@@ -54,7 +54,7 @@ class Sideber extends React.Component {
                 onPress={() => {
                     this.setState({menuActive: item.name});
 
-                    if (item.name === 'logout') {
+                    if (item.route === null ) {
                         Alert.alert(
                             'ออกจากระบบ',
                             'ต้องการออกจากระบบ ?',
@@ -105,6 +105,7 @@ class Sideber extends React.Component {
     };
 
     render () {
+        const { navigate } = this.props.navigation;
         //const { first_name, last_name, employee_id, manager } = this.props.users;
         const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
 
@@ -120,14 +121,7 @@ class Sideber extends React.Component {
             <Container>
                 <TouchableOpacity
                     style={styles.info}
-                    onPress={() => {
-                        this.props.NavigationActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({routeName: PROFILE_SCREEN})
-                            ]
-                        })
-                    }}
+                    onPress={ () => navigate({routeName: PROFILE_SCREEN})}
                 >
                     <View style={{flexDirection: 'row'}}>
                         <Thumbnail
@@ -160,14 +154,7 @@ class Sideber extends React.Component {
                     />
                 </Content>
                 <TouchableOpacity
-                    onPress={() => {
-                        this.props.NavigationActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({routeName: ABOUT_SCREEN})
-                            ]
-                        })
-                    }}
+                    onPress={ () => navigate({routeName: ABOUT_SCREEN})}
                 >
                     <View style={styles.footer}>
                         <CommonText text={'เกี่ยวกับเรา'} style={styles.footerFont} />

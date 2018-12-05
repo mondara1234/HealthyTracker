@@ -3,12 +3,13 @@ import { Dimensions } from "react-native";
 import { addNavigationHelpers, DrawerNavigator, StackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
 import { CommonRouter, DASHBOARD } from '../features/common/router';
-import { trickRouter, TRICK_SCREEN } from "../features/Trick/router";
-import { menuFoodRouter, MENUFOOD_SCREEN } from "../features/MenuFood/router";
-import {foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
+import { UserRouter } from '../features/User/router';
+import { trickRouter  } from "../features/Trick/router";
+import { menuFoodRouter  } from "../features/MenuFood/router";
+import { foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
 import { exerciseRouter } from '../features/Exercise/router';
 import { bmiRouter } from '../features/BMI/router';
-import { UserRouter, LOGIN } from '../features/About/router';
+import { aboutRouter } from '../features/About/router';
 import { settingRouter } from '../features/Setting/router';
 import { usermanualRouter } from '../features/UserManual/router';
 import { profileRouter } from '../features/ProfileUser/router';
@@ -25,7 +26,8 @@ export const RootStack = StackNavigator({
     ...bmiRouter,
     ...settingRouter,
     ...usermanualRouter,
-    ...profileRouter
+    ...profileRouter,
+    ...aboutRouter
 },{
     initialRouteName: FOODDIARY_SCREEN,
     navigationOptions: ({navigation}) => ({
