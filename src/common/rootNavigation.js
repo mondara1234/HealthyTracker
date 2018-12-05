@@ -21,7 +21,7 @@ export const RootStack = StackNavigator({
     ...exerciseRouter,
     ...bmiRouter
 },{
-    initialRouteName: TRICK_SCREEN,
+    initialRouteName: FOODDIARY_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

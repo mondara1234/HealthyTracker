@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Container } from 'native-base';
-import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import HeaderTitle from '../../common/components/HeaderTitle';
 
 class foodDiaryScreen extends React.PureComponent {
 
@@ -16,7 +16,7 @@ class foodDiaryScreen extends React.PureComponent {
 }
 
 foodDiaryScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'FoodDiary'} />,
+    headerTitle: <HeaderTitle text={'FoodDiary'}/>,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

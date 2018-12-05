@@ -93,7 +93,7 @@ class Sideber extends React.Component {
                 />}
                 </Left>
                 <Body style={{borderBottomWidth: 0}}>
-                    <CommonText text={`${item.name}.title`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
+                    <CommonText text={`${item.name}`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
                 </Body>
             </ListItem>
         )
@@ -132,23 +132,27 @@ class Sideber extends React.Component {
                         })
                     }}
                 >
-                    <Thumbnail
-                        source={
-                            profileImage
-                                ? {uri: profileImage}
-                                : require('../../../../pulic/assets/images/user-default.png')
+                    <View style={{flexDirection: 'row'}}>
+                        <Thumbnail
+                            source={
+                                profileImage
+                                    ? {uri: profileImage}
+                                    : require('../../../../pulic/assets/images/user-default.png')
 
-                        }
-                        style={styles.userThumb}
-                    />
-                    <CommonText
-                        text={'first_name'}
-                        style={[styles.fontBase, s.b]}
-                    />
-                    <CommonText
-                        text={`หลังงานที่ต้องการต่อวัน:  ${'1999'}  kcal`}
-                        style={[styles.fontBase, s.fw3, {fontSize: 16}]}
-                    />
+                            }
+                            style={styles.userThumb}
+                        />
+                        <View>
+                            <CommonText
+                                text={'first_name'}
+                                style={[styles.fontBase, s.b,{fontSize: 18}]}
+                            />
+                            <CommonText
+                                text={`หลังงานที่ต้องการต่อวัน:  ${'1999'}  kcal`}
+                                style={[styles.fontBase, s.fw3, {fontSize: 10}]}
+                            />
+                        </View>
+                    </View>
                 </TouchableOpacity>
                 <Content style={[s.bg_white]}>
                     <FlatList
@@ -223,7 +227,7 @@ const styles = StyleSheet.create({
         height: 50,
     },
     footerFont: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '300',
     },
     userThumb: {
@@ -233,11 +237,11 @@ const styles = StyleSheet.create({
     },
     fontBase: {
         color: '#991b1f',
-        fontSize: 22,
+        fontSize: 14,
         fontWeight: themeVariables.platform === 'ios' ? '600' : null
     },
     version: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '300',
         position: 'absolute',
         right: 4,

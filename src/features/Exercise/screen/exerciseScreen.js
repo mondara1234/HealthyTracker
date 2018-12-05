@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Container } from 'native-base';
-import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 
 class exerciseScreen extends React.PureComponent {
@@ -16,7 +16,7 @@ class exerciseScreen extends React.PureComponent {
 }
 
 exerciseScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'exercise'} />,
+    headerTitle: <HeaderTitle text={'exercise'}/>,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

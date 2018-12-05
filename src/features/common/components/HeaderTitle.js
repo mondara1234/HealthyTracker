@@ -14,7 +14,7 @@ HeaderTitle.propTypes = {
 
 HeaderTitle.defaultProps = {
     text: '',
-    color: '#f3f3f3',
+    color: '#fff',
     size : 20
 };
 
