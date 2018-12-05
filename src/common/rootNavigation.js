@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from "react-native";
-import { addNavigationHelpers, DrawerNavigator, StackNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
 import { CommonRouter, DASHBOARD } from '../features/common/router';
 import { trickRouter, TRICK_SCREEN } from "../features/Trick/router";
@@ -12,7 +12,7 @@ import { UserRouter, LOGIN } from '../features/User/router';
 import { HEADER_STYLE } from './constants';
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
-export const RootStack = StackNavigator({
+export const RootStack = createStackNavigator({
     ...CommonRouter,
     ...UserRouter,
     ...trickRouter,
@@ -30,7 +30,7 @@ export const RootStack = StackNavigator({
     }
 });
 
-const RootDrawer = DrawerNavigator(
+const RootDrawer = createDrawerNavigator(
     {
         'root': {
             screen: RootStack
@@ -43,14 +43,10 @@ const RootDrawer = DrawerNavigator(
     }
 );
 
-export const RootNavigator = StackNavigator({
+export const RootNavigator = createStackNavigator({
     Drawer: { screen: RootDrawer },
 }, {
     headerMode: 'none',
 });
-
-
-
-
 
 export default RootNavigator;
