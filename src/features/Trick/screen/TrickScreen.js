@@ -9,7 +9,7 @@ class TrickScreen extends React.PureComponent {
     render() {
         return (
             <Container>
-                <Text style={{fontSize: 40}}>{'ประวัติการใช้งาน ในแต่ละวัน'}</Text>
+                <Text style={{fontSize: 40}}>{'Trick'}</Text>
             </Container>
         );
     }
