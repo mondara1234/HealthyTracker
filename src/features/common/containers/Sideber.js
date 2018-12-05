@@ -12,13 +12,12 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
 import CommonText from '../../common/components/CommonText';
-import { DASHBOARD } from "../../common/router";
 import { LOGIN, PRAVIEDKEY } from "../../User/router";
-import { BMI_SCREEN } from "../../BMI/router";
+import { PROFILE_SCREEN } from "../../ProfileUser/router";
 import { EXERCISE_SCREEN } from "../../Exercise/router";
-import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import { MENUFOOD_SCREEN } from "../../MenuFood/router";
-import { TRICK_SCREEN } from "../../Trick/router";
+import { USERMANUAL_SCREEN } from "../../UserManual/router";
+import { SETTING_SCREEN } from "../../Setting/router";
+import { ABOUT_SCREEN } from "../../About/router";
 import * as API from "../../User/api/api";
 
 class Sideber extends React.Component {
@@ -110,13 +109,11 @@ class Sideber extends React.Component {
         const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
 
         const menus = [
-            {name: 'หน้าหลัก', icon: 'home', route: DASHBOARD},
-            {name: 'BMI', icon: 'camera', route: BMI_SCREEN},
-            {name: 'MENUFOOD', icon: 'foot', route: MENUFOOD_SCREEN},
-            {name: 'EXERCISE', icon: 'book', route: EXERCISE_SCREEN, params: {isRootPage: true}},
-            {name: 'FOODDIARY', icon: 'food', route: FOODDIARY_SCREEN},
-            {name: 'TRICK', icon: 'list', route: TRICK_SCREEN, params: {isRootPage: true}},
-            {name: 'logout', icon: 'log-out', route: null}
+            {name: 'จัดการข้อมูลส่วนตัว', icon: 'foot', route: PROFILE_SCREEN},
+            {name: 'ท่าออกกำลังกาย', icon: 'book', route: EXERCISE_SCREEN, params: {isRootPage: true}},
+            {name: 'คู่มือการใช้งาน', icon: 'food', route: USERMANUAL_SCREEN},
+            {name: 'ตั้งค่า', icon: 'list', route: SETTING_SCREEN, params: {isRootPage: true}},
+            {name: 'ออกจากระบบ', icon: 'log-out', route: null}
         ];
 
         return (
@@ -127,7 +124,7 @@ class Sideber extends React.Component {
                         this.props.NavigationActions.reset({
                             index: 0,
                             actions: [
-                                NavigationActions.navigate({routeName: PRAVIEDKEY})
+                                NavigationActions.navigate({routeName: PROFILE_SCREEN})
                             ]
                         })
                     }}
@@ -167,7 +164,7 @@ class Sideber extends React.Component {
                         this.props.NavigationActions.reset({
                             index: 0,
                             actions: [
-                                NavigationActions.navigate({routeName: PRAVIEDKEY})
+                                NavigationActions.navigate({routeName: ABOUT_SCREEN})
                             ]
                         })
                     }}

@@ -8,7 +8,10 @@ import { menuFoodRouter, MENUFOOD_SCREEN } from "../features/MenuFood/router";
 import {foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
 import { exerciseRouter } from '../features/Exercise/router';
 import { bmiRouter } from '../features/BMI/router';
-import { UserRouter, LOGIN } from '../features/User/router';
+import { UserRouter, LOGIN } from '../features/About/router';
+import { settingRouter } from '../features/Setting/router';
+import { usermanualRouter } from '../features/UserManual/router';
+import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
@@ -19,7 +22,10 @@ export const RootStack = StackNavigator({
     ...menuFoodRouter,
     ...foodDiaryRouter,
     ...exerciseRouter,
-    ...bmiRouter
+    ...bmiRouter,
+    ...settingRouter,
+    ...usermanualRouter,
+    ...profileRouter
 },{
     initialRouteName: FOODDIARY_SCREEN,
     navigationOptions: ({navigation}) => ({

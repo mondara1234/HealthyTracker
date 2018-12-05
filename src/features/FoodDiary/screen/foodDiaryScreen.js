@@ -3,13 +3,19 @@ import { Text } from 'react-native';
 import { Container } from 'native-base';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
+import SideMenu from '../../common/components/SideMenu';
+import { NavigationActions } from "react-navigation";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {TRICK_SCREEN} from "../../Trick/router";
 
 class foodDiaryScreen extends React.PureComponent {
 
     render() {
         return (
             <Container>
-                <Text style={{fontSize: 40}}>{'FoodDiary'}</Text>
+                <Text style={{fontSize: 40}} onPress={() => NavigationActions.navigate({routeName: TRICK_SCREEN})}>{'FoodDiary'}</Text>
+                <SideMenu/>
             </Container>
         );
     }
@@ -20,4 +26,9 @@ foodDiaryScreen.navigationOptions  = ({navigation}) => ({
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 
-export default foodDiaryScreen;
+export default connect(
+    null,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+    })
+)(foodDiaryScreen);
