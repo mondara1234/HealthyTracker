@@ -12,6 +12,7 @@
     "prop-types": "^15.6.2",
     "react": "16.6.1",
     "react-native": "0.54.0",
+    "react-native-gesture-handler": "^1.0.10",
     "react-native-style-tachyons": "^4.0.0",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.5",
