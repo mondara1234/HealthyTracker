@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { StyleSheet } from 'react-native';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Container, Header, Content, Footer, FooterTab, Button, Text } from 'native-base';
 import { withNavigation } from "react-navigation";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
@@ -21,28 +24,28 @@ class SideMenu extends Component {
                             style={styles.button}
                             onPress={ () => navigate({routeName: FOODDIARY_SCREEN})}
                             >
-                            <Icon name="apps" />
+                            <IconEntypo name="open-book" />
                             <Text style={styles.Text}>{'ไดอารี่อาหาร'}</Text>
                         </Button>
                         <Button
                             style={styles.button}
                             onPress={ () => navigate({routeName: MENUFOOD_SCREEN})}
                         >
-                            <Icon name="camera" />
+                            <IconMaterialCommunityIcons name="food" />
                             <Text style={styles.Text}>{'เมนูอาหาร'}</Text>
                         </Button>
                         <Button
                             style={styles.button}
                             onPress={ () => navigate({routeName: BMI_SCREEN})}
                         >
-                            <Icon active name="navigate" />
+                            <IconMaterialIcons name="healing" />
                             <Text style={styles.Text}>{'BMI'}</Text>
                         </Button>
                         <Button
                             style={styles.button}
                             onPress={ () => navigate({routeName: TRICK_SCREEN})}
                         >
-                            <Icon name="person" />
+                            <IconMaterialCommunityIcons name="nutrition" />
                             <Text style={styles.Text}>{'เคล็ดลับ'}</Text>
                         </Button>
                     </FooterTab>

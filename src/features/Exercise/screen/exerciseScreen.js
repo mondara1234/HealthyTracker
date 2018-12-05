@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Container } from 'native-base';
+import SideMenu from '../../common/components/SideMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 
@@ -10,6 +11,7 @@ class exerciseScreen extends React.PureComponent {
         return (
             <Container>
                 <Text style={{fontSize: 40}}>{'ท่าออกกกำลังกาย'}</Text>
+                <SideMenu/>
             </Container>
         );
     }

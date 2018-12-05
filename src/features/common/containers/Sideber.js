@@ -7,11 +7,11 @@ import { NavigationActions } from 'react-navigation';
 import { styles as s } from 'react-native-style-tachyons';
 import { Container, Content, Thumbnail, ListItem, Left, Body } from 'native-base';
 import { Alert, StyleSheet, TouchableOpacity, View, FlatList } from 'react-native';
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
-import CommonText from '../../common/components/CommonText';
 import { LOGIN, PRAVIEDKEY } from "../../User/router";
 import { PROFILE_SCREEN } from "../../ProfileUser/router";
 import { EXERCISE_SCREEN } from "../../Exercise/router";
@@ -19,6 +19,8 @@ import { USERMANUAL_SCREEN } from "../../UserManual/router";
 import { SETTING_SCREEN } from "../../Setting/router";
 import { ABOUT_SCREEN } from "../../About/router";
 import * as API from "../../User/api/api";
+import CommonText from '../../common/components/CommonText';
+
 
 class Sideber extends React.Component {
     constructor(props) {
@@ -86,10 +88,21 @@ class Sideber extends React.Component {
                         style={[styles.listItemIcon, {color: fontColor}]}
                         name={item.icon}
                     />
-                    :<IconFontAwesome
-                    style={[styles.listItemIcon, {color: fontColor}]}
-                    name={item.icon}
-                />}
+                    :item.icon === 'user' ?
+                    <IconEntypo
+                        style={[styles.listItemIcon, {color: fontColor}]}
+                        name={item.icon}
+                    />
+                        :item.icon === 'address-book-o' ?
+                            <IconFontAwesome
+                            style={[styles.listItemIcon, {color: fontColor}]}
+                            name={item.icon}
+                            />
+                            :
+                            <IconMaterialIcons
+                            style={[styles.listItemIcon, {color: fontColor}]}
+                            name={item.icon}/>
+                }
                 </Left>
                 <Body style={{borderBottomWidth: 0}}>
                     <CommonText text={`${item.name}`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
@@ -110,10 +123,10 @@ class Sideber extends React.Component {
         const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
 
         const menus = [
-            {name: 'จัดการข้อมูลส่วนตัว', icon: 'foot', route: PROFILE_SCREEN},
-            {name: 'ท่าออกกำลังกาย', icon: 'book', route: EXERCISE_SCREEN, params: {isRootPage: true}},
-            {name: 'คู่มือการใช้งาน', icon: 'food', route: USERMANUAL_SCREEN},
-            {name: 'ตั้งค่า', icon: 'list', route: SETTING_SCREEN, params: {isRootPage: true}},
+            {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN},
+            {name: 'ท่าออกกำลังกาย', icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
+            {name: 'คู่มือการใช้งาน', icon: 'address-book-o', route: USERMANUAL_SCREEN},
+            {name: 'ตั้งค่า', icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
             {name: 'ออกจากระบบ', icon: 'log-out', route: null}
         ];
 
