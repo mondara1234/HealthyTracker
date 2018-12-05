@@ -13,11 +13,12 @@ import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
 import CommonText from '../../common/components/CommonText';
 import { DASHBOARD } from "../../common/router";
-import { PROFILE_LIST, LOGIN } from "../../User/router";
-import { SELECT_FOOD_SCREEN } from "../../selectFood/router";
-import { HISTORY_SCREEN } from "../../history/router";
-import { SCANQR_SCREEN } from "../../qrcodeScanner/router";
-import { CAL_FOOD_SCREEN } from "../../calFood/router";
+import { LOGIN, PRAVIEDKEY } from "../../User/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { EXERCISE_SCREEN } from "../../Exercise/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { TRICK_SCREEN } from "../../Trick/router";
 import * as API from "../../User/api/api";
 
 class Sideber extends React.Component {
@@ -110,11 +111,11 @@ class Sideber extends React.Component {
 
         const menus = [
             {name: 'หน้าหลัก', icon: 'home', route: DASHBOARD},
-            {name: 'กล้อง', icon: 'camera', route: SCANQR_SCREEN},
-            {name: 'นับการก้าวเท้า', icon: 'foot', route: PROFILE_LIST},
-            {name: 'ไดอารี่อาหาร', icon: 'book', route: HISTORY_SCREEN, params: {isRootPage: true}},
-            {name: 'รายการอาหาร', icon: 'food', route: SELECT_FOOD_SCREEN},
-            {name: 'BMI', icon: 'list', route: CAL_FOOD_SCREEN, params: {isRootPage: true}},
+            {name: 'BMI', icon: 'camera', route: BMI_SCREEN},
+            {name: 'MENUFOOD', icon: 'foot', route: MENUFOOD_SCREEN},
+            {name: 'EXERCISE', icon: 'book', route: EXERCISE_SCREEN, params: {isRootPage: true}},
+            {name: 'FOODDIARY', icon: 'food', route: FOODDIARY_SCREEN},
+            {name: 'TRICK', icon: 'list', route: TRICK_SCREEN, params: {isRootPage: true}},
             {name: 'logout', icon: 'log-out', route: null}
         ];
 
@@ -126,7 +127,7 @@ class Sideber extends React.Component {
                         this.props.NavigationActions.reset({
                             index: 0,
                             actions: [
-                                NavigationActions.navigate({routeName: PROFILE_LIST})
+                                NavigationActions.navigate({routeName: PRAVIEDKEY})
                             ]
                         })
                     }}
@@ -162,7 +163,7 @@ class Sideber extends React.Component {
                         this.props.NavigationActions.reset({
                             index: 0,
                             actions: [
-                                NavigationActions.navigate({routeName: PROFILE_LIST})
+                                NavigationActions.navigate({routeName: PRAVIEDKEY})
                             ]
                         })
                     }}
