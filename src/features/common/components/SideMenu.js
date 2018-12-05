@@ -24,28 +24,28 @@ class SideMenu extends Component {
                             style={styles.button}
                             onPress={ () => navigate({routeName: FOODDIARY_SCREEN})}
                             >
-                            <IconEntypo name="open-book" />
+                            <IconEntypo name="open-book" size={30} />
                             <Text style={styles.Text}>{'ไดอารี่อาหาร'}</Text>
                         </Button>
                         <Button
                             style={styles.button}
                             onPress={ () => navigate({routeName: MENUFOOD_SCREEN})}
                         >
-                            <IconMaterialCommunityIcons name="food" />
+                            <IconMaterialCommunityIcons name="food" size={30} />
                             <Text style={styles.Text}>{'เมนูอาหาร'}</Text>
                         </Button>
                         <Button
                             style={styles.button}
                             onPress={ () => navigate({routeName: BMI_SCREEN})}
                         >
-                            <IconMaterialIcons name="healing" />
+                            <IconMaterialIcons name="healing" size={30} />
                             <Text style={styles.Text}>{'BMI'}</Text>
                         </Button>
                         <Button
                             style={styles.button}
                             onPress={ () => navigate({routeName: TRICK_SCREEN})}
                         >
-                            <IconMaterialCommunityIcons name="nutrition" />
+                            <IconMaterialCommunityIcons name="nutrition" size={30} />
                             <Text style={styles.Text}>{'เคล็ดลับ'}</Text>
                         </Button>
                     </FooterTab>
