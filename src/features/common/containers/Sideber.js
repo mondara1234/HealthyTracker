@@ -152,7 +152,7 @@ class Sideber extends React.Component {
                                 style={[styles.fontBase, s.b,{fontSize: 18}]}
                             />
                             <CommonText
-                                text={`หลังงานที่ต้องการต่อวัน:  ${'1999'}  kcal`}
+                                text={`พลังงานที่ต้องการต่อวัน:  ${'1999'}  kcal`}
                                 style={[styles.fontBase, s.fw3, {fontSize: 10}]}
                             />
                         </View>
