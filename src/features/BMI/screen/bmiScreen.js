@@ -9,14 +9,14 @@ class bmiScreen extends React.PureComponent {
     render() {
         return (
             <Container>
-                <Text style={{fontSize: 40}}>{'ประวัติการใช้งาน ในแต่ละวัน'}</Text>
+                <Text style={{fontSize: 40}}>{'BMi'}</Text>
             </Container>
         );
     }
 }
 
 bmiScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'ประวัติการใช้งาน'} />,
+    headerTitle: <CommonText text={'BMI'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from "react-native";
+import { Dimensions } from "react-native/Libraries/react-native/react-native-implementation";
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
 import { CommonRouter, DASHBOARD } from '../features/common/router';
@@ -10,7 +10,6 @@ import { exerciseRouter } from '../features/Exercise/router';
 import { bmiRouter } from '../features/BMI/router';
 import { UserRouter, LOGIN } from '../features/User/router';
 import { HEADER_STYLE } from './constants';
-import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
 export const RootStack = createStackNavigator({
     ...CommonRouter,

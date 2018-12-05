@@ -9,14 +9,14 @@ class menuFoodScreen extends React.PureComponent {
     render() {
         return (
             <Container>
-                <Text style={{fontSize: 40}}>{'ประวัติการใช้งาน ในแต่ละวัน'}</Text>
+                <Text style={{fontSize: 40}}>{'รายการอาหาร'}</Text>
             </Container>
         );
     }
 }
 
 menuFoodScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'ประวัติการใช้งาน'} />,
+    headerTitle: <CommonText text={'รายการอาหาร'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 
