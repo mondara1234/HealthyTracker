@@ -1,36 +1,41 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { withNavigation } from "react-navigation";
 import Form from './FormScreen/FormRegistration';
+import Logo from '../components/Logo';
+import { LOGIN } from "../router";
 
 class Registration extends Component {
 
-    GoTo_Show_StudentList_Activity_Function = () =>
-    {
-        this.props.navigation.navigate('SHOWLIST');
-    };
-
     render() {
+
+        const { navigate } = this.props.navigation;
+
         return (
             <View style={styles.container}>
-                <Image  style={{width:120, height: 120}}
+                <Logo Title="WECOME MyAPP"/>
+                <Image  style={styles.Image}
                         source={require('../../../../pulic/assets/images/user.png')}/>
-                <Form nameRegistration="Registration" />
-                <TouchableOpacity style={styles.button} onPress={this.GoTo_Show_StudentList_Activity_Function}>
-                    <Text style={styles.buttonText} >{ 'ShowAllData' }</Text>
-                </TouchableOpacity>
+                <Form nameRegistration="ลงทะเบียน" />
+                <View style={styles.signupTextCont}>
+                    <Text style={styles.signupText}>{'คุณมีบัญชีแล้วหรือยัง ?'}</Text>
+                    <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
+                        <Text style={styles.signupButton}> {'Login'}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
 }
 
 Registration.navigationOptions  = ({navigation}) => ({
-    header: null
+    header:  null
 });
 
 const styles = StyleSheet.create({
     container : {
-        paddingBottom: 60,
-        backgroundColor: '#455a64',
+        paddingTop: 40,
+        backgroundColor: '#F4F4F4',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
@@ -47,7 +52,28 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
-    }
+    },
+    Image: {
+        width: 100,
+        height: 100,
+        marginVertical: 15
+    },
+    signupTextCont : {
+        flexGrow: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingVertical: 16,
+        flexDirection: 'row'
+    },
+    signupText: {
+        color: 'rgba(0,0,0,0.6)',
+        fontSize: 14
+    },
+    signupButton: {
+        color: '#068e81',
+        fontSize: 18,
+        fontWeight: '500'
+    },
 });
 
-export default  Registration;
+export default withNavigation(Registration);

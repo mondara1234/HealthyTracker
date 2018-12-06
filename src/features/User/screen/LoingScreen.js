@@ -75,7 +75,7 @@ LoingScreen.navigationOptions  = ({navigation}) => ({
 const styles = StyleSheet.create({
     container : {
         paddingTop:60,
-        backgroundColor:'#455a64',
+        backgroundColor:'#F4F4F4',
         flex: 1,
         alignItems:'center',
         justifyContent :'center'

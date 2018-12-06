@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class FormRegistration extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             TextInput_Name: '',
             TextInput_Password: '',
             TextInput_Email: '',
+            TextInput_PasswordAgain: ''
         }
     }
 
@@ -29,33 +32,43 @@ class FormRegistration extends Component {
             }).catch((error) => {
             console.error(error);
         });
-    }
+    };
 
     render(){
         return(
-            <View >
+            <View style={styles.container}>
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
                            placeholder="UserName"
-                           placeholderTextColor = "#ffffff"
+                           placeholderTextColor = "#068e81"
                            onChangeText={ TextInputValue => this.setState({ TextInput_Name : TextInputValue }) }
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
                            placeholder="Email"
-                           placeholderTextColor = "#ffffff"
+                           placeholderTextColor = "#068e81"
                            keyboardType="email-address"
-                           onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue }) }
+                           onChangeText={ TextInputValue => this.setState({ TextInput_Email : TextInputValue }) }
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
                            placeholder="Password"
                            secureTextEntry={true}
-                           placeholderTextColor = "#ffffff"
-                           onChangeText={ TextInputValue => this.setState({ TextInput_Email : TextInputValue }) }
+                           placeholderTextColor = "#068e81"
+                           onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue }) }
+                />
+                <TextInput style={styles.inputBox}
+                           underlineColorAndroid='rgba(0,0,0,0)'
+                           placeholder="ยืนยัน Password"
+                           secureTextEntry={true}
+                           placeholderTextColor = "#068e81"
+                           onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue }) }
                 />
                 <TouchableOpacity style={styles.button} onPress={this.InsertStudentRecordsToServer}>
-                    <Text style={styles.buttonText} >{this.props.nameRegistration}</Text>
+                    <View style={styles.containerButton}>
+                        <IconFontAwesome name="registered" size={30} style={styles.styleIconFontAwesome} />
+                        <Text style={styles.buttonText} >{this.props.nameRegistration}</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         )
@@ -63,29 +76,44 @@ class FormRegistration extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     inputBox: {
         width: 300,
-        backgroundColor: 'rgba(255, 255,255,0.2)',
+        height: 40,
+        backgroundColor: '#fff',
         borderRadius: 25,
-        paddingHorizontal: 16,
+        borderWidth: 1,
         fontSize: 16,
-        color: '#ffffff',
-        marginVertical: 10
+        color: '#068e81',
+        paddingLeft: 10,
+        marginVertical: 5
     },
     button: {
-        width: 300,
-        backgroundColor: '#1c313a',
+        width: 250,
         borderRadius: 25,
-        marginVertical: 10,
-        paddingVertical: 13
+        borderWidth: 1,
+        marginTop: 20,
+        paddingVertical: 10,
+        backgroundColor: '#068e81'
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
+    },
+    styleIconFontAwesome: {
+        marginRight: 40,
+        color: '#000'
+    },
+    containerButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
-
 });
 
 export default FormRegistration;
