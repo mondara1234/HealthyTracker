@@ -7,10 +7,12 @@ import { requestApiData } from "../redux/actions";
 import Logo from '../components/Logo';
 import {getNews, getAllFlights} from '../redux/actions';
 import * as API from '../api/api';
+import { FORGOTPASSWORD, REGISTRATION } from "../router";
 
 class LoingScreen extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             UserEmail: '',
             UserPassword: ''
@@ -28,10 +30,6 @@ class LoingScreen extends Component {
         this.props.Flights_DATA(Email,Password , keyScreen);
     };
 
-      RegistrationFunction = () =>{
-        this.props.navigation.navigate('REGISTRATION');
-    };
-
     render() {
             console.log('Update Store:',this.props);
         return (
@@ -41,7 +39,7 @@ class LoingScreen extends Component {
                     <TextInput style={styles.inputBox}
                                underlineColorAndroid='rgba(0,0,0,0)'
                                placeholder="Email"
-                               placeholderTextColor = "#ffffff"
+                               placeholderTextColor = "#068e81"
                                selectionColor="#fff"
                                keyboardType="email-address"
                                onChangeText={UserEmail =>this.setState({UserEmail})}
@@ -50,15 +48,18 @@ class LoingScreen extends Component {
                                underlineColorAndroid='rgba(0,0,0,0)'
                                placeholder="Password"
                                secureTextEntry={true}
-                               placeholderTextColor = "#ffffff"
+                               placeholderTextColor = "#068e81"
                                onChangeText={UserPassword =>this.setState({UserPassword})}
                     />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                        <Text style={styles.signupButton}> {'ลืมรหัสผ่าน ?'}</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
                         <Text style={styles.buttonText} > {'Login'} </Text>
                     </TouchableOpacity>
                     <View style={styles.signupTextCont}>
                         <Text style={styles.signupText}>Don't have an account yet?</Text>
-                        <TouchableOpacity onPress={this.RegistrationFunction}>
+                        <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
                             <Text style={styles.signupButton}> {'Signup'}</Text>
                         </TouchableOpacity>
                     </View>
@@ -73,63 +74,66 @@ LoingScreen.navigationOptions  = ({navigation}) => ({
 });
 
 const styles = StyleSheet.create({
-    container : {
-        paddingTop:60,
-        backgroundColor:'#F4F4F4',
+    container: {
+        paddingTop: 60,
+        backgroundColor: '#F4F4F4',
         flex: 1,
-        alignItems:'center',
-        justifyContent :'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     containerView : {
         flex: 1,
         marginTop: 65,
-        justifyContent:'center',
+        justifyContent: 'center',
         alignItems: 'center'
     },
     signupTextCont : {
         flexGrow: 1,
-        alignItems:'flex-end',
-        justifyContent :'center',
-        paddingVertical:16,
-        flexDirection:'row'
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingVertical: 16,
+        flexDirection: 'row'
     },
     signupText: {
-        color:'rgba(255,255,255,0.6)',
-        fontSize:16
+        color: 'rgba(0,0,0,0.6)',
+        fontSize: 16
     },
     signupButton: {
-        color:'#ffffff',
-        fontSize:16,
-        fontWeight:'500'
+        color: '#000',
+        fontSize: 16,
+        fontWeight: '500'
     },
     inputBox: {
-        width:300,
-        backgroundColor:'rgba(255, 255,255,0.2)',
+        width: 300,
+        height: 40,
+        backgroundColor: '#fff',
         borderRadius: 25,
-        paddingHorizontal:16,
-        fontSize:16,
-        color:'#ffffff',
-        marginVertical: 10
+        borderWidth: 1,
+        fontSize: 16,
+        color: '#068e81',
+        paddingLeft: 10,
+        marginVertical: 5
     },
     button: {
-        width:300,
-        backgroundColor:'#1c313a',
+        width: 250,
         borderRadius: 25,
-        marginVertical: 10,
-        paddingVertical: 13
+        borderWidth: 1,
+        marginTop: 20,
+        paddingVertical: 10,
+        backgroundColor: '#068e81'
     },
     buttonText: {
-        fontSize:16,
-        fontWeight:'500',
-        color:'#ffffff',
-        textAlign:'center'
-    }
+        fontSize: 20,
+        fontWeight: '500',
+        color: '#ffffff',
+        textAlign: 'center'
+    },
 });
 
 function mapStateToProps(state) {
     return{
         servers: state.data
-};
+    };
 }
 
 export default connect(mapStateToProps,

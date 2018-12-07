@@ -3,7 +3,7 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { StyleSheet } from 'react-native';
-import { Container, Header, Content, Footer, FooterTab, Button, Text } from 'native-base';
+import { Container, Footer, Content, FooterTab, Button, Text } from 'native-base';
 import { withNavigation } from "react-navigation";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
@@ -16,7 +16,7 @@ class SideMenu extends Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <Container>
+            <Container style={styles.container}>
                 <Content />
                 <Footer>
                     <FooterTab>
@@ -56,6 +56,9 @@ class SideMenu extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        height: '20%'
+    },
     button: {
         backgroundColor: '#068E81',
         display: 'flex',
