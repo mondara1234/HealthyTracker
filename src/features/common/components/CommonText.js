@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import { styles as s } from 'react-native-style-tachyons';
 
 const CommonText = (props) => {
-    const fontFamily = props.weight === 'bold' ? 'ThaiSansNeue-Bold' : (props.weight === 'light' ? 'ThaiSansNeue-Light' : 'ThaiSansNeue-Regular' );
 
     return (
-        <Text style={[{ fontFamily: fontFamily, fontSize: props.size, color: props.color }, props.style]}>
+        <Text style={[{ fontSize: props.size, color: props.color }, props.style]}>
             {`${props.text}`}
         </Text>
     )
@@ -29,6 +28,7 @@ CommonText.defaultProps = {
     size: 24,
     color: s.white,
     text: '',
+    style: {}
 };
 
 export default CommonText;

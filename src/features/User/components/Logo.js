@@ -6,7 +6,7 @@ class Logo extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Image  style={{width: 80, height: 80}}
+                <Image  style={{width: 150, height: 150}}
                         source={Images.logo}
                 />
                 <Text style={styles.logoText}>{this.props.Title}</Text>
@@ -21,10 +21,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logoText : {
-        marginVertical: 15,
-        fontSize:18,
-        color:'rgba(0, 0, 0, 0.7)',
-        justifyContent:'center',
+        marginBottom: 15,
+        marginTop: -25,
+        fontSize: 18,
+        color: '#068e81',
+        justifyContent: 'center',
         alignItems: 'center'
     }
 });

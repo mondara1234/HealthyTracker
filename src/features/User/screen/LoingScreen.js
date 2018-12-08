@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput} from 'react-native';
+import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground} from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
@@ -8,6 +8,8 @@ import Logo from '../components/Logo';
 import {getNews, getAllFlights} from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import {Images} from "../components/images";
 
 class LoingScreen extends Component {
     constructor(props) {
@@ -19,9 +21,9 @@ class LoingScreen extends Component {
         }
     }
 
-    componentDidMount(){
+    /*componentDidMount(){
         this.props.FETCH_DATA();
-    }
+    }*/
 
     UserLoginFunction = () =>{
         const Email = this.state.UserEmail ;
@@ -33,8 +35,12 @@ class LoingScreen extends Component {
     render() {
             console.log('Update Store:',this.props);
         return (
-            <View style={styles.container}>
-                <Logo Title="WECOME MyAPP"/>
+            <ImageBackground style={styles.backgroundImage}
+                             source={Images.bgLogin}>
+                <View style={styles.containerRow}>
+                    <Text style={styles.titleLogin}> {'LOGIN'}</Text>
+                    <Logo Title="Healthy MyApp"/>
+                </View>
                 <View style={styles.containerView}>
                     <TextInput style={styles.inputBox}
                                underlineColorAndroid='rgba(0,0,0,0)'
@@ -51,20 +57,24 @@ class LoingScreen extends Component {
                                placeholderTextColor = "#068e81"
                                onChangeText={UserPassword =>this.setState({UserPassword})}
                     />
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                        <Text style={styles.signupButton}> {'ลืมรหัสผ่าน ?'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
+                    <View style={styles.containerForgot}>
+                        <TouchableOpacity style={styles.TouchForgot}
+                                          onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                            <Text style={styles.textForgot}> {'ลืมรหัสผ่าน ?'}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.button} //onPress={this.UserLoginFunction}
+                                      onPress={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}>
                         <Text style={styles.buttonText} > {'Login'} </Text>
                     </TouchableOpacity>
                     <View style={styles.signupTextCont}>
-                        <Text style={styles.signupText}>Don't have an account yet?</Text>
+                        <Text style={styles.signupText}>{'คุณมีบัญชีแล้วหรือยัง ?'}</Text>
                         <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
-                            <Text style={styles.signupButton}> {'Signup'}</Text>
+                            <Text style={styles.signupButton}> {'สมัครสมาชิก'}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </ImageBackground>
         )
     }
 }
@@ -74,24 +84,39 @@ LoingScreen.navigationOptions  = ({navigation}) => ({
 });
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 60,
-        backgroundColor: '#F4F4F4',
+    backgroundImage: {
+        paddingTop: 20,
         flex: 1,
-        alignItems: 'center',
+    },
+    containerRow: {
+        flexDirection: 'row',
+    },
+    titleLogin: {
+        color: '#068e81',
+        fontSize: 30,
+        marginLeft: 10
+    },
+    textForgot: {
+        color: '#000',
+        fontSize: 18,
+    },
+    TouchForgot: {
+        marginLeft: '40%'
+    },
+    containerForgot: {
+        width:  200,
+        marginLeft: 10,
+    },
+    containerView: {
+        flex: 1,
+        marginLeft: 10,
         justifyContent: 'center'
     },
-    containerView : {
+    signupTextCont: {
         flex: 1,
-        marginTop: 65,
+        marginTop: '50%',
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
-    },
-    signupTextCont : {
-        flexGrow: 1,
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-        paddingVertical: 16,
         flexDirection: 'row'
     },
     signupText: {
@@ -99,12 +124,12 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     signupButton: {
-        color: '#000',
+        color: '#F4F4F4',
         fontSize: 16,
         fontWeight: '500'
     },
     inputBox: {
-        width: 300,
+        width: 200,
         height: 40,
         backgroundColor: '#fff',
         borderRadius: 25,
@@ -115,7 +140,7 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     button: {
-        width: 250,
+        width: 150,
         borderRadius: 25,
         borderWidth: 1,
         marginTop: 20,

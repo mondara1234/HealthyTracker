@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CommonText from './CommonText';
 
 const HeaderTitle = (props) => {
-    return <CommonText text={props.text} color={props.color} size={props.size}  />
+    return <CommonText text={props.text} color={props.color} size={props.size} />
 };
 
 HeaderTitle.propTypes = {

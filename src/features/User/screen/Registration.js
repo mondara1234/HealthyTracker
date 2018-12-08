@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { withNavigation } from "react-navigation";
 import Form from './FormScreen/FormRegistration';
-import Logo from '../components/Logo';
+import LogoTextHT from '../../common/components/LogoTextHT';
+import { Images } from "../components/images";
 import { LOGIN } from "../router";
 
 class Registration extends Component {
@@ -12,18 +13,21 @@ class Registration extends Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <View style={styles.container}>
-                <Logo Title="WECOME MyAPP"/>
-                <Image  style={styles.Image}
-                        source={require('../../../../pulic/assets/images/user.png')}/>
+            <ImageBackground style={styles.backgroundImage}
+                   source={Images.bgRegister}>
+                <LogoTextHT colorMain={'#000'} color={'#fff'} />
+                <Image  style={styles.imageUser}
+                        source={Images.user_default}/>
+                <Image  style={styles.image}
+                        source={Images.plusImg}/>
                 <Form nameRegistration="ลงทะเบียน" />
                 <View style={styles.signupTextCont}>
                     <Text style={styles.signupText}>{'คุณมีบัญชีแล้วหรือยัง ?'}</Text>
                     <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
-                        <Text style={styles.signupButton}> {'Login'}</Text>
+                        <Text style={styles.signupButton}> {'เข้าสู่ระบบ'}</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 }
@@ -33,12 +37,11 @@ Registration.navigationOptions  = ({navigation}) => ({
 });
 
 const styles = StyleSheet.create({
-    container : {
-        paddingTop: 40,
-        backgroundColor: '#F4F4F4',
+    backgroundImage: {
+        paddingTop: 60,
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     button: {
         width: 300,
@@ -53,10 +56,17 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'center'
     },
-    Image: {
-        width: 100,
-        height: 100,
-        marginVertical: 15
+    imageUser: {
+        width: 120,
+        height: 120,
+        marginTop: 30
+    },
+    image: {
+        width: 30,
+        height: 30,
+        marginTop: -30,
+        marginLeft: 90,
+        marginBottom: 20
     },
     signupTextCont : {
         flexGrow: 1,

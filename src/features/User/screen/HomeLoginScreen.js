@@ -18,7 +18,7 @@ class HomeLoingScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <Logo Title="WECOME MyAPP"/>
+                <Logo Title="Healthy MyApp"/>
                 <View style={styles.containerView}>
                     <TouchableOpacity
                         style={styles.buttonLogin}
@@ -39,9 +39,7 @@ class HomeLoingScreen extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <Image  style={{flex: 1, width: '100%', height: 80}}
-                        source={Images.foodhome}
-                />
+                <Image  style={styles.imgFood} source={Images.foodhome} />
             </View>
         )
     }
@@ -53,7 +51,7 @@ HomeLoingScreen.navigationOptions  = ({navigation}) => ({
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 60,
+        paddingTop: 20,
         backgroundColor: '#F4F4F4',
         flex: 1,
         alignItems: 'center',
@@ -102,9 +100,14 @@ const styles = StyleSheet.create({
         color: '#000'
     },
     styleIconEntypo: {
-        marginRight: 40,
+        marginRight: 60,
         color: '#fff'
     },
+    imgFood: {
+        flex: 1,
+        width: '100%',
+        height: 80
+    }
 });
 
 export default withNavigation(HomeLoingScreen);
