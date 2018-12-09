@@ -7,6 +7,8 @@ import { NavigationActions } from "react-navigation";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import ImageGif from '../components/ImageGif';
+import {Images} from "../../User/components/images";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {TRICK_SCREEN} from "../../Trick/router";
 import {MENUFOOD_SCREEN} from "../router";
@@ -48,7 +50,7 @@ class FoodDetailScreen extends React.PureComponent {
                             <Text style={{fontSize: 20, color: '#068e81'}}>{'หน่วย'}</Text>
                         </View>
                     </View>
-                    <Text style={{fontSize: 16}}>{'*หน่วย = ชาม/ถ้วย/ฝัก/ลูก'}</Text>
+                    <Text style={{fontSize: 16, marginLeft: 5}}>{'*หน่วย = ชาม/ถ้วย/ฝัก/ลูก'}</Text>
                     <View
                         style = {{height: 1 , width: '100%', backgroundColor: '#080808'}}>
                     </View>
@@ -70,12 +72,11 @@ class FoodDetailScreen extends React.PureComponent {
                         <Text style={{fontSize: 16}}>{'1'}</Text>
                         <Text style={{fontSize: 16}}>{' หน่วย'}</Text>
                     </View>
-                    <View>
-                        <Image
-                            source={require('../../../../pulic/assets/images/Run.gif')}
-                            style={{width: 60, height: 60}}
-                        />
-                        <Text>{'เดิน'}</Text>
+                    <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 50}}>
+                        <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิม 10 นาที'} />
+                        <ImageGif itemImage={Images.imgGif.Run} nameImg={'วิ่ง 7 นาที'} />
+                        <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={'ปั่น 5 นาที'} />
+                        <ImageGif itemImage={Images.imgGif.swimming} nameImg={'ว่าย 3 นาที'} />
                     </View>
                 </View>
                 <SideMenu

@@ -12,6 +12,12 @@ export  const Images = {
     'typeFood': {
         'food1':require('../../../../pulic/assets/images/food1.png'),
         'food4':require('../../../../pulic/assets/images/food4.png'),
+    },
+    'imgGif': {
+        'Run':require('../../../../pulic/assets/images/Run.gif'),
+        'swimming':require('../../../../pulic/assets/images/swimming.gif'),
+        'walk':require('../../../../pulic/assets/images/walk.gif'),
+        'ride_bicycle':require('../../../../pulic/assets/images/ride_bicycle.gif'),
     }
 
 };

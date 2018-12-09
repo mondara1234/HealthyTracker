@@ -10,7 +10,7 @@ import {getNews, getAllFlights} from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import {Images} from "../components/images";
+import {Images} from "../../User/components/images";
 
 class LoingScreen extends Component {
     constructor(props) {
