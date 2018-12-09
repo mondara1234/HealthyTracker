@@ -76,7 +76,7 @@ class menuFoodScreen extends React.PureComponent {
                     </Left>
                     <Body style={{ width: '100%'}}>
                     <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View>
+                            <View>
                             <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
                             <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' แคลอรี่'} </Text>
                         </View>
@@ -113,7 +113,14 @@ class menuFoodScreen extends React.PureComponent {
                             </TouchableOpacity>/*กำหนดรูปแบบการแสดงในช่่องค้นหาที่จะขึ้นเมื่อกรอกข้อความ*/
                         )}
                     />
-                    <View style={{ flex: 1, width: '100%', marginTop: 60}}>
+                    <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
+                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 10}}> {'หมวดหมู่'}</Text>
+                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 5}}> {' จานเดียว'}</Text>
+                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 10}}> {'  จำนวนที่พบ'}</Text>
+                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 5}}> {' 25'}</Text>
+                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 5}}> {' รายการ'}</Text>
+                    </View>
+                    <View style={{ flex: 1, width: '100%'}}>
                         <FlatList
                             data={this.state.films}
                             renderItem={this._renderItem}
