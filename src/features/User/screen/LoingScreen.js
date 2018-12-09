@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { requestApiData } from "../redux/actions";
+import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Logo from '../components/Logo';
 import {getNews, getAllFlights} from '../redux/actions';
 import * as API from '../api/api';
@@ -33,10 +34,16 @@ class LoingScreen extends Component {
     };
 
     render() {
-            console.log('Update Store:',this.props);
+
+        const { goBack } = this.props.navigation;
+        console.log('Update Store:',this.props);
+
         return (
             <ImageBackground style={styles.backgroundImage}
                              source={Images.bgLogin}>
+                <View style={{marginTop: -20}}>
+                    <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
+                </View>
                 <View style={styles.containerRow}>
                     <Text style={styles.titleLogin}> {'LOGIN'}</Text>
                     <Logo Title="Healthy MyApp"/>
@@ -98,10 +105,10 @@ const styles = StyleSheet.create({
     },
     textForgot: {
         color: '#000',
-        fontSize: 18,
+        fontSize: 14,
     },
     TouchForgot: {
-        marginLeft: '40%'
+        marginLeft: '50%'
     },
     containerForgot: {
         width:  200,

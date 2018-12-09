@@ -54,12 +54,11 @@ class FoodSearchScreen extends React.PureComponent {
 
 FoodSearchScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <CommonText text={'ค้นหาอาหาร'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: '50%',
         flex: 1,
         backgroundColor: '#F4F4F4',
         alignItems: 'center',

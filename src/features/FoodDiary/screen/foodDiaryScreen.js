@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, FlatList, TouchableOpacity } from 'react-native';
 import { Container, H3, ListItem, Left, Thumbnail, Body } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import { NavigationActions } from "react-navigation";
@@ -14,7 +14,7 @@ import food from '../api/food';
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
-import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -28,19 +28,26 @@ class foodDiaryScreen extends React.PureComponent {
 
     _renderItem = ({ item, index }) => {
         return (
-            <View style={{width: '100%', height: 70, backgroundColor: index % 2 == 0 ? "#8ef7ff" : "#ff78f4"}}>
-                <ListItem thumbnail >
+            <View style={{ width: '100%', height: 70, backgroundColor: "#F4F4F4" }}>
+                <ListItem thumbnail style={{ backgroundColor: 'transparent' }} >
                     <Left>
-                        <Thumbnail source={{uri: item.picture.thumbnail}}  style={{ width: 60, height: 60, marginLeft: 15, marginBottom: 15}} />
+                        <Thumbnail
+                            source={{uri: item.picture.thumbnail}}
+                            style={{ width: 60, height: 60, marginBottom: 10 }}
+                        />
                     </Left>
-                    <Body style={{backgroundColor: index % 2 == 0 ? "#8ef7ff" : "#ff78f4"}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <H3 style={{fontSize: 16, color: '#020202', marginBottom: 10}}>{item.name.first} </H3>
-                        <IconFontAwesome name="window-close-o" size={30} style={{ marginTop: -40}}/>
+                    <Body>
+                    <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
+                        <IconFontAwesome name="window-close-o" size={30} color={'#000'} style={{ marginTop: -40}}/>
                     </View>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Text style={{ fontSize: 14, color: '#000',}}> {'จำนวน '+ item.calorie + ' หน่วย'} </Text>
-                        <Text style={{ fontSize: 14, color: '#068e81',}}> {item.calorie + ' แคลอรี่'} </Text>
+                        <View style={styles.containerRowList}>
+                            <Text style={{ fontSize: 14, color: '#000',}}> {'จำนวน '} </Text>
+                            <Text style={{ fontSize: 14, color: '#068e81',}}> {'1'} </Text>
+                            <Text style={{ fontSize: 14, color: '#000',}}> {' หน่วย'} </Text>
+                        </View>
+                        <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' แคลอรี่'} </Text>
                     </View>
                     </Body>
                 </ListItem>
@@ -48,7 +55,7 @@ class foodDiaryScreen extends React.PureComponent {
         )
     };
 
-    renderSeparator=() =>{
+    renderSeparator = () => {
         return(
             <View
                 style = {{height: 1 , width: '100%', backgroundColor: '#080808'}}>
@@ -69,7 +76,7 @@ class foodDiaryScreen extends React.PureComponent {
                     <Text style={styles.textCalendar}> {'22/02/61'} </Text>
                     <IconFontAwesome name="calendar" size={30} style={styles.styleIconCalendar} />
                 </View>
-                <View style={{ flex: 1,alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <View style={{ flex: 1, width: '90%', borderWidth: 1 , marginHorizontal: 5}}>
                         <FlatList
                             data={this.state.dataSource}
@@ -77,6 +84,14 @@ class foodDiaryScreen extends React.PureComponent {
                             keyExtractor={(item, index) => index}
                             ItemSeparatorComponent={this.renderSeparator}
                         />
+                        <View style={[styles.containerRowList, { justifyContent: 'flex-end', marginRight: 10, marginBottom: 10 }]}>
+                            <IconFontAwesome
+                                name="plus-circle"
+                                size={50}
+                                color={'#000'}
+                                onPress={() => this.props.navigation.navigate(FOODSEARCH_SCREEN)}
+                            />
+                        </View>
                     </View>
                 </View>
                 <View style={styles.containerKcal}>
@@ -181,7 +196,7 @@ class foodDiaryScreen extends React.PureComponent {
 }
 
 foodDiaryScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'FoodDiary'}/>,
+    headerTitle: <HeaderTitle text={'ไกอารี่อาหาร'}/>,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 
@@ -201,6 +216,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10
+    },
+    containerRowList: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     textClock: {
         fontSize: 16,

@@ -20,10 +20,34 @@ export default [
             last: "หาดใหญ๋"
         },
         calorie: "300",
-        detile: {
-            aa: "ลักษณะ",
-            bb: "อาหารประจำภาค, อืื่นๆๆ",
+        picture: {
+            large: "https://randomuser.me/api/portraits/men/95.jpg",
+            medium: "https://randomuser.me/api/portraits/med/men/95.jpg",
+            thumbnail: "https://randomuser.me/api/portraits/thumb/men/95.jpg"
         },
+        key: "aa"
+    },
+    {
+        tyle: "อาหารใต้",
+        name: {
+            first: "ข้าวมันไก่",
+            last: "หาดใหญ๋"
+        },
+        calorie: "180",
+        picture: {
+            large: "https://randomuser.me/api/portraits/men/95.jpg",
+            medium: "https://randomuser.me/api/portraits/med/men/95.jpg",
+            thumbnail: "https://randomuser.me/api/portraits/thumb/men/95.jpg"
+        },
+        key: "aa"
+    },
+    {
+        tyle: "อาหารใต้",
+        name: {
+            first: "เสต็กไก่",
+            last: "หาดใหญ๋"
+        },
+        calorie: "300",
         picture: {
             large: "https://randomuser.me/api/portraits/men/95.jpg",
             medium: "https://randomuser.me/api/portraits/med/men/95.jpg",

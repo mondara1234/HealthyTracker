@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { withNavigation } from "react-navigation";
 import Form from './FormScreen/FormRegistration';
+import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import { Images } from "../components/images";
 import { LOGIN } from "../router";
@@ -33,7 +34,11 @@ class Registration extends Component {
 }
 
 Registration.navigationOptions  = ({navigation}) => ({
-    header:  null
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
+    headerStyle: {
+        backgroundColor: '#068e81',
+        elevation: 0
+    },
 });
 
 const styles = StyleSheet.create({

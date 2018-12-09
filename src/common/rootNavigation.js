@@ -5,7 +5,7 @@ import Sidebar from '../features/common/containers/Sideber';
 import { CommonRouter } from '../features/common/router';
 import { UserRouter, HOMELOGIN, LOGIN } from '../features/User/router';
 import { trickRouter } from "../features/Trick/router";
-import { menuFoodRouter, FOODSEARCH_SCREEN } from "../features/MenuFood/router";
+import { menuFoodRouter, MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../features/MenuFood/router";
 import { foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
 import { exerciseRouter } from '../features/Exercise/router';
 import { bmiRouter } from '../features/BMI/router';
@@ -29,7 +29,7 @@ export const RootStack = StackNavigator({
     ...profileRouter,
     ...aboutRouter
 },{
-    initialRouteName: HOMELOGIN,
+    initialRouteName: MENUFOOD_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

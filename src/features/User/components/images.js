@@ -7,7 +7,12 @@ export  const Images = {
     'bgLogin':require('../../../../pulic/assets/images/bgLogin.png'),
     'foodDiaty': {
          'kcal1':require('../../../../pulic/assets/images/kcal1.png'),
-     }
+        'plusFood':require('../../../../pulic/assets/images/plusFood.png'),
+     },
+    'typeFood': {
+        'food1':require('../../../../pulic/assets/images/food1.png'),
+        'food4':require('../../../../pulic/assets/images/food4.png'),
+    }
 
 };
 
