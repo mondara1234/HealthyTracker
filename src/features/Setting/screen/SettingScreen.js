@@ -9,6 +9,12 @@ import {FOODSTYPE_SCREEN, MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
+import {getNews} from "../../User/redux/actions";
+import {connect} from "react-redux";
+import * as API from "../../User/api/api";
+import {bindActionCreators} from "redux";
+import {NavigationActions} from "react-navigation";
+import {PRAVIEDKEY} from "../../User/router";
 
 class settingScreen extends React.PureComponent {
     constructor(props) {
@@ -28,9 +34,14 @@ class settingScreen extends React.PureComponent {
       })
     };
 
-    _setPrivateKey = () => this.setState(state => ({
-        PrivateKey: !state.PrivateKey
-    }));
+    _setPrivateKey = () => {
+        if(this.state.PrivateKey === 'true'){
+            this.setState(state => ({ PrivateKey: !state.PrivateKey }))
+        }else{
+            this.setState(state => ({ PrivateKey: !state.PrivateKey }));
+            this.props.navigation.navigate(PRAVIEDKEY)
+        }
+    };
 
     render() {
         const StyleToggle = StyleSheet.create({
@@ -51,7 +62,7 @@ class settingScreen extends React.PureComponent {
                         <Text style={{ fontSize: 16, color: '#000'}}> {'ปิดการใช้งาน'} </Text>
                         <TouchableOpacity
                             style={styles.containerButton}
-                            onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
+                            onPress={ () => this.props.navigation.navigate(PRAVIEDKEY)}
                         >
                             <View style={styles.containerTitleButton}>
                                 <Text style={styles.textButton}> {'ปิดบัญชี'} </Text>
@@ -282,4 +293,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default settingScreen;
+export default connect(
+    null,
+    (dispatch) => ({
+        navigationActions: bindActionCreators(NavigationActions, dispatch),
+    })
+)(settingScreen);
