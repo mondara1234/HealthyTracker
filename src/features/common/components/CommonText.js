@@ -25,7 +25,7 @@ CommonText.propTypes = {
 
 CommonText.defaultProps = {
     weight: 'regular',
-    size: 24,
+    size: 16,
     color: s.white,
     text: '',
     style: {}

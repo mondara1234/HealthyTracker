@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import ImageGif from '../components/ImageGif';
 import {Images} from "../../User/components/images";
@@ -36,16 +37,14 @@ class FoodDetailScreen extends React.PureComponent {
                             <Text style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}}>{foodData.name.first}</Text>
                             <Text style={{fontSize: 18, color: '#068e81'}}>{foodData.calorie + ' แคลลอรี่'}</Text>
                         </View>
-                        <View>
-                            <TextInput style={styles.inputBox}
-                                       underlineColorAndroid='rgba(0,0,0,0)'
-                                       placeholder="1"
-                                       placeholderTextColor = "#068e81"
-                                       selectionColor="#fff"
-                                       keyboardType="numeric"
-                                       onChangeText={UserEmail =>this.setState({UserEmail})}
-                            />
-                        </View>
+                        <TextInput style={styles.inputBox}
+                                   underlineColorAndroid='rgba(0,0,0,0)'
+                                   placeholder="1"
+                                   placeholderTextColor = "#068e81"
+                                   selectionColor="#fff"
+                                   keyboardType="numeric"
+                                   onChangeText={UserEmail =>this.setState({UserEmail})}
+                        />
                         <View>
                             <Text style={{fontSize: 20, color: '#068e81'}}>{'หน่วย'}</Text>
                         </View>
@@ -91,7 +90,7 @@ class FoodDetailScreen extends React.PureComponent {
 }
 
 FoodDetailScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'จัดการข้อมูลส่วนตัว'} color={'#fff'}/>,
+    headerTitle: <HeaderTitle text={'รายละเอียดอาหาร'} color={'#fff'}/>,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 
@@ -111,7 +110,8 @@ const styles = StyleSheet.create({
         color: '#068e81',
         paddingLeft: 10,
         marginVertical: 5,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        textAlign: 'center'
     },
     button: {
         width: 150,

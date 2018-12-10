@@ -5,12 +5,12 @@ import Sidebar from '../features/common/containers/Sideber';
 import { CommonRouter } from '../features/common/router';
 import { UserRouter, HOMELOGIN, LOGIN } from '../features/User/router';
 import { trickRouter } from "../features/Trick/router";
-import { menuFoodRouter, MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../features/MenuFood/router";
-import { foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
+import { menuFoodRouter } from "../features/MenuFood/router";
+import { foodDiaryRouter } from "../features/FoodDiary/router";
 import { exerciseRouter } from '../features/Exercise/router';
 import { bmiRouter } from '../features/BMI/router';
 import { aboutRouter } from '../features/About/router';
-import { settingRouter } from '../features/Setting/router';
+import { settingRouter, SETTING_SCREEN } from '../features/Setting/router';
 import { usermanualRouter } from '../features/UserManual/router';
 import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
@@ -29,7 +29,7 @@ export const RootStack = StackNavigator({
     ...profileRouter,
     ...aboutRouter
 },{
-    initialRouteName: MENUFOOD_SCREEN,
+    initialRouteName: SETTING_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

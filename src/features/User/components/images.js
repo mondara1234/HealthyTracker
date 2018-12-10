@@ -18,6 +18,10 @@ export  const Images = {
         'swimming':require('../../../../pulic/assets/images/swimming.gif'),
         'walk':require('../../../../pulic/assets/images/walk.gif'),
         'ride_bicycle':require('../../../../pulic/assets/images/ride_bicycle.gif'),
+    },
+    'TrickScreen': {
+        'Rank':require('../../../../pulic/assets/images/Rank.png'),
+        'Heart':require('../../../../pulic/assets/images/Heart.png'),
     }
 
 };

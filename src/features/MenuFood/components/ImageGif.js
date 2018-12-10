@@ -4,13 +4,13 @@ import { Image, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
 const ImageGif = (props) => {
     return(
-        <TouchableOpacity style={styles.containerGif}>
+        <View style={styles.containerGif}>
             <Image
                 source={props.itemImage}
                 style={styles.image}
             />
             <Text>{props.nameImg}</Text>
-        </TouchableOpacity>
+        </View>
     )
 };
 

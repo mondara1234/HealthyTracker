@@ -50,11 +50,11 @@ class menuFoodScreen extends React.PureComponent {
                         />
                     </Left>
                     <Body>
-                    <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
+                    <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{name.first}</Text>
                     <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: '100%'}}>
                         <IconMaterialIcons name="navigate-next" size={40} color={'#000'} style={{ marginTop: 100}} />
                     </View>
-                    <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' แคลอรี่'} </Text>
+                    <Text style={{ fontSize: 14, color: '#068e81'}}> {calorie + ' แคลอรี่'} </Text>
                     </Body>
                 </CardItem>
             </Card>
