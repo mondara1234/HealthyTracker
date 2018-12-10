@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import food from '../../FoodDiary/api/food';
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
@@ -149,7 +150,7 @@ class menuFoodScreen extends React.PureComponent {
 }
 
 menuFoodScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'รายการอาหาร'} color={'#fff'} />,
+    headerTitle: <HeaderTitle text={'รายการอาหาร'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

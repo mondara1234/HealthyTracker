@@ -5,6 +5,7 @@ import { Images } from "../../User/components/images";
 import MenuItem from "../components/MenuItem";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
@@ -67,7 +68,7 @@ class FoodTypeScreen extends React.PureComponent {
 }
 
 FoodTypeScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'หมวดหมู่อาหาร'} color={'#fff'} />,
+    headerTitle: <HeaderTitle text={'หมวดหมู่อาหาร'} color={'#fff'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

@@ -196,7 +196,7 @@ class foodDiaryScreen extends React.PureComponent {
 }
 
 foodDiaryScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'ไกอารี่อาหาร'}/>,
+    headerTitle: <HeaderTitle text={'ไดอารี่อาหาร'}/>,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

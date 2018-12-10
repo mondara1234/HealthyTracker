@@ -3,6 +3,7 @@ import {Container, Tab, TabHeading, Tabs, Text, View} from 'native-base';
 import { Images } from "../../User/components/images";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import AllTab from './Tab/AllTab';
 import NewTab from './Tab/NewTab';
@@ -61,7 +62,7 @@ class TrickScreen extends React.PureComponent {
 }
 
 TrickScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'Trick'} />,
+    headerTitle: <HeaderTitle text={'เคล็ดลับ'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerStyle: {
         backgroundColor: '#068e81',

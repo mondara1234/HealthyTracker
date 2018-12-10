@@ -82,11 +82,13 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        marginTop: 40
+        marginTop: 30,
+        color: '#068e81'
     },
     number: {
-        fontSize: 35,
-        textAlign: 'center'
+        fontSize: 33,
+        textAlign: 'center',
+        color: '#068e81'
     },
     backspace: {
         flex: 1,
@@ -96,7 +98,6 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         justifyContent: 'center'
-    },
+    }
 });
-
 export  default VirtualKeyboard;

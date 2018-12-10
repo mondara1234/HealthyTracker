@@ -3,6 +3,7 @@ import { Text } from 'react-native';
 import { Container } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 
 class profileScreen extends React.PureComponent {
@@ -18,7 +19,7 @@ class profileScreen extends React.PureComponent {
 }
 
 profileScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'จัดการข้อมูลส่วนตัว'} />,
+    headerTitle: <HeaderTitle text={'จัดการข้อมูลส่วนตัว'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

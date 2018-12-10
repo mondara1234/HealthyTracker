@@ -16,7 +16,9 @@ class Registration extends Component {
         return (
             <ImageBackground style={styles.backgroundImage}
                    source={Images.bgRegister}>
-                <LogoTextHT colorMain={'#000'} color={'#fff'} />
+                <View style={styles.containerLogo}>
+                    <LogoTextHT colorMain={'#000'} color={'#fff'} />
+                </View>
                 <Image  style={styles.imageUser}
                         source={Images.user_default}/>
                 <Image  style={styles.image}
@@ -47,6 +49,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    containerLogo: {
+        flex: 1,
+        marginBottom: 30
     },
     button: {
         width: 300,

@@ -1,15 +1,16 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import { Container } from 'native-base';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
 import { NavigationActions } from 'react-navigation';
+import LogoTextHT from '../../common/components/LogoTextHT';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import CommonText from "../../common/components/CommonText";
 import VirtualKeyboard from '../components/VirtualKeyboard';
+import {FORGOTPASSWORD} from "../router";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
@@ -96,26 +97,32 @@ class PraviedKeyScreen extends React.PureComponent {
 
         return (
             <Container style={styles.container}>
-                <CommonText text={'กรอกรหัสส่วนตัว'} size={50} />
+                <LogoTextHT colorMain={'#000'} color={'#068e81'} />
                 <View style={styles.borderWrapper}>
                     <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[0] ? 'black' : 'white'}]} />
+                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[0] ? '#068e81' : 'white'}]} />
                     </View>
                     <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[1] ? 'black' : 'white'}]} />
+                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[1] ? '#068e81' : 'white'}]} />
                     </View>
                     <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[2] ? 'black' : 'white'}]} />
+                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[2] ? '#068e81' : 'white'}]} />
                     </View>
                     <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[3] ? 'black' : 'white'}]} />
+                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[3] ? '#068e81' : 'white'}]} />
                     </View>
                     <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[4] ? 'black' : 'white'}]} />
+                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[4] ? '#068e81' : 'white'}]} />
                     </View>
                     <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? 'black': 'white'}]}  />
+                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? '#068e81': 'white'}]}  />
                     </View>
+                </View>
+                <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                    <TouchableOpacity style={styles.TouchForgot}
+                                      onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                        <Text style={styles.textForgot}> {'ลืมรหัสส่วนตัว ?'}</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.viewKeyboard}>
                     <VirtualKeyboard
@@ -130,10 +137,6 @@ class PraviedKeyScreen extends React.PureComponent {
     }
 }
 
-// PraviedKeyScreen.propTypes = {
-//     navigation: PropTypes.object.isRequired
-// };
-
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
     headerTitle: <HeaderTitle text={'ตั้งค่ารหัสส่วนตัว'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
@@ -142,8 +145,8 @@ PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 20,
         alignItems: 'center',
-        paddingTop: 30
     },
     borderWrapper: {
         justifyContent: 'center',
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 280,
         height: 60,
-        marginTop: 30,
+        marginTop: 20,
         borderWidth: 2,
         borderRadius: 50
     },
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderWidth: 2,
-        borderColor:'black',
+        borderColor:'#068e81',
         marginRight:10,
         borderRadius: 50,
         justifyContent: 'center',
@@ -179,8 +182,16 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: '10%',
         marginTop: 40,
-        borderTopWidth: 1
-    }
+        borderTopWidth: 1,
+        borderColor: '#068e81'
+    },
+    textForgot: {
+        color: '#000',
+        fontSize: 14
+    },
+    TouchForgot: {
+        marginRight: 20
+    },
 });
  export default PraviedKeyScreen;
 //

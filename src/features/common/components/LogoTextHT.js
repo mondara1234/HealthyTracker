@@ -13,9 +13,7 @@ const LogoTextHT = (props) => {
 
 const styles = StyleSheet.create({
     container :{
-        flex: 1,
-        justifyContent: 'center',
-        marginBottom: 20
+        justifyContent: 'center'
     },
     styleThe: {
         fontFamily: 'monotype-Corsiva'
@@ -27,7 +25,7 @@ const styles = StyleSheet.create({
     },
     styleTracker: {
         marginTop: -10,
-        paddingLeft: 24,
+        paddingLeft: 18,
         fontFamily: 'monotype-Corsiva'
     },
 });

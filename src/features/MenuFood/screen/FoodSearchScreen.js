@@ -6,6 +6,7 @@ import SideMenu from '../../common/components/SideMenu';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import { MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../../MenuFood/router";
 
@@ -53,7 +54,7 @@ class FoodSearchScreen extends React.PureComponent {
 }
 
 FoodSearchScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'ค้นหาอาหาร'} />,
+    headerTitle: <HeaderTitle text={'ค้นหาอาหาร'} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 
@@ -95,6 +96,5 @@ const styles = StyleSheet.create({
         color: '#000'
     },
 });
-
 
 export default withNavigation(FoodSearchScreen);

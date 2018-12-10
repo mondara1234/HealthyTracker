@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput,  } from 'react-nati
 import { Container, Switch } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
+import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import {TRICK_SCREEN} from "../../Trick/router";
 import {FOODSTYPE_SCREEN, MENUFOOD_SCREEN} from "../../MenuFood/router";
@@ -210,7 +211,7 @@ class settingScreen extends React.PureComponent {
 }
 
 settingScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <CommonText text={'ตั้งค่า'} />,
+    headerTitle: <HeaderTitle text={'ตั้งค่า'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
 });
 

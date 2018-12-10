@@ -4,6 +4,7 @@ import { Container, Content, Button, Text } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import LogoTextHT from '../../common/components/LogoTextHT';
 
 class ForgotPasswordScreen extends React.PureComponent {
     constructor(props) {
@@ -26,6 +27,9 @@ class ForgotPasswordScreen extends React.PureComponent {
             <View style={{backgroundColor: '#F4F4F4', flex: 1,}}>
                 <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
                 <Container style={styles.container}>
+                    <View style={styles.containerLogo}>
+                        <LogoTextHT colorMain={'#000'} color={'#068e81'} sizeMain={34} size={28} />
+                    </View>
                     <Text style={styles.signupText}>{'ลืมรหัสผ่าน'}</Text>
                     <TextInput
                         style={styles.inputBox}
@@ -135,6 +139,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    containerLogo: {
+        marginBottom: 50
     },
     signupText: {
         color: '#068e81',
