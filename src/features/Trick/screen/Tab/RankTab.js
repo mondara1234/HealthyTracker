@@ -106,7 +106,7 @@ class RankTab extends React.PureComponent {
                                 <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                     <Body>
                                     <ImgRank
-                                        nameUriImg={"https://randomuser.me/api/portraits/men/97.jpg"}
+                                        nameUriImg={"https://randomuser.me/api/portraits/men/95.jpg"}
                                         nameRank={'3'}
                                         styleImgRank={{marginTop: -70}}
                                         styleImg={{width: '100%', height: 100}}

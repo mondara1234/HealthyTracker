@@ -5,9 +5,9 @@ export default [
         },
         detailtrick: "ส่วนของเนื้อหา",
         picture: {
-            large: "https://randomuser.me/api/portraits/men/97.jpg",
-            medium: "https://randomuser.me/api/portraits/med/men/97.jpg",
-            thumbnail: "https://randomuser.me/api/portraits/thumb/men/97.jpg"
+            large: "https://randomuser.me/api/portraits/men/95.jpg",
+            medium: "https://randomuser.me/api/portraits/med/men/95.jpg",
+            thumbnail: "https://randomuser.me/api/portraits/thumb/men/95.jpg"
         },
         Follow: "200",
         credit: "Admin ",
@@ -33,9 +33,9 @@ export default [
         },
         detailtrick: "ส่วนของเนื้อหา",
         picture: {
-            large: "https://randomuser.me/api/portraits/men/97.jpg",
-            medium: "https://randomuser.me/api/portraits/med/men/97.jpg",
-            thumbnail: "https://randomuser.me/api/portraits/thumb/men/97.jpg"
+            large: "https://randomuser.me/api/portraits/men/95.jpg",
+            medium: "https://randomuser.me/api/portraits/med/men/95.jpg",
+            thumbnail: "https://randomuser.me/api/portraits/thumb/men/95.jpg"
         },
         Follow: "200",
         credit: "Admin ",
@@ -47,9 +47,9 @@ export default [
         },
         detailtrick: "ส่วนของเนื้อหา",
         picture: {
-            large: "https://randomuser.me/api/portraits/men/97.jpg",
-            medium: "https://randomuser.me/api/portraits/med/men/97.jpg",
-            thumbnail: "https://randomuser.me/api/portraits/thumb/men/97.jpg"
+            large: "https://randomuser.me/api/portraits/men/95.jpg",
+            medium: "https://randomuser.me/api/portraits/med/men/95.jpg",
+            thumbnail: "https://randomuser.me/api/portraits/thumb/men/95.jpg"
         },
         Follow: "200",
         credit: "Admin ",
@@ -75,9 +75,9 @@ export default [
         },
         detailtrick: "ส่วนของเนื้อหา",
         picture: {
-            large: "https://randomuser.me/api/portraits/men/97.jpg",
-            medium: "https://randomuser.me/api/portraits/med/men/97.jpg",
-            thumbnail: "https://randomuser.me/api/portraits/thumb/men/97.jpg"
+            large: "https://randomuser.me/api/portraits/men/95.jpg",
+            medium: "https://randomuser.me/api/portraits/med/men/95.jpg",
+            thumbnail: "https://randomuser.me/api/portraits/thumb/men/95.jpg"
         },
         Follow: "200",
         credit: "Admin ",

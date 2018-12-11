@@ -80,7 +80,7 @@ class AllTab extends React.PureComponent {
                                 <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                     <Body>
                                     <Image
-                                        source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
+                                        source={{uri: "https://randomuser.me/api/portraits/men/95.jpg"}}
                                         style={{width: '100%', height: 100}}
                                     />
                                     <Text style={{fontSize: 11, color: '#020202', marginTop: 3, marginLeft: -10, fontWeight: 'bold'}}>{'อาหารเช้าดีต่อสุขภาพ'}</Text>
