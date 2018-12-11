@@ -12,14 +12,14 @@ import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {TRICK_SCREEN} from "../../Trick/router";
-import food from "../../FoodDiary/api/food";
+import DataExercise from "../api/DataExercise";
 import { DETAILEXERCISE_SCREEN } from "../router";
 
 class exerciseScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            films: food,
+            films: DataExercise,
             query: ''
         };
     }
@@ -38,7 +38,7 @@ class exerciseScreen extends React.PureComponent {
                     </Left>
                     <Body>
                     <View style={{width: '100%', height: 76, backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{fontSize: 16, color: '#020202', marginTop: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
+                        <Text style={{fontSize: 14, color: '#020202', marginTop: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <IconMaterialIcons
                                 name="navigate-next" size={50} color={'#068e81'}

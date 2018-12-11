@@ -32,7 +32,7 @@ class DetailExerciseScreen extends React.PureComponent {
                         <Text style={{ fontSize: 16, color: '#000'}}> {'Admin/28/11/61'} </Text>
                     </View>
                     <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
-                        <Text style={{ fontSize: 30, color: '#000'}}> {'ส่วนของเนื้อหา'} </Text>
+                        <Text style={{ fontSize: 30, color: '#000'}}> {exerciseData.detailExercise} </Text>
                     </View>
                 </View>
                 <SideMenu

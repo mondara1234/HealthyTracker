@@ -13,6 +13,7 @@ import {TRICK_SCREEN} from "../router";
 import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {Images} from "../../User/components/images";
+import {APP_VERSION_TEXT} from "../../../common/constants";
 
 class DetailTrickScreen extends React.PureComponent {
     constructor(props) {
@@ -39,11 +40,11 @@ class DetailTrickScreen extends React.PureComponent {
                             <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
                                     source={Images.TrickScreen.Heart}
                             />
-                            <Text style={{ fontSize: 16, color: '#000'}}> {trickData.calorie + ' คน'} </Text>
+                            <Text style={{ fontSize: 16, color: '#000'}}> {trickData.Follow + ' คน'} </Text>
                         </View>
-                        <Text style={{ fontSize: 16, color: '#000'}}> {'Admin/28/11/61'} </Text>
+                        <Text style={{ fontSize: 16, color: '#000'}}> {`${trickData.credit}  ${trickData.dateAdd}`} </Text>
                     </View>
-                    <Text style={{ fontSize: 30, color: '#000', marginTop: 40}}> {'ส่วนของเนื้อหา'} </Text>
+                    <Text style={{ fontSize: 30, color: '#000', marginTop: 40}}> {trickData.detailtrick} </Text>
                 </View>
                 <SideMenu
                     diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}

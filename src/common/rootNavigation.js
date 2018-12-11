@@ -4,7 +4,7 @@ import { addNavigationHelpers, DrawerNavigator, StackNavigator } from 'react-nav
 import Sidebar from '../features/common/containers/Sideber';
 import { CommonRouter } from '../features/common/router';
 import { UserRouter, HOMELOGIN, PRAVIEDKEY } from '../features/User/router';
-import { trickRouter } from "../features/Trick/router";
+import { trickRouter, TRICK_SCREEN  } from "../features/Trick/router";
 import { menuFoodRouter } from "../features/MenuFood/router";
 import { foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
 import { exerciseRouter } from '../features/Exercise/router';
@@ -29,7 +29,7 @@ export const RootStack = StackNavigator({
     ...profileRouter,
     ...aboutRouter
 },{
-    initialRouteName: HOMELOGIN,
+    initialRouteName: TRICK_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

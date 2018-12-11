@@ -1,54 +1,53 @@
 import React from 'react';
 import { Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
-import {Container, Card, CardItem, Body, Left, Content} from 'native-base';
+import {Container, Card, CardItem, Body, Left, Right , Content} from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigation } from "react-navigation";
 import { Images } from "../../../User/components/images";
 import RankTrick from '../../components/RankTrick';
-import food from "../../../FoodDiary/api/food";
+import ImgRank from '../../../common/components/ImgRank';
 import { DETAILTRICK_SCREEN } from "../../../Trick/router";
+import DataTrick from "../../api/DataTrick";
 
 class RankTab extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            films: food,
+            films: DataTrick,
         };
     }
 
     _renderItem = ({item, index}) => {
-        const Rankin = index + 1;
+        const Rankin = index + 4;
         const { navigate } = this.props.navigation;
         return (
-            <Card withSpace style={{marginTop: 20, marginRight: -18 }}>
-                <TouchableOpacity style={{  width: '100%', height: 70, backgroundColor: "#F4F4F4"}}
-                                  onPress={() => navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}}) }
+            <Card
+                style={{flex: 1, width: '93%', marginLeft: 10}}
+            >
+                <CardItem
+                    button
+                    onPress={() => navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}})}
                 >
-                    <Body>
-                    <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between', marginTop: -10, marginLeft: -10}}>
-                        <View style={{width: 80, height: 70}}>
-                            <Image
-                                source={{uri: item.picture.large}}
-                                style={{width: 80, height: 70}}
+                    <Left>
+                        <ImgRank
+                            nameUriImg={item.picture.large}
+                            styleImg={{width: 70, height: 70}}
+                            styleImgRank={{marginTop: -43}}
+                            nameRank={Rankin}
+                        />
+                    </Left>
+                    <Body style={{ marginLeft: '-50%'}}>
+                        <Text style={{fontSize: 14, color: '#020202', marginTop: 3, marginLeft: 3, fontWeight: 'bold'}}>{item.name.first}</Text>
+                        <View style={{flex: 1, width: '100%', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                            <Image  style={{width: 28, height: 24}}
+                                    source={Images.TrickScreen.Heart}
                             />
+                            <Text style={{ fontSize: 14, color: '#068e81'}}> {item.Follow + ' คน'} </Text>
                         </View>
-                        <Text style={{fontSize: 18, color: '#020202', marginLeft: 10, marginTop: 10, fontWeight: 'bold'}}>{item.name.first}</Text>
-                        <View style={{width: '50%', backgroundColor: "#F4F4F4", alignItems: 'flex-end', justifyContent: 'flex-end',marginTop: -40}}>
-                            <RankTrick  itemImage={Images.TrickScreen.Rank}
-                                        nameImg={Rankin}
-                            />
-                            <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                                <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
-                                        source={Images.TrickScreen.Heart}
-                                />
-                                <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' คน'} </Text>
-                            </View>
-                        </View>
-                    </View>
                     </Body>
-                </TouchableOpacity>
+                </CardItem>
             </Card>
         )
     };
@@ -61,10 +60,12 @@ class RankTab extends React.PureComponent {
                         <Card withSpace style={{marginTop: 20, marginLeft: -10 ,marginRight: -15 }}>
                             <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                 <Body>
-                                <Image
-                                    source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
-                                    style={{width: '98%', height: 80, marginTop: -10}}
-                                />
+                                    <ImgRank
+                                        nameUriImg={"https://randomuser.me/api/portraits/men/97.jpg"}
+                                        nameRank={'1'}
+                                        styleImgRank={{marginTop: -120}}
+                                        styleImg={{width: '98%', height: 150}}
+                                    />
                                 <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Text style={{fontSize: 14, color: '#020202', marginLeft: 10, marginTop: 3, fontWeight: 'bold'}}>{'ท้าให้ลอง'}</Text>
                                     <View style={{width: '80%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' , marginTop: 20}}>
@@ -83,9 +84,11 @@ class RankTab extends React.PureComponent {
                             <Card withSpace style={{marginLeft: 10 , marginRight: 10}}>
                                 <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                     <Body>
-                                    <Image
-                                        source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
-                                        style={{width: '100%', height: 60, marginTop: -10}}
+                                    <ImgRank
+                                        nameUriImg={"https://randomuser.me/api/portraits/men/97.jpg"}
+                                        nameRank={'2'}
+                                        styleImgRank={{marginTop: -70}}
+                                        styleImg={{width: '100%', height: 100}}
                                     />
                                     <Text style={{fontSize: 11, color: '#020202', marginTop: 3, marginLeft: -10, fontWeight: 'bold'}}>{'อาหารเช้าดีต่อสุขภาพ'}</Text>
                                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' , marginTop: 20}}>
@@ -102,9 +105,11 @@ class RankTab extends React.PureComponent {
                             <Card withSpace style={{marginLeft: 10 , marginRight: 10}}>
                                 <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                     <Body>
-                                    <Image
-                                        source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
-                                        style={{width: '100%', height: 60, marginTop: -10}}
+                                    <ImgRank
+                                        nameUriImg={"https://randomuser.me/api/portraits/men/97.jpg"}
+                                        nameRank={'3'}
+                                        styleImgRank={{marginTop: -70}}
+                                        styleImg={{width: '100%', height: 100}}
                                     />
                                     <Text style={{fontSize: 11, color: '#020202', marginTop: 3, marginLeft: -10, fontWeight: 'bold'}}>{'อาหารเช้าดีต่อสุขภาพ'}</Text>
                                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' , marginTop: 20}}>

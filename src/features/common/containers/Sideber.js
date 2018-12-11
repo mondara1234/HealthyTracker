@@ -149,11 +149,11 @@ class Sideber extends React.Component {
                         <View style={{justifyContent: 'space-between'}}>
                             <CommonText
                                 text={'name_User'}
-                                style={[styles.fontBase, s.b,{fontSize: 18}]}
+                                style={[styles.fontBase, s.b, s.ml2,{fontSize: 18}]}
                             />
                             <CommonText
                                 text={`พลังงานที่ต้องการ:  ${'1999'}  แคลอรี่`}
-                                style={[styles.fontBase, s.fw3, {fontSize: 12, marginLeft: -10}]}
+                                style={[styles.fontBase, s.fw3, {fontSize: 12, marginLeft: -5, marginBottom: -5}]}
                             />
                         </View>
                     </View>
@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 40,
+        marginLeft: 2
     },
     fontBase: {
         color: '#fff',

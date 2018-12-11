@@ -28,19 +28,17 @@ RankTrick.defaultProps = {
 const styles = StyleSheet.create({
     containerGif: {
         width: 30,
-        height: 30,
-        marginRight: 10,
-        marginBottom: 20
+        height: 30
     },
     image: {
-        width: 40,
-        height: 40
+        width: 30,
+        height: 30
     },
     nameImage: {
-        fontSize: 14,
+        fontSize: 10,
         color: '#fff',
-        marginTop: -30,
-        marginLeft: 16
+        marginTop: -20,
+        marginLeft: 12
     }
 });
 

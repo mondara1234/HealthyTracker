@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { NavigationActions, withNavigation } from "react-navigation";
 import { Images } from "../../../User/components/images";
 import RankTrick from '../../components/RankTrick';
-import food from "../../../FoodDiary/api/food";
+import DataTrick from "../../api/DataTrick";
 import { DETAILTRICK_SCREEN } from "../../../Trick/router";
 
 class AllTab extends React.PureComponent {
@@ -14,43 +14,42 @@ class AllTab extends React.PureComponent {
         super(props);
 
         this.state = {
-            films: food,
+            films: DataTrick,
         };
     }
 
     _renderItem = ({item}) => {
         const { navigate } = this.props.navigation;
         return (
-            <Card withSpace style={{marginTop: 20 }}>
-                <TouchableOpacity style={{  width: '100%', height: 70, backgroundColor: "#F4F4F4"}}
-                          onPress={() => navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}}) }
+            <Card
+                style={{flex: 1, width: '93%', marginLeft: 10}}
+            >
+                <CardItem
+                    button
+                    onPress={() => navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}})}
                 >
-                    <Body>
-                        <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <View style={{width: 80, height: 70}}>
-                                <Image
-                                    source={{uri: item.picture.large}}
-                                    style={{width: 80, height: 70}}
-                                />
-                            </View>
-                            <Text style={{fontSize: 18, color: '#020202', marginLeft: 10, marginTop: 10, fontWeight: 'bold'}}>{item.name.first}</Text>
-                            <View style={{width: '50%', backgroundColor: "#F4F4F4", alignItems: 'flex-end', justifyContent: 'flex-end',marginTop: -40}}>
-                                <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                                    <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
-                                            source={Images.TrickScreen.Heart}
-                                    />
-                                    <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' คน'} </Text>
-                                </View>
-                            </View>
-                        </View>
+                    <Left>
+                        <Image
+                            source={{uri: item.picture.large}}
+                            style={{width: 70, height: 70}}
+                        />
+                    </Left>
+                    <Body style={{ marginLeft: '-50%'}}>
+                    <Text style={{fontSize: 14, color: '#020202', marginTop: 3, marginLeft: 3, fontWeight: 'bold'}}>{item.name.first}</Text>
+                    <View style={{flex: 1, width: '100%', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <Image  style={{width: 28, height: 24}}
+                                source={Images.TrickScreen.Heart}
+                        />
+                        <Text style={{ fontSize: 14, color: '#068e81'}}> {item.Follow + ' คน'} </Text>
+                    </View>
                     </Body>
-                </TouchableOpacity>
+                </CardItem>
             </Card>
         )
     };
 
     render() {
-        const {name,picture} = this.state.films;
+        const {name,Follow} = this.state.films;
         return (
             <Container withBackground>
                 <Content>
@@ -60,7 +59,7 @@ class AllTab extends React.PureComponent {
                                 <Body>
                                 <Image
                                     source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
-                                    style={{width: '98%', height: 80, marginTop: -10}}
+                                    style={{width: '98%', height: 150}}
                                 />
                                 <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Text style={{fontSize: 14, color: '#020202', marginLeft: 10, marginTop: 3, fontWeight: 'bold'}}>{'ท้าให้ลอง'}</Text>
@@ -82,7 +81,7 @@ class AllTab extends React.PureComponent {
                                     <Body>
                                     <Image
                                         source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
-                                        style={{width: '100%', height: 60, marginTop: -10}}
+                                        style={{width: '100%', height: 100}}
                                     />
                                     <Text style={{fontSize: 11, color: '#020202', marginTop: 3, marginLeft: -10, fontWeight: 'bold'}}>{'อาหารเช้าดีต่อสุขภาพ'}</Text>
                                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' , marginTop: 20}}>
@@ -101,7 +100,7 @@ class AllTab extends React.PureComponent {
                                     <Body>
                                     <Image
                                         source={{uri: "https://randomuser.me/api/portraits/men/97.jpg"}}
-                                        style={{width: '100%', height: 60, marginTop: -10}}
+                                        style={{width: '100%', height: 100}}
                                     />
                                     <Text style={{fontSize: 11, color: '#020202', marginTop: 3, marginLeft: -10, fontWeight: 'bold'}}>{'อาหารเช้าดีต่อสุขภาพ'}</Text>
                                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' , marginTop: 20}}>
