@@ -1,18 +1,165 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { Container } from 'native-base';
+import {Text, View, TouchableOpacity, StyleSheet, Image, TextInput} from 'react-native';
+import { Container, Thumbnail } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
+import {BMI_SCREEN} from "../../BMI/router";
+import {MENUFOOD_SCREEN} from "../../MenuFood/router";
+import {TRICK_SCREEN} from "../../Trick/router";
+import themeVariables from "../../../../native-base-theme/variables/platform";
+import {Images} from "../../User/components/images";
 
 class profileScreen extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected: 'male',
+        }
+    }
+
+    selectSex = (selectedSex) => {
+
+        if(selectedSex === 'male'){
+            this.setState({
+                selected: selectedSex
+            })
+        }else{
+            this.setState({
+                selected: selectedSex
+            })
+        }
+    };
 
     render() {
+        const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
+
         return (
             <Container>
-                <Text style={{fontSize: 40}}>{'จัดการข้อมูลส่วนตัว'}</Text>
-                <SideMenu/>
+                <View style={{flex: 1 , alignItems: 'center', paddingTop: 20}}>
+                    <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
+                        <View style={{paddingLeft: 3, height: 30, width: '100%', backgroundColor: '#068e81', justifyContent: 'center', marginBottom: 10}}>
+                            <Text style={{color: '#fff', fontSize: 18}}>{'ข้อมูล BMR'}</Text>
+                        </View>
+                        <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 14, color: '#000'}}>{'BMI :'}</Text>
+                            </View>
+                            <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 16, color: '#068E81'}}>{'58'}</Text>
+                            </View>
+                        </View>
+                        <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 14, color: '#000'}}>{'น้ำหนักอยู่ในเกณฑ์ :'}</Text>
+                            </View>
+                            <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 16, color: '#068E81'}}>{'ปกติ'}</Text>
+                            </View>
+                        </View>
+                        <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 14, color: '#000'}}>{'พลังงานที่ต้องการต่อวัน :'}</Text>
+                            </View>
+                            <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 16, color: '#068E81'}}>{'2875 แคลลอรี่'}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
+                        <View style={{paddingLeft: 3, height: 30, width: '100%', flexDirection: 'row', backgroundColor: '#068e81', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <Text style={{color: '#fff', fontSize: 18}}>{'ข้อมูล ส่วนตัว'}</Text>
+                            <TouchableOpacity style={{paddingHorizontal: 10, backgroundColor: '#F4F4F4',flexDirection: 'row', marginRight: 3, height: 26, alignItems: 'center', justifyContent: 'center'}}>
+                                <IconFontAwesome5
+                                    name="user-edit"
+                                    size={20}
+                                    color={'#068e81'}
+                                    style={styles.styleIconFontAwesome}
+                                />
+                                <Text style={{ color: '#068e81', fontSize: 14}}> {'แก้ไข'}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{width: '90%', flexDirection: 'row', alignItems: 'center'}}>
+                            <Image
+                                source={
+                                    profileImage
+                                        ? {uri: profileImage}
+                                        : require('../../../../pulic/assets/images/user-default.png')
+
+                                }
+                                style={styles.userThumb}
+                            />
+                            <View>
+                                <Text style={{fontSize: 18, color: '#068e81'}}>{'NameUser'}</Text>
+                                <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, color: '#000'}}>{'E-mail:'}</Text>
+                                    <Text style={{fontSize: 16, color: '#068e81', marginLeft: 10}}>{'kakzadsr@gmail.com'}</Text>
+                                </View>
+                                <TouchableOpacity style={{ backgroundColor: '#068e81', marginTop:3, height: 30, width: 120 , alignItems: 'center', justifyContent: 'center'}}>
+                                    <Text style={{ color: '#fff', fontSize: 14}}> {'เปลี่ยนรูปโปรไฟล์'}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={{width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{marginLeft:10 ,width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={{fontSize: 16, color: '#000'}}>{'เพศ :'}</Text>
+                                <Text
+                                    style={{marginLeft: 20, fontSize: 16, color: this.state.selected === 'male' ? '#068e81' : '#000'}}
+                                    onPress={() => this.selectSex('male')}
+                                >
+                                    {'ชาย'}
+                                </Text>
+                                <Text style={{fontSize: 16, color: '#000'}}>{' / '}</Text>
+                                <Text
+                                    style={{fontSize: 16, color: this.state.selected === 'female' ? '#068e81' : '#000'}}
+                                    onPress={() => this.selectSex('female')}
+                                >
+                                    {'หญิง'}
+                                </Text>
+                            </View>
+                            <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={{fontSize: 16, color: '#000'}}>{'อายุ (ปี)'}</Text>
+                            </View>
+                        </View>
+                        <View style={{paddingHorizontal: 20, width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{width: '60%', alignItems: 'center', marginTop: 20}}>
+                                <Text style={{fontSize: 16, color: '#000'}}>{'น้ำหนัก (กก)'}</Text>
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="58"
+                                           placeholderTextColor = "#068e81"
+                                />
+                                <Text style={{fontSize: 16, color: '#000', marginTop: 10}}>{'ส่วนสูง (ซม)'}</Text>
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="169"
+                                           placeholderTextColor = "#068e81"
+                                />
+                            </View>
+                            <View style={{width: '40%', alignItems: 'center', marginTop: 10}}>
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="21"
+                                           placeholderTextColor = "#068e81"
+                                />
+                                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop:10}}>
+                                    <Image  style={{width: 60, height: 100}}
+                                            source={Images.ProfileScreen.smile}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <SideMenu
+                    diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
+                    menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
+                    bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
+                    trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
+                />
             </Container>
         );
     }
@@ -21,6 +168,29 @@ class profileScreen extends React.PureComponent {
 profileScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'จัดการข้อมูลส่วนตัว'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+});
+
+const styles = StyleSheet.create({
+    userThumb: {
+        width: 70,
+        height: 70,
+        marginVertical: 20,
+        marginRight: 20
+    },
+    styleIconFontAwesome: {
+        marginRight: 10
+    },
+    inputBox: {
+        width: 60,
+        height: 30,
+        backgroundColor: 'transparent',
+        borderBottomWidth: 1,
+        borderColor: '#068e81',
+        fontSize: 16,
+        color: '#068e81',
+        textAlign: 'center',
+        paddingBottom: -5
+    },
 });
 
 export default profileScreen;

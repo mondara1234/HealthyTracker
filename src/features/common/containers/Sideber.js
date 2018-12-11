@@ -46,68 +46,69 @@ class Sideber extends React.Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <ListItem
-                style={[
-                    styles.listItem,
-                    s.m10,
-                    {backgroundColor: isActive ? '#2a9998' : '#fff'}
-                ]}
-                icon
-                onPress={() => {
-                    this.setState({menuActive: item.name});
+            <View style={{backgroundColor: isActive ? '#2a9998' : '#fff'}}>
+                <ListItem
+                    style={[
+                        styles.listItem,
+                        s.m10
+                    ]}
+                    icon
+                    onPress={() => {
+                        this.setState({menuActive: item.name});
 
-                    if (item.route === null ) {
-                        Alert.alert(
-                            'ออกจากระบบ',
-                            'ต้องการออกจากระบบ ?',
-                            [
-                                {text: 'ตกลง', onPress: () => navigate({routeName: LOGIN})},
-                                /*this.props.NavigationActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({
-                                    routeName: item.route,
-                                    params:  item.params
-                                })
-                            ]
-                        }) //มาทำแบบนี้ให้ได้*/
-                                {text: 'ยกเลิก'}
-                            ]
-                        )
-                    } else {
-                        navigate({
-                            routeName: `${item.route}`,
-                            params: item.params
-                        })
-                    }
-                }}
-            >
-                <Left>{
-                item.icon === 'log-out' ?
-                    <IconEntypo
-                        style={[styles.listItemIcon, {color: fontColor}]}
-                        name={item.icon}
-                    />
-                    :item.icon === 'user' ?
-                    <IconEntypo
-                        style={[styles.listItemIcon, {color: fontColor}]}
-                        name={item.icon}
-                    />
-                        :item.icon === 'address-book-o' ?
-                            <IconFontAwesome
+                        if (item.route === null ) {
+                            Alert.alert(
+                                'ออกจากระบบ',
+                                'ต้องการออกจากระบบ ?',
+                                [
+                                    {text: 'ตกลง', onPress: () => navigate({routeName: LOGIN})},
+                                    /*this.props.NavigationActions.reset({
+                                index: 0,
+                                actions: [
+                                    NavigationActions.navigate({
+                                        routeName: item.route,
+                                        params:  item.params
+                                    })
+                                ]
+                            }) //มาทำแบบนี้ให้ได้*/
+                                    {text: 'ยกเลิก'}
+                                ]
+                            )
+                        } else {
+                            navigate({
+                                routeName: `${item.route}`,
+                                params: item.params
+                            })
+                        }
+                    }}
+                >
+                    <Left>{
+                    item.icon === 'log-out' ?
+                        <IconEntypo
                             style={[styles.listItemIcon, {color: fontColor}]}
                             name={item.icon}
-                            />
-                            :
-                            <IconMaterialIcons
+                        />
+                        :item.icon === 'user' ?
+                        <IconEntypo
                             style={[styles.listItemIcon, {color: fontColor}]}
-                            name={item.icon}/>
-                }
-                </Left>
-                <Body style={{borderBottomWidth: 0}}>
-                    <CommonText text={`${item.name}`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
-                </Body>
-            </ListItem>
+                            name={item.icon}
+                        />
+                            :item.icon === 'address-book-o' ?
+                                <IconFontAwesome
+                                style={[styles.listItemIcon, {color: fontColor}]}
+                                name={item.icon}
+                                />
+                                :
+                                <IconMaterialIcons
+                                style={[styles.listItemIcon, {color: fontColor}]}
+                                name={item.icon}/>
+                    }
+                    </Left>
+                    <Body style={{borderBottomWidth: 0}}>
+                        <CommonText text={`${item.name}`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
+                    </Body>
+                </ListItem>
+            </View>
         )
     };
 
@@ -134,9 +135,8 @@ class Sideber extends React.Component {
             <Container>
                 <TouchableOpacity
                     style={styles.info}
-                    onPress={ () => navigate({routeName: PROFILE_SCREEN})}
                 >
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{flexDirection: 'row', width: '100%'}}>
                         <Thumbnail
                             source={
                                 profileImage
@@ -146,14 +146,14 @@ class Sideber extends React.Component {
                             }
                             style={styles.userThumb}
                         />
-                        <View>
+                        <View style={{justifyContent: 'space-between'}}>
                             <CommonText
-                                text={'first_name'}
+                                text={'name_User'}
                                 style={[styles.fontBase, s.b,{fontSize: 18}]}
                             />
                             <CommonText
-                                text={`พลังงานที่ต้องการต่อวัน:  ${'1999'}  kcal`}
-                                style={[styles.fontBase, s.fw3, {fontSize: 10}]}
+                                text={`พลังงานที่ต้องการ:  ${'1999'}  แคลอรี่`}
+                                style={[styles.fontBase, s.fw3, {fontSize: 12, marginLeft: -10}]}
                             />
                         </View>
                     </View>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: 'white',
+        backgroundColor: '#068e81',
         borderBottomWidth: 1,
         borderBottomColor: '#000000',
     },
@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         height: 50,
         alignItems: 'center',
+        backgroundColor: 'transparent'
     },
     listItemIcon: {
         width: 30,
@@ -228,12 +229,12 @@ const styles = StyleSheet.create({
         fontWeight: '300',
     },
     userThumb: {
-        width: 80,
-        height: 80,
+        width: 70,
+        height: 70,
         borderRadius: 40,
     },
     fontBase: {
-        color: '#991b1f',
+        color: '#fff',
         fontSize: 14,
         fontWeight: themeVariables.platform === 'ios' ? '600' : null
     },

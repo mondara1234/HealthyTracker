@@ -9,6 +9,9 @@ import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import { MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../../MenuFood/router";
+import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
+import {BMI_SCREEN} from "../../BMI/router";
+import {TRICK_SCREEN} from "../../Trick/router";
 
 class FoodSearchScreen extends React.PureComponent {
     constructor(props) {
@@ -47,7 +50,12 @@ class FoodSearchScreen extends React.PureComponent {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <SideMenu/>
+                <SideMenu
+                    diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
+                    menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
+                    bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
+                    trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
+                />
             </Container>
         );
     }
@@ -55,7 +63,9 @@ class FoodSearchScreen extends React.PureComponent {
 
 FoodSearchScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'ค้นหาอาหาร'} />,
-    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
+    headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
+
 });
 
 const styles = StyleSheet.create({

@@ -11,6 +11,7 @@ import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import {FORGOTPASSWORD} from "../router";
+import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
@@ -139,7 +140,8 @@ class PraviedKeyScreen extends React.PureComponent {
 
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
     headerTitle: <HeaderTitle text={'ตั้งค่ารหัสส่วนตัว'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
+    headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
 
 const styles = StyleSheet.create({

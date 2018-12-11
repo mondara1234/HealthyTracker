@@ -22,7 +22,10 @@ export  const Images = {
     'TrickScreen': {
         'Rank':require('../../../../pulic/assets/images/Rank.png'),
         'Heart':require('../../../../pulic/assets/images/Heart.png'),
-    }
+    },
+    'ProfileScreen': {
+        'smile':require('../../../../pulic/assets/images/smile.png'),
+    },
 
 };
 

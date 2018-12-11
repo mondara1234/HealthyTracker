@@ -67,11 +67,11 @@ class bmiScreen extends React.PureComponent {
                         <View>
                             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                                 <Text style={styles.textHead}>{'BMI :'}</Text>
-                                <Text style={[styles.textHead,{marginLeft: 60}]}>{'21.36'}</Text>
+                                <Text style={[styles.textHead,{marginLeft: 60, color: '#068e81'}]}>{'21.36'}</Text>
                             </View>
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                                 <Text style={styles.textHead}>{'เกณฑ์ :'}</Text>
-                                <Text style={[styles.textHead,{marginLeft: 40}]}>{'ปกติ'}</Text>
+                                <Text style={[styles.textHead,{marginLeft: 40, color: '#068e81'}]}>{'ปกติ'}</Text>
                             </View>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
@@ -86,10 +86,10 @@ class bmiScreen extends React.PureComponent {
                     <View style={styles.containerClock}>
                         <Text style={[styles.textUnitKcal, { color: '#068e81'}]}> {'ควรเพิ่ม'} </Text>
                         <Text style={[styles.textUnitKcal, { color: '#406894'}]}> {'พอดี'} </Text>
-                        <Text style={[styles.textUnitKcal, { color: '#940c17'}]}> {'ควรเผาผลาญ'} </Text>
+                        <Text style={[styles.textUnitKcal, { color: '#940c17'}]}> {'ควรลด'} </Text>
                     </View>
                     <View
-                        style = {{height: 1 , width: '100%', backgroundColor: '#080808'}}>
+                        style = {{height: 1 , width: '100%', backgroundColor: '#068e81'}}>
                     </View>
                     <Content padder>
                         <Accordion
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     barBMI: {
         height: 26,
         width: '50%',
-        backgroundColor: '#068e81'
+        backgroundColor: '#406894'
     },
 
 });

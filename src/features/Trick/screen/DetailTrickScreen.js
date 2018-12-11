@@ -58,7 +58,8 @@ class DetailTrickScreen extends React.PureComponent {
 
 DetailTrickScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'เคล็ดลับ: ชื่อที่เรากดเข้ามา'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
+    headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
 
 const styles = StyleSheet.create({

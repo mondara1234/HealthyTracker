@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Image, FlatList, TouchableOpacity } from 'react-native';
-import { Container, H3, ListItem, Left, Thumbnail, Body } from 'native-base';
+import { Container, ListItem, Left, Thumbnail, Body } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import DatePicker from 'react-native-datepicker'
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import FormDateScreen from '../../common/components/form/FormDateScreen';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import SideMenu from '../../common/components/SideMenu';
@@ -21,33 +23,55 @@ class foodDiaryScreen extends React.PureComponent {
         super(props);
 
         this.state = {
+            selected: '',
             dataSource: food,
             DialogData: false,
-        }
+            date: "11-12-2018"
+        };
+
     }
+
+    selectSex = (selectedSex) => {
+
+        if(selectedSex === 'male'){
+            this.setState({
+                selected: selectedSex
+            })
+        }else{
+            this.setState({
+                selected: selectedSex
+            })
+        }
+    };
 
     _renderItem = ({ item, index }) => {
         return (
             <View style={{ width: '100%', height: 70, backgroundColor: "#F4F4F4" }}>
-                <ListItem thumbnail style={{ backgroundColor: 'transparent' }} >
+                <ListItem thumbnail style={{ height: 70, backgroundColor: 'transparent'}} >
                     <Left>
                         <Thumbnail
                             source={{uri: item.picture.thumbnail}}
-                            style={{ width: 60, height: 60, marginBottom: 10 }}
+                            style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}
                         />
                     </Left>
                     <Body>
-                    <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
-                        <IconFontAwesome name="window-close-o" size={30} color={'#000'} style={{ marginTop: -40}}/>
+                    <View style={{height: 35, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Text style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
+                        <IconFontAwesome
+                            name="window-close-o"
+                            size={30}
+                            color={'#068e81'}
+                            style={{ marginTop: -14}}
+                            onPress={() => alert('ต้องการลบรายการอาหารนี้ใช่ไหม')}
+                        />
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{ height: 35, marginBottom: -2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'transparent'}}>
                         <View style={styles.containerRowList}>
                             <Text style={{ fontSize: 14, color: '#000',}}> {'จำนวน '} </Text>
                             <Text style={{ fontSize: 14, color: '#068e81',}}> {'1'} </Text>
                             <Text style={{ fontSize: 14, color: '#000',}}> {' หน่วย'} </Text>
                         </View>
-                        <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' แคลอรี่'} </Text>
+                        <Text style={{ fontSize: 14, color: '#068e81', marginRight: 3}}> {item.calorie + ' แคลอรี่'} </Text>
                     </View>
                     </Body>
                 </ListItem>
@@ -58,7 +82,7 @@ class foodDiaryScreen extends React.PureComponent {
     renderSeparator = () => {
         return(
             <View
-                style = {{height: 1 , width: '100%', backgroundColor: '#080808'}}>
+                style = {{height: 1 , width: '100%', backgroundColor: '#068e81'}}>
             </View>
         )
     };
@@ -67,31 +91,53 @@ class foodDiaryScreen extends React.PureComponent {
         return (
             <Container style={styles.container}>
                 <View style={styles.containerClock}>
-                    <IconFontAwesome name="clock-o" size={30} style={styles.styleIconClock} />
-                    <Text style={styles.textClock}> {'22:45'} </Text>
+                    <IconFontAwesome
+                        name="clock-o"
+                        size={30}
+                        color={'#068e81'}
+                        style={styles.styleIconClock}
+                    />
+                    <FormDateScreen />
                     <Text style={styles.textClock}> {'น.'} </Text>
                 </View>
                 <View style={styles.containerCalendar}>
                     <Text style={styles.textCalendar}> {'วันที่'} </Text>
-                    <Text style={styles.textCalendar}> {'22/02/61'} </Text>
-                    <IconFontAwesome name="calendar" size={30} style={styles.styleIconCalendar} />
+                    <Text style={styles.textCalendar}> {this.state.date} </Text>
+                    <DatePicker
+                        style={{width: 40}}
+                        date={this.state.date}
+                        hideText
+                        mode="date"
+                        format="DD-MM-YYYY"
+                        minDate="01/1/2016"
+                        maxDate="31/12/2020"
+                        customStyles={{
+                            dateIcon: {
+                                width: 30,
+                                height: 30
+                            }
+                            // ... You can check the source to find the other keys.
+                        }}
+                        onDateChange={(date) => {this.setState({date: date})}}
+                    />
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={{ flex: 1, width: '90%', borderWidth: 1 , marginHorizontal: 5}}>
+                    <View style={{ flex: 1, width: '90%', borderWidth: 1 , marginHorizontal: 5, borderColor: '#068e81'}}>
                         <FlatList
                             data={this.state.dataSource}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => index}
                             ItemSeparatorComponent={this.renderSeparator}
                         />
-                        <View style={[styles.containerRowList, { justifyContent: 'flex-end', marginRight: 10, marginBottom: 10 }]}>
-                            <IconFontAwesome
-                                name="plus-circle"
-                                size={50}
-                                color={'#000'}
-                                onPress={() => this.props.navigation.navigate(FOODSEARCH_SCREEN)}
-                            />
-                        </View>
+                        <IconFontAwesome
+                            name="plus-circle"
+                            size={50}
+                            color={'#068e81'}
+                            style={{
+                                marginTop: -30,
+                                marginLeft: '86%',}}
+                            onPress={() => this.props.navigation.navigate(FOODSEARCH_SCREEN)}
+                        />
                     </View>
                 </View>
                 <View style={styles.containerKcal}>
@@ -111,13 +157,16 @@ class foodDiaryScreen extends React.PureComponent {
                         </View>
                     </View>
                 </View>
-                <Image  style={{marginHorizontal: 10, width: '92%', height: 20}}
-                        source={require('../../../../pulic/assets/images/MeasuringBar.png')}
-                />
-                <View style={styles.containerClock}>
+                <View style={styles.containerBarBMI }>
+                    <View style={{height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',}}>
+                        <View style={styles.barBMI} />
+                        <Text style={{marginRight: 10}}>{'เหลือ 1675 kcal'}</Text>
+                    </View>
+                </View>
+                <View style={{width: '98%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                     <Text style={[styles.textUnitKcal, { marginLeft: 10, color: '#068e81'}]}> {'ควรเพิ่ม'} </Text>
-                    <Text style={[styles.textUnitKcal, { marginHorizontal: 40, color: '#406894'}]}> {'พอดี'} </Text>
-                    <Text style={[styles.textUnitKcal, { marginRight: 10, color: '#940c17'}]}> {'ควรเผาผลาญ'} </Text>
+                    <Text style={[styles.textUnitKcal, { color: '#406894'}]}> {'พอดี'} </Text>
+                    <Text style={[styles.textUnitKcal, { color: '#940c17'}]}> {'ควรลด'} </Text>
                 </View>
                 <SideMenu
                     diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -151,9 +200,19 @@ class foodDiaryScreen extends React.PureComponent {
                     <View style={styles.dialogBodyView}>
                         <View style={styles.containerTextDialogBody}>
                             <Text style={[styles.dialogTextBody,{ marginLeft: 20 }]}>{'เพศ'}</Text>
-                            <Text style={[styles.dialogTextBody,{ marginLeft: 30 }]}>{'ชาย'}</Text>
+                            <Text
+                                style={[styles.dialogTextBody,{ marginLeft: 30, color: this.state.selected === 'male' ? '#068e81' : '#000' }]}
+                                onPress={() => this.selectSex('male')}
+                            >
+                                {'ชาย'}
+                            </Text>
                             <Text style={[styles.dialogTextBody,{ marginLeft: 3 }]}>{'/'}</Text>
-                            <Text style={[styles.dialogTextBody,{ marginLeft: 3 }]}>{'หญิง'}</Text>
+                            <Text
+                                style={[styles.dialogTextBody,{ marginLeft: 3, color: this.state.selected === 'female' ? '#068e81' : '#000' }]}
+                                onPress={() => this.selectSex('female')}
+                            >
+                                {'หญิง'}
+                            </Text>
                         </View>
                         <View style={styles.containerTextDialogBody}>
                             <Text style={[styles.dialogTextBody,{ marginLeft: 20 }]}>{'อายุ'}</Text>
@@ -229,14 +288,13 @@ const styles = StyleSheet.create({
         color: '#068e81'
     },
     textCalendar: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '500',
         textAlign: 'center',
         color: '#068e81'
     },
     styleIconClock: {
-        marginRight: 10,
-        color: '#000'
+        marginRight: 10
     },
     styleIconCalendar: {
         marginLeft: 10,
@@ -306,6 +364,18 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    containerBarBMI: {
+        width: '94%' ,
+        height: 20,
+        justifyContent: 'center',
+        borderWidth: 2,
+        marginHorizontal: 10
+    },
+    barBMI: {
+        height: 16,
+        width: '12%',
+        backgroundColor: '#068e81'
     },
 });
 

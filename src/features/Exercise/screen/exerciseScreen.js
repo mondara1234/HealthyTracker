@@ -26,7 +26,7 @@ class exerciseScreen extends React.PureComponent {
 
     _renderItem = ({ item, index }) => {
         return (
-            <View style={{  width: '100%', height: 80, backgroundColor: "#F4F4F4", borderWidth: 1 }}>
+            <View style={{  width: '100%', height: 80, backgroundColor: "#F4F4F4", borderWidth: 1, borderColor: '#068e81' }}>
                 <ListItem  thumbnail
                            style={{ backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', marginTop: -16, marginLeft: 5}}
                 >
@@ -41,7 +41,7 @@ class exerciseScreen extends React.PureComponent {
                         <Text style={{fontSize: 16, color: '#020202', marginTop: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <IconMaterialIcons
-                                name="navigate-next" size={50} color={'#000'}
+                                name="navigate-next" size={50} color={'#068e81'}
                                 onPress={() => this.props.navigation.navigate({routeName: DETAILEXERCISE_SCREEN, params: {exerciseData: item}})}
                             />
                         </View>

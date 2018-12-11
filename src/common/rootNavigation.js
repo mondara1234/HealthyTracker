@@ -6,9 +6,9 @@ import { CommonRouter } from '../features/common/router';
 import { UserRouter, HOMELOGIN, PRAVIEDKEY } from '../features/User/router';
 import { trickRouter } from "../features/Trick/router";
 import { menuFoodRouter } from "../features/MenuFood/router";
-import { foodDiaryRouter } from "../features/FoodDiary/router";
+import { foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
 import { exerciseRouter } from '../features/Exercise/router';
-import { bmiRouter, BMI_SCREEN } from '../features/BMI/router';
+import { bmiRouter } from '../features/BMI/router';
 import { aboutRouter } from '../features/About/router';
 import { settingRouter } from '../features/Setting/router';
 import { usermanualRouter } from '../features/UserManual/router';
@@ -29,7 +29,7 @@ export const RootStack = StackNavigator({
     ...profileRouter,
     ...aboutRouter
 },{
-    initialRouteName: BMI_SCREEN,
+    initialRouteName: HOMELOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 10
     },
     containerLogo: {
         flex: 1,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     },
     signupButton: {
         color: '#068e81',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '500'
     },
 });

@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 25,
         borderWidth: 1,
+        borderColor: '#068e81',
         fontSize: 16,
         color: '#068e81',
         paddingLeft: 10,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     },
     styleIconFontAwesome: {
         marginRight: 40,
-        color: '#000'
+        color: '#fff'
     },
     containerButton: {
         flexDirection: 'row',

@@ -64,7 +64,7 @@ class menuFoodScreen extends React.PureComponent {
 
     _renderItem = ({ item, index }) => {
         return (
-            <View style={{  width: '100%', height: 70, backgroundColor: "#F4F4F4", borderWidth: 1 }}>
+            <View style={{  width: '100%', height: 70, backgroundColor: "#F4F4F4", borderWidth: 1 , borderColor: '#068e81'}}>
                 <ListItem  thumbnail
                            style={{ backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', marginTop: -7 }}
                            onPress={() => this.props.navigation.navigate({routeName: FOODDETAIL_SCREEN, params: {foodData: item}}) }
@@ -82,7 +82,7 @@ class menuFoodScreen extends React.PureComponent {
                             <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' แคลอรี่'} </Text>
                         </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                <IconMaterialIcons name="navigate-next" size={30} color={'#000'} />
+                                <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
                             </View>
                     </View>
                     </Body>
@@ -151,7 +151,13 @@ class menuFoodScreen extends React.PureComponent {
 
 menuFoodScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'รายการอาหาร'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: (
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <HeaderLeftMenu icon={'flask'} onPress={() => alert('เลือกประเภทของการแสดงข้อมูล')} />
+            <HeaderLeftMenu icon={'sort-alpha-asc'} onPress={() => alert('เรียงลำดับข้อมูล')} />
+        </View>
+    )
 });
 
 const styles = StyleSheet.create({

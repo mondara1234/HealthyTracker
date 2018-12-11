@@ -91,7 +91,8 @@ class FoodDetailScreen extends React.PureComponent {
 
 FoodDetailScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'รายละเอียดอาหาร'} color={'#fff'}/>,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
+    headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
 
 

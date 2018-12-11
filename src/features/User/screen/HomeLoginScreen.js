@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         width: 300,
         borderRadius: 25,
         borderWidth: 1,
+        borderColor: '#068e81',
         marginTop: 20,
         paddingVertical: 10,
         backgroundColor: '#fff'
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     },
     styleIconFontAwesome: {
         marginRight: 40,
-        color: '#000'
+        color: '#068e81'
     },
     styleIconEntypo: {
         marginRight: 60,

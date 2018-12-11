@@ -69,7 +69,8 @@ class FoodTypeScreen extends React.PureComponent {
 
 FoodTypeScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'หมวดหมู่อาหาร'} color={'#fff'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
+    headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
 
 const windows = Dimensions.get('window');
