@@ -69,9 +69,9 @@ class bmiScreen extends React.PureComponent {
                                 <Text style={styles.textHead}>{'BMI :'}</Text>
                                 <Text style={[styles.textHead,{marginLeft: 60, color: '#068e81'}]}>{'21.36'}</Text>
                             </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style={styles.textHead}>{'เกณฑ์ :'}</Text>
-                                <Text style={[styles.textHead,{marginLeft: 40, color: '#068e81'}]}>{'ปกติ'}</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                                <Text style={[styles.textHead,{marginLeft: -13}]}>{'เกณฑ์ :'}</Text>
+                                <Text style={[styles.textHead,{marginLeft: 60, color: '#068e81'}]}>{'ปกติ'}</Text>
                             </View>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>

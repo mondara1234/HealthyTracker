@@ -98,12 +98,18 @@ class profileScreen extends React.PureComponent {
                                     <Text style={{fontSize: 16, color: '#000'}}>{'E-mail:'}</Text>
                                     <Text style={{fontSize: 16, color: '#068e81', marginLeft: 10}}>{'kakzadsr@gmail.com'}</Text>
                                 </View>
-                                <TouchableOpacity style={{ backgroundColor: '#068e81', marginTop:3, height: 30, width: 120 , alignItems: 'center', justifyContent: 'center'}}>
-                                    <Text style={{ color: '#fff', fontSize: 14}}> {'เปลี่ยนรูปโปรไฟล์'}</Text>
+                                <TouchableOpacity style={{ backgroundColor: '#068e81', height: 25, width: 100 , alignItems: 'center', justifyContent: 'center'}}>
+                                    <Text style={{ color: '#fff', fontSize: 14}}> {'เปลี่ยนรหัสผ่าน'}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
+                        <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                            <TouchableOpacity style={{ backgroundColor: '#068e81', marginTop: -10, marginLeft: 6, height: 20, width: 100 , alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={{ color: '#fff', fontSize: 12}}> {'เปลี่ยนรูปโปรไฟล์'}</Text>
+                            </TouchableOpacity>
+                        </View>
                         <View style={{width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+
                             <View style={{marginLeft:10 ,width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                                 <Text style={{fontSize: 16, color: '#000'}}>{'เพศ :'}</Text>
                                 <Text

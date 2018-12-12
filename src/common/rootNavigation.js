@@ -29,7 +29,7 @@ export const RootStack = StackNavigator({
     ...profileRouter,
     ...aboutRouter
 },{
-    initialRouteName: TRICK_SCREEN,
+    initialRouteName: HOMELOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

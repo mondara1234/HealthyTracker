@@ -96,11 +96,11 @@ class settingScreen extends React.PureComponent {
                     </View>
                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 20}}>
                         <TouchableOpacity
-                            style={styles.containerButton}
+                            style={[styles.containerButton,{width: 130, height: 30}]}
                             onPress={() => {this.setState({DialogChangePrivateKey: true})}}
                         >
                             <View style={styles.containerTitleButton}>
-                                <Text style={styles.textButton}> {'เปลี่ยนรหัสผ่าน'} </Text>
+                                <Text style={styles.textButton}> {'เปลี่ยนรหัสส่วนตัว'} </Text>
                             </View>
                         </TouchableOpacity>
                     </View>
