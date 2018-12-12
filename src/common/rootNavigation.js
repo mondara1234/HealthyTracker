@@ -57,8 +57,4 @@ export const RootNavigator = StackNavigator({
     headerMode: 'none',
 });
 
-
-
-
-
 export default RootNavigator;

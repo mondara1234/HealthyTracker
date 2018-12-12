@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import DatePicker from 'react-native-datepicker'
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import FormDateScreen from '../../common/components/form/FormDateScreen';
+import CommonTime from '../../common/components/form/CommonTime';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import SideMenu from '../../common/components/SideMenu';
@@ -26,10 +26,30 @@ class foodDiaryScreen extends React.PureComponent {
             selected: '',
             dataSource: food,
             DialogData: false,
-            date: "11-12-2018"
+            date: ''
         };
-
     }
+
+    componentDidMount() {
+        let date, day, month, year, fulldate;
+
+        date = new Date();
+        day = date.getDate() ;
+        month = date.getMonth()+1;
+        year = date.getFullYear();
+
+        if( day  < 10)
+        {     day = '0' + day.toString();}
+        if( month  < 10)
+        {     month = '0' + month.toString();}
+
+        fulldate =  day.toString() + '-' + month.toString() + '-' + year.toString();
+
+        this.setState({
+            date: fulldate
+        });
+    }
+
 
     selectSex = (selectedSex) => {
 
@@ -97,7 +117,7 @@ class foodDiaryScreen extends React.PureComponent {
                         color={'#068e81'}
                         style={styles.styleIconClock}
                     />
-                    <FormDateScreen />
+                    <CommonTime />
                     <Text style={styles.textClock}> {'น.'} </Text>
                 </View>
                 <View style={styles.containerCalendar}>

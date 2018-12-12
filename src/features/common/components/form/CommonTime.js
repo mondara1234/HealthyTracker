@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {H1} from 'native-base';
 
-class FormDateScreen extends React.PureComponent {
+class CommonTime extends React.PureComponent {
     constructor(props){
         super(props);
         
@@ -43,4 +43,4 @@ class FormDateScreen extends React.PureComponent {
     }
 };
 
-export default FormDateScreen;
+export default CommonTime;
