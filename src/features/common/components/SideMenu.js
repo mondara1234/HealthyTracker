@@ -8,7 +8,7 @@ import { Container, Content, Footer, FooterTab, Button, Text } from 'native-base
 
 const SideMenu = (props) => {
     return<Footer>
-        <FooterTab >
+        <FooterTab>
             <Button
                 style={styles.button}
                 onPress={ props.diaryScreen }
