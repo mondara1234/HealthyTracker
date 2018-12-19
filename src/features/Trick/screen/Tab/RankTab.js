@@ -56,7 +56,7 @@ class RankTab extends React.PureComponent {
         return (
             <Container withBackground>
                 <Content>
-                    <View style={{flex: 1, width: '100%'}}>
+                    <View style={{flex: 1, width: '100%', marginTop: 10}}>
                         <Card withSpace style={{marginTop: 20, marginLeft: -10 ,marginRight: -15 }}>
                             <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                 <Body>
@@ -80,7 +80,7 @@ class RankTab extends React.PureComponent {
                         </Card>
                     </View>
                     <View style={{flex: 1, width: '100%', flexDirection: 'row'}}>
-                        <View style={{marginTop: 20, marginLeft: 15, width: '45%'}}>
+                        <View style={{marginTop: 10, marginLeft: 15, width: '45%'}}>
                             <Card withSpace style={{marginLeft: 10 , marginRight: 10}}>
                                 <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                     <Body>
@@ -101,7 +101,7 @@ class RankTab extends React.PureComponent {
                                 </CardItem>
                             </Card>
                         </View>
-                        <View style={{marginTop: 20, marginLeft: 10, width: '45%'}}>
+                        <View style={{marginTop: 10, marginLeft: 10, width: '45%'}}>
                             <Card withSpace style={{marginLeft: 10 , marginRight: 10}}>
                                 <CardItem style={{  width: '100%', height: '100%', backgroundColor: "#F4F4F4"}}>
                                     <Body>
@@ -123,7 +123,7 @@ class RankTab extends React.PureComponent {
                             </Card>
                         </View>
                     </View>
-                    <View style={{flex: 1, width: '100%'}}>
+                    <View style={{flex: 1, width: '100%', marginTop: 10}}>
                         <FlatList
                             data={this.state.films}
                             renderItem={this._renderItem}

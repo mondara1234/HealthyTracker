@@ -17,6 +17,7 @@ import { PROFILE_SCREEN } from "../../ProfileUser/router";
 import { EXERCISE_SCREEN } from "../../Exercise/router";
 import { USERMANUAL_SCREEN } from "../../UserManual/router";
 import { SETTING_SCREEN } from "../../Setting/router";
+import { PROBLEM_SCREEN } from "../../Problem/router";
 import { ABOUT_SCREEN } from "../../About/router";
 import * as API from "../../User/api/api";
 import CommonText from '../../common/components/CommonText';
@@ -126,6 +127,7 @@ class Sideber extends React.Component {
         const menus = [
             {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN},
             {name: 'ท่าออกกำลังกาย', icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
+            {name: 'แจ้งปัญหา', icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
             {name: 'คู่มือการใช้งาน', icon: 'address-book-o', route: USERMANUAL_SCREEN},
             {name: 'ตั้งค่า', icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
             {name: 'ออกจากระบบ', icon: 'log-out', route: null}
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 40,
-        marginLeft: 2
+        marginHorizontal: 5
     },
     fontBase: {
         color: '#fff',

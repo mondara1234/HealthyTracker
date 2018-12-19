@@ -10,6 +10,7 @@ import { foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router"
 import { exerciseRouter } from '../features/Exercise/router';
 import { bmiRouter } from '../features/BMI/router';
 import { aboutRouter } from '../features/About/router';
+import { problemRouter, PROBLEM_SCREEN } from '../features/Problem/router';
 import { settingRouter } from '../features/Setting/router';
 import { usermanualRouter } from '../features/UserManual/router';
 import { profileRouter } from '../features/ProfileUser/router';
@@ -27,9 +28,10 @@ export const RootStack = StackNavigator({
     ...settingRouter,
     ...usermanualRouter,
     ...profileRouter,
-    ...aboutRouter
+    ...aboutRouter,
+    ...problemRouter
 },{
-    initialRouteName: HOMELOGIN,
+    initialRouteName: PROBLEM_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

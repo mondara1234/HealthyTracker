@@ -29,7 +29,7 @@ class FoodDetailScreen extends React.PureComponent {
         return (
             <Container>
                 <View style={styles.container}>
-                    <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', paddingLeft: '2%'}}>
                         <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: 80, height: 80}}
                                 source={{uri: foodData.picture.large}}
                         />
@@ -37,32 +37,32 @@ class FoodDetailScreen extends React.PureComponent {
                             <Text style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}}>{foodData.name.first}</Text>
                             <Text style={{fontSize: 18, color: '#068e81'}}>{foodData.calorie + ' แคลลอรี่'}</Text>
                         </View>
-                        <TextInput style={styles.inputBox}
-                                   underlineColorAndroid='rgba(0,0,0,0)'
-                                   placeholder="1"
-                                   placeholderTextColor = "#068e81"
-                                   selectionColor="#fff"
-                                   keyboardType="numeric"
-                                   onChangeText={UserEmail =>this.setState({UserEmail})}
-                        />
-                        <View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
+                            <TextInput style={styles.inputBox}
+                                       underlineColorAndroid='rgba(0,0,0,0)'
+                                       placeholder="1"
+                                       placeholderTextColor = "#068e81"
+                                       selectionColor="#fff"
+                                       keyboardType="numeric"
+                                       onChangeText={UserEmail =>this.setState({UserEmail})}
+                            />
                             <Text style={{fontSize: 20, color: '#068e81'}}>{'หน่วย'}</Text>
                         </View>
                     </View>
-                    <Text style={{fontSize: 16, marginLeft: 5}}>{'*หน่วย = ชาม/ถ้วย/ฝัก/ลูก'}</Text>
+                    <Text style={{fontSize: 16, marginLeft: '3%'}}>{'*หน่วย = ชาม/ถ้วย/ฝัก/ลูก'}</Text>
                     <View
                         style = {{height: 1 , width: '100%', backgroundColor: '#080808'}}>
                     </View>
-                    <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ width: '100%',backgroundColor:'#21acdd' ,flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
                         <TouchableOpacity
-                            style={styles.button}
+                            style={[styles.button,{marginLeft: '10%'}]}
                             onPress={ () => this.props.navigation.navigate({
                             routeName: FOODDIARY_SCREEN,
                             params: {foodData: foodData}})}
                         >
                             <Text style={styles.buttonText}> {'บันทึกลงไดอารี่'}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={[styles.button,{marginRight: '10%'}]}>
                             <Text style={styles.buttonText}> {'บันทึกและค้นหาต่อ'}</Text>
                         </TouchableOpacity>
                     </View>
@@ -72,7 +72,7 @@ class FoodDetailScreen extends React.PureComponent {
                         <Text style={{fontSize: 16}}>{' หน่วย'}</Text>
                     </View>
                     <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 50}}>
-                        <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิม 10 นาที'} />
+                        <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิน 9 นาที'} />
                         <ImageGif itemImage={Images.imgGif.Run} nameImg={'วิ่ง 7 นาที'} />
                         <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={'ปั่น 5 นาที'} />
                         <ImageGif itemImage={Images.imgGif.swimming} nameImg={'ว่าย 3 นาที'} />
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         marginTop: 30,
-        marginLeft: 20,
         backgroundColor: '#068e81'
     },
     buttonText: {
