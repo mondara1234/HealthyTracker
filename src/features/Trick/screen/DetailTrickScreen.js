@@ -34,7 +34,7 @@ class DetailTrickScreen extends React.PureComponent {
                     <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '90%', height: 150}}
                             source={{uri: trickData.picture.large}}
                     />
-                    <Text style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}}>{trickData.name.first}</Text>
+                    <Text style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}}>{trickData.name.first}</Text>D
                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                         <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row'}}>
                             <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
