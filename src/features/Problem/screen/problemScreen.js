@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text, View, TextInput} from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, TextInput, Alert, BackHandler } from 'react-native';
 import { Container, Footer, FooterTab, Picker, Content, Textarea, Form } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
@@ -11,6 +11,7 @@ import {BMI_SCREEN} from "../../BMI/router";
 import {TRICK_SCREEN} from "../../Trick/router";
 import RNFetchBlob from "react-native-fetch-blob";
 import ImagePicker from "react-native-image-picker";
+import HandleBack from "../../common/components/HandleBack";
 
 class problemScreen extends React.PureComponent {
     constructor(){
@@ -19,9 +20,28 @@ class problemScreen extends React.PureComponent {
             imageSource: null,
             data: null,
             filename: null,
-            selected: undefined
+            selected: undefined,
+            editing: true
         }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     onValueChange(value) {
         this.setState({
@@ -78,60 +98,62 @@ class problemScreen extends React.PureComponent {
 
     render() {
         return (
-            <Container>
-                <View style={styles.container}>
-                    <Content>
-                        <Text style={styles.textTitle}>{'แจ้งปัญหา'}</Text>
-                        <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                            <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'ชื่อหัวข้อ'}</Text>
-                            <TextInput style={styles.inputBox}
-                                       underlineColorAndroid='rgba(0,0,0,0)'
-                                       placeholder="ชื่อหัวข้อปัญหา"
-                                       secureTextEntry={true}
-                                       placeholderTextColor = "#068e81"
-                                       onChangeText={UserPassword =>this.setState({UserPassword})}
-                            />
-                        </View>
-                        <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                            <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'ประเภท'}</Text>
-                            <Picker
-                                mode="dropdown"
-                                style={{ width: 240 }}
-                                selectedValue={this.state.selected}
-                                onValueChange={this.onValueChange.bind(this)}
-                            >
-                                <Picker.Item label="เลือกประเภทของปัญหา" value="null" />
-                                <Picker.Item label="ระบบไม่สเถียน" value="Error1" />
-                                <Picker.Item label="serverมีปัญหา" value="Error2" />
-                                <Picker.Item label="เจอBug" value="Error3" />
-                                <Picker.Item label="แนะนำ" value="Error4" />
-                                <Picker.Item label="อื่นๆ" value="Error5" />
-                            </Picker>
-                        </View>
-                        <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'รายละเอียด'}</Text>
-                        <Form>
-                            <Textarea rowSpan={4} bordered placeholder="กรอกรายละเอียดของปัญหา" />
-                        </Form>
-                        <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                            <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
-                                <Text style={{color: '#fff', fontSize: 16}}> {'แนบรูปภาพ'}</Text>
-                            </TouchableOpacity>
-                            <Text style={{fontSize: 14, marginLeft: '2%', marginTop: 10}}>{'ชื่อรูปภาพ.jpg'}</Text>
-                        </View>
-                        <View style={{width: '100%',alignItems: 'center', justifyContent: 'center' }}>
-                            <TouchableOpacity style={styles.button} onPress={this.uploadPhoto.bind(this)}>
-                                <Text style={styles.buttonText}> {'ส่งปัญหา'}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </Content>
-                </View>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
-                    menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
-                    bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
-                    trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
-                />
-            </Container>
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <View style={styles.container}>
+                        <Content>
+                            <Text style={styles.textTitle}>{'แจ้งปัญหา'}</Text>
+                            <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
+                                <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'ชื่อหัวข้อ'}</Text>
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="ชื่อหัวข้อปัญหา"
+                                           secureTextEntry={true}
+                                           placeholderTextColor = "#068e81"
+                                           onChangeText={UserPassword =>this.setState({UserPassword})}
+                                />
+                            </View>
+                            <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
+                                <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'ประเภท'}</Text>
+                                <Picker
+                                    mode="dropdown"
+                                    style={{ width: 240 }}
+                                    selectedValue={this.state.selected}
+                                    onValueChange={this.onValueChange.bind(this)}
+                                >
+                                    <Picker.Item label="เลือกประเภทของปัญหา" value="null" />
+                                    <Picker.Item label="ระบบไม่สเถียน" value="Error1" />
+                                    <Picker.Item label="serverมีปัญหา" value="Error2" />
+                                    <Picker.Item label="เจอBug" value="Error3" />
+                                    <Picker.Item label="แนะนำ" value="Error4" />
+                                    <Picker.Item label="อื่นๆ" value="Error5" />
+                                </Picker>
+                            </View>
+                            <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'รายละเอียด'}</Text>
+                            <Form>
+                                <Textarea style={{backgroundColor: '#fff'}} rowSpan={10} bordered placeholder="กรอกรายละเอียดของปัญหา" />
+                            </Form>
+                            <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
+                                <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
+                                    <Text style={{color: '#fff', fontSize: 16}}> {'แนบรูปภาพ'}</Text>
+                                </TouchableOpacity>
+                                <Text style={{fontSize: 14, marginLeft: '2%', marginTop: 10}}>{'ชื่อรูปภาพ.jpg'}</Text>
+                            </View>
+                            <View style={{width: '100%',alignItems: 'center', justifyContent: 'center' }}>
+                                <TouchableOpacity style={styles.button} onPress={this.uploadPhoto.bind(this)}>
+                                    <Text style={styles.buttonText}> {'ส่งปัญหา'}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </Content>
+                    </View>
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
+                        menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
+                        bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
+                        trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
+                    />
+                </Container>
+            </HandleBack>
         );
     }
 }
@@ -144,6 +166,8 @@ problemScreen.navigationOptions  = ({navigation}) => ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: '100%',
+        height: '100%',
         backgroundColor: '#F4F4F4',
         alignItems: 'center',
         justifyContent: 'center',
@@ -176,17 +200,18 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 150,
+        height: 40,
         borderRadius: 25,
         borderWidth: 1,
         marginTop: 20,
-        paddingVertical: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#068e81'
     },
     buttonText: {
         fontSize: 20,
         fontWeight: '500',
-        color: '#ffffff',
-        textAlign: 'center'
+        color: '#ffffff'
     },
 
 });
