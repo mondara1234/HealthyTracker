@@ -102,9 +102,9 @@ class problemScreen extends React.PureComponent {
                 <Container>
                     <View style={styles.container}>
                         <Content>
-                            <Text style={styles.textTitle}>{'แจ้งปัญหา'}</Text>
+                            <CommonText text={'แจ้งปัญหา'} style={styles.textTitle} />
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                                <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'ชื่อหัวข้อ'}</Text>
+                                <CommonText text={'ชื่อหัวข้อ'} style={{fontSize: 20 , marginHorizontal: 20}} />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholder="ชื่อหัวข้อปัญหา"
@@ -114,7 +114,7 @@ class problemScreen extends React.PureComponent {
                                 />
                             </View>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                                <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'ประเภท'}</Text>
+                                <CommonText text={'ประเภท'} style={{fontSize: 20 , marginHorizontal: 20}} />
                                 <Picker
                                     mode="dropdown"
                                     style={{ width: 240 }}
@@ -129,19 +129,19 @@ class problemScreen extends React.PureComponent {
                                     <Picker.Item label="อื่นๆ" value="Error5" />
                                 </Picker>
                             </View>
-                            <Text style={{fontSize: 20 , marginHorizontal: 20}}>{'รายละเอียด'}</Text>
+                            <CommonText text={'รายละเอียด'} style={{fontSize: 20 , marginHorizontal: 20}} />
                             <Form>
                                 <Textarea style={{backgroundColor: '#fff'}} rowSpan={10} bordered placeholder="กรอกรายละเอียดของปัญหา" />
                             </Form>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
                                 <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
-                                    <Text style={{color: '#fff', fontSize: 16}}> {'แนบรูปภาพ'}</Text>
+                                    <CommonText text={'แนบรูปภาพ'} style={{color: '#fff', fontSize: 16}} />
                                 </TouchableOpacity>
-                                <Text style={{fontSize: 14, marginLeft: '2%', marginTop: 10}}>{'ชื่อรูปภาพ.jpg'}</Text>
+                                <CommonText text={'ชื่อรูปภาพ.jpg'} style={{fontSize: 14, marginLeft: '2%', marginTop: 10}} />
                             </View>
                             <View style={{width: '100%',alignItems: 'center', justifyContent: 'center' }}>
                                 <TouchableOpacity style={styles.button} onPress={this.uploadPhoto.bind(this)}>
-                                    <Text style={styles.buttonText}> {'ส่งปัญหา'}</Text>
+                                    <CommonText text={'ส่งปัญหา'} style={styles.buttonText} />
                                 </TouchableOpacity>
                             </View>
                         </Content>
@@ -160,7 +160,8 @@ class problemScreen extends React.PureComponent {
 
 problemScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'แจ้งปัญหา'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({

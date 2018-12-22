@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity } from 'react-native';
-import { Container } from 'native-base';
+import { Container, Content } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -24,28 +24,30 @@ class DetailTrickScreen extends React.PureComponent {
         const { trickData } = this.props.navigation.state.params;
         return (
             <Container>
-                <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <Text style={{ fontSize: 18, color: '#000'}}> {'กดถูกใจ'} </Text>
-                    <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
-                            source={Images.TrickScreen.Heart}
-                    />
-                </View>
-                <View style={styles.container}>
-                    <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '90%', height: 150}}
-                            source={{uri: trickData.picture.large}}
-                    />
-                    <Text style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}}>{trickData.name.first}</Text>D
-                    <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row'}}>
-                            <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
-                                    source={Images.TrickScreen.Heart}
-                            />
-                            <Text style={{ fontSize: 16, color: '#000'}}> {trickData.Follow + ' คน'} </Text>
-                        </View>
-                        <Text style={{ fontSize: 16, color: '#000'}}> {`${trickData.credit}  ${trickData.dateAdd}`} </Text>
+                <Content>
+                    <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <CommonText text={'กดถูกใจ'} />
+                        <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
+                                source={Images.TrickScreen.Heart}
+                        />
                     </View>
-                    <Text style={{ fontSize: 30, color: '#000', marginTop: 40}}> {trickData.detailtrick} </Text>
-                </View>
+                    <View style={styles.container}>
+                        <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '90%', height: 150}}
+                                source={{uri: trickData.picture.large}}
+                        />
+                        <CommonText text={trickData.name.first} style={{fontSize: 22, fontWeight: 'bold'}} />
+                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row'}}>
+                                <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
+                                        source={Images.TrickScreen.Heart}
+                                />
+                                <CommonText text={`${trickData.Follow} คน`} size={16} />
+                            </View>
+                            <CommonText text={`${trickData.credit}/${trickData.dateAdd}`} size={16} />
+                        </View>
+                        <CommonText text={trickData.detailtrick} style={{ fontSize: 30, marginTop: 40}} />
+                    </View>
+                </Content>
                 <SideMenu
                     diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
                     menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}

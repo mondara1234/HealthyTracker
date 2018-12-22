@@ -12,7 +12,6 @@ import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import RankTrick from "../components/RankTrick";
 
 class TrickScreen extends React.PureComponent {
 
@@ -23,27 +22,21 @@ class TrickScreen extends React.PureComponent {
                     <Tabs locked>
                         <Tab heading={
                             <TabHeading style={{ backgroundColor: "#068e81" }}>
-                                <Text style={{ color: "#fff" }}>
-                                    {'ทั้งหมด'}
-                                </Text>
+                                <CommonText text={'ทั้งหมด'} style={{ color: "#fff" }} />
                             </TabHeading>}
                         >
                             <AllTab />
                         </Tab>
                         <Tab heading={
                             <TabHeading style={{ backgroundColor: "#068e81" }}>
-                                <Text style={{ color: "#fff" }}>
-                                    {'ใหม่'}
-                                </Text>
+                                <CommonText text={'ใหม่'} style={{ color: "#fff" }} />
                             </TabHeading>}
                         >
                             <NewTab />
                         </Tab>
                         <Tab heading={
                             <TabHeading style={{ backgroundColor: "#068e81" }}>
-                                <Text style={{ color: "#fff" }}>
-                                    {'ติดอันดับ'}
-                                </Text>
+                                <CommonText text={'ติดอันดับ'} style={{ color: "#fff" }} />
                             </TabHeading>}
                         >
                             <RankTab />
@@ -64,6 +57,7 @@ class TrickScreen extends React.PureComponent {
 TrickScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'เคล็ดลับ'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />,
     headerStyle: {
         backgroundColor: '#068e81',
         elevation: 0

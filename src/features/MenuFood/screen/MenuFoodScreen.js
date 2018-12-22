@@ -51,11 +51,11 @@ class menuFoodScreen extends React.PureComponent {
                         />
                     </Left>
                     <Body>
-                    <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{name.first}</Text>
+                    <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{name.first}</Text>
                     <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: '100%'}}>
                         <IconMaterialIcons name="navigate-next" size={40} color={'#000'} style={{ marginTop: 100}} />
                     </View>
-                    <Text style={{ fontSize: 14, color: '#068e81'}}> {calorie + ' แคลอรี่'} </Text>
+                    <CommonText text={calorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81'}} />
                     </Body>
                 </CardItem>
             </Card>
@@ -78,8 +78,8 @@ class menuFoodScreen extends React.PureComponent {
                     <Body style={{ width: '100%'}}>
                     <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View>
-                            <Text style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
-                            <Text style={{ fontSize: 14, color: '#068e81'}}> {item.calorie + ' แคลอรี่'} </Text>
+                            <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
+                            <CommonText text={item.calorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81'}} />
                         </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                 <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
@@ -107,19 +107,17 @@ class menuFoodScreen extends React.PureComponent {
                         onChangeText={text => this.setState({ query: text })} /*setค่าให้กับตัวแปล query เป้นไปตามที่กรอก*/
                         placeholder="กรอกชื่ออาหาร" /*ลายน้ำเพื่อพิมจะหายไป*/
                         renderItem={({ calorie, name }) => (
-                            <TouchableOpacity onPress={() => alert(calorie + name.first)}>
-                                <Text style={styles.itemText}>
-                                    {name.first} ({'แสดงตรงค้นหา'})
-                                </Text>
+                            <TouchableOpacity onPress={() => alert(`${calorie} ${name.first}`)}>
+                                <CommonText text={`${name.first} แสดงตรงค้นหา`} style={styles.itemText}/>
                             </TouchableOpacity>/*กำหนดรูปแบบการแสดงในช่่องค้นหาที่จะขึ้นเมื่อกรอกข้อความ*/
                         )}
                     />
                     <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
-                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 10}}> {'หมวดหมู่'}</Text>
-                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 5}}> {' จานเดียว'}</Text>
-                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 10}}> {'  จำนวนที่พบ'}</Text>
-                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 5}}> {' 25'}</Text>
-                        <Text style={{ fontSize: 14, color: '#fff', marginLeft: 5}}> {' รายการ'}</Text>
+                        <CommonText text={'หมวดหมู่'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                        <CommonText text={' จานเดียว'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                        <CommonText text={'  จำนวนที่พบ'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                        <CommonText text={' 25'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                        <CommonText text={' รายการ'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
                     </View>
                     <View style={{ flex: 1, width: '100%'}}>
                         <FlatList

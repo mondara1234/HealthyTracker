@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Container, Content } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {BMI_SCREEN} from "../../BMI/router";
-import {TRICK_SCREEN} from "../../Trick/router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { TRICK_SCREEN } from "../../Trick/router";
 
 class aboutScreen extends React.PureComponent {
 
@@ -16,30 +16,25 @@ class aboutScreen extends React.PureComponent {
         return (
             <Container>
                 <View style={styles.container}>
-                    <Content>
-                        <Text style={styles.textTitle}>{'เกี่ยวกับเรา'}</Text>
+                    <Content padder>
+                        <CommonText style={styles.textTitle} text={'เกี่ยวกับเรา'} />
                         <View style={styles.containerBody}>
-                            <Text style={styles.textbody}>
-                                {'Healthy Tracker'}
-                            </Text>
-                            <Text style={styles.textbody}>
-                                {'คือ แอฟพลิเคชันดูแลสุขภาพในส่วนของการควบคุมอาหารในแต่ละวัน'}
-                            </Text>
+                            <CommonText text={'Healthy Tracker'} />
+                            <CommonText text={'คือ แอฟพลิเคชันดูแลสุขภาพในส่วนของการควบคุมอาหารในแต่ละวัน'} />
                         </View>
-                        <Text style={styles.textHead}>{'รายละเอียดของ แอฟพลิเคชัน'}</Text>
+                        <CommonText style={styles.textHead} text={'รายละเอียดของ แอฟพลิเคชัน'} />
                         <View style={styles.containerBody}>
-                            <Text style={styles.textbody}>
-                                {'เนื้อหา..................................................................................' +
-                                '........................................................................................' +
-                                '........................................................................................' +
-                                '........................................................................................'}
-                            </Text>
+                            <CommonText text={'เนื้อหา..................................................................................' +
+                            '........................................................................................' +
+                            '........................................................................................' +
+                            '........................................................................................'}
+                            />
                         </View>
-                        <Text style={styles.textHead}>{'ติดต่อเรา'}</Text>
+                        <CommonText style={styles.textHead} text={'ติดต่อเรา'} />
                         <View style={styles.containerBody}>
-                            <Text style={styles.textbody}>{'สอบถามข้อมูลเพิ่มเติมได้ทาง'}</Text>
-                            <Text style={styles.textbody}>{'E-mail: kakzadsr@gmail.com'}</Text>
-                            <Text style={styles.textbody}>{'เบอร์โทรศัพท์: 088-6060-128'}</Text>
+                            <CommonText text={'สอบถามข้อมูลเพิ่มเติมได้ทาง'} />
+                            <CommonText text={'E-mail: kakzadsr@gmail.com'} />
+                            <CommonText text={'เบอร์โทรศัพท์: 088-6060-128'} />
                         </View>
                     </Content>
                 </View>
@@ -56,7 +51,8 @@ class aboutScreen extends React.PureComponent {
 
 aboutScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'เกี่ยวกับเรา'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({
@@ -70,19 +66,16 @@ const styles = StyleSheet.create({
     containerBody: {
         marginHorizontal:20,
         marginTop: 10,
+        marginLeft: 10
     },
     textTitle: {
         fontSize: 24,
-        marginLeft: 20
+        marginLeft: 30
     },
     textHead: {
         fontSize: 22,
         marginTop:10,
-        marginLeft: 20
-    },
-    textbody :{
-        fontSize: 18,
-        marginLeft: 10
+        marginLeft: 30
     }
 
 });

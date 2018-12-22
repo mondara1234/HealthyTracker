@@ -34,8 +34,7 @@ const HeaderLeftMenu = (props) => {
 const styles = StyleSheet.create({
     button: {
         backgroundColor: 'transparent',
-        width: 44,
-        display: 'flex',
+        width: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },

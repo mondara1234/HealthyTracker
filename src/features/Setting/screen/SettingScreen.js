@@ -60,33 +60,31 @@ class settingScreen extends React.PureComponent {
             <Container>
                 <View style={styles.container}>
                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                        <Text style={{ fontSize: 16, color: '#000'}}> {'ปิดการใช้งาน'} </Text>
+                        <CommonText text={'ปิดการใช้งาน'} style={{ fontSize: 16, color: '#000'}} />
                         <TouchableOpacity
                             style={styles.containerButton}
                             onPress={ () => this.props.navigation.navigate(PRAVIEDKEY)}
                         >
                             <View style={styles.containerTitleButton}>
-                                <Text style={styles.textButton}> {'ปิดบัญชี'} </Text>
+                                <CommonText text={'ปิดบัญชี'} style={styles.textButton} />
                             </View>
                         </TouchableOpacity>
                     </View>
                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                        <Text style={{ fontSize: 16, color: '#000'}}> {'เปลี่ยนภาษา'} </Text>
+                        <CommonText text={'เปลี่ยนภาษา'} style={{ fontSize: 16, color: '#000'}} />
                         <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
                             <View style={styles.containerToggle}>
                                 <TouchableOpacity
                                     style={StyleToggle.touchToggle}
                                     onPress={this.handleSwitchToggle}
                                 >
-                                   <Text style={styles.labelToggle}>
-                                       {this.state.active ? 'ENG' : 'TH'}
-                                   </Text>
+                                   <CommonText text={this.state.active ? 'ENG' : 'TH'} style={styles.labelToggle} />
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                     <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                        <Text style={{ fontSize: 16, color: '#000'}}> {'รหัสส่วนตัว'} </Text>
+                        <CommonText text={'รหัสส่วนตัว'} style={{ fontSize: 16, color: '#000'}} />
                         <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
                             <Switch
                                 value={this.state.PrivateKey}
@@ -100,7 +98,7 @@ class settingScreen extends React.PureComponent {
                             onPress={() => {this.setState({DialogChangePrivateKey: true})}}
                         >
                             <View style={styles.containerTitleButton}>
-                                <Text style={styles.textButton}> {'เปลี่ยนรหัสส่วนตัว'} </Text>
+                                <CommonText text={'เปลี่ยนรหัสส่วนตัว'} style={styles.textButton} />
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -109,7 +107,7 @@ class settingScreen extends React.PureComponent {
                         onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
                     >
                         <View style={styles.containerTitleButton}>
-                            <Text style={[styles.textButton,{fontSize: 20}]}> {'บันทึก'} </Text>
+                            <CommonText text={'บันทึก'} style={[styles.textButton,{fontSize: 20}]} />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -212,7 +210,8 @@ class settingScreen extends React.PureComponent {
 
 settingScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'ตั้งค่า'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({
@@ -273,7 +272,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 25,
         borderWidth: 1,
-        fontSize: 16,
+        fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
         paddingTop: 8,
@@ -282,7 +281,7 @@ const styles = StyleSheet.create({
     },
     dialogTextBody: {
         color: '#000',
-        fontSize: 16
+        fontSize: 18
     },
     dialogTextButton: {
         color: '#fff',

@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Container, Content, Footer } from 'native-base';
+import { Container, Content } from 'native-base';
 import { Images } from "../../User/components/images";
 import MenuItem from "../components/MenuItem";
 import SideMenu from '../../common/components/SideMenu';
-import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";

@@ -42,36 +42,36 @@ class profileScreen extends React.PureComponent {
                 <View style={{flex: 1 , alignItems: 'center', paddingTop: 20}}>
                     <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
                         <View style={{paddingLeft: 3, height: 30, width: '100%', backgroundColor: '#068e81', justifyContent: 'center', marginBottom: 10}}>
-                            <Text style={{color: '#fff', fontSize: 18}}>{'ข้อมูล BMR'}</Text>
+                            <CommonText text={'ข้อมูล BMR'} color={'#fff'} />
                         </View>
                         <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                             <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                <Text style={{fontSize: 14, color: '#000'}}>{'BMI :'}</Text>
+                                <CommonText text={'BMI :'} size={14} />
                             </View>
                             <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                <Text style={{fontSize: 16, color: '#068E81'}}>{'58'}</Text>
+                                <CommonText text={'58'} style={{fontSize: 16, color: '#068E81'}} />
                             </View>
                         </View>
                         <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                             <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                <Text style={{fontSize: 14, color: '#000'}}>{'น้ำหนักอยู่ในเกณฑ์ :'}</Text>
+                                <CommonText text={'น้ำหนักอยู่ในเกณฑ์ :'} size={14} />
                             </View>
                             <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                <Text style={{fontSize: 16, color: '#068E81'}}>{'ปกติ'}</Text>
+                                <CommonText text={'ปกติ'} style={{fontSize: 16, color: '#068E81'}} />
                             </View>
                         </View>
                         <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                             <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                <Text style={{fontSize: 14, color: '#000'}}>{'พลังงานที่ต้องการต่อวัน :'}</Text>
+                                <CommonText text={'พลังงานที่ต้องการต่อวัน :'} size={14} />
                             </View>
                             <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                <Text style={{fontSize: 16, color: '#068E81'}}>{'2875 แคลลอรี่'}</Text>
+                                <CommonText text={'2875 แคลลอรี่'} style={{fontSize: 16, color: '#068E81'}} />
                             </View>
                         </View>
                     </View>
                     <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
                         <View style={{paddingLeft: 3, height: 30, width: '100%', flexDirection: 'row', backgroundColor: '#068e81', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <Text style={{color: '#fff', fontSize: 18}}>{'ข้อมูล ส่วนตัว'}</Text>
+                            <CommonText text={'ข้อมูล ส่วนตัว'} color={'#fff'} />
                             <TouchableOpacity style={{paddingHorizontal: 10, backgroundColor: '#F4F4F4',flexDirection: 'row', marginRight: 3, height: 26, alignItems: 'center', justifyContent: 'center'}}>
                                 <IconFontAwesome5
                                     name="user-edit"
@@ -79,7 +79,7 @@ class profileScreen extends React.PureComponent {
                                     color={'#068e81'}
                                     style={styles.styleIconFontAwesome}
                                 />
-                                <Text style={{ color: '#068e81', fontSize: 14}}> {'แก้ไข'}</Text>
+                                <CommonText text={'แก้ไข'} style={{ color: '#068e81', fontSize: 14}} />
                             </TouchableOpacity>
                         </View>
                         <View style={{width: '90%', flexDirection: 'row', alignItems: 'center'}}>
@@ -93,52 +93,49 @@ class profileScreen extends React.PureComponent {
                                 style={styles.userThumb}
                             />
                             <View>
-                                <Text style={{fontSize: 18, color: '#068e81'}}>{'NameUser'}</Text>
+                                <CommonText text={'NameUser'} color={'#068e81'} />
                                 <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={{fontSize: 16, color: '#000'}}>{'E-mail:'}</Text>
-                                    <Text style={{fontSize: 16, color: '#068e81', marginLeft: 10}}>{'kakzadsr@gmail.com'}</Text>
+                                    <CommonText text={'E-mail:'} />
+                                    <CommonText text={'kakzadsr@gmail.com'} style={{ color: '#068e81', marginLeft: 10}} />
                                 </View>
                                 <TouchableOpacity style={{ backgroundColor: '#068e81', height: 25, width: 100 , alignItems: 'center', justifyContent: 'center'}}>
-                                    <Text style={{ color: '#fff', fontSize: 14}}> {'เปลี่ยนรหัสผ่าน'}</Text>
+                                    <CommonText text={'เปลี่ยนรหัสผ่าน'} style={{ color: '#fff', fontSize: 14}} />
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
                             <TouchableOpacity style={{ backgroundColor: '#068e81', marginTop: -10, marginLeft: 6, height: 20, width: 100 , alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style={{ color: '#fff', fontSize: 12}}> {'เปลี่ยนรูปโปรไฟล์'}</Text>
+                                <CommonText text={'เปลี่ยนรูปโปรไฟล์'} style={{ color: '#fff', fontSize: 12}} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-
+                        <View style={{width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20}}>
                             <View style={{marginLeft:10 ,width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style={{fontSize: 16, color: '#000'}}>{'เพศ :'}</Text>
-                                <Text
-                                    style={{marginLeft: 20, fontSize: 16, color: this.state.selected === 'male' ? '#068e81' : '#000'}}
+                                <CommonText text={'เพศ :'} />
+                                <CommonText
+                                    text={'ชาย'}
+                                    style={{marginLeft: 20,color: this.state.selected === 'male' ? '#068e81' : '#000'}}
                                     onPress={() => this.selectSex('male')}
-                                >
-                                    {'ชาย'}
-                                </Text>
-                                <Text style={{fontSize: 16, color: '#000'}}>{' / '}</Text>
-                                <Text
-                                    style={{fontSize: 16, color: this.state.selected === 'female' ? '#068e81' : '#000'}}
+                                />
+                                <CommonText text={' / '}  />
+                                <CommonText
+                                    text={'หญิง'}
+                                    style={{color: this.state.selected === 'female' ? '#068e81' : '#000'}}
                                     onPress={() => this.selectSex('female')}
-                                >
-                                    {'หญิง'}
-                                </Text>
+                                />
                             </View>
                             <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style={{fontSize: 16, color: '#000'}}>{'อายุ (ปี)'}</Text>
+                                <CommonText text={'อายุ (ปี)'}/>
                             </View>
                         </View>
                         <View style={{paddingHorizontal: 20, width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                             <View style={{width: '60%', alignItems: 'center', marginTop: 20}}>
-                                <Text style={{fontSize: 16, color: '#000'}}>{'น้ำหนัก (กก)'}</Text>
+                                <CommonText text={'น้ำหนัก (กก)'} />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholder="58"
                                            placeholderTextColor = "#068e81"
                                 />
-                                <Text style={{fontSize: 16, color: '#000', marginTop: 10}}>{'ส่วนสูง (ซม)'}</Text>
+                                <CommonText text={'ส่วนสูง (ซม)'} style={{marginTop: 10}} />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholder="169"
@@ -173,7 +170,8 @@ class profileScreen extends React.PureComponent {
 
 profileScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'จัดการข้อมูลส่วนตัว'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({
@@ -192,7 +190,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderBottomWidth: 1,
         borderColor: '#068e81',
-        fontSize: 16,
+        fontSize: 18,
         color: '#068e81',
         textAlign: 'center',
         paddingBottom: -5

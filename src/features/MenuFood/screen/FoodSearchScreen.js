@@ -31,8 +31,8 @@ class FoodSearchScreen extends React.PureComponent {
                     >
                         <View style={styles.containerTextButton}>
                             <View style={styles.containerTitleButton}>
-                                <Text style={[styles.textButton,{marginLeft: 50}]}> {'ค้นหาตาม'} </Text>
-                                <Text style={styles.textButton}> {'ชื่ออาหาร'} </Text>
+                                <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
+                                <CommonText text={'ชื่ออาหาร'} style={styles.textButton} />
                             </View>
                             <IconFontAwesome name="search" size={70} style={styles.styleIconFontAwesome} />
                         </View>
@@ -43,8 +43,8 @@ class FoodSearchScreen extends React.PureComponent {
                     >
                         <View style={styles.containerTextButton}>
                             <View style={styles.containerTitleButton}>
-                                <Text style={[styles.textButton,{marginLeft: 50}]}> {'ค้นหาตาม'} </Text>
-                                <Text style={styles.textButton}> {'หมวดหมู่'} </Text>
+                                <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
+                                <CommonText text={'หมวดหมู่'} style={styles.textButton} />
                             </View>
                             <IconMaterialIcons name="restaurant-menu" size={70} style={styles.styleIconFontAwesome} />
                         </View>

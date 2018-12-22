@@ -121,7 +121,6 @@ class Sideber extends React.Component {
 
     render () {
         const { navigate } = this.props.navigation;
-        //const { first_name, last_name, employee_id, manager } = this.props.users;
         const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
 
         const menus = [

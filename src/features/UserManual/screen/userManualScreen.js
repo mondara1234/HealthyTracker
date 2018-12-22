@@ -17,7 +17,7 @@ class userManualScreen extends React.PureComponent {
             <Container>
                 <View style={styles.container}>
                     <Content>
-                        <Text style={styles.textTitle}>{'คู่มือการใช้งานเบื้องต้น'}</Text>
+                        <CommonText text={'คู่มือการใช้งานเบื้องต้น'} style={styles.textTitle} />
                         <View style={styles.containerBody}>
                             <Text style={styles.textbody}>
                                 {'เนื้อหา..................................................................................' +
@@ -48,7 +48,8 @@ class userManualScreen extends React.PureComponent {
 
 userManualScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'คู่มือการใช้งาน'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({

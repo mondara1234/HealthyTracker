@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
 import { withNavigation } from "react-navigation";
 import Form from './FormScreen/FormRegistration';
+import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import { Images } from "../components/images";
@@ -25,9 +26,9 @@ class Registration extends Component {
                         source={Images.plusImg}/>
                 <Form nameRegistration="ลงทะเบียน" />
                 <View style={styles.signupTextCont}>
-                    <Text style={styles.signupText}>{'คุณมีบัญชีแล้วหรือยัง ?'}</Text>
+                    <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
                     <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
-                        <Text style={styles.signupButton}> {'เข้าสู่ระบบ'}</Text>
+                        <CommonText text={'เข้าสู่ระบบ'} style={styles.signupButton} />
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
         paddingVertical: 13
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
@@ -89,11 +90,11 @@ const styles = StyleSheet.create({
     },
     signupText: {
         color: 'rgba(0,0,0,0.6)',
-        fontSize: 14
+        fontSize: 16
     },
     signupButton: {
         color: '#068e81',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '500'
     },
 });

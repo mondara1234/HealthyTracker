@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import { withNavigation } from "react-navigation";
+import CommonText from '../../common/components/CommonText';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import Logo from '../components/Logo';
@@ -26,7 +27,7 @@ class HomeLoingScreen extends Component {
                     >
                         <View style={styles.containerButton}>
                             <IconEntypo name="login" size={30} style={styles.styleIconEntypo} />
-                            <Text style={styles.textLogin}> {'เข้าสู่ระบบ'} </Text>
+                            <CommonText text={'เข้าสู่ระบบ'} style={styles.textLogin} />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -35,7 +36,7 @@ class HomeLoingScreen extends Component {
                     >
                         <View style={styles.containerButton}>
                             <IconFontAwesome name="registered" size={30} style={styles.styleIconFontAwesome} />
-                            <Text style={styles.textRegister}> {'สมัครสมาชิก'} </Text>
+                            <CommonText text={'สมัครสมาชิก'} style={styles.textRegister} />
                         </View>
                     </TouchableOpacity>
                 </View>

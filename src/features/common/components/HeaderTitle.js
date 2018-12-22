@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CommonText from './CommonText';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 
 const HeaderTitle = (props) => {
     return <View style={styles.container}>
             <CommonText text={'The Healthy Tracker'} color={'#fff'} size={20} style={styles.textTitle} />
-           <CommonText text={props.text} color={props.color} size={props.size} />
+            <Text numberOfLines={1} style={{color:props.color, fontSize: props.size}}>{props.text}</Text>
     </View>
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },

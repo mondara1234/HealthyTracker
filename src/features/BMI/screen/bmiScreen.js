@@ -1,56 +1,42 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View, Image} from 'react-native';
-import { Container,Text, Content, Accordion } from 'native-base';
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import { Container, Content, Accordion } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Images } from "../../User/components/images";
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {BMI_SCREEN} from "../router";
-import {TRICK_SCREEN} from "../../Trick/router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { BMI_SCREEN } from "../router";
+import { TRICK_SCREEN } from "../../Trick/router";
 
 
 class bmiScreen extends React.PureComponent {
 
     _renderHeader(dataArray, expanded) {
         return (
-            <View style={{ width: '96%', margin: 10, justifyContent: 'center', alignItems: "center", backgroundColor: "#e3f1f1", borderWidth: 1, borderColor: '#068e81' }}>
-                <View
-                    style={{ width: '96%', flexDirection: "row", padding: 10, justifyContent: "space-between", alignItems: "center"}}
-                >
-                    <Text style={{ fontWeight: "600" }}>
-                        {dataArray.title}
-                    </Text>
-                    <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-end", alignItems: "center"}}>
-                        <Text style={{ fontWeight: "400" }}>
-                            {dataArray.kcal}
-                        </Text>
-                        <Text style={{ fontWeight: "600", marginLeft: 3 }}>
-                            {dataArray.Unit}
-                        </Text>
+            <View style={styles.containerHead}>
+                <View style={styles.containerBodyHead}>
+                    <CommonText text={dataArray.title} />
+                    <View style={styles.containerUnitHead}>
+                        <CommonText text={dataArray.kcal} />
+                        <CommonText text={dataArray.Unit} style={{ marginLeft: 3 }} />
                     </View>
                 </View>
                 {expanded
-                    ? <Text style={{ fontWeight: "600", color: '#068e81', marginBottom: 3}}>
-                        {'ปิดรายละเอียด'}
-                    </Text>
-                    : <Text style={{ fontWeight: "600", color: '#068e81', marginBottom: 3}}>
-                        {'เปิดรายละเอียด'}
-                    </Text>}
+                    ?
+                    <CommonText text={'ปิดรายละเอียด'} style={styles.showBody}/>
+                    :
+                    <CommonText text={'เปิดรายละเอียด'} style={styles.showBody}/>
+                }
             </View>
         );
     }
 
     _renderContent(dataArray) {
         return (
-            <Text
-                style={{ backgroundColor: "#e3f1f1", padding: 10 }}
-            >
-                {dataArray.content}
-            </Text>
+            <CommonText text={dataArray.content} style={styles.containerContent} />
         );
     }
 
@@ -62,45 +48,47 @@ class bmiScreen extends React.PureComponent {
         ];
         return (
             <Container>
-                <View style={styles.container}>
-                    <View style={{width: '80%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10}}>
-                        <View>
-                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <Text style={styles.textHead}>{'BMI :'}</Text>
-                                <Text style={[styles.textHead,{marginLeft: 60, color: '#068e81'}]}>{'21.36'}</Text>
+                <Content>
+                    <View style={styles.container}>
+                        <View style={styles.containerBMI}>
+                            <View>
+                                <View style={styles.containerBodyBMI}>
+                                    <CommonText text={'BMI :'} style={styles.textHead} />
+                                    <CommonText text={'21.36'} style={styles.valueHead} />
+                                </View>
+                                <View style={styles.containerBodyBMI}>
+                                    <CommonText text={'เกณฑ์ :'} style={[styles.textHead,{marginLeft: -13}]} />
+                                    <CommonText text={'ปกติ'} style={styles.valueHead} />
+                                </View>
                             </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <Text style={[styles.textHead,{marginLeft: -13}]}>{'เกณฑ์ :'}</Text>
-                                <Text style={[styles.textHead,{marginLeft: 60, color: '#068e81'}]}>{'ปกติ'}</Text>
+                            <View style={styles.containerBodyBMI}>
+                                <Image  style={{width: 60, height: 100}}
+                                        source={Images.foodDiaty.kcal1}
+                                />
                             </View>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                            <Image  style={{width: 60, height: 100}}
-                                    source={Images.foodDiaty.kcal1}
+                        <View style={styles.containerBarBMI }>
+                            <View style={styles.barBMI} />
+                        </View>
+                        <View style={styles.containerClock}>
+                            <CommonText text={'ควรเพิ่ม'} style={[styles.textUnitKcal, { color: '#068e81'}]} />
+                            <CommonText text={'พอดี'} style={[styles.textUnitKcal, { color: '#406894'}]} />
+                            <CommonText text={'ควรลด'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
+                        </View>
+                        <View
+                            style = {styles.separator}>
+                        </View>
+                        <Content padder>
+                            <Accordion
+                                dataArray={dataArray}
+                                renderHeader={this._renderHeader}
+                                renderContent={this._renderContent}
+                                headerStyle={{ backgroundColor: "#b7daf8" }}
+                                contentStyle={{ backgroundColor: "#ddecf8" }}
                             />
-                        </View>
+                        </Content>
                     </View>
-                    <View style={styles.containerBarBMI }>
-                        <View style={styles.barBMI} />
-                    </View>
-                    <View style={styles.containerClock}>
-                        <Text style={[styles.textUnitKcal, { color: '#068e81'}]}> {'ควรเพิ่ม'} </Text>
-                        <Text style={[styles.textUnitKcal, { color: '#406894'}]}> {'พอดี'} </Text>
-                        <Text style={[styles.textUnitKcal, { color: '#940c17'}]}> {'ควรลด'} </Text>
-                    </View>
-                    <View
-                        style = {{height: 1 , width: '100%', backgroundColor: '#068e81'}}>
-                    </View>
-                    <Content padder>
-                        <Accordion
-                            dataArray={dataArray}
-                            renderHeader={this._renderHeader}
-                            renderContent={this._renderContent}
-                            headerStyle={{ backgroundColor: "#b7daf8" }}
-                            contentStyle={{ backgroundColor: "#ddecf8" }}
-                        />
-                    </Content>
-                </View>
+                </Content>
                 <SideMenu
                     diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
                     menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
@@ -114,7 +102,8 @@ class bmiScreen extends React.PureComponent {
 
 bmiScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'BMI'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({
@@ -124,9 +113,51 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         alignItems: 'center'
     },
+    containerHead: {
+        width: '96%',
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: "#e3f1f1",
+        borderWidth: 1,
+        borderColor: '#068e81'
+    },
+    containerBodyHead: {
+        width: '96%',
+        flexDirection: "row",
+        padding: 10,
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    containerUnitHead: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "center"
+    },
+    showBody: {
+        color: '#068e81',
+        marginBottom: 3
+    },
+    containerContent: {
+        backgroundColor: "#e3f1f1",
+        padding: 10
+    },
     containerBody: {
-        marginHorizontal:20,
+        marginHorizontal: 20,
         marginTop: 10,
+    },
+    containerBMI:{
+        width: '80%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 10
+    },
+    containerBodyBMI: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     textTitle: {
         fontSize: 24,
@@ -134,8 +165,14 @@ const styles = StyleSheet.create({
     },
     textHead: {
         fontSize: 22,
-        marginTop:10,
+        marginTop: 10,
         marginLeft: 20
+    },
+    valueHead:{
+        fontSize: 22,
+        marginTop: 10,
+        marginLeft: 60,
+        color: '#068e81'
     },
     textbody :{
         fontSize: 18,
@@ -152,7 +189,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
         textAlign: 'center',
-        color: '#068e81'
+        color: '#068e81',
+        paddingHorizontal: 10
     },
     containerBarBMI: {
         width: '98%' ,
@@ -166,6 +204,11 @@ const styles = StyleSheet.create({
         width: '50%',
         backgroundColor: '#406894'
     },
+    separator: {
+        height: 1 ,
+        width: '100%',
+        backgroundColor: '#068e81'
+    }
 
 });
 

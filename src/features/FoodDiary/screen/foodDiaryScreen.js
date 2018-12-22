@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import DatePicker from 'react-native-datepicker'
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonTime from '../../common/components/form/CommonTime';
+import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import SideMenu from '../../common/components/SideMenu';
@@ -76,7 +77,7 @@ class foodDiaryScreen extends React.PureComponent {
                     </Left>
                     <Body>
                     <View style={{height: 35, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Text style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
+                        <CommonText text={item.name.first} style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5}} />
                         <IconFontAwesome
                             name="window-close-o"
                             size={30}
@@ -87,11 +88,11 @@ class foodDiaryScreen extends React.PureComponent {
                     </View>
                     <View style={{ height: 35, marginBottom: -2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'transparent'}}>
                         <View style={styles.containerRowList}>
-                            <Text style={{ fontSize: 14, color: '#000',}}> {'จำนวน '} </Text>
-                            <Text style={{ fontSize: 14, color: '#068e81',}}> {'1'} </Text>
-                            <Text style={{ fontSize: 14, color: '#000',}}> {' หน่วย'} </Text>
+                            <CommonText text={'จำนวน '} size={14}/>
+                            <CommonText text={'1'} style={{ fontSize: 14, color: '#068e81' }} />
+                            <CommonText text={' หน่วย'} size={14}/>
                         </View>
-                        <Text style={{ fontSize: 14, color: '#068e81', marginRight: 3}}> {item.calorie + ' แคลอรี่'} </Text>
+                        <CommonText text={item.calorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81', marginRight: 3}} />
                     </View>
                     </Body>
                 </ListItem>
@@ -118,11 +119,11 @@ class foodDiaryScreen extends React.PureComponent {
                         style={styles.styleIconClock}
                     />
                     <CommonTime />
-                    <Text style={styles.textClock}> {'น.'} </Text>
+                    <CommonText text={'น.'} style={styles.textClock} />
                 </View>
                 <View style={styles.containerCalendar}>
-                    <Text style={styles.textCalendar}> {'วันที่'} </Text>
-                    <Text style={styles.textCalendar}> {this.state.date} </Text>
+                    <CommonText text={'วันที่'} style={styles.textClock} />
+                    <CommonText text={this.state.date} style={styles.textClock} />
                     <DatePicker
                         style={{width: 40}}
                         date={this.state.date}
@@ -166,14 +167,14 @@ class foodDiaryScreen extends React.PureComponent {
                     />
                     <View>
                         <View style={styles.containerCalendar}>
-                            <Text style={styles.textTitlekcal}> {'พลังงานที่ได้รับในวันนี้ '} </Text>
-                            <Text style={styles.textSumkcal}> {'200'} </Text>
-                            <Text style={styles.textTitlekcal}> {' แคลอรี่'} </Text>
+                            <CommonText text={'พลังงานที่ได้รับในวันนี้ '} style={styles.textTitlekcal} />
+                            <CommonText text={'200'} style={styles.textSumkcal} />
+                            <CommonText text={' แคลอรี่'} style={styles.textTitlekcal} />
                         </View>
                         <View style={styles.containerCalendar}>
-                            <Text style={styles.textTitlekcal}> {'พลังงานที่ต้องการจ่อวัน '} </Text>
-                            <Text style={styles.textSumkcal}> {'1875'} </Text>
-                            <Text style={styles.textTitlekcal}> {' แคลอรี่'} </Text>
+                            <CommonText text={'พลังงานที่ต้องการจ่อวัน '} style={styles.textTitlekcal} />
+                            <CommonText text={'1875'} style={styles.textSumkcal} />
+                            <CommonText text={' แคลอรี่'} style={styles.textTitlekcal} />
                         </View>
                     </View>
                 </View>
@@ -184,9 +185,9 @@ class foodDiaryScreen extends React.PureComponent {
                     </View>
                 </View>
                 <View style={{width: '98%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <Text style={[styles.textUnitKcal, { marginLeft: 10, color: '#068e81'}]}> {'ควรเพิ่ม'} </Text>
-                    <Text style={[styles.textUnitKcal, { color: '#406894'}]}> {'พอดี'} </Text>
-                    <Text style={[styles.textUnitKcal, { color: '#940c17'}]}> {'ควรลด'} </Text>
+                    <CommonText text={'ควรเพิ่ม'} style={[styles.textUnitKcal, { marginLeft: 10, color: '#068e81'}]} />
+                    <CommonText text={'พอดี'} style={[styles.textUnitKcal, { color: '#406894'}]} />
+                    <CommonText text={'ควรลด'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
                 </View>
                 <SideMenu
                     diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -219,23 +220,21 @@ class foodDiaryScreen extends React.PureComponent {
                 >{/*ส่วนของbody*/}
                     <View style={styles.dialogBodyView}>
                         <View style={styles.containerTextDialogBody}>
-                            <Text style={[styles.dialogTextBody,{ marginLeft: 20 }]}>{'เพศ'}</Text>
-                            <Text
+                            <CommonText text={'เพศ'} style={[styles.dialogTextBody,{ marginLeft: 20 }]} />
+                            <CommonText
+                                text={'ชาย'}
                                 style={[styles.dialogTextBody,{ marginLeft: 30, color: this.state.selected === 'male' ? '#068e81' : '#000' }]}
                                 onPress={() => this.selectSex('male')}
-                            >
-                                {'ชาย'}
-                            </Text>
-                            <Text style={[styles.dialogTextBody,{ marginLeft: 3 }]}>{'/'}</Text>
-                            <Text
+                            />
+                            <CommonText text={'/'} style={[styles.dialogTextBody,{ marginLeft: 3 }]} />
+                            <CommonText
+                                text={'หญิง'}
                                 style={[styles.dialogTextBody,{ marginLeft: 3, color: this.state.selected === 'female' ? '#068e81' : '#000' }]}
                                 onPress={() => this.selectSex('female')}
-                            >
-                                {'หญิง'}
-                            </Text>
+                            />
                         </View>
                         <View style={styles.containerTextDialogBody}>
-                            <Text style={[styles.dialogTextBody,{ marginLeft: 20 }]}>{'อายุ'}</Text>
+                            <CommonText text={'อายุ'} style={[styles.dialogTextBody,{ marginLeft: 20 }]} />
                             <TextInput style={styles.inputBoxDialog}
                                        underlineColorAndroid='rgba(0,0,0,0)'
                                        placeholderTextColor = "#068e81"
@@ -243,10 +242,10 @@ class foodDiaryScreen extends React.PureComponent {
                                        textAlign="center"
                                        onChangeText={ TextInputValue => this.setState({ TextInput_age : TextInputValue })}
                             />
-                            <Text style={styles.dialogTextBody}>{'ปี'}</Text>
+                            <CommonText text={'ปี'} style={styles.dialogTextBody} />
                         </View>
                         <View style={styles.containerTextDialogBody}>
-                            <Text style={styles.dialogTextBody}>{'ส่วนสูง'}</Text>
+                            <CommonText text={'ส่วนสูง'} style={styles.dialogTextBody} />
                             <TextInput style={styles.inputBoxDialog}
                                        underlineColorAndroid='rgba(0,0,0,0)'
                                        placeholderTextColor = "#068e81"
@@ -254,10 +253,10 @@ class foodDiaryScreen extends React.PureComponent {
                                        textAlign="center"
                                        onChangeText={ TextInputValue => this.setState({ TextInput_cm : TextInputValue }) }
                             />
-                            <Text style={styles.dialogTextBody}>{'เซนติเมตร'}</Text>
+                            <CommonText text={'เซนติเมตร'} style={styles.dialogTextBody} />
                         </View>
                         <View style={[styles.containerTextDialogBody,{ marginBottom: 30 }]}>
-                            <Text style={styles.dialogTextBody}>{'น้ำหนัก'}</Text>
+                            <CommonText text={'น้ำหนัก'} style={styles.dialogTextBody} />
                             <TextInput style={styles.inputBoxDialog}
                                        underlineColorAndroid='rgba(0,0,0,0)'
                                        placeholderTextColor = "#068e81"
@@ -265,7 +264,7 @@ class foodDiaryScreen extends React.PureComponent {
                                        textAlign="center"
                                        onChangeText={ TextInputValue => this.setState({ TextInput_gg : TextInputValue }) }
                             />
-                            <Text style={styles.dialogTextBody}>{'กิโลกรัม'}</Text>
+                            <CommonText text={'กิโลกรัม'} style={styles.dialogTextBody} />
                         </View>
                     </View>
                 </Dialog>
@@ -276,7 +275,8 @@ class foodDiaryScreen extends React.PureComponent {
 
 foodDiaryScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'ไดอารี่อาหาร'}/>,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />
+    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerRight: <HeaderLeftMenu icon={null} />
 });
 
 const styles = StyleSheet.create({
@@ -302,12 +302,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     textClock: {
-        fontSize: 16,
-        fontWeight: '500',
-        textAlign: 'center',
-        color: '#068e81'
-    },
-    textCalendar: {
         fontSize: 16,
         fontWeight: '500',
         textAlign: 'center',

@@ -30,7 +30,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                     <View style={styles.containerLogo}>
                         <LogoTextHT colorMain={'#000'} color={'#068e81'} sizeMain={34} size={28} />
                     </View>
-                    <Text style={styles.signupText}>{'ลืมรหัสผ่าน'}</Text>
+                    <CommonText text={'ลืมรหัสผ่าน'} style={styles.signupText} />
                     <TextInput
                         style={styles.inputBox}
                         underlineColorAndroid='rgba(0,0,0,0)'
@@ -43,7 +43,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                         style={styles.button}
                         onPress={() => {this.setState({DialogForgot: true,})}}
                     >
-                        <Text style={styles.buttonText} > {'เปลี่ยนรหัสผ่าน'} </Text>
+                        <CommonText text={'เปลี่ยนรหัสผ่าน'} style={styles.buttonText} />
                     </TouchableOpacity>
 
                     <Dialog  //Dialogตอนกดเปลี่ยน
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 25,
         borderWidth: 1,
-        fontSize: 16,
+        fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
         marginVertical: 20
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 25,
         borderWidth: 1,
-        fontSize: 16,
+        fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
         paddingTop: 8,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     },
     dialogTextBody: {
         color: '#000',
-        fontSize: 16
+        fontSize: 18
     },
     dialogTextButton: {
         color: '#fff',

@@ -4,6 +4,7 @@ import {Container, Card, CardItem, Body, Left, Content} from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withNavigation } from "react-navigation";
+import CommonText from '../../../common/components/CommonText';
 import { Images } from "../../../User/components/images";
 import RankTrick from '../../components/RankTrick';
 import DataTrick from "../../api/DataTrick";

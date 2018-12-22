@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import CommonText from '../../../common/components/CommonText';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class FormRegistration extends Component {
@@ -67,7 +68,7 @@ class FormRegistration extends Component {
                 <TouchableOpacity style={styles.button} onPress={this.InsertStudentRecordsToServer}>
                     <View style={styles.containerButton}>
                         <IconFontAwesome name="registered" size={30} style={styles.styleIconFontAwesome} />
-                        <Text style={styles.buttonText} >{this.props.nameRegistration}</Text>
+                        <CommonText text={this.props.nameRegistration} style={styles.buttonText} />
                     </View>
                 </TouchableOpacity>
             </View>
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         borderColor: '#068e81',
-        fontSize: 16,
+        fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
         marginVertical: 5

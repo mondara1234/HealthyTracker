@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import { bindActionCreators } from 'redux';
 import { NavigationActions } from 'react-navigation';
+import CommonText from '../../common/components/CommonText';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
@@ -122,7 +123,7 @@ class PraviedKeyScreen extends React.PureComponent {
                 <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                     <TouchableOpacity style={styles.TouchForgot}
                                       onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                        <Text style={styles.textForgot}> {'ลืมรหัสส่วนตัว ?'}</Text>
+                        <CommonText text={'ลืมรหัสส่วนตัว ?'} style={styles.textForgot} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.viewKeyboard}>

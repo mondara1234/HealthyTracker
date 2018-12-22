@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground} from 'react-native';
+import { Container, Content, Footer } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { requestApiData } from "../redux/actions";
+import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Logo from '../components/Logo';
 import {getNews, getAllFlights} from '../redux/actions';
@@ -39,49 +41,56 @@ class LoingScreen extends Component {
         console.log('Update Store:',this.props);
 
         return (
-            <ImageBackground style={styles.backgroundImage}
-                             source={Images.bgLogin}>
-                <View style={{marginTop: -20}}>
-                    <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
-                </View>
-                <View style={styles.containerRow}>
-                    <Text style={styles.titleLogin}> {'LOGIN'}</Text>
-                    <Logo Title="Healthy MyApp"/>
-                </View>
-                <View style={styles.containerView}>
-                    <TextInput style={styles.inputBox}
-                               underlineColorAndroid='rgba(0,0,0,0)'
-                               placeholder="Email"
-                               placeholderTextColor = "#068e81"
-                               selectionColor="#fff"
-                               keyboardType="email-address"
-                               onChangeText={UserEmail =>this.setState({UserEmail})}
-                    />
-                    <TextInput style={styles.inputBox}
-                               underlineColorAndroid='rgba(0,0,0,0)'
-                               placeholder="Password"
-                               secureTextEntry={true}
-                               placeholderTextColor = "#068e81"
-                               onChangeText={UserPassword =>this.setState({UserPassword})}
-                    />
-                    <View style={styles.containerForgot}>
-                        <TouchableOpacity style={styles.TouchForgot}
-                                          onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                            <Text style={styles.textForgot}> {'ลืมรหัสผ่าน ?'}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity style={styles.button} //onPress={this.UserLoginFunction}
-                                      onPress={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}>
-                        <Text style={styles.buttonText} > {'Login'} </Text>
+            <Container style={styles.container} >
+                <ImageBackground style={styles.backgroundImage}
+                                 source={Images.bgLogin}>
+                    <Content padder>
+                        <View style={{marginTop: -20}}>
+                            <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
+                        </View>
+                        <View style={styles.containerRow}>
+                            <CommonText text={'LOGIN'} style={styles.titleLogin} />
+                            <Logo Title="Healthy MyApp"/>
+                        </View>
+                        <View style={styles.containerView}>
+                            <TextInput style={styles.inputBox}
+                                       underlineColorAndroid='rgba(0,0,0,0)'
+                                       placeholder="Email"
+                                       placeholderTextColor = "#068e81"
+                                       selectionColor="#fff"
+                                       keyboardType="email-address"
+                                       onChangeText={UserEmail =>this.setState({UserEmail})}
+                            />
+                            <TextInput style={styles.inputBox}
+                                       underlineColorAndroid='rgba(0,0,0,0)'
+                                       placeholder="Password"
+                                       secureTextEntry={true}
+                                       placeholderTextColor = "#068e81"
+                                       onChangeText={UserPassword =>this.setState({UserPassword})}
+                            />
+                            <View style={styles.containerForgot}>
+                                <TouchableOpacity style={styles.TouchForgot}
+                                                  onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                                    <CommonText text={'ลืมรหัสผ่าน ?'} style={styles.textForgot} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.containerForgot}>
+                                <TouchableOpacity style={styles.button} //onPress={this.UserLoginFunction}
+                                                  onPress={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}>
+                                    <CommonText text={'Login'} style={styles.buttonText} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </Content>
+                </ImageBackground>
+                <View style={styles.signupTextCont}>
+                    <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
+                    <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
+                        <CommonText text={'สมัครสมาชิก'} style={styles.signupButton} />
                     </TouchableOpacity>
-                    <View style={styles.signupTextCont}>
-                        <Text style={styles.signupText}>{'คุณมีบัญชีแล้วหรือยัง ?'}</Text>
-                        <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
-                            <Text style={styles.signupButton}> {'สมัครสมาชิก'}</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
-            </ImageBackground>
+            </Container>
         )
     }
 }
@@ -91,9 +100,18 @@ LoingScreen.navigationOptions  = ({navigation}) => ({
 });
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     backgroundImage: {
         paddingTop: 20,
         flex: 1,
+        width: '100%',
+        height: '100%'
     },
     containerRow: {
         flexDirection: 'row',
@@ -105,35 +123,36 @@ const styles = StyleSheet.create({
     },
     textForgot: {
         color: '#000',
-        fontSize: 14,
+        fontSize: 16,
     },
     TouchForgot: {
         marginLeft: '50%'
     },
     containerForgot: {
         width:  200,
-        marginLeft: 10,
+        alignItems: 'center' ,
+        justifyContent: 'center'
     },
     containerView: {
-        flex: 1,
         marginLeft: 10,
         justifyContent: 'center'
     },
     signupTextCont: {
-        flex: 1,
-        marginTop: '50%',
+        position: 'absolute',
+        bottom: 5,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row'
     },
     signupText: {
         color: 'rgba(0,0,0,0.6)',
-        fontSize: 16
+        fontSize: 18
     },
     signupButton: {
         color: '#F4F4F4',
-        fontSize: 16,
-        fontWeight: '500'
+        fontSize: 18,
+        fontWeight: '500',
+        marginLeft: 5
     },
     inputBox: {
         width: 200,
@@ -142,10 +161,11 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         borderColor: '#068e81',
-        fontSize: 16,
+        fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
-        marginVertical: 5
+        marginVertical: 5,
+        justifyContent: 'center'
     },
     button: {
         width: 150,
