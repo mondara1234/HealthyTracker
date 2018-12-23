@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert} from 'react-native';
 import { Container, CardItem, Left, Thumbnail, Card, Body, ListItem } from 'native-base';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Autocomplete from 'react-native-autocomplete-input';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
+import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -21,9 +22,28 @@ class menuFoodScreen extends React.PureComponent {
         super(props);
         this.state = {
             films: food,
-            query: ''
+            query: '',
+            editing: true
         };
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     //ไว้รับค่าแล้วค้นหา
     findFilm(query) {
@@ -95,54 +115,56 @@ class menuFoodScreen extends React.PureComponent {
         const films = this.findFilm(this.state.query);//ประกาศตัวแปร เพื่อรับค่า findFilm โดยส่งค่า query ไป
 
         return (
-            <Container>
-                <View style={styles.container}>
-                    <Autocomplete
-                        autoCapitalize="none" /*ไม่ต้องมีก็ได้*/
-                        autoCorrect={true} /*ไม่ต้องมีก็ได้*/
-                        style={styles.containerSearch}/*กำหนดรูปแบบช่องค้นหา*/
-                        containerStyle={styles.autocompleteContainer}/*กำหนดรูปแบบแถบแสดงค้นหา*/
-                        data={films.length === 1 ? [] : films}  /*ตรวจสอบข้อมูลที่หาเจอถ้ามีแค่อันเดียว ไม่แสดงช่องค้นหา แต่ถ้ามีเยอะจะแสดงให้เลือก*/
-                        defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
-                        onChangeText={text => this.setState({ query: text })} /*setค่าให้กับตัวแปล query เป้นไปตามที่กรอก*/
-                        placeholder="กรอกชื่ออาหาร" /*ลายน้ำเพื่อพิมจะหายไป*/
-                        renderItem={({ calorie, name }) => (
-                            <TouchableOpacity onPress={() => alert(`${calorie} ${name.first}`)}>
-                                <CommonText text={`${name.first} แสดงตรงค้นหา`} style={styles.itemText}/>
-                            </TouchableOpacity>/*กำหนดรูปแบบการแสดงในช่่องค้นหาที่จะขึ้นเมื่อกรอกข้อความ*/
-                        )}
-                    />
-                    <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
-                        <CommonText text={'หมวดหมู่'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
-                        <CommonText text={' จานเดียว'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
-                        <CommonText text={'  จำนวนที่พบ'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
-                        <CommonText text={' 25'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
-                        <CommonText text={' รายการ'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
-                    </View>
-                    <View style={{ flex: 1, width: '100%'}}>
-                        <FlatList
-                            data={this.state.films}
-                            renderItem={this._renderItem}
-                            keyExtractor={(item, index) => index}
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <View style={styles.container}>
+                        <Autocomplete
+                            autoCapitalize="none" /*ไม่ต้องมีก็ได้*/
+                            autoCorrect={true} /*ไม่ต้องมีก็ได้*/
+                            style={styles.containerSearch}/*กำหนดรูปแบบช่องค้นหา*/
+                            containerStyle={styles.autocompleteContainer}/*กำหนดรูปแบบแถบแสดงค้นหา*/
+                            data={films.length === 1 ? [] : films}  /*ตรวจสอบข้อมูลที่หาเจอถ้ามีแค่อันเดียว ไม่แสดงช่องค้นหา แต่ถ้ามีเยอะจะแสดงให้เลือก*/
+                            defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
+                            onChangeText={text => this.setState({ query: text })} /*setค่าให้กับตัวแปล query เป้นไปตามที่กรอก*/
+                            placeholder="กรอกชื่ออาหาร" /*ลายน้ำเพื่อพิมจะหายไป*/
+                            renderItem={({ calorie, name }) => (
+                                <TouchableOpacity onPress={() => alert(`${calorie} ${name.first}`)}>
+                                    <CommonText text={`${name.first} แสดงตรงค้นหา`} style={styles.itemText}/>
+                                </TouchableOpacity>/*กำหนดรูปแบบการแสดงในช่่องค้นหาที่จะขึ้นเมื่อกรอกข้อความ*/
+                            )}
                         />
+                        <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
+                            <CommonText text={'หมวดหมู่'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                            <CommonText text={' จานเดียว'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                            <CommonText text={'  จำนวนที่พบ'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                            <CommonText text={' 25'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                            <CommonText text={' รายการ'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                        </View>
+                        <View style={{ flex: 1, width: '100%'}}>
+                            <FlatList
+                                data={this.state.films}
+                                renderItem={this._renderItem}
+                                keyExtractor={(item, index) => index}
+                            />
+                        </View>
+                        {/*<View style={styles.descriptionContainer}>
+                            {films.length > 0 ? (
+                                menuFoodScreen.renderFilm(films[0])//คือไรทำไมเขียนแบบนี้
+                            ) : (
+                                <Text style={styles.infoText}>
+                                    Enter Title of a Star Wars movie{'แสดงเนื้อหสด้านล่าง'}
+                                </Text>
+                            )}
+                        </View>*/}
                     </View>
-                    {/*<View style={styles.descriptionContainer}>
-                        {films.length > 0 ? (
-                            menuFoodScreen.renderFilm(films[0])//คือไรทำไมเขียนแบบนี้
-                        ) : (
-                            <Text style={styles.infoText}>
-                                Enter Title of a Star Wars movie{'แสดงเนื้อหสด้านล่าง'}
-                            </Text>
-                        )}
-                    </View>*/}
-                </View>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
-                    menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
-                    bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
-                    trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
-                />
-            </Container>
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
+                        menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
+                        bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
+                        trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
+                    />
+                </Container>
+            </HandleBack>
         );
     }
 }

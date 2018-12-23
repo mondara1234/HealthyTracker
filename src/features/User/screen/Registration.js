@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, Image, ImageBackground } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, ImageBackground, BackHandler, Alert } from 'react-native';
 import { withNavigation } from "react-navigation";
 import Form from './FormScreen/FormRegistration';
+import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import LogoTextHT from '../../common/components/LogoTextHT';
@@ -9,29 +10,55 @@ import { Images } from "../components/images";
 import { LOGIN } from "../router";
 
 class Registration extends Component {
+    constructor(){
+        super();
+        this.state = {
+            editing: true
+        }
+    }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     render() {
 
         const { navigate } = this.props.navigation;
 
         return (
-            <ImageBackground style={styles.backgroundImage}
-                   source={Images.bgRegister}>
-                <View style={styles.containerLogo}>
-                    <LogoTextHT colorMain={'#000'} color={'#fff'} />
-                </View>
-                <Image  style={styles.imageUser}
-                        source={Images.user_default}/>
-                <Image  style={styles.image}
-                        source={Images.plusImg}/>
-                <Form nameRegistration="ลงทะเบียน" />
-                <View style={styles.signupTextCont}>
-                    <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
-                    <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
-                        <CommonText text={'เข้าสู่ระบบ'} style={styles.signupButton} />
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
+            <HandleBack onBack={this.onBack}>
+                <ImageBackground style={styles.backgroundImage}
+                       source={Images.bgRegister}>
+                    <View style={styles.containerLogo}>
+                        <LogoTextHT colorMain={'#000'} color={'#fff'} />
+                    </View>
+                    <Image  style={styles.imageUser}
+                            source={Images.user_default}/>
+                    <Image  style={styles.image}
+                            source={Images.plusImg}/>
+                    <Form nameRegistration="ลงทะเบียน" />
+                    <View style={styles.signupTextCont}>
+                        <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
+                        <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
+                            <CommonText text={'เข้าสู่ระบบ'} style={styles.signupButton} />
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </HandleBack>
         );
     }
 }
@@ -95,7 +122,8 @@ const styles = StyleSheet.create({
     signupButton: {
         color: '#068e81',
         fontSize: 18,
-        fontWeight: '500'
+        fontWeight: '500',
+        marginLeft: 5
     },
 });
 

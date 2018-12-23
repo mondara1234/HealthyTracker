@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, TextInput,  } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, TextInput, BackHandler, Alert} from 'react-native';
 import { Container, Switch } from 'native-base';
+import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -26,8 +27,27 @@ class settingScreen extends React.PureComponent {
             active: false,
             DialogChangePrivateKey: false,
             DialogChangeSuccess: false,
+            editing: true
         }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     handleSwitchToggle = () => {
       this.setState({
@@ -57,153 +77,155 @@ class settingScreen extends React.PureComponent {
         });
 
         return (
-            <Container>
-                <View style={styles.container}>
-                    <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                        <CommonText text={'ปิดการใช้งาน'} style={{ fontSize: 16, color: '#000'}} />
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <View style={styles.container}>
+                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
+                            <CommonText text={'ปิดการใช้งาน'} style={{ fontSize: 16, color: '#000'}} />
+                            <TouchableOpacity
+                                style={styles.containerButton}
+                                onPress={ () => this.props.navigation.navigate(PRAVIEDKEY)}
+                            >
+                                <View style={styles.containerTitleButton}>
+                                    <CommonText text={'ปิดบัญชี'} style={styles.textButton} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
+                            <CommonText text={'เปลี่ยนภาษา'} style={{ fontSize: 16, color: '#000'}} />
+                            <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+                                <View style={styles.containerToggle}>
+                                    <TouchableOpacity
+                                        style={StyleToggle.touchToggle}
+                                        onPress={this.handleSwitchToggle}
+                                    >
+                                       <CommonText text={this.state.active ? 'ENG' : 'TH'} style={styles.labelToggle} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
+                            <CommonText text={'รหัสส่วนตัว'} style={{ fontSize: 16, color: '#000'}} />
+                            <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+                                <Switch
+                                    value={this.state.PrivateKey}
+                                    onValueChange={this._setPrivateKey}
+                                />
+                            </View>
+                        </View>
+                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 20}}>
+                            <TouchableOpacity
+                                style={[styles.containerButton,{width: 130, height: 30}]}
+                                onPress={() => {this.setState({DialogChangePrivateKey: true})}}
+                            >
+                                <View style={styles.containerTitleButton}>
+                                    <CommonText text={'เปลี่ยนรหัสส่วนตัว'} style={styles.textButton} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                         <TouchableOpacity
-                            style={styles.containerButton}
-                            onPress={ () => this.props.navigation.navigate(PRAVIEDKEY)}
+                            style={[styles.containerButton,{width: 100, height: 50}]}
+                            onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
                         >
                             <View style={styles.containerTitleButton}>
-                                <CommonText text={'ปิดบัญชี'} style={styles.textButton} />
+                                <CommonText text={'บันทึก'} style={[styles.textButton,{fontSize: 20}]} />
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                        <CommonText text={'เปลี่ยนภาษา'} style={{ fontSize: 16, color: '#000'}} />
-                        <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-                            <View style={styles.containerToggle}>
-                                <TouchableOpacity
-                                    style={StyleToggle.touchToggle}
-                                    onPress={this.handleSwitchToggle}
-                                >
-                                   <CommonText text={this.state.active ? 'ENG' : 'TH'} style={styles.labelToggle} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                        <CommonText text={'รหัสส่วนตัว'} style={{ fontSize: 16, color: '#000'}} />
-                        <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-                            <Switch
-                                value={this.state.PrivateKey}
-                                onValueChange={this._setPrivateKey}
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
+                        menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
+                        bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
+                        trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
+                    />
+                    <Dialog  //Dialogตอนกดเปลี่ยน
+                        visible={this.state.DialogChangePrivateKey}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                        onTouchOutside={() => {this.setState({ DialogChangePrivateKey: true })}}//ไม่ให้กดข้างนอกได้
+                        dialogTitle={//ส่วนของTitle
+                            <DialogTitle
+                                title="การเปลี่ยนรหัสส่วนตัว"
+                                hasTitleBar={false}
+                                textStyle={styles.dialogTextTitle}
+                                style={styles.dialogTitleView}
+                            />
+                        }
+                        actions={[//ส่วนของฺbutton
+                            <DialogButton
+                                text="ตกลง"
+                                textStyle={styles.dialogTextButton}
+                                onPress={() => {
+                                    this.setState({ DialogChangePrivateKey: false, DialogChangeSuccess: true })
+                                }}
+                                style={styles.dialogTitleView}
+                            />,
+                            <DialogButton
+                                text="ปิด"
+                                textStyle={styles.dialogTextButton}
+                                onPress={() => {
+                                    this.setState({ DialogChangePrivateKey: false });
+                                }}
+                                style={styles.dialogTitleView}
+                            />
+                        ]}
+                    >{/*ส่วนของbody*/}
+                        <View style={styles.dialogBodyView}>
+                            <TextInput
+                                style={styles.inputBoxDialog}
+                                underlineColorAndroid='rgba(0,0,0,0)'
+                                placeholder="รหัสส่วนตัวเดิม"
+                                secureTextEntry={true}
+                                placeholderTextColor = "#068e81"
+                                onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
+                            />
+                            <TextInput
+                                style={styles.inputBoxDialog}
+                                underlineColorAndroid='rgba(0,0,0,0)'
+                                placeholder="รหัสส่วนตัวใหม่"
+                                secureTextEntry={true}
+                                placeholderTextColor = "#068e81"
+                                selectionColor="#fff"
+                                onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
+                            />
+                            <TextInput
+                                style={styles.inputBoxDialog}
+                                underlineColorAndroid='rgba(0,0,0,0)'
+                                placeholder="ยืนยัน รหัสส่วนตัวใหม่"
+                                secureTextEntry={true}
+                                placeholderTextColor = "#068e81"
+                                selectionColor="#fff"
+                                onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
                             />
                         </View>
-                    </View>
-                    <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 20}}>
-                        <TouchableOpacity
-                            style={[styles.containerButton,{width: 130, height: 30}]}
-                            onPress={() => {this.setState({DialogChangePrivateKey: true})}}
-                        >
-                            <View style={styles.containerTitleButton}>
-                                <CommonText text={'เปลี่ยนรหัสส่วนตัว'} style={styles.textButton} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        style={[styles.containerButton,{width: 100, height: 50}]}
-                        onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
-                    >
-                        <View style={styles.containerTitleButton}>
-                            <CommonText text={'บันทึก'} style={[styles.textButton,{fontSize: 20}]} />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
-                    menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
-                    bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
-                    trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
-                />
-                <Dialog  //Dialogตอนกดเปลี่ยน
-                    visible={this.state.DialogChangePrivateKey}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
-                    onTouchOutside={() => {this.setState({ DialogChangePrivateKey: true })}}//ไม่ให้กดข้างนอกได้
-                    dialogTitle={//ส่วนของTitle
-                        <DialogTitle
-                            title="การเปลี่ยนรหัสส่วนตัว"
-                            hasTitleBar={false}
-                            textStyle={styles.dialogTextTitle}
-                            style={styles.dialogTitleView}
-                        />
-                    }
-                    actions={[//ส่วนของฺbutton
-                        <DialogButton
-                            text="ตกลง"
-                            textStyle={styles.dialogTextButton}
-                            onPress={() => {
-                                this.setState({ DialogChangePrivateKey: false, DialogChangeSuccess: true })
-                            }}
-                            style={styles.dialogTitleView}
-                        />,
-                        <DialogButton
-                            text="ปิด"
-                            textStyle={styles.dialogTextButton}
-                            onPress={() => {
-                                this.setState({ DialogChangePrivateKey: false });
-                            }}
-                            style={styles.dialogTitleView}
-                        />
-                    ]}
-                >{/*ส่วนของbody*/}
-                    <View style={styles.dialogBodyView}>
-                        <TextInput
-                            style={styles.inputBoxDialog}
-                            underlineColorAndroid='rgba(0,0,0,0)'
-                            placeholder="รหัสส่วนตัวเดิม"
-                            secureTextEntry={true}
-                            placeholderTextColor = "#068e81"
-                            onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
-                        />
-                        <TextInput
-                            style={styles.inputBoxDialog}
-                            underlineColorAndroid='rgba(0,0,0,0)'
-                            placeholder="รหัสส่วนตัวใหม่"
-                            secureTextEntry={true}
-                            placeholderTextColor = "#068e81"
-                            selectionColor="#fff"
-                            onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
-                        />
-                        <TextInput
-                            style={styles.inputBoxDialog}
-                            underlineColorAndroid='rgba(0,0,0,0)'
-                            placeholder="ยืนยัน รหัสส่วนตัวใหม่"
-                            secureTextEntry={true}
-                            placeholderTextColor = "#068e81"
-                            selectionColor="#fff"
-                            onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
-                        />
-                    </View>
-                </Dialog>
+                    </Dialog>
 
-                <Dialog //Dialogตอนกรอกข้อมูลเส้ดสิ้น
-                    visible={this.state.DialogChangeSuccess}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
-                    onTouchOutside={() => {this.setState({ DialogChangeSuccess: true })}}//ไม่ให้กดข้างนอกได้
-                    dialogTitle={//ส่วนของTitle
-                        <DialogTitle
-                            title="เปลี่ยนรหัสส่วนตัวสำเร็จ"
-                            hasTitleBar={false}
-                            textStyle={styles.dialogTextTitle}
-                            style={styles.dialogTitleView}
-                        />
-                    }
-                    actions={[//ส่วนของฺbutton
-                        <DialogButton
-                            text="ปิด"
-                            textStyle={styles.dialogTextButton}
-                            onPress={() => {
-                                this.setState({ DialogChangeSuccess: false });
-                            }}
-                            style={styles.dialogTitleView}
-                        />
-                    ]}
-                >{/*ส่วนของbody*/}
-                    <View style={styles.dialogBodyView}>
-                        <Text style={styles.dialogTextBody}> {'เปลี่ยน รหัสส่วนตัว เรียบร้อยแล้วครับ'}</Text>
-                    </View>
-                </Dialog>
-            </Container>
+                    <Dialog //Dialogตอนกรอกข้อมูลเส้ดสิ้น
+                        visible={this.state.DialogChangeSuccess}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                        onTouchOutside={() => {this.setState({ DialogChangeSuccess: true })}}//ไม่ให้กดข้างนอกได้
+                        dialogTitle={//ส่วนของTitle
+                            <DialogTitle
+                                title="เปลี่ยนรหัสส่วนตัวสำเร็จ"
+                                hasTitleBar={false}
+                                textStyle={styles.dialogTextTitle}
+                                style={styles.dialogTitleView}
+                            />
+                        }
+                        actions={[//ส่วนของฺbutton
+                            <DialogButton
+                                text="ปิด"
+                                textStyle={styles.dialogTextButton}
+                                onPress={() => {
+                                    this.setState({ DialogChangeSuccess: false });
+                                }}
+                                style={styles.dialogTitleView}
+                            />
+                        ]}
+                    >{/*ส่วนของbody*/}
+                        <View style={styles.dialogBodyView}>
+                            <Text style={styles.dialogTextBody}> {'เปลี่ยน รหัสส่วนตัว เรียบร้อยแล้วครับ'}</Text>
+                        </View>
+                    </Dialog>
+                </Container>
+            </HandleBack>
         );
     }
 }

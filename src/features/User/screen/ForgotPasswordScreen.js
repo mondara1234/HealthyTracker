@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, TextInput, Alert} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, TextInput, Alert, BackHandler} from 'react-native';
 import { Container, Content, Button, Text } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
+import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import LogoTextHT from '../../common/components/LogoTextHT';
@@ -16,115 +17,136 @@ class ForgotPasswordScreen extends React.PureComponent {
             TextInput_PasswordAgain: '',
             DialogForgot: false,
             DialogSuccess: false,
+            editing: true
         }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     render() {
 
         const { goBack } = this.props.navigation;
 
         return (
-            <View style={{backgroundColor: '#F4F4F4', flex: 1,}}>
-                <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
-                <Container style={styles.container}>
-                    <View style={styles.containerLogo}>
-                        <LogoTextHT colorMain={'#000'} color={'#068e81'} sizeMain={34} size={28} />
-                    </View>
-                    <CommonText text={'ลืมรหัสผ่าน'} style={styles.signupText} />
-                    <TextInput
-                        style={styles.inputBox}
-                        underlineColorAndroid='rgba(0,0,0,0)'
-                        placeholder="กรุณากรอก Email"
-                        placeholderTextColor = "#068e81"
-                        keyboardType="email-address"
-                        onChangeText={TextInputValue => this.setState({ UserEmail : TextInputValue })}
-                    />
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {this.setState({DialogForgot: true,})}}
-                    >
-                        <CommonText text={'เปลี่ยนรหัสผ่าน'} style={styles.buttonText} />
-                    </TouchableOpacity>
-
-                    <Dialog  //Dialogตอนกดเปลี่ยน
-                        visible={this.state.DialogForgot}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
-                        onTouchOutside={() => {this.setState({ DialogForgot: true })}}//ไม่ให้กดข้างนอกได้
-                        dialogTitle={//ส่วนของTitle
-                            <DialogTitle
-                                title="การเปลี่ยนรหัสผ่าน"
-                                hasTitleBar={false}
-                                textStyle={styles.dialogTextTitle}
-                                style={styles.dialogTitleView}
-                            />
-                        }
-                        actions={[//ส่วนของฺbutton
-                            <DialogButton
-                                text="ตกลง"
-                                textStyle={styles.dialogTextButton}
-                                onPress={() => {
-                                    this.setState({ DialogForgot: false, DialogSuccess: true })
-                                }}
-                                style={styles.dialogTitleView}
-                            />,
-                            <DialogButton
-                                text="ปิด"
-                                textStyle={styles.dialogTextButton}
-                                onPress={() => {
-                                    this.setState({ DialogForgot: false });
-                                }}
-                                style={styles.dialogTitleView}
-                            />
-                        ]}
-                    >{/*ส่วนของbody*/}
-                        <View style={styles.dialogBodyView}>
-                            <TextInput
-                                style={styles.inputBoxDialog}
-                                underlineColorAndroid='rgba(0,0,0,0)'
-                                placeholder="รหัสผ่านใหม่"
-                                secureTextEntry={true}
-                                placeholderTextColor = "#068e81"
-                                onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
-                            />
-                            <TextInput
-                                style={styles.inputBoxDialog}
-                                underlineColorAndroid='rgba(0,0,0,0)'
-                                placeholder="ยืนยัน รหัสผ่านใหม่"
-                                secureTextEntry={true}
-                                placeholderTextColor = "#068e81"
-                                selectionColor="#fff"
-                                onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
-                            />
+            <HandleBack onBack={this.onBack}>
+                <View style={{backgroundColor: '#F4F4F4', flex: 1,}}>
+                    <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
+                    <Container style={styles.container}>
+                        <View style={styles.containerLogo}>
+                            <LogoTextHT colorMain={'#000'} color={'#068e81'} sizeMain={34} size={28} />
                         </View>
-                    </Dialog>
+                        <CommonText text={'ลืมรหัสผ่าน'} style={styles.signupText} />
+                        <TextInput
+                            style={styles.inputBox}
+                            underlineColorAndroid='rgba(0,0,0,0)'
+                            placeholder="กรุณากรอก Email"
+                            placeholderTextColor = "#068e81"
+                            keyboardType="email-address"
+                            onChangeText={TextInputValue => this.setState({ UserEmail : TextInputValue })}
+                        />
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {this.setState({DialogForgot: true,})}}
+                        >
+                            <CommonText text={'เปลี่ยนรหัสผ่าน'} style={styles.buttonText} />
+                        </TouchableOpacity>
 
-                    <Dialog //Dialogตอนกรอกข้อมูลเส้ดสิ้น
-                        visible={this.state.DialogSuccess}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
-                        onTouchOutside={() => {this.setState({ DialogSuccess: true })}}//ไม่ให้กดข้างนอกได้
-                        dialogTitle={//ส่วนของTitle
-                            <DialogTitle
-                                title="เปลี่ยนรหัสผ่านสำเร็จ"
-                                hasTitleBar={false}
-                                textStyle={styles.dialogTextTitle}
-                                style={styles.dialogTitleView}
-                            />
-                        }
-                        actions={[//ส่วนของฺbutton
-                            <DialogButton
-                                text="ปิด"
-                                textStyle={styles.dialogTextButton}
-                                onPress={() => {
-                                    this.setState({ DialogSuccess: false });
-                                }}
-                                style={styles.dialogTitleView}
-                            />
-                        ]}
-                    >{/*ส่วนของbody*/}
+                        <Dialog  //Dialogตอนกดเปลี่ยน
+                            visible={this.state.DialogForgot}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                            onTouchOutside={() => {this.setState({ DialogForgot: true })}}//ไม่ให้กดข้างนอกได้
+                            dialogTitle={//ส่วนของTitle
+                                <DialogTitle
+                                    title="การเปลี่ยนรหัสผ่าน"
+                                    hasTitleBar={false}
+                                    textStyle={styles.dialogTextTitle}
+                                    style={styles.dialogTitleView}
+                                />
+                            }
+                            actions={[//ส่วนของฺbutton
+                                <DialogButton
+                                    text="ตกลง"
+                                    textStyle={styles.dialogTextButton}
+                                    onPress={() => {
+                                        this.setState({ DialogForgot: false, DialogSuccess: true })
+                                    }}
+                                    style={styles.dialogTitleView}
+                                />,
+                                <DialogButton
+                                    text="ปิด"
+                                    textStyle={styles.dialogTextButton}
+                                    onPress={() => {
+                                        this.setState({ DialogForgot: false });
+                                    }}
+                                    style={styles.dialogTitleView}
+                                />
+                            ]}
+                        >{/*ส่วนของbody*/}
                             <View style={styles.dialogBodyView}>
-                                <Text style={styles.dialogTextBody}> {'ระบบได้ส่งรหัสผ่านไปให้คุณทาง \n e-mail เรียบร้อยแล้วครับ'}</Text>
+                                <TextInput
+                                    style={styles.inputBoxDialog}
+                                    underlineColorAndroid='rgba(0,0,0,0)'
+                                    placeholder="รหัสผ่านใหม่"
+                                    secureTextEntry={true}
+                                    placeholderTextColor = "#068e81"
+                                    onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
+                                />
+                                <TextInput
+                                    style={styles.inputBoxDialog}
+                                    underlineColorAndroid='rgba(0,0,0,0)'
+                                    placeholder="ยืนยัน รหัสผ่านใหม่"
+                                    secureTextEntry={true}
+                                    placeholderTextColor = "#068e81"
+                                    selectionColor="#fff"
+                                    onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
+                                />
                             </View>
-                    </Dialog>
-                </Container>
-            </View>
+                        </Dialog>
+
+                        <Dialog //Dialogตอนกรอกข้อมูลเส้ดสิ้น
+                            visible={this.state.DialogSuccess}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                            onTouchOutside={() => {this.setState({ DialogSuccess: true })}}//ไม่ให้กดข้างนอกได้
+                            dialogTitle={//ส่วนของTitle
+                                <DialogTitle
+                                    title="เปลี่ยนรหัสผ่านสำเร็จ"
+                                    hasTitleBar={false}
+                                    textStyle={styles.dialogTextTitle}
+                                    style={styles.dialogTitleView}
+                                />
+                            }
+                            actions={[//ส่วนของฺbutton
+                                <DialogButton
+                                    text="ปิด"
+                                    textStyle={styles.dialogTextButton}
+                                    onPress={() => {
+                                        this.setState({ DialogSuccess: false });
+                                    }}
+                                    style={styles.dialogTitleView}
+                                />
+                            ]}
+                        >{/*ส่วนของbody*/}
+                                <View style={styles.dialogBodyView}>
+                                    <Text style={styles.dialogTextBody}> {'ระบบได้ส่งรหัสผ่านไปให้คุณทาง \n e-mail เรียบร้อยแล้วครับ'}</Text>
+                                </View>
+                        </Dialog>
+                    </Container>
+                </View>
+            </HandleBack>
         );
     }
 }
@@ -138,7 +160,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F4F4F4',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: '20%'
     },
     containerLogo: {
         marginBottom: 50

@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions } from 'react-native';
+import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert} from 'react-native';
 import { Container, Content } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import HandleBack from "../../common/components/HandleBack";
 import {bindActionCreators} from "redux";
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
@@ -14,39 +15,62 @@ import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {BMI_SCREEN} from "../../BMI/router";
 
 class DetailExerciseScreen extends React.PureComponent {
-    constructor(props) {
-        super(props);
+    constructor(){
+        super();
+        this.state = {
+            editing: true
+        }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     render() {
         const { exerciseData } = this.props.navigation.state.params;
-        const {height, width} = Dimensions.get('window');
+        const { width } = Dimensions.get('window');
 
         return (
-            <Container>
-                <Content>
-                    <View style={styles.container}>
-                        <Image  style={{width: width - 40, height: 150, marginVertical: 20}}
-                                source={{uri: exerciseData.picture.large}}
-                        />
-                        <CommonText text={exerciseData.name.first} style={{fontSize: 24, marginLeft: 15}} />
-                        <View style={{flex: 1, width: width}}>
-                            <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 10}}>
-                                <CommonText text={'Admin/28/11/61'} style={{ fontSize: 16 }} />
-                            </View>
-                            <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
-                                <CommonText text={exerciseData.detailExercise} style={{ fontSize: 30, color: '#000'}} />
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <Content>
+                        <View style={styles.container}>
+                            <Image  style={{width: width - 40, height: 150, marginVertical: 20}}
+                                    source={{uri: exerciseData.picture.large}}
+                            />
+                            <CommonText text={exerciseData.name.first} style={{fontSize: 24, marginLeft: 15}} />
+                            <View style={{flex: 1, width: width}}>
+                                <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 10}}>
+                                    <CommonText text={'Admin/28/11/61'} style={{ fontSize: 16 }} />
+                                </View>
+                                <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
+                                    <CommonText text={exerciseData.detailExercise} style={{ fontSize: 30, color: '#000'}} />
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </Content>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
-                    menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
-                    bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
-                    trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
-                />
-            </Container>
+                    </Content>
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
+                        menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
+                        bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
+                        trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
+                    />
+                </Container>
+            </HandleBack>
         );
     }
 }

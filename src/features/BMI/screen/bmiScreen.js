@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image, BackHandler, Alert } from 'react-native';
 import { Container, Content, Accordion } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import HandleBack from "../../common/components/HandleBack";
 import { Images } from "../../User/components/images";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
@@ -13,6 +14,30 @@ import { TRICK_SCREEN } from "../../Trick/router";
 
 
 class bmiScreen extends React.PureComponent {
+    constructor(){
+        super();
+        this.state = {
+            editing: true
+        }
+    }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     _renderHeader(dataArray, expanded) {
         return (
@@ -47,55 +72,57 @@ class bmiScreen extends React.PureComponent {
             { title: "การบริโภคที่แนะนำ", content: "เนื้อหา การบริโภคที่แนะนำ ", kcal: 2428, Unit: 'แคลอรี่' },
         ];
         return (
-            <Container>
-                <Content>
-                    <View style={styles.container}>
-                        <View style={styles.containerBMI}>
-                            <View>
-                                <View style={styles.containerBodyBMI}>
-                                    <CommonText text={'BMI :'} style={styles.textHead} />
-                                    <CommonText text={'21.36'} style={styles.valueHead} />
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <Content>
+                        <View style={styles.container}>
+                            <View style={styles.containerBMI}>
+                                <View>
+                                    <View style={styles.containerBodyBMI}>
+                                        <CommonText text={'BMI :'} style={styles.textHead} />
+                                        <CommonText text={'21.36'} style={styles.valueHead} />
+                                    </View>
+                                    <View style={styles.containerBodyBMI}>
+                                        <CommonText text={'เกณฑ์ :'} style={[styles.textHead,{marginLeft: -13}]} />
+                                        <CommonText text={'ปกติ'} style={styles.valueHead} />
+                                    </View>
                                 </View>
                                 <View style={styles.containerBodyBMI}>
-                                    <CommonText text={'เกณฑ์ :'} style={[styles.textHead,{marginLeft: -13}]} />
-                                    <CommonText text={'ปกติ'} style={styles.valueHead} />
+                                    <Image  style={{width: 60, height: 100}}
+                                            source={Images.foodDiaty.kcal1}
+                                    />
                                 </View>
                             </View>
-                            <View style={styles.containerBodyBMI}>
-                                <Image  style={{width: 60, height: 100}}
-                                        source={Images.foodDiaty.kcal1}
+                            <View style={styles.containerBarBMI }>
+                                <View style={styles.barBMI} />
+                            </View>
+                            <View style={styles.containerClock}>
+                                <CommonText text={'ควรเพิ่ม'} style={[styles.textUnitKcal, { color: '#068e81'}]} />
+                                <CommonText text={'พอดี'} style={[styles.textUnitKcal, { color: '#406894'}]} />
+                                <CommonText text={'ควรลด'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
+                            </View>
+                            <View
+                                style = {styles.separator}>
+                            </View>
+                            <View padder>
+                                <Accordion
+                                    dataArray={dataArray}
+                                    renderHeader={this._renderHeader}
+                                    renderContent={this._renderContent}
+                                    headerStyle={{ backgroundColor: "#b7daf8" }}
+                                    contentStyle={{ backgroundColor: "#ddecf8" }}
                                 />
                             </View>
                         </View>
-                        <View style={styles.containerBarBMI }>
-                            <View style={styles.barBMI} />
-                        </View>
-                        <View style={styles.containerClock}>
-                            <CommonText text={'ควรเพิ่ม'} style={[styles.textUnitKcal, { color: '#068e81'}]} />
-                            <CommonText text={'พอดี'} style={[styles.textUnitKcal, { color: '#406894'}]} />
-                            <CommonText text={'ควรลด'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
-                        </View>
-                        <View
-                            style = {styles.separator}>
-                        </View>
-                        <Content padder>
-                            <Accordion
-                                dataArray={dataArray}
-                                renderHeader={this._renderHeader}
-                                renderContent={this._renderContent}
-                                headerStyle={{ backgroundColor: "#b7daf8" }}
-                                contentStyle={{ backgroundColor: "#ddecf8" }}
-                            />
-                        </Content>
-                    </View>
-                </Content>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
-                    menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
-                    bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
-                    trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
-                />
-            </Container>
+                    </Content>
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
+                        menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
+                        bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
+                        trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
+                    />
+                </Container>
+            </HandleBack>
         );
     }
 }

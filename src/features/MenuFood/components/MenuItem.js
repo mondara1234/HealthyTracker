@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import CommonText from '../../common/components/CommonText';
 
 const MenuItem = (props) => {
     return(
@@ -9,7 +10,7 @@ const MenuItem = (props) => {
                 source={props.itemImage}
                 style={styles.image}
             />
-            <Text>{props.name}</Text>
+            <CommonText text={props.name} style={styles.nameImage} />
         </TouchableOpacity>
     )
 };
@@ -28,19 +29,22 @@ const styles = StyleSheet.create({
     containerMenu: {
         marginHorizontal: 15,
         paddingTop: 4,
-        height: 90,
-        width: 90,
+        height: 100,
+        width: 100,
         alignItems: 'center',
+        justifyContent: 'center',
         borderWidth: 2,
         borderColor: '#068e81'
     },
     image: {
-        width: 60,
-        height: 60
+        width: 70,
+        height: 60,
+        borderWidth: 1,
+        borderColor: '#068e81'
     },
     nameImage: {
-        fontSize: 16,
-        color: '#068e81'
+        color: '#068e81',
+        marginTop: 2
     }
 
 });

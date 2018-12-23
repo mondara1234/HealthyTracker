@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, BackHandler, Alert } from 'react-native';
 import { withNavigation } from "react-navigation";
+import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -9,39 +10,62 @@ import { Images } from "../components/images";
 import { LOGIN, REGISTRATION } from "../router";
 
 class HomeLoingScreen extends Component {
-    constructor(props) {
-        super(props);
+    constructor(){
+        super();
+        this.state = {
+            editing: true
+        }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     render() {
 
         const { navigate } = this.props.navigation;
 
         return (
-            <View style={styles.container}>
-                <Logo Title="Healthy MyApp"/>
-                <View style={styles.containerView}>
-                    <TouchableOpacity
-                        style={styles.buttonLogin}
-                        onPress={ () => navigate({routeName: LOGIN})}
-                    >
-                        <View style={styles.containerButton}>
-                            <IconEntypo name="login" size={30} style={styles.styleIconEntypo} />
-                            <CommonText text={'เข้าสู่ระบบ'} style={styles.textLogin} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.buttonRegister}
-                        onPress={ () => navigate({routeName: REGISTRATION})}
-                    >
-                        <View style={styles.containerButton}>
-                            <IconFontAwesome name="registered" size={30} style={styles.styleIconFontAwesome} />
-                            <CommonText text={'สมัครสมาชิก'} style={styles.textRegister} />
-                        </View>
-                    </TouchableOpacity>
+            <HandleBack onBack={this.onBack}>
+                <View style={styles.container}>
+                    <Logo Title="Healthy MyApp"/>
+                    <View style={styles.containerView}>
+                        <TouchableOpacity
+                            style={styles.buttonLogin}
+                            onPress={ () => navigate({routeName: LOGIN})}
+                        >
+                            <View style={styles.containerButton}>
+                                <IconEntypo name="login" size={30} style={styles.styleIconEntypo} />
+                                <CommonText text={'เข้าสู่ระบบ'} style={styles.textLogin} />
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonRegister}
+                            onPress={ () => navigate({routeName: REGISTRATION})}
+                        >
+                            <View style={styles.containerButton}>
+                                <IconFontAwesome name="registered" size={30} style={styles.styleIconFontAwesome} />
+                                <CommonText text={'สมัครสมาชิก'} style={styles.textRegister} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <Image  style={styles.imgFood} source={Images.foodhome} />
                 </View>
-                <Image  style={styles.imgFood} source={Images.foodhome} />
-            </View>
+            </HandleBack>
         )
     }
 }

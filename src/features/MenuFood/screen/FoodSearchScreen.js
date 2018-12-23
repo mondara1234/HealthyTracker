@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Container } from 'native-base';
 import { withNavigation } from "react-navigation";
-import SideMenu from '../../common/components/SideMenu';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import HandleBack from "../../common/components/HandleBack";
+import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
@@ -14,49 +15,72 @@ import {BMI_SCREEN} from "../../BMI/router";
 import {TRICK_SCREEN} from "../../Trick/router";
 
 class FoodSearchScreen extends React.PureComponent {
-    constructor(props) {
-        super(props);
+    constructor(){
+        super();
+        this.state = {
+            editing: true
+        }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     render() {
 
         const { navigate } = this.props.navigation;
 
         return (
-            <Container>
-                <View style={styles.container}>
-                    <TouchableOpacity
-                        style={styles.containerButton}
-                        onPress={ () => navigate({routeName: MENUFOOD_SCREEN})}
-                    >
-                        <View style={styles.containerTextButton}>
-                            <View style={styles.containerTitleButton}>
-                                <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
-                                <CommonText text={'ชื่ออาหาร'} style={styles.textButton} />
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <View style={styles.container}>
+                        <TouchableOpacity
+                            style={styles.containerButton}
+                            onPress={ () => navigate({routeName: MENUFOOD_SCREEN})}
+                        >
+                            <View style={styles.containerTextButton}>
+                                <View style={styles.containerTitleButton}>
+                                    <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
+                                    <CommonText text={'ชื่ออาหาร'} style={styles.textButton} />
+                                </View>
+                                <IconFontAwesome name="search" size={70} style={styles.styleIconFontAwesome} />
                             </View>
-                            <IconFontAwesome name="search" size={70} style={styles.styleIconFontAwesome} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.containerButton}
-                        onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
-                    >
-                        <View style={styles.containerTextButton}>
-                            <View style={styles.containerTitleButton}>
-                                <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
-                                <CommonText text={'หมวดหมู่'} style={styles.textButton} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.containerButton}
+                            onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
+                        >
+                            <View style={styles.containerTextButton}>
+                                <View style={styles.containerTitleButton}>
+                                    <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
+                                    <CommonText text={'หมวดหมู่'} style={styles.textButton} />
+                                </View>
+                                <IconMaterialIcons name="restaurant-menu" size={70} style={styles.styleIconFontAwesome} />
                             </View>
-                            <IconMaterialIcons name="restaurant-menu" size={70} style={styles.styleIconFontAwesome} />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
-                    menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
-                    bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
-                    trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
-                />
-            </Container>
+                        </TouchableOpacity>
+                    </View>
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}
+                        menuFoodScreen={() => this.props.navigation.navigate( MENUFOOD_SCREEN )}
+                        bmiScreen={() => this.props.navigation.navigate( BMI_SCREEN )}
+                        trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
+                    />
+                </Container>
+            </HandleBack>
         );
     }
 }

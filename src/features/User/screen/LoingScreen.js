@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground} from 'react-native';
+import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler} from 'react-native';
 import { Container, Content, Footer } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { requestApiData } from "../redux/actions";
+import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Logo from '../components/Logo';
@@ -20,9 +21,28 @@ class LoingScreen extends Component {
 
         this.state = {
             UserEmail: '',
-            UserPassword: ''
+            UserPassword: '',
+            editing: true
         }
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     /*componentDidMount(){
         this.props.FETCH_DATA();
@@ -41,56 +61,58 @@ class LoingScreen extends Component {
         console.log('Update Store:',this.props);
 
         return (
-            <Container style={styles.container} >
-                <ImageBackground style={styles.backgroundImage}
-                                 source={Images.bgLogin}>
-                    <Content padder>
-                        <View style={{marginTop: -20}}>
-                            <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
-                        </View>
-                        <View style={styles.containerRow}>
-                            <CommonText text={'LOGIN'} style={styles.titleLogin} />
-                            <Logo Title="Healthy MyApp"/>
-                        </View>
-                        <View style={styles.containerView}>
-                            <TextInput style={styles.inputBox}
-                                       underlineColorAndroid='rgba(0,0,0,0)'
-                                       placeholder="Email"
-                                       placeholderTextColor = "#068e81"
-                                       selectionColor="#fff"
-                                       keyboardType="email-address"
-                                       onChangeText={UserEmail =>this.setState({UserEmail})}
-                            />
-                            <TextInput style={styles.inputBox}
-                                       underlineColorAndroid='rgba(0,0,0,0)'
-                                       placeholder="Password"
-                                       secureTextEntry={true}
-                                       placeholderTextColor = "#068e81"
-                                       onChangeText={UserPassword =>this.setState({UserPassword})}
-                            />
-                            <View style={styles.containerForgot}>
-                                <TouchableOpacity style={styles.TouchForgot}
-                                                  onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                                    <CommonText text={'ลืมรหัสผ่าน ?'} style={styles.textForgot} />
-                                </TouchableOpacity>
+            <HandleBack onBack={this.onBack}>
+                <Container style={styles.container} >
+                    <ImageBackground style={styles.backgroundImage}
+                                     source={Images.bgLogin}>
+                        <Content padder>
+                            <View style={{marginTop: -20}}>
+                                <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
                             </View>
-                            <View style={styles.containerForgot}>
-                                <TouchableOpacity style={styles.button} //onPress={this.UserLoginFunction}
-                                                  onPress={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}>
-                                    <CommonText text={'Login'} style={styles.buttonText} />
-                                </TouchableOpacity>
+                            <View style={styles.containerRow}>
+                                <CommonText text={'LOGIN'} style={styles.titleLogin} />
+                                <Logo Title="Healthy MyApp"/>
                             </View>
-                        </View>
+                            <View style={styles.containerView}>
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="Email"
+                                           placeholderTextColor = "#068e81"
+                                           selectionColor="#fff"
+                                           keyboardType="email-address"
+                                           onChangeText={UserEmail =>this.setState({UserEmail})}
+                                />
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="Password"
+                                           secureTextEntry={true}
+                                           placeholderTextColor = "#068e81"
+                                           onChangeText={UserPassword =>this.setState({UserPassword})}
+                                />
+                                <View style={styles.containerForgot}>
+                                    <TouchableOpacity style={styles.TouchForgot}
+                                                      onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                                        <CommonText text={'ลืมรหัสผ่าน ?'} style={styles.textForgot} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.containerForgot}>
+                                    <TouchableOpacity style={styles.button} //onPress={this.UserLoginFunction}
+                                                      onPress={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}>
+                                        <CommonText text={'Login'} style={styles.buttonText} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
 
-                    </Content>
-                </ImageBackground>
-                <View style={styles.signupTextCont}>
-                    <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
-                    <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
-                        <CommonText text={'สมัครสมาชิก'} style={styles.signupButton} />
-                    </TouchableOpacity>
-                </View>
-            </Container>
+                        </Content>
+                    </ImageBackground>
+                    <View style={styles.signupTextCont}>
+                        <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
+                        <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
+                            <CommonText text={'สมัครสมาชิก'} style={styles.signupButton} />
+                        </TouchableOpacity>
+                    </View>
+                </Container>
+            </HandleBack>
         )
     }
 }

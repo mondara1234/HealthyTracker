@@ -1,11 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler} from 'react-native';
 import { Container } from 'native-base';
-import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import { bindActionCreators } from 'redux';
-import { NavigationActions } from 'react-navigation';
+import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -20,8 +17,27 @@ class PraviedKeyScreen extends React.PureComponent {
         this.state = {
             passCode: [],
             passKey: '',
+            editing: true
         };
     }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
 
     _onFinishCheckingCode = () => {
         let checkPassKey = this.state.passCode[0]+
@@ -98,43 +114,45 @@ class PraviedKeyScreen extends React.PureComponent {
         const textDisabled = this.state.passCode[5] ? true : false;
 
         return (
-            <Container style={styles.container}>
-                <LogoTextHT colorMain={'#000'} color={'#068e81'} />
-                <View style={styles.borderWrapper}>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[0] ? '#068e81' : 'white'}]} />
+            <HandleBack onBack={this.onBack}>
+                <Container style={styles.container}>
+                    <LogoTextHT colorMain={'#000'} color={'#068e81'} />
+                    <View style={styles.borderWrapper}>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[0] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[1] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[2] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[3] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[4] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? '#068e81': 'white'}]}  />
+                        </View>
                     </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[1] ? '#068e81' : 'white'}]} />
+                    <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <TouchableOpacity style={styles.TouchForgot}
+                                          onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                            <CommonText text={'ลืมรหัสส่วนตัว ?'} style={styles.textForgot} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[2] ? '#068e81' : 'white'}]} />
+                    <View style={styles.viewKeyboard}>
+                        <VirtualKeyboard
+                            pressMode={'string'}
+                            decimal={false}
+                            onPress={(val) => this._checkText(val)}
+                            disableds={textDisabled}
+                        />
                     </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[3] ? '#068e81' : 'white'}]} />
-                    </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[4] ? '#068e81' : 'white'}]} />
-                    </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? '#068e81': 'white'}]}  />
-                    </View>
-                </View>
-                <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <TouchableOpacity style={styles.TouchForgot}
-                                      onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                        <CommonText text={'ลืมรหัสส่วนตัว ?'} style={styles.textForgot} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.viewKeyboard}>
-                    <VirtualKeyboard
-                        pressMode={'string'}
-                        decimal={false}
-                        onPress={(val) => this._checkText(val)}
-                        disableds={textDisabled}
-                    />
-                </View>
-            </Container>
+                </Container>
+            </HandleBack>
         )
     }
 }

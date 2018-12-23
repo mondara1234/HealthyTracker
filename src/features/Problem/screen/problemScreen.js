@@ -1,17 +1,18 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, TextInput, Alert, BackHandler } from 'react-native';
 import { Container, Footer, FooterTab, Picker, Content, Textarea, Form } from 'native-base';
+import RNFetchBlob from "react-native-fetch-blob";
+import ImagePicker from "react-native-image-picker";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import HandleBack from "../../common/components/HandleBack";
 import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {TRICK_SCREEN} from "../../Trick/router";
-import RNFetchBlob from "react-native-fetch-blob";
-import ImagePicker from "react-native-image-picker";
-import HandleBack from "../../common/components/HandleBack";
+
 
 class problemScreen extends React.PureComponent {
     constructor(){

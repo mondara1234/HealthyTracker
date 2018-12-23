@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, FlatList, Image } from 'react-native';
+import {StyleSheet, TouchableOpacity, View, FlatList, Image, BackHandler, Alert} from 'react-native';
 import { Container, Left, Body, ListItem, Content}  from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -9,6 +9,7 @@ import CommonText from '../../common/components/CommonText';
 import SideMenu from '../../common/components/SideMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import HandleBack from "../../common/components/HandleBack";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../../BMI/router";
@@ -20,11 +21,30 @@ class exerciseScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            films: DataExercise
+            films: DataExercise,
+            editing: true
         };
     }
 
-    _renderItem = ({ item, index }) => {
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                "แจ้งเตือน",
+                "คุณต้องการปิด App ใช่ไหม?",
+                [
+                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
+                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
+
+        _renderItem = ({ item, index }) => {
         return (
             <View style={{  width: '98%', height: 90, backgroundColor: "#F4F4F4", borderWidth: 1, borderColor: '#068e81', marginTop: 5, marginLeft: '1%' }}>
                 <ListItem  thumbnail
@@ -54,25 +74,27 @@ class exerciseScreen extends React.PureComponent {
 
     render() {
         return (
-            <Container>
-                <Content>
-                    <View style={styles.container}>
-                        <View style={{ flex: 1, width: '100%'}}>
-                            <FlatList
-                                data={this.state.films}
-                                renderItem={this._renderItem}
-                                keyExtractor={(item, index) => index}
-                            />
+            <HandleBack onBack={this.onBack}>
+                <Container>
+                    <Content>
+                        <View style={styles.container}>
+                            <View style={{ flex: 1, width: '100%'}}>
+                                <FlatList
+                                    data={this.state.films}
+                                    renderItem={this._renderItem}
+                                    keyExtractor={(item, index) => index}
+                                />
+                            </View>
                         </View>
-                    </View>
-                </Content>
-                <SideMenu
-                    diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
-                    menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
-                    bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
-                    trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
-                />
-            </Container>
+                    </Content>
+                    <SideMenu
+                        diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
+                        menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
+                        bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
+                        trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
+                    />
+                </Container>
+            </HandleBack>
         );
     }
 }
