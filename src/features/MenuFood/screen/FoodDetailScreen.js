@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert } from 'react-native';
-import { Container, Content } from 'native-base';
+import { Container } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
@@ -49,57 +49,57 @@ class FoodDetailScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <Content>
-                        <View style={styles.container}>
-                            <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', paddingLeft: '2%'}}>
-                                <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: 100, height: 100}}
-                                        source={{uri: foodData.picture.large}}
+                    <View style={styles.container}>
+                        <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', paddingLeft: '2%'}}>
+                            <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: 100, height: 100}}
+                                    source={{uri: foodData.picture.large}}
+                            />
+                            <View>
+                                <CommonText text={foodData.name.first} style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}} />
+                                <CommonText text={`${foodData.calorie} แคลลอรี่`} color={'#068e81'} />
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder="1"
+                                           placeholderTextColor = "#068e81"
+                                           selectionColor="#fff"
+                                           keyboardType="numeric"
+                                           onChangeText={UserEmail =>this.setState({UserEmail})}
                                 />
-                                <View>
-                                    <CommonText text={foodData.name.first} style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}} />
-                                    <CommonText text={`${foodData.calorie} แคลลอรี่`} color={'#068e81'} />
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
-                                    <TextInput style={styles.inputBox}
-                                               underlineColorAndroid='rgba(0,0,0,0)'
-                                               placeholder="1"
-                                               placeholderTextColor = "#068e81"
-                                               selectionColor="#fff"
-                                               keyboardType="numeric"
-                                               onChangeText={UserEmail =>this.setState({UserEmail})}
-                                    />
-                                    <CommonText text={'หน่วย'} style={{fontSize: 20, color: '#068e81'}} />
-                                </View>
-                            </View>
-                            <View
-                                style = {{height: 1 , width: '100%', backgroundColor: '#080808'}}>
-                            </View>
-                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
-                                <TouchableOpacity
-                                    style={[styles.button,{marginLeft: '10%'}]}
-                                    onPress={ () => this.props.navigation.navigate({
-                                    routeName: FOODDIARY_SCREEN,
-                                    params: {foodData: foodData}})}
-                                >
-                                    <CommonText text={'บันทึกลงไดอารี่'} style={styles.buttonText} />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.button,{marginRight: '10%'}]}>
-                                    <CommonText text={'บันทึกและค้นหาต่อ'} style={styles.buttonText} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 50}}>
-                                <CommonText text={'ปริมาณแคลลอรี่เปรียบเทียบต่อ '} size={16} />
-                                <CommonText text={'1'} size={16} />
-                                <CommonText text={' หน่วย'} size={16} />
-                            </View>
-                            <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 50}}>
-                                <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิน 9 นาที'} />
-                                <ImageGif itemImage={Images.imgGif.Run} nameImg={'วิ่ง 7 นาที'} />
-                                <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={'ปั่น 5 นาที'} />
-                                <ImageGif itemImage={Images.imgGif.swimming} nameImg={'ว่าย 3 นาที'} />
+                                <CommonText text={'หน่วย'} style={{fontSize: 20, color: '#068e81'}} />
                             </View>
                         </View>
-                    </Content>
+                        <View
+                            style = {{height: 1 , width: '100%', backgroundColor: '#080808', marginTop: 10}}>
+                        </View>
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
+                            <TouchableOpacity
+                                style={[styles.button,{marginLeft: '10%'}]}
+                                onPress={ () => this.props.navigation.navigate({
+                                routeName: FOODDIARY_SCREEN,
+                                params: {foodData: foodData}})}
+                            >
+                                <CommonText text={'บันทึกลงไดอารี่'} style={styles.buttonText} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button,{marginRight: '10%'}]}>
+                                <CommonText text={'บันทึกและค้นหาต่อ'} style={styles.buttonText} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center'}}>
+                                <CommonText text={'ปริมาณแคลลอรี่เปรียบเทียบต่อ '} />
+                                <CommonText text={'1'} />
+                                <CommonText text={' หน่วย'} />
+                            </View>
+                            <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 100}}>
+                                <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิน 10 นาที'} />
+                                <ImageGif itemImage={Images.imgGif.Run} nameImg={'วิ่ง 10 นาที'} />
+                                <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={'ปั่น 72 นาที'} />
+                                <ImageGif itemImage={Images.imgGif.swimming} nameImg={'ว่าย 59 นาที'} />
+                            </View>
+                        </View>
+                    </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
                         menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}

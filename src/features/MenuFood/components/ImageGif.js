@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import CommonText from '../../common/components/CommonText';
 
 const ImageGif = (props) => {
     return(
@@ -9,7 +10,7 @@ const ImageGif = (props) => {
                 source={props.itemImage}
                 style={styles.image}
             />
-            <Text>{props.nameImg}</Text>
+            <CommonText text={props.nameImg} color={'#068e81'} size={16} />
         </View>
     )
 };
@@ -25,20 +26,16 @@ ImageGif.defaultProps = {
 
 const styles = StyleSheet.create({
     containerGif: {
-        width: 70,
-        height: 90,
-        marginHorizontal: 10,
-        marginVertical: 10,
+        width: '23%',
+        height: '23%',
         alignItems: 'center',
         justifyContent: 'center'
     },
     image: {
         width: 60,
-        height: 60
-    },
-    nameImage: {
-        fontSize: 16,
-        color: '#068e81'
+        height: 60,
+        borderWidth:1,
+        borderColor: '#068e81'
     }
 });
 
