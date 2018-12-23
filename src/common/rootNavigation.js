@@ -31,7 +31,7 @@ export const RootStack = StackNavigator({
     ...aboutRouter,
     ...problemRouter
 },{
-    initialRouteName: MENUFOOD_SCREEN,
+    initialRouteName: LOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),
