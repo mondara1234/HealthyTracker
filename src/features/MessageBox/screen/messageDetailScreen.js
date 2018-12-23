@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert} from 'react-native';
+import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert } from 'react-native';
 import { Container, Content } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
@@ -9,12 +9,12 @@ import HandleBack from "../../common/components/HandleBack";
 import {bindActionCreators} from "redux";
 import {withNavigation} from "react-navigation";
 import {connect} from "react-redux";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {TRICK_SCREEN} from "../router";
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {BMI_SCREEN} from "../../BMI/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { TRICK_SCREEN } from "../router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { BMI_SCREEN } from "../../BMI/router";
 
-class DetailExerciseScreen extends React.PureComponent {
+class messageDetailScreen extends React.PureComponent {
     constructor(){
         super();
         this.state = {
@@ -41,28 +41,20 @@ class DetailExerciseScreen extends React.PureComponent {
     };
 
     render() {
-        const { exerciseData } = this.props.navigation.state.params;
+        const { messageData } = this.props.navigation.state.params;
         const { width } = Dimensions.get('window');
 
         return (
             <HandleBack onBack={this.onBack}>
-                <Container>
-                    <Content>
-                        <View style={styles.container}>
-                            <Image  style={{width: width - 40, height: 150, marginVertical: 20}}
-                                    source={{uri: exerciseData.picture.large}}
-                            />
-                            <CommonText text={exerciseData.name.first} style={{fontSize: 24, marginLeft: 15}} />
-                            <View style={{flex: 1, width: width}}>
-                                <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 10}}>
-                                    <CommonText text={'Admin/28/11/61'} style={{ fontSize: 16 }} />
-                                </View>
-                                <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
-                                    <CommonText text={exerciseData.detailExercise} style={{ fontSize: 30, color: '#000'}} />
-                                </View>
+                <Container style={styles.container}>
+                    <View style={styles.container}>
+                        <Content>
+                            <CommonText text={messageData.title} style={{fontSize: 22, marginLeft: 15}} />
+                            <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
+                                <CommonText text={messageData.detail} style={{ fontSize: 20, color: '#000'}} />
                             </View>
-                        </View>
-                    </Content>
+                        </Content>
+                    </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
                         menuFoodScreen={() => this.props.navigation.navigate(MENUFOOD_SCREEN)}
@@ -75,8 +67,8 @@ class DetailExerciseScreen extends React.PureComponent {
     }
 }
 
-DetailExerciseScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={`เคล็ดลับ: ${navigation.state.params.exerciseData.name.first}`} />,
+messageDetailScreen.navigationOptions  = ({navigation}) => ({
+    headerTitle: <HeaderTitle text={'รายละเอียดข้อความ'} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
@@ -85,9 +77,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F4F4F4',
         flex: 1,
-        paddingTop: 10,
-        alignItems: 'center'
-    }
+        alignItems: 'center',
+    },
 });
 
-export default withNavigation(DetailExerciseScreen);
+export default withNavigation(messageDetailScreen);

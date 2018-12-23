@@ -27,7 +27,7 @@ class App extends React.Component{
     }
 
     render() {
-        console.disableYellowBox = true;//ปิดข้อความสีเหลือง
+        //console.disableYellowBox = true;//ปิดข้อความสีเหลือง
 
         return (
             <StyleProvider style={getTheme(ThemeVariables)}>

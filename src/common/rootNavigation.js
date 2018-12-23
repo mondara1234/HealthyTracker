@@ -13,6 +13,7 @@ import { aboutRouter, ABOUT_SCREEN } from '../features/About/router';
 import { problemRouter, PROBLEM_SCREEN } from '../features/Problem/router';
 import { settingRouter } from '../features/Setting/router';
 import { usermanualRouter } from '../features/UserManual/router';
+import { messageboxRouter, MESSAGEBOX_SCREEN } from '../features/MessageBox/router';
 import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
@@ -29,9 +30,10 @@ export const RootStack = StackNavigator({
     ...usermanualRouter,
     ...profileRouter,
     ...aboutRouter,
-    ...problemRouter
+    ...problemRouter,
+    ...messageboxRouter
 },{
-    initialRouteName: LOGIN,
+    initialRouteName: MESSAGEBOX_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

@@ -17,6 +17,7 @@ import { PROFILE_SCREEN } from "../../ProfileUser/router";
 import { EXERCISE_SCREEN } from "../../Exercise/router";
 import { USERMANUAL_SCREEN } from "../../UserManual/router";
 import { SETTING_SCREEN } from "../../Setting/router";
+import { MESSAGEBOX_SCREEN } from "../../MessageBox/router";
 import { PROBLEM_SCREEN } from "../../Problem/router";
 import { ABOUT_SCREEN } from "../../About/router";
 import * as API from "../../User/api/api";
@@ -124,10 +125,11 @@ class Sideber extends React.Component {
         const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
 
         const menus = [
-            {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN},
+            {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
             {name: 'ท่าออกกำลังกาย', icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
+            {name: 'กล่องข้อความ', icon: 'message', route: MESSAGEBOX_SCREEN, params: {isRootPage: true}},
             {name: 'แจ้งปัญหา', icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
-            {name: 'คู่มือการใช้งาน', icon: 'address-book-o', route: USERMANUAL_SCREEN},
+            {name: 'คู่มือการใช้งาน', icon: 'address-book-o', route: USERMANUAL_SCREEN, params: {isRootPage: true}},
             {name: 'ตั้งค่า', icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
             {name: 'ออกจากระบบ', icon: 'log-out', route: null}
         ];
