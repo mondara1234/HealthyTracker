@@ -11,12 +11,11 @@ import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import {DETAILEXERCISE_SCREEN} from "../../Exercise/router";
 
 const datas = [
-    { title: 'ยินดีต้อนรับสูj Healthy Tracker', detail: 'เนื้อหาต่างๆ', name: "Snoopy" },
-    { title: 'ต้องการลดน้ำหนัก 5โล ใน 1อาทิตย์', detail: 'เนื้อหาต่างๆ', name: "Oliver" },
-    { title: 'การคาดเดารูปร่างคุณ จากอาหารที่คุณกิน', detail: 'เนื้อหาต่างๆ', name: "Oliver" }
+    { title: 'ยินดีต้อนรับสู Healthy Tracker', detail: 'เนื้อหาต่างๆ', name: "Snoopy", status: true },
+    { title: 'ต้องการลดน้ำหนัก 5โล ใน 1อาทิตย์', detail: 'เนื้อหาต่างๆ', name: "Oliver", status: false },
+    { title: 'การคาดเดารูปร่างคุณ จากอาหารที่คุณกิน', detail: 'เนื้อหาต่างๆ', name: "Oliver", status: false }
 
 ];
 
@@ -26,7 +25,8 @@ class messageBoxScreen extends Component {
         this.state = {
             basic: true,
             listViewData: datas,
-            editing: true
+            editing: true,
+            status: false
         };
     }
 
@@ -48,15 +48,41 @@ class messageBoxScreen extends Component {
 
     };
 
+    messageDetail = (data) => {
+        if(data.status === false){
+            this.setState({
+                status: !this.state.status
+            });
+        }
+        this.props.navigation.navigate(
+            {routeName: MESSAGEDETAIL_SCREEN, params: {messageData: data}}
+        )
+    };
+
     deleteRow(data, secId, rowId, rowMap) {
         console.warn('data: '+ data.name);// กลุ่มข้อมูล แต่จะแสดงตามหลัง.
         console.warn('secId: '+ secId);//แสดงค่า แต่เป้น s1
         console.warn('rowId: '+ rowId);//เป้นกลุ่ม object แต่ไม่แสดงค่า
         console.warn('rowMap: '+ rowMap);//เป้นกลุ่ม object แต่ไม่แสดงค่า
         rowMap[`${secId}${rowId}`].props.closeRow();//รับค่า ไว้ใน object เพื่อลบ ตามค่าใน object
+
         const newData = [...this.state.listViewData]; //ประกาศตัวแปร เพื่อรับค่า state
-        newData.splice(rowId, 1);// ลบ ค่าในตัวแปร ตาม rowID ลบ 1
-        this.setState({ listViewData: newData }); // set ค่า state ใหม่
+        Alert.alert(
+            "แจ้งเตือน",
+            "คุณต้องการลบข้อความนี้ ใช่ไหม?",
+            [
+                {
+                    text: "ลบ",
+                    onPress: () =>
+                    {
+                        newData.splice(rowId, 1);// ลบ ค่าในตัวแปร ตาม rowID ลบ 1
+                        this.setState({ listViewData: newData }); // set ค่า state ใหม่
+                    }
+                },
+                { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+            ],
+            { cancelable: false }
+        );
     }
 
     render() {
@@ -73,13 +99,14 @@ class messageBoxScreen extends Component {
                                     renderRow={data =>
 
                                         <ListItem
+                                            style={{backgroundColor: this.state.status === false ? '#bfbfbf' : '#fff'}}
                                             onPress={() => alert('กดที่ข้อความแล้วเลื่อนขวา เพื่อดู รายละเอียด' + '\n' + 'กดที่ข้อความแล้วเลื่อนซ้าย เพื่อลบ ข้อความ')}>
                                             <CommonText text={data.title} style={{marginLeft: 10}}/>
                                         </ListItem>
 
                                     }
                                     renderLeftHiddenRow={data =>
-                                        <Button full onPress={() => this.props.navigation.navigate( {routeName: MESSAGEDETAIL_SCREEN, params: {messageData: data}} )}>
+                                        <Button full onPress={() => this.messageDetail(data)}>
                                             <Icon active name="information-circle"/>
                                         </Button>}
                                     renderRightHiddenRow={(data, secId, rowId, rowMap) =>
