@@ -4,7 +4,6 @@ import { Container, Content, Footer } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
-import { requestApiData } from "../redux/actions";
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
@@ -12,8 +11,7 @@ import Logo from '../components/Logo';
 import {getNews, getAllFlights} from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
-import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import {Images} from "../../User/components/images";
+import { Images } from "../../User/components/images";
 
 class LoingScreen extends Component {
     constructor(props) {
@@ -44,15 +42,27 @@ class LoingScreen extends Component {
 
     };
 
-    /*componentDidMount(){
+    componentDidMount(){
         this.props.FETCH_DATA();
-    }*/
+    }
 
     UserLoginFunction = () =>{
-        const Email = this.state.UserEmail ;
-        const Password = this.state.UserPassword ;
-        const keyScreen = this.props.navigation;
-        this.props.Flights_DATA(Email,Password , keyScreen);
+        if(this.state.UserEmail === '' || this.state.UserPassword === '' ){
+            Alert.alert(
+                "แจ้งเตือน",
+                "กรุณากรอกให้ครบ",
+                [
+                    { text: "ปิด", onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+        }else{
+
+            const Email = this.state.UserEmail ;
+            const Password = this.state.UserPassword ;
+            const keyScreen = this.props.navigation;
+            this.props.Flights_DATA(Email,Password , keyScreen);
+        }
     };
 
     render() {
@@ -96,8 +106,7 @@ class LoingScreen extends Component {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.containerForgot}>
-                                    <TouchableOpacity style={styles.button} //onPress={this.UserLoginFunction}
-                                                      onPress={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}>
+                                    <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
                                         <CommonText text={'Login'} style={styles.buttonText} />
                                     </TouchableOpacity>
                                 </View>

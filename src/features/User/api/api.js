@@ -14,7 +14,7 @@ export function fetchPostsApi() {
 }
 
 export const fetchTodo = (Email, Password, keyScreen) => dispatch => {
-    return fetch('http://192.168.1.4/My_SQL/User_Login.php', {
+    return fetch('http://localhost/My_SQL/User_Login.php', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -28,7 +28,7 @@ export const fetchTodo = (Email, Password, keyScreen) => dispatch => {
         .then((responseJson) => {
             if(responseJson === 'Data Matched')
             {
-                keyScreen.navigate('DASHBOARD')
+                keyScreen.navigate('FOODDIARY_SCREEN')
             }
             else{
                 Alert.alert('Error',responseJson);
