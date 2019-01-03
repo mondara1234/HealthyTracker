@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import CommonText from '../../../common/components/CommonText';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';;
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+import { bindActionCreators } from 'redux';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import CommonText from '../../../common/components/CommonText'
+import * as API from '../../api/api';
 
 class FormRegistration extends Component {
     constructor(props) {
@@ -16,23 +20,34 @@ class FormRegistration extends Component {
     }
 
     InsertStudentRecordsToServer = () =>{
-        fetch('http://localhost/My_SQL/InsertData.php', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name : this.state.TextInput_Name,
-                password : this.state.TextInput_Password,
-                email: this.state.TextInput_Email
-            })
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                Alert.alert(responseJson);
-            }).catch((error) => {
-            console.error(error);
-        });
+       if(this.state.TextInput_Name === ''||this.state.TextInput_Email === ''||this.state.TextInput_Password === ''|| this.state.TextInput_PasswordAgain === '' ){
+           Alert.alert(
+               "แจ้งเตือน",
+               "กรุณากรอกให้ครบ",
+               [
+                   { text: "ปิด", onPress: () => {}, style: "cancel" },
+               ],
+               { cancelable: false },
+           );
+       }else{
+           if(this.state.TextInput_Password === this.state.TextInput_PasswordAgain ){
+               const Name = this.state.TextInput_Name;
+               const Email = this.state.TextInput_Email;
+               const Password = this.state.TextInput_Password;
+               const keyScreens = this.props.keyScreen;
+
+               this.props.Flights_Register(Name, Email, Password, keyScreens);
+           }else{
+               Alert.alert(
+                   "แจ้งเตือน",
+                   "รหัสผ่าน ทั้ง 2 ช่อง ไม่ตรงกัน",
+                   [
+                       { text: "ปิด", onPress: () => {}, style: "cancel" },
+                   ],
+                   { cancelable: false },
+               );
+           }
+       }
     };
 
     render(){
@@ -118,4 +133,15 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FormRegistration;
+function mapStateToProps(state) {
+    return{
+        servers: state.data
+    };
+}
+
+export default connect(mapStateToProps,
+    (dispatch) => ({
+        navigationActions: bindActionCreators(NavigationActions, dispatch),
+        Flights_Register: bindActionCreators(API.fetchRegister, dispatch),
+    })
+)(FormRegistration);

@@ -8,7 +8,7 @@ import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Logo from '../components/Logo';
-import {getNews, getAllFlights} from '../redux/actions';
+import { getNews } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
@@ -58,10 +58,10 @@ class LoingScreen extends Component {
             );
         }else{
 
-            const Email = this.state.UserEmail ;
-            const Password = this.state.UserPassword ;
+            const Email = this.state.UserEmail;
+            const Password = this.state.UserPassword;
             const keyScreen = this.props.navigation;
-            this.props.Flights_DATA(Email,Password , keyScreen);
+            this.props.Flights_Login(Email, Password, keyScreen);
         }
     };
 
@@ -224,7 +224,7 @@ export default connect(mapStateToProps,
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_DATA: bindActionCreators(getNews, dispatch),
-        Flights_DATA: bindActionCreators(API.fetchTodo, dispatch),
+        Flights_Login: bindActionCreators(API.fetchLogin, dispatch),
     })
 )(LoingScreen);
 

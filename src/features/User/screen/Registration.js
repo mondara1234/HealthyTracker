@@ -50,7 +50,7 @@ class Registration extends Component {
                             source={Images.user_default}/>
                     <Image  style={styles.image}
                             source={Images.plusImg}/>
-                    <Form nameRegistration="ลงทะเบียน" />
+                    <Form nameRegistration="ลงทะเบียน" keyScreen={navigate}/>
                     <View style={styles.signupTextCont}>
                         <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
                         <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>

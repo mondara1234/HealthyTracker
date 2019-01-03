@@ -1,11 +1,11 @@
 import * as actionTypes from '../redux/actions';
 import axios from '../redux/axios';
 import {Alert} from "react-native";
-import { getAllFlights } from "../redux/actions";
-
+import { SERVER_URL } from "../../../common/constants"
+import {LOGIN} from "../router";
 
 export function fetchPostsApi() {
-    return fetch(`http://192.168.1.4/My_SQL/ShowAllDataList.php`)
+    return fetch(`${SERVER_URL}/My_SQL/ShowAllDataList.php`)
         .then(response => response.json())
         .then((responseJson) => responseJson)
         .catch((error) => {
@@ -13,8 +13,8 @@ export function fetchPostsApi() {
         });
 }
 
-export const fetchTodo = (Email, Password, keyScreen) => dispatch => {
-    return fetch('http://localhost/My_SQL/User_Login.php', {
+export const fetchLogin = (Email, Password, keyScreen) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/User_Login.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -39,34 +39,45 @@ export const fetchTodo = (Email, Password, keyScreen) => dispatch => {
 
 };
 
-export const fetchTodoss = (Email, Password, keyScreen) => dispatch => {
-    return fetch('http://192.168.1.4/My_SQL/User_Login.php', {
+export const fetchRegister = (Name, Email, Password, keyScreens) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/InsertData.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            name: Name,
             email: Email,
             password: Password
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            if(responseJson === 'Data Matched')
-            {
-                let todos = 'Data Matched';
-                dispatch(getAllFlights(todos))
-            }
-            else{
-                let todos = responseJson;
-                dispatch(getAllFlights(todos))
+            if(responseJson === 'Email'||responseJson === 'Name'){
+                Alert.alert(
+                    "แจ้งเตือน",
+                    responseJson+" นี้มีคนใช้ไปแล้วครับ",
+                    [
+                        { text: "ปิด", onPress: () => {}, style: "cancel" }
+                    ],
+                    { cancelable: false },
+                );
+            }else{
+                Alert.alert(
+                    "แจ้งเตือน",
+                    responseJson,
+                    [
+                        { text: "ตกลง", onPress: () => keyScreens({routeName: LOGIN})},
+                        { text: "ปิด", onPress: () => {}, style: "cancel" }
+                    ],
+                    { cancelable: false },
+                );
             }
         }).catch((error) => {
             console.error(error);
         });
 
 };
-
 
 const getDataSuccess = (data) => {
     return {
@@ -93,17 +104,22 @@ const postDataSuccess = (response) => {
     }
 }
 
-export const postData = (url, obj, props) => {
-    return (dispatch) => {
-        axios.post(url, obj)
-            .then(response => {
-                dispatch(postDataSuccess(response));
+export const postData = ( Email, Password, keyScreen) => {
+        axios.post(`${SERVER_URL}/My_SQL/User_Login.php`, Email, Password, keyScreen)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if(responseJson === 'Data Matched')
+                {
+                    keyScreen.navigate('FOODDIARY_SCREEN')
+                }
+                else{
+                    Alert.alert('Error',responseJson);
+                }
             })
             .catch(error => {
                 //TODO: handle the error when implemented
             })
-    }
-}
+};
 
 const putDataSuccess = (response) => {
     return {

@@ -260,7 +260,6 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     (dispatch) => ({
-        NavigationActions: bindActionCreators(NavigationActions, dispatch),
-        Flights_DATA: bindActionCreators(API.fetchTodo, dispatch),
+        NavigationActions: bindActionCreators(NavigationActions, dispatch)
     })
 )(Sideber);
