@@ -33,7 +33,7 @@ export const RootStack = StackNavigator({
     ...problemRouter,
     ...messageboxRouter
 },{
-    initialRouteName: EXERCISE_SCREEN,
+    initialRouteName: LOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

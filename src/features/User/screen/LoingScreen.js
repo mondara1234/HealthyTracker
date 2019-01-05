@@ -8,7 +8,7 @@ import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Logo from '../components/Logo';
-import { getNews } from '../redux/actions';
+import { getNews, getAllFlights } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
@@ -20,7 +20,8 @@ class LoingScreen extends Component {
         this.state = {
             UserEmail: '',
             UserPassword: '',
-            editing: true
+            editing: true,
+            data_User: []
         }
     }
 
@@ -61,7 +62,17 @@ class LoingScreen extends Component {
             const Email = this.state.UserEmail;
             const Password = this.state.UserPassword;
             const keyScreen = this.props.navigation;
+            const members = this.props.servers.user;
+            let result = [];
+            for (let i = 0; i < members.length; i++) {
+                if (members[i].Email === Email) {
+                    result.push(members[i]);
+                    console.log(result);
+                    this.props.FETCH_GETDATA(result);
+                }
+            }
             this.props.Flights_Login(Email, Password, keyScreen);
+
         }
     };
 
@@ -216,8 +227,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        servers: state.data,
-        routerName : state.routeName
+        servers: state.dataUser
     };
 }
 
@@ -225,7 +235,9 @@ export default connect(mapStateToProps,
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_DATA: bindActionCreators(getNews, dispatch),
+        FETCH_GETDATA: bindActionCreators(getAllFlights, dispatch),
         Flights_Login: bindActionCreators(API.fetchLogin, dispatch),
+        Flights_User: bindActionCreators(API.fetchSelectUser, dispatch),
     })
 )(LoingScreen);
 

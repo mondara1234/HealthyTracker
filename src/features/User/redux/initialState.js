@@ -1,6 +1,6 @@
 
 const initialState = {
-    data: [],
+    user: [],
     routeName: '',
     error: null,
     fetched: false,

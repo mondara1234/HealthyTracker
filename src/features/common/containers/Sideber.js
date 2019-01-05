@@ -29,6 +29,7 @@ class Sideber extends React.Component {
 
         this.state = {
             menuActive: 'home',
+            ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png'
         };
     }
 
@@ -121,7 +122,12 @@ class Sideber extends React.Component {
     };
 
     render () {
-        const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
+        console.log('Update Store:',this.props);
+        const { user } = this.props.users;
+        const imgProfile = user.map((data) => {return data.imgProfile});
+        const Names = user.map((data) => {return data.UserName});
+        const profileImage = imgProfile.toString();
+        const UserName = Names.toString();
 
         const menus = [
             {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
@@ -143,14 +149,14 @@ class Sideber extends React.Component {
                             source={
                                 profileImage
                                     ? {uri: profileImage}
-                                    : require('../../../../pulic/assets/images/user-default.png')
+                                    : {uri: this.state.ImgDefault}
 
                             }
                             style={styles.userThumb}
                         />
                         <View style={{justifyContent: 'space-between'}}>
                             <CommonText
-                                text={'name_User'}
+                                text={UserName}
                                 style={[styles.fontBase, s.b, s.ml2,{fontSize: 18}]}
                             />
                             <CommonText
@@ -249,7 +255,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        routerName : state.routeName
+        users: state.dataUser
     };
 }
 
