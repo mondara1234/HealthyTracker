@@ -20,7 +20,7 @@ class LoingScreen extends Component {
         this.state = {
             UserEmail: '',
             UserPassword: '',
-            editing: true,
+            editing: true
         }
     }
 
@@ -43,7 +43,7 @@ class LoingScreen extends Component {
     };
 
     componentDidMount(){
-        this.props.FETCH_DATA();
+        this.props.FETCH_DATA(); //น้ำข้อมูลมาใส่ใน servers.data
     }
 
     UserLoginFunction = () =>{
@@ -67,7 +67,6 @@ class LoingScreen extends Component {
 
     render() {
 
-        const { goBack } = this.props.navigation;
         console.log('Update Store:',this.props);
 
         return (
@@ -76,9 +75,6 @@ class LoingScreen extends Component {
                     <ImageBackground style={styles.backgroundImage}
                                      source={Images.bgLogin}>
                         <Content padder>
-                            <View style={{marginTop: -20}}>
-                                <HeaderLeftMenu icon={'arrow-back'} color={'#000'}  onPress={() => goBack()} />
-                            </View>
                             <View style={styles.containerRow}>
                                 <CommonText text={'LOGIN'} style={styles.titleLogin} />
                                 <Logo Title="Healthy MyApp"/>
@@ -127,7 +123,11 @@ class LoingScreen extends Component {
 }
 
 LoingScreen.navigationOptions  = ({navigation}) => ({
-    header: null
+    headerTransparent: true,
+    headerTintColor: '#000',
+    headerStyle: {
+        backgroundColor: 'transparent'
+    }
 });
 
 const styles = StyleSheet.create({
@@ -216,7 +216,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        servers: state.data
+        servers: state.data,
+        routerName : state.routeName
     };
 }
 

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';;
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';;
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonText from '../../../common/components/CommonText'
 import * as API from '../../api/api';
+import { Images } from "../../components/images";
+import {SERVER_URL} from "../../../../common/constants";
+import ImagePicker from "react-native-image-picker";
+import RNFetchBlob from "react-native-fetch-blob";
 
 class FormRegistration extends Component {
     constructor(props) {
@@ -15,7 +19,11 @@ class FormRegistration extends Component {
             TextInput_Name: '',
             TextInput_Password: '',
             TextInput_Email: '',
-            TextInput_PasswordAgain: ''
+            TextInput_PasswordAgain: '',
+            ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png',
+            ImgProfile: null,
+            data: null,
+            filename: null,
         }
     }
 
@@ -34,9 +42,10 @@ class FormRegistration extends Component {
                const Name = this.state.TextInput_Name;
                const Email = this.state.TextInput_Email;
                const Password = this.state.TextInput_Password;
+               const ImgProfile = this.state.ImgDefault ? this.state.ImgDefault : this.state.ImgProfile;
                const keyScreens = this.props.keyScreen;
 
-               this.props.Flights_Register(Name, Email, Password, keyScreens);
+               this.props.Flights_Register(Name, Email, Password, ImgProfile, keyScreens);
            }else{
                Alert.alert(
                    "แจ้งเตือน",
@@ -50,9 +59,70 @@ class FormRegistration extends Component {
        }
     };
 
+    selectPhotoTapped() {
+
+        const options = {
+            title: 'เลือกรูปภาพ',
+            cancelButtonTitle: 'ปิด',
+            takePhotoButtonTitle: 'ถ่ายรูป',
+            chooseFromLibraryButtonTitle: 'เลือกรูปจากคลัง',
+            quality: 1.0,
+            maxWidth: 500,
+            maxHeight: 500,
+            storageOptions: {
+                skipBackup: true
+            },
+            mediaType: 'photo'
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            if (!response.uri) {
+                return;
+            }
+            //let source = { uri: response.uri };
+
+            // You can also display the image using data:
+             let source = 'data:image/jpeg;base64,'+response.data ;
+
+            console.log(source);
+            console.log(response.uri);
+            console.log(response.data);
+            console.log(response.fileName);
+
+            this.setState({
+                ImgProfile: source,
+                data: response.data,
+                filename: response.fileName
+            });
+        })
+    }
+
+    uploadPhoto(){
+        RNFetchBlob.fetch('POST', `${SERVER_URL}/My_SQL/upload.php`, {
+            Authorization : "Bearer access-token",
+            otherHeader : "foo",
+            'Content-Type' : 'multipart/form-data',
+        }, [
+            { name : 'fileToUpload', filename : this.state.filename, type: 'image/jpeg', data: this.state.data},
+            console.log('Data',this.state.data)
+        ]).then((resp) => {
+            console.log('resp ='+ resp);
+        }).catch((err) => {
+            console.log('errror = '+ err);
+        })
+    }
+
     render(){
         return(
             <View style={styles.container}>
+                <Image  style={styles.imageUser}
+                        source={this.state.ImgProfile ? {uri: this.state.ImgProfile} :
+                            {uri: this.state.ImgDefault}} />
+                <TouchableOpacity style={styles.touchImage} onPress={this.selectPhotoTapped.bind(this)}>
+                    <Image  style={styles.image}
+                            source={Images.plusImg}
+                    />
+                </TouchableOpacity>
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
                            placeholder="UserName"
@@ -130,7 +200,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    imageUser: {
+        width: 120,
+        height: 120,
+        marginTop: 30
+    },
+    touchImage: {
+        marginTop: -30,
+        marginLeft: 90,
+        marginBottom: 20
+    },
+    image: {
+        width: 30,
+        height: 30
+    },
 });
 
 function mapStateToProps(state) {

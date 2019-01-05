@@ -23,7 +23,6 @@ import { ABOUT_SCREEN } from "../../About/router";
 import * as API from "../../User/api/api";
 import CommonText from '../../common/components/CommonText';
 
-
 class Sideber extends React.Component {
     constructor(props) {
         super(props);
@@ -32,14 +31,6 @@ class Sideber extends React.Component {
             menuActive: 'home',
         };
     }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     // One possible fix...
-    //     const routeName = this.props.routerName;
-    //     if (this.state.screebSideber !== routeName ) {
-    //         this.setState({ screebSideber: routeName });
-    //     }
-    // }
 
     _renderItem = ({item}) => {
         const isActive = this.state.menuActive === item.name;
@@ -58,29 +49,31 @@ class Sideber extends React.Component {
                     onPress={() => {
                         this.setState({menuActive: item.name});
 
-                        if (item.route === null ) {
+                        const resetAction = this.props.navigationActions.reset({
+                            index: 0,
+                            actions: [
+                                NavigationActions.navigate({
+                                    routeName: 'LOGIN'
+                                })
+                            ]
+                        });
+
+                        const navigateAction = this.props.navigationActions.navigate({
+                            routeName: `${item.route}`,
+                            params: item.params
+                        });
+
+                        if (item.route === LOGIN ) {
                             Alert.alert(
                                 'ออกจากระบบ',
                                 'ต้องการออกจากระบบ ?',
                                 [
-                                    {text: 'ตกลง', onPress: () => navigate({routeName: LOGIN})},
-                                    /*this.props.NavigationActions.reset({
-                                index: 0,
-                                actions: [
-                                    NavigationActions.navigate({
-                                        routeName: item.route,
-                                        params:  item.params
-                                    })
-                                ]
-                            }) //มาทำแบบนี้ให้ได้*/
-                                    {text: 'ยกเลิก'}
+                                    {text: 'ตกลง', onPress: () => this.props.navigation.dispatch(resetAction)},
+                                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
                                 ]
                             )
                         } else {
-                            navigate({
-                                routeName: `${item.route}`,
-                                params: item.params
-                            })
+                            this.props.navigation.dispatch(navigateAction);
                         }
                     }}
                 >
@@ -120,8 +113,14 @@ class Sideber extends React.Component {
         )
     };
 
-    render () {
+    aboutFuntion = () => {
         const { navigate } = this.props.navigation;
+
+        this.setState({menuActive: 'about'});
+        navigate({routeName: ABOUT_SCREEN});
+    };
+
+    render () {
         const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
 
         const menus = [
@@ -131,7 +130,7 @@ class Sideber extends React.Component {
             {name: 'แจ้งปัญหา', icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
             {name: 'คู่มือการใช้งาน', icon: 'address-book-o', route: USERMANUAL_SCREEN, params: {isRootPage: true}},
             {name: 'ตั้งค่า', icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
-            {name: 'ออกจากระบบ', icon: 'log-out', route: null}
+            {name: 'ออกจากระบบ', icon: 'log-out', route: LOGIN, params: {isRootPage: true}}
         ];
 
         return (
@@ -169,10 +168,8 @@ class Sideber extends React.Component {
                         ItemSeparatorComponent={this.renderSeparator}
                     />
                 </Content>
-                <TouchableOpacity
-                    onPress={ () => navigate({routeName: ABOUT_SCREEN})}
-                >
-                    <View style={styles.footer}>
+                <TouchableOpacity onPress={() => this.aboutFuntion()}>
+                    <View style={[styles.footer,{backgroundColor: this.state.menuActive === 'about' ? '#999999' : '#e7e7e7'}]}>
                         <CommonText text={'เกี่ยวกับเรา'} style={styles.footerFont} />
                         <CommonText text={`version ${APP_VERSION_TEXT}`} style={styles.version} />
                     </View>
@@ -222,9 +219,8 @@ const styles = StyleSheet.create({
     },
     footer: {
         width: '100%',
-        padding: 5,
+        padding: 10,
         alignItems: 'center',
-        backgroundColor: '#e7e7e7',
         height: 50,
     },
     footerFont: {
@@ -260,6 +256,6 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     (dispatch) => ({
-        NavigationActions: bindActionCreators(NavigationActions, dispatch)
+        navigationActions: bindActionCreators(NavigationActions, dispatch)
     })
 )(Sideber);

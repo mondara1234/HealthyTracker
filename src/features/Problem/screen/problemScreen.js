@@ -8,6 +8,7 @@ import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HandleBack from "../../common/components/HandleBack";
+import {SERVER_URL} from "../../../common/constants";
 import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {BMI_SCREEN} from "../../BMI/router";
@@ -82,8 +83,9 @@ class problemScreen extends React.PureComponent {
             });
         })
     }
+
     uploadPhoto(){
-        RNFetchBlob.fetch('POST', 'http://192.168.1.28/My_SQL/upload.php', {
+        RNFetchBlob.fetch('POST', `${SERVER_URL}/My_SQL/upload.php`, {
             Authorization : "Bearer access-token",
             otherHeader : "foo",
             'Content-Type' : 'multipart/form-data',

@@ -3,6 +3,7 @@ import axios from '../redux/axios';
 import {Alert} from "react-native";
 import { SERVER_URL } from "../../../common/constants"
 import {LOGIN} from "../router";
+import { Images } from "../components/images";
 
 export function fetchPostsApi() {
     return fetch(`${SERVER_URL}/My_SQL/ShowAllDataList.php`)
@@ -39,7 +40,7 @@ export const fetchLogin = (Email, Password, keyScreen) => dispatch => {
 
 };
 
-export const fetchRegister = (Name, Email, Password, keyScreens) => dispatch => {
+export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/InsertData.php`, {
         method: 'POST',
         headers: {
@@ -49,7 +50,8 @@ export const fetchRegister = (Name, Email, Password, keyScreens) => dispatch => 
         body: JSON.stringify({
             name: Name,
             email: Email,
-            password: Password
+            password: Password,
+            imgProfile: ImgProfile
         })
     }).then((response) => response.json())
         .then((responseJson) => {

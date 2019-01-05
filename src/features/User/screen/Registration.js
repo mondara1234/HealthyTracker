@@ -46,10 +46,6 @@ class Registration extends Component {
                     <View style={styles.containerLogo}>
                         <LogoTextHT colorMain={'#000'} color={'#fff'} />
                     </View>
-                    <Image  style={styles.imageUser}
-                            source={Images.user_default}/>
-                    <Image  style={styles.image}
-                            source={Images.plusImg}/>
                     <Form nameRegistration="ลงทะเบียน" keyScreen={navigate}/>
                     <View style={styles.signupTextCont}>
                         <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
@@ -64,7 +60,6 @@ class Registration extends Component {
 }
 
 Registration.navigationOptions  = ({navigation}) => ({
-    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerStyle: {
         backgroundColor: '#068e81',
         elevation: 0
@@ -95,18 +90,6 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
-    },
-    imageUser: {
-        width: 120,
-        height: 120,
-        marginTop: 30
-    },
-    image: {
-        width: 30,
-        height: 30,
-        marginTop: -30,
-        marginLeft: 90,
-        marginBottom: 20
     },
     signupTextCont : {
         flexGrow: 1,
