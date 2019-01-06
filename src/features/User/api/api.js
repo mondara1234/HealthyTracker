@@ -79,7 +79,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
 };
 
 export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch => {
-    return fetch(`${SERVER_URL}/My_SQL/UpdateData.php`, {
+    return fetch(`${SERVER_URL}/My_SQL/UpdateBMIUser.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
