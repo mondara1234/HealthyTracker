@@ -2,8 +2,8 @@ import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
 import { LOGIN } from "../router";
 
-export function fetchPostsApi() {
-    return fetch(`${SERVER_URL}/My_SQL/user/ShowAllDataList.php`)
+export function fetchAllFoodUser() {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/AllFoodUser.php`)
         .then(response => response.json())
         .then((responseJson) => responseJson)
         .catch((error) => {
@@ -11,34 +11,8 @@ export function fetchPostsApi() {
         });
 }
 
-export const fetchLogin = (Email, Password, keyScreen) => dispatch => {
-    return fetch(`${SERVER_URL}/My_SQL/user/User_Login.php`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            email: Email,
-            password: Password
-        })
-    }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson === 'Data Matched')
-            {
-                keyScreen.navigate('FOODDIARY_SCREEN')
-            }
-            else{
-                Alert.alert('Error',responseJson);
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
-
-};
-
 export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => dispatch => {
-    return fetch(`${SERVER_URL}/My_SQL/user/InsertData.php`, {
+    return fetch(`${SERVER_URL}/My_SQL/InsertData.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -79,7 +53,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
 };
 
 export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch => {
-    return fetch(`${SERVER_URL}/My_SQL/user/UpdateBMIUser.php`, {
+    return fetch(`${SERVER_URL}/My_SQL/UpdateBMIUser.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -102,24 +76,22 @@ export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch =
 
 };
 
-// export const fetchSearchUser = (itemID) => dispatch => {
-//     return fetch(`${SERVER_URL}/My_SQL/user/ShowOneDataList.php`, {
-//         method: 'POST',
-//         headers: {
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             id: itemID
-//         })
-//     }).then((response) => response.json()
-//         ).then(function(responseText) {
-//         console.log('responseText'+ responseText);
-//             console.log('JSON'+ JSON.stringify(responseText));
-//             return responseText;
-//         }
-//     ).catch((error) => {
-//         console.error(error);
-//     });
-//
-// };
+export const fetchSearchFoodUser = (UserName) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/SeachFoodUser.php`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            userName: UserName
+        })
+    }).then((response) => response.text())
+        .then(function (data) {
+            console.log(JSON.parse(data))
+        })
+        .catch((error) => {
+        console.error(error);
+    });
+
+};

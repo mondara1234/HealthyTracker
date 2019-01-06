@@ -1,17 +1,27 @@
 import initialState from './initialState';
+import { SEARCH_ALLFODEUSER, SEARCH_FODEUSER, ONE_FODEUSER } from './constants';
 
-const reducers = [
-
-];
-
-export default function reducer(state = initialState, action = {}) {
-    let newState;
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        // Handle cross-topic actions here
+        case SEARCH_ALLFODEUSER:
+            return {
+                ...state,
+                loading: true
+            };
+        case ONE_FODEUSER:
+            return {
+                ...state,
+                foodUser: action.json,
+                loading: false
+            };
+        case SEARCH_FODEUSER:
+            return {
+                ...state,
+                foodUser: action.payload
+            };
         default:
-            newState = state;
-            break;
+            return state;
     }
-    /* istanbul ignore next */
-    return reducers.reduce((s, r) => r(s, action), newState);
-}
+};
+
+export default reducer;
