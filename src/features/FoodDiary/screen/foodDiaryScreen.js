@@ -19,17 +19,23 @@ import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
+import * as API from "../../User/api/api";
+import { getOneUser } from "../../User/redux/actions";
+import { SERVER_URL } from "../../../common/constants";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            selected: '',
-            dataSource: food,
-            DialogData: false,
+            editing: true,
             date: '',
-            editing: true
+            DialogData: false,
+            selected: '',
+            TextInput_age: 0,
+            TextInput_cm: 0,
+            TextInput_gg: 0,
+            dataSource: food,
         };
     }
 
@@ -39,10 +45,13 @@ class foodDiaryScreen extends React.PureComponent {
                 "แจ้งเตือน",
                 "คุณต้องการปิด App ใช่ไหม?",
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    {text: "ปิด", onPress: () => BackHandler.exitApp()},
+                    {
+                        text: "ยกเลิก", onPress: () => {
+                        }, style: "cancel"
+                    },
                 ],
-                { cancelable: false },
+                {cancelable: false},
             );
             return true;
         }
@@ -51,68 +60,93 @@ class foodDiaryScreen extends React.PureComponent {
 
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         let date, day, month, year, fulldate;
 
         date = new Date();
-        day = date.getDate() ;
-        month = date.getMonth()+1;
+        day = date.getDate();
+        month = date.getMonth() + 1;
         year = date.getFullYear();
 
-        if( day  < 10)
-        {     day = '0' + day.toString();}
-        if( month  < 10)
-        {     month = '0' + month.toString();}
+        if (day < 10) {
+            day = '0' + day.toString();
+        }
+        if (month < 10) {
+            month = '0' + month.toString();
+        }
 
-        fulldate =  day.toString() + '-' + month.toString() + '-' + year.toString();
+        fulldate = day.toString() + '-' + month.toString() + '-' + year.toString();
 
         this.setState({
             date: fulldate
         });
-    }
 
+        const {user} = this.props.Users;
+        const sex = user.map((data) => {return data.Sex});
+
+        if (sex.toString() === '') {
+            this.setState({
+                DialogData: true
+            });
+        }
+    }
 
     selectSex = (selectedSex) => {
 
-        if(selectedSex === 'male'){
+        if (selectedSex === 'male') {
             this.setState({
                 selected: selectedSex
             })
-        }else{
+        } else {
             this.setState({
                 selected: selectedSex
             })
         }
     };
 
-    _renderItem = ({ item, index }) => {
+    _renderItem = ({item, index}) => {
         return (
-            <View style={{ width: '100%', height: 70, backgroundColor: "#F4F4F4" }}>
-                <ListItem thumbnail style={{ height: 70, backgroundColor: 'transparent'}} >
+            <View style={{width: '100%', height: 70, backgroundColor: "#F4F4F4"}}>
+                <ListItem thumbnail style={{height: 70, backgroundColor: 'transparent'}}>
                     <Left>
                         <Thumbnail
                             source={{uri: item.picture.thumbnail}}
-                            style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}
+                            style={{width: 60, height: 60, alignItems: 'center', justifyContent: 'center'}}
                         />
                     </Left>
                     <Body>
-                    <View style={{height: 35, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <CommonText text={item.name.first} style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5}} />
+                    <View style={{
+                        height: 35,
+                        backgroundColor: 'transparent',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <CommonText text={item.name.first}
+                                    style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5}}/>
                         <IconFontAwesome
                             name="window-close-o"
                             size={30}
                             color={'#068e81'}
-                            style={{ marginTop: -14}}
+                            style={{marginTop: -14}}
                             onPress={() => alert('ต้องการลบรายการอาหารนี้ใช่ไหม')}
                         />
                     </View>
-                    <View style={{ height: 35, marginBottom: -2, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'transparent'}}>
+                    <View style={{
+                        height: 35,
+                        marginBottom: -2,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backgroundColor: 'transparent'
+                    }}>
                         <View style={styles.containerRowList}>
                             <CommonText text={'จำนวน '} size={14}/>
-                            <CommonText text={'1'} style={{ fontSize: 14, color: '#068e81' }} />
+                            <CommonText text={'1'} style={{fontSize: 14, color: '#068e81'}}/>
                             <CommonText text={' หน่วย'} size={14}/>
                         </View>
-                        <CommonText text={item.calorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81', marginRight: 3}} />
+                        <CommonText text={item.calorie + ' แคลอรี่'}
+                                    style={{fontSize: 14, color: '#068e81', marginRight: 3}}/>
                     </View>
                     </Body>
                 </ListItem>
@@ -121,14 +155,34 @@ class foodDiaryScreen extends React.PureComponent {
     };
 
     renderSeparator = () => {
-        return(
+        return (
             <View
-                style = {{height: 1 , width: '100%', backgroundColor: '#068e81'}}>
+                style={{height: 1, width: '100%', backgroundColor: '#068e81'}}>
             </View>
         )
     };
+    //ใช้สำหรับข้อมูลเป็น Promise {_40: 0, _65: 0, _55: null, _72: null}
+    async getData(itemID) {
+        const response = await fetch(`${SERVER_URL}/My_SQL/ShowOneDataList.php`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: itemID
+            })
+        }).then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+
+        this.props.REDUCER_ONEDATA(response);
+    }
 
     render() {
+        console.log('Update Store:', this.props);
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
@@ -139,12 +193,12 @@ class foodDiaryScreen extends React.PureComponent {
                             color={'#068e81'}
                             style={styles.styleIconClock}
                         />
-                        <CommonTime />
-                        <CommonText text={'น.'} style={styles.textDate} size={16} />
+                        <CommonTime/>
+                        <CommonText text={'น.'} style={styles.textDate} size={16}/>
                     </View>
                     <View style={styles.containerCalendar}>
-                        <CommonText text={'วันที่'} style={styles.textDate} />
-                        <CommonText text={this.state.date} style={styles.textDate} />
+                        <CommonText text={'วันที่'} style={styles.textDate}/>
+                        <CommonText text={this.state.date} style={styles.textDate}/>
                         <DatePicker
                             style={{width: 40}}
                             date={this.state.date}
@@ -160,11 +214,19 @@ class foodDiaryScreen extends React.PureComponent {
                                 }
                                 // ... You can check the source to find the other keys.
                             }}
-                            onDateChange={(date) => {this.setState({date: date})}}
+                            onDateChange={(date) => {
+                                this.setState({date: date})
+                            }}
                         />
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <View style={{ flex: 1, width: '90%', borderWidth: 1 , marginHorizontal: 5, borderColor: '#068e81'}}>
+                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                        <View style={{
+                            flex: 1,
+                            width: '90%',
+                            borderWidth: 1,
+                            marginHorizontal: 5,
+                            borderColor: '#068e81'
+                        }}>
                             <FlatList
                                 data={this.state.dataSource}
                                 renderItem={this._renderItem}
@@ -177,38 +239,50 @@ class foodDiaryScreen extends React.PureComponent {
                                 color={'#068e81'}
                                 style={{
                                     marginTop: -30,
-                                    marginLeft: '86%',}}
+                                    marginLeft: '86%',
+                                }}
                                 onPress={() => this.props.navigation.navigate(FOODSEARCH_SCREEN)}
                             />
                         </View>
                     </View>
                     <View style={styles.containerKcal}>
-                        <Image  style={{width: 60, height: 100}}
-                                source={Images.foodDiaty.kcal1}
+                        <Image style={{width: 60, height: 100}}
+                               source={Images.foodDiaty.kcal1}
                         />
                         <View>
                             <View style={styles.containerCalendar}>
-                                <CommonText text={'พลังงานที่ได้รับในวันนี้ '} style={styles.textTitlekcal} />
-                                <CommonText text={'200'} style={styles.textSumkcal} />
-                                <CommonText text={' แคลอรี่'} style={styles.textTitlekcal} />
+                                <CommonText text={'พลังงานที่ได้รับในวันนี้ '} style={styles.textTitlekcal}/>
+                                <CommonText text={'200'} style={styles.textSumkcal}/>
+                                <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
                             </View>
                             <View style={styles.containerCalendar}>
-                                <CommonText text={'พลังงานที่ต้องการต่อวัน '} style={styles.textTitlekcal} />
-                                <CommonText text={'1875'} style={styles.textSumkcal} />
-                                <CommonText text={' แคลอรี่'} style={styles.textTitlekcal} />
+                                <CommonText text={'พลังงานที่ต้องการต่อวัน '} style={styles.textTitlekcal}/>
+                                <CommonText text={'1875'} style={styles.textSumkcal}/>
+                                <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
                             </View>
                         </View>
                     </View>
-                    <View style={styles.containerBarBMI }>
-                        <View style={{height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',}}>
-                            <View style={styles.barBMI} />
+                    <View style={styles.containerBarBMI}>
+                        <View style={{
+                            height: 16,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}>
+                            <View style={styles.barBMI}/>
                             <Text style={{marginRight: 10}}>{'เหลือ 1675 kcal'}</Text>
                         </View>
                     </View>
-                    <View style={{width: '98%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <CommonText text={'ควรเพิ่ม'} style={[styles.textUnitKcal, { marginLeft: 10, color: '#068e81'}]} />
-                        <CommonText text={'พอดี'} style={[styles.textUnitKcal, { color: '#406894'}]} />
-                        <CommonText text={'ควรลด'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
+                    <View style={{
+                        width: '98%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <CommonText text={'ควรเพิ่ม'}
+                                    style={[styles.textUnitKcal, {marginLeft: 10, color: '#068e81'}]}/>
+                        <CommonText text={'พอดี'} style={[styles.textUnitKcal, {color: '#406894'}]}/>
+                        <CommonText text={'ควรลด'} style={[styles.textUnitKcal, {color: '#940c17'}]}/>
                     </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -218,14 +292,16 @@ class foodDiaryScreen extends React.PureComponent {
                     />
                     <Dialog
                         visible={this.state.DialogData}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
-                        onTouchOutside={() => {this.setState({ DialogData: true })}}//ไม่ให้กดข้างนอกได้
+                        onTouchOutside={() => {
+                            this.setState({DialogData: true})
+                        }}//ไม่ให้กดข้างนอกได้
                         backgroundStyle={styles.customBackgroundDialog}
                         dialogTitle={//ส่วนของTitle
                             <DialogTitle
                                 title="กรุณากรอกข้อมูลส่วนตัวของคุณ"
                                 hasTitleBar={false}
                                 textStyle={styles.dialogTextTitle}
-                                style={[styles.dialogTitleView,{backgroundColor: '#F4F4F4'}]}
+                                style={[styles.dialogTitleView, {backgroundColor: '#F4F4F4'}]}
                             />
                         }//ส่วนของฺbutton
                         actions={[
@@ -233,7 +309,36 @@ class foodDiaryScreen extends React.PureComponent {
                                 text="บันทึก"
                                 textStyle={styles.dialogTextButton}
                                 onPress={() => {
-                                    this.setState({ DialogData: false })
+                                    if (
+                                        this.state.selected === '' ||
+                                        this.state.TextInput_age === 0 ||
+                                        this.state.TextInput_cm === 0 ||
+                                        this.state.TextInput_gg === 0
+                                        ) {
+                                            Alert.alert(
+                                                "แจ้งเตือน",
+                                                " กรุณากรอกให้ครบ",
+                                                [
+                                                    {
+                                                        text: "ปิด", onPress: () => {
+                                                        }, style: "cancel"
+                                                    }
+                                                ],
+                                                {cancelable: false},
+                                            );
+                                        } else {
+                                            const {user} = this.props.Users;
+                                            const id = user.map((data) => { return data.UserID });
+                                            const UserID = id.toString();
+                                            const Sex = this.state.selected;
+                                            const Age = this.state.TextInput_age;
+                                            const Weight = this.state.TextInput_cm;
+                                            const Height = this.state.TextInput_gg;
+
+                                            this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height);
+                                            this.setState({DialogData: false});
+                                            this.getData(UserID);
+                                        }
                                 }}
                                 style={styles.dialogTitleView}
                             />
@@ -241,51 +346,59 @@ class foodDiaryScreen extends React.PureComponent {
                     >{/*ส่วนของbody*/}
                         <View style={styles.dialogBodyView}>
                             <View style={styles.containerTextDialogBody}>
-                                <CommonText text={'เพศ'} style={[styles.dialogTextBody,{ marginLeft: 20 }]} />
-                                <CommonText
-                                    text={'ชาย'}
-                                    style={[styles.dialogTextBody,{ marginLeft: 30, color: this.state.selected === 'male' ? '#068e81' : '#000' }]}
-                                    onPress={() => this.selectSex('male')}
-                                />
-                                <CommonText text={'/'} style={[styles.dialogTextBody,{ marginLeft: 3 }]} />
-                                <CommonText
-                                    text={'หญิง'}
-                                    style={[styles.dialogTextBody,{ marginLeft: 3, color: this.state.selected === 'female' ? '#068e81' : '#000' }]}
-                                    onPress={() => this.selectSex('female')}
-                                />
+                                <CommonText text={'เพศ'} style={[styles.dialogTextBody, {marginLeft: 20}]}/>
+                                <TouchableOpacity onPress={() => this.selectSex('male')}>
+                                    <CommonText
+                                        text={'ชาย'}
+                                        style={[styles.dialogTextBody, {
+                                            marginLeft: 30,
+                                            color: this.state.selected === 'male' ? '#068e81' : '#000'
+                                        }]}
+                                    />
+                                </TouchableOpacity>
+                                <CommonText text={'/'} style={[styles.dialogTextBody, {marginLeft: 3}]}/>
+                                <TouchableOpacity onPress={() => this.selectSex('female')}>
+                                    <CommonText
+                                        text={'หญิง'}
+                                        style={[styles.dialogTextBody, {
+                                            marginLeft: 3,
+                                            color: this.state.selected === 'female' ? '#068e81' : '#000'
+                                        }]}
+                                    />
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.containerTextDialogBody}>
-                                <CommonText text={'อายุ'} style={[styles.dialogTextBody,{ marginLeft: 20 }]} />
+                                <CommonText text={'อายุ'} style={[styles.dialogTextBody, {marginLeft: 20}]}/>
                                 <TextInput style={styles.inputBoxDialog}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholderTextColor = "#068e81"
+                                           placeholderTextColor="#068e81"
                                            keyboardType="numeric"
                                            textAlign="center"
-                                           onChangeText={ TextInputValue => this.setState({ TextInput_age : TextInputValue })}
+                                           onChangeText={TextInputValue => this.setState({TextInput_age: TextInputValue})}
                                 />
-                                <CommonText text={'ปี'} style={styles.dialogTextBody} />
+                                <CommonText text={'ปี'} style={styles.dialogTextBody}/>
                             </View>
                             <View style={styles.containerTextDialogBody}>
-                                <CommonText text={'ส่วนสูง'} style={styles.dialogTextBody} />
+                                <CommonText text={'ส่วนสูง'} style={styles.dialogTextBody}/>
                                 <TextInput style={styles.inputBoxDialog}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholderTextColor = "#068e81"
+                                           placeholderTextColor="#068e81"
                                            keyboardType="numeric"
                                            textAlign="center"
-                                           onChangeText={ TextInputValue => this.setState({ TextInput_cm : TextInputValue }) }
+                                           onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue})}
                                 />
-                                <CommonText text={'เซนติเมตร'} style={styles.dialogTextBody} />
+                                <CommonText text={'เซนติเมตร'} style={styles.dialogTextBody}/>
                             </View>
-                            <View style={[styles.containerTextDialogBody,{ marginBottom: 30 }]}>
-                                <CommonText text={'น้ำหนัก'} style={styles.dialogTextBody} />
+                            <View style={[styles.containerTextDialogBody, {marginBottom: 30}]}>
+                                <CommonText text={'น้ำหนัก'} style={styles.dialogTextBody}/>
                                 <TextInput style={styles.inputBoxDialog}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholderTextColor = "#068e81"
+                                           placeholderTextColor="#068e81"
                                            keyboardType="numeric"
                                            textAlign="center"
-                                           onChangeText={ TextInputValue => this.setState({ TextInput_gg : TextInputValue }) }
+                                           onChangeText={TextInputValue => this.setState({TextInput_gg: TextInputValue})}
                                 />
-                                <CommonText text={'กิโลกรัม'} style={styles.dialogTextBody} />
+                                <CommonText text={'กิโลกรัม'} style={styles.dialogTextBody}/>
                             </View>
                         </View>
                     </Dialog>
@@ -415,9 +528,17 @@ const styles = StyleSheet.create({
     },
 });
 
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser
+    };
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_UpdateUser: bindActionCreators(API.fetchUpdateUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })
 )(foodDiaryScreen);

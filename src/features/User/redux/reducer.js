@@ -1,37 +1,23 @@
 import initialState from './initialState';
-import * as actionTypes from '../redux/actions';
-import {FETCHDATA, FETCH_FLIGHT, ADDDATA_COUNTER, ROUTE_START} from './constants';
+import { FETCH_FLIGHT, ALL_DATAUSER, ADD_ONEUSER, ROUTE_START, SEARCH_DATAUSER } from './constants';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCHDATA:
-            return {
-                ...state,
-                loading: true
-            };
-        case ADDDATA_COUNTER:
-            return {
-                ...state,
-                user: action.payload,
-                loading: false
-            };
-        case "RECEIVE":
-            return {
-                ...state,
-                fetching: false,
-                fetched: true,
-                user: action.payload
-            };
-        case "ERROR":
-            return {
-                ...state,
-                fetching: false,
-                user: action.payload
-            };
         case FETCH_FLIGHT:
             return {
                 ...state,
                 user: action.json,
+                loading: false
+            };
+        case ALL_DATAUSER:
+            return {
+                ...state,
+                loading: true
+            };
+        case ADD_ONEUSER:
+            return {
+                ...state,
+                user: action.payload,
                 loading: false
             };
         case ROUTE_START:

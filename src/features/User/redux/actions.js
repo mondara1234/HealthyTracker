@@ -1,14 +1,17 @@
-import { FETCHDATA, ROUTE_START, ADDDATA_COUNTER } from './constants';
-import * as sagas from './sagas';
-import axios from 'axios';
+import { ALL_DATAUSER, ROUTE_START, ADD_ONEUSER, SEARCH_DATAUSER } from './constants';
 
-export const getAllFlights = (todos) => ({
-    type: ADDDATA_COUNTER,
+export const getOneUser = (todos) => ({
+    type: ADD_ONEUSER,
     payload: todos
 });
 
-export const getNews = () => ({
-    type: FETCHDATA,
+export const getAllUser = () => ({
+    type: ALL_DATAUSER
+});
+
+export const getSearchUser = (itemID) => ({
+    type: SEARCH_DATAUSER,
+    payload: itemID
 });
 
 export const getRouteName = (screen) => ({

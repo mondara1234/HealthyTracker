@@ -22,6 +22,7 @@ import { PROBLEM_SCREEN } from "../../Problem/router";
 import { ABOUT_SCREEN } from "../../About/router";
 import * as API from "../../User/api/api";
 import CommonText from '../../common/components/CommonText';
+import {getRouteName} from "../../User/redux/actions";
 
 class Sideber extends React.Component {
     constructor(props) {
@@ -37,7 +38,6 @@ class Sideber extends React.Component {
         const isActive = this.state.menuActive === item.name;
         const fontColor = isActive ? '#fff' : '#2a9998';
         const isAndroid = themeVariables.platform === 'android';
-        const { navigate } = this.props.navigation;
 
         return (
             <View style={{backgroundColor: isActive ? '#2a9998' : '#fff'}}>
@@ -49,6 +49,7 @@ class Sideber extends React.Component {
                     icon
                     onPress={() => {
                         this.setState({menuActive: item.name});
+                        this.props.REDUCER_ROUNTNAME(item.name);
 
                         const resetAction = this.props.navigationActions.reset({
                             index: 0,
@@ -255,13 +256,15 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        users: state.dataUser
+        users: state.dataUser,
+        routeName: state.dataUser.routeName
     };
 }
 
 export default connect(
     mapStateToProps,
     (dispatch) => ({
-        navigationActions: bindActionCreators(NavigationActions, dispatch)
+        navigationActions: bindActionCreators(NavigationActions, dispatch),
+        REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
     })
 )(Sideber);

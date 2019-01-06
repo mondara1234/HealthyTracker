@@ -1,9 +1,6 @@
-import * as actionTypes from '../redux/actions';
-import axios from '../redux/axios';
-import {Alert} from "react-native";
+import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants"
-import {LOGIN} from "../router";
-import { Images } from "../components/images";
+import { LOGIN } from "../router";
 
 export function fetchPostsApi() {
     return fetch(`${SERVER_URL}/My_SQL/ShowAllDataList.php`)
@@ -81,21 +78,48 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
 
 };
 
-export const fetchSelectUser = (Email) => dispatch => {
-    return fetch(`${SERVER_URL}/My_SQL/ShowOneDataList.php`, {
+export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/UpdateData.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: Email
+            id : UserID,
+            sex : Sex,
+            age : Age,
+            weight: Weight,
+            height: Height
         })
-    }).then((response) => response.json())
-        .then((responseJson) => responseJson)
-
+        }).then(response => response.json())
+        .then((responseJson) =>
+            console.log(responseJson)
+        )
         .catch((error) => {
             console.error(error);
         });
 
 };
+
+// export const fetchSearchUser = (itemID) => dispatch => {
+//     return fetch(`${SERVER_URL}/My_SQL/ShowOneDataList.php`, {
+//         method: 'POST',
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             id: itemID
+//         })
+//     }).then((response) => response.json()
+//         ).then(function(responseText) {
+//         console.log('responseText'+ responseText);
+//             console.log('JSON'+ JSON.stringify(responseText));
+//             return responseText;
+//         }
+//     ).catch((error) => {
+//         console.error(error);
+//     });
+//
+// };

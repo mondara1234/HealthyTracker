@@ -6,9 +6,8 @@ import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
-import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Logo from '../components/Logo';
-import { getNews, getAllFlights } from '../redux/actions';
+import { getAllUser, getOneUser } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
@@ -44,7 +43,7 @@ class LoingScreen extends Component {
     };
 
     componentDidMount(){
-        this.props.FETCH_DATA(); //น้ำข้อมูลมาใส่ใน servers.data
+        this.props.REDUCER_ALLDATA(); //น้ำข้อมูลมาใส่ใน servers.data
     }
 
     UserLoginFunction = () =>{
@@ -67,12 +66,10 @@ class LoingScreen extends Component {
             for (let i = 0; i < members.length; i++) {
                 if (members[i].Email === Email) {
                     result.push(members[i]);
-                    console.log(result);
-                    this.props.FETCH_GETDATA(result);
+                    this.props.REDUCER_ONEDATA(result);
                 }
             }
-            this.props.Flights_Login(Email, Password, keyScreen);
-
+            this.props.FETCH_Login(Email, Password, keyScreen);
         }
     };
 
@@ -231,13 +228,13 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps,
+export default connect(
+    mapStateToProps,
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
-        FETCH_DATA: bindActionCreators(getNews, dispatch),
-        FETCH_GETDATA: bindActionCreators(getAllFlights, dispatch),
-        Flights_Login: bindActionCreators(API.fetchLogin, dispatch),
-        Flights_User: bindActionCreators(API.fetchSelectUser, dispatch),
+        REDUCER_ALLDATA: bindActionCreators(getAllUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
+        FETCH_Login: bindActionCreators(API.fetchLogin, dispatch),
     })
 )(LoingScreen);
 
