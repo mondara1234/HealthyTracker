@@ -78,48 +78,20 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
 
 };
 
-export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch => {
-    return fetch(`${SERVER_URL}/My_SQL/user/UpdateBMIUser.php`, {
+export const fetchSearchUser = (UserNames) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/ShowOneDataList.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            id : UserID,
-            sex : Sex,
-            age : Age,
-            weight: Weight,
-            height: Height
+            userName: UserNames
         })
-        }).then(response => response.json())
-        .then((responseJson) =>
-            console.log(responseJson)
-        )
+    }).then(response => response.json())
+        .then((responseJson) => responseJson)
         .catch((error) => {
             console.error(error);
         });
 
 };
-
-// export const fetchSearchUser = (itemID) => dispatch => {
-//     return fetch(`${SERVER_URL}/My_SQL/user/ShowOneDataList.php`, {
-//         method: 'POST',
-//         headers: {
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             id: itemID
-//         })
-//     }).then((response) => response.json()
-//         ).then(function(responseText) {
-//         console.log('responseText'+ responseText);
-//             console.log('JSON'+ JSON.stringify(responseText));
-//             return responseText;
-//         }
-//     ).catch((error) => {
-//         console.error(error);
-//     });
-//
-// };

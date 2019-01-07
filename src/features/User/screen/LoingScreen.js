@@ -62,6 +62,7 @@ class LoingScreen extends Component {
             const Password = this.state.UserPassword;
             const keyScreen = this.props.navigation;
             const members = this.props.servers.user;
+            console.log(Email);
             let result = [];
             for (let i = 0; i < members.length; i++) {
                 if (members[i].Email === Email) {

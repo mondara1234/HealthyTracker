@@ -19,6 +19,7 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
+import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser, AllFoodUser } from "../../FoodDiary/redux/actions";
 import { SERVER_URL } from "../../../common/constants";
 
@@ -91,7 +92,7 @@ class foodDiaryScreen extends React.PureComponent {
             });
         }
 
-         this.getFoodUser(UserName);
+         this.getFoodUser(UserName,fulldate);
 
     }
 
@@ -185,42 +186,23 @@ class foodDiaryScreen extends React.PureComponent {
         this.props.REDUCER_ONEDATA(response);
     }
 
-    async getFoodUser(UserName) {
-        const response = await fetch(`${SERVER_URL}/My_SQL/foodDiary/AllFoodUser.php`)
-            .then(response => response.json())
-            .then((responseJson) =>responseJson)
-            .catch((error) => {
-                console.error(error);
-            });
-        this.props.REDUCER_ALLFoodUser(response);
-
+    async getFoodUser(UserName,fulldate) {
+        let dateNow = this.state.date ? `${this.state.date}` : `${fulldate}`;
+        let UserNames =`${UserName}`;
+        const response = await this.props.FETCH_SearchFoodUser(UserNames, dateNow);
+        this.props.REDUCER_SearchFoodUser(response);
         const members = this.props.FoodUser.foodUser;
         this.setState({
             dataSource : members
         });
-        let dateNow = this.state.date;
-        let result = [];
 
-        console.log(dateNow);
-        console.log('UserName :'+ UserName);
-        console.log(members);
-        console.log(members.length);
-
-        for (let i = 0; i < members.length; i++) {
-            console.log('membersaa',members.length);
-            if (members[i].DiaryDate === dateNow ) {
-                result.push(members[i]);
-                this.setState({
-                    dataSource : result
-                });
-                this.props.REDUCER_SearchFoodUser(result);
-            }
-        }
 
     }
 
     render() {
         console.log('Update Store:', this.props);
+        const {user} = this.props.Users;
+        const UserName = user.map((data) => {return data.UserName});
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
@@ -242,8 +224,8 @@ class foodDiaryScreen extends React.PureComponent {
                             date={this.state.date}
                             hideText
                             mode="date"
-                            format="DD-MM-YYYY"
-                            minDate="01/1/2016"
+                            format="YYYY-MM-DD"
+                            minDate="01/1/2019"
                             maxDate="31/12/2020"
                             customStyles={{
                                 dateIcon: {
@@ -252,8 +234,9 @@ class foodDiaryScreen extends React.PureComponent {
                                 }
                                 // ... You can check the source to find the other keys.
                             }}
-                            onDateChange={(date) => {
-                                this.setState({date: date})
+                            onDateChange={(fulldate) => {
+                                this.setState({date: fulldate});
+                                this.getFoodUser(UserName,fulldate);
                             }}
                         />
                     </View>
@@ -577,8 +560,9 @@ export default connect(
     mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
-        FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
-        REDUCER_ALLFoodUser: bindActionCreators(AllFoodUser, dispatch),
+        FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
+        FETCH_UpdateUser: bindActionCreators(APIDiary.fetchUpdateUser, dispatch),
+        FETCH_SearchFoodUser: bindActionCreators(APIDiary.fetchSearchFoodUser, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
     })
 )(foodDiaryScreen);
