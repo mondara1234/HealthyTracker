@@ -9,7 +9,7 @@ import { createStore, applyMiddleware } from "redux"
 import thunk from 'redux-thunk';
 import reducer from "./common/rootReducer";
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from "../src/common/rootSaga";
+import rootSaga from "../src/features/User/redux/sagas";
 import SplashScreen from "react-native-splash-screen";
 
 const sagaMiddleware = createSagaMiddleware();

@@ -19,9 +19,7 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
-import * as APIDeary from "../../FoodDiary/api/api";
-import { AllFoodUser, getOneFoodUser } from "../../FoodDiary/redux/actions";
-import { getSearchFoofUser } from ".././redux/actions";
+import { getSearchFoodUser, AllFoodUser } from "../../FoodDiary/redux/actions";
 import { SERVER_URL } from "../../../common/constants";
 
 class foodDiaryScreen extends React.PureComponent {
@@ -63,10 +61,6 @@ class foodDiaryScreen extends React.PureComponent {
 
      componentDidMount() {
 
-         console.log('saver'+ this.props.FETCH_AllFoodUser());
-         let data = this.props.FETCH_AllFoodUser();
-         console.log(data);
-
         let date, day, month, year, fulldate;
 
         date = new Date();
@@ -81,7 +75,7 @@ class foodDiaryScreen extends React.PureComponent {
             month = '0' + month.toString();
         }
 
-        fulldate = day.toString() + '-' + month.toString() + '-' + year.toString();
+        fulldate = year.toString() + '-' + month.toString() + '-' + day.toString();
 
         this.setState({
             date: fulldate
@@ -89,28 +83,15 @@ class foodDiaryScreen extends React.PureComponent {
 
         const {user} = this.props.Users;
         const sex = user.map((data) => {return data.Sex});
-         const UserName = user.map((data) => {return data.UserName});
+        const UserName = user.map((data) => {return data.UserName});
 
         if (sex.toString() === '') {
             this.setState({
                 DialogData: true
             });
         }
-        // let modnara = this.props.ETCH_SeachFoodUser(UserName);
-        //  console.log('ETCH_SeachFoodUser; '+ modnara);
 
-         const members = this.props.FoodUser.foodUser;
-         // let result = [];
-         // for (let i = 0; i < members.length; i++) {
-         //     if (members[i].Email === Email) {
-         //         result.push(members[i]);
-         //         this.props.REDUCER_ONEDATA(result);
-         //     }
-         // }
-
-        const {foodUser} = this.props.FoodUser;
-
-        console.log('members; '+ members);
+         this.getFoodUser(UserName);
 
     }
 
@@ -133,7 +114,7 @@ class foodDiaryScreen extends React.PureComponent {
                 <ListItem thumbnail style={{height: 70, backgroundColor: 'transparent'}}>
                     <Left>
                         <Thumbnail
-                            source={{uri: item.picture.thumbnail}}
+                            source={{uri: item.FoodIMG}}
                             style={{width: 60, height: 60, alignItems: 'center', justifyContent: 'center'}}
                         />
                     </Left>
@@ -145,7 +126,7 @@ class foodDiaryScreen extends React.PureComponent {
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}>
-                        <CommonText text={item.name.first}
+                        <CommonText text={item.FoodName}
                                     style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5}}/>
                         <IconFontAwesome
                             name="window-close-o"
@@ -168,7 +149,7 @@ class foodDiaryScreen extends React.PureComponent {
                             <CommonText text={'1'} style={{fontSize: 14, color: '#068e81'}}/>
                             <CommonText text={' หน่วย'} size={14}/>
                         </View>
-                        <CommonText text={item.calorie + ' แคลอรี่'}
+                        <CommonText text={item.FoodCalorie + ' แคลอรี่'}
                                     style={{fontSize: 14, color: '#068e81', marginRight: 3}}/>
                     </View>
                     </Body>
@@ -205,33 +186,37 @@ class foodDiaryScreen extends React.PureComponent {
     }
 
     async getFoodUser(UserName) {
-        const response = await fetch(`${SERVER_URL}/My_SQL/foodDiary/SeachFoodUser.php`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userName: UserName
-            })
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                console.log('json'+ responseJson);
-                let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-                console.log('ds'+ ds);
-                this.setState({
-                    isLoading: false,
-                    dataSource: ds.cloneWithRows(responseJson),
-                }, function() {
-                    // In this block you can do something with new state.
-                });
-            })
+        const response = await fetch(`${SERVER_URL}/My_SQL/foodDiary/AllFoodUser.php`)
+            .then(response => response.json())
+            .then((responseJson) =>responseJson)
             .catch((error) => {
                 console.error(error);
             });
+        this.props.REDUCER_ALLFoodUser(response);
 
-        this.props.REDUCER_GetFoodUser(response);
-        console.log('response'+ response);
+        const members = this.props.FoodUser.foodUser;
+        this.setState({
+            dataSource : members
+        });
+        let dateNow = this.state.date;
+        let result = [];
+
+        console.log(dateNow);
+        console.log('UserName :'+ UserName);
+        console.log(members);
+        console.log(members.length);
+
+        for (let i = 0; i < members.length; i++) {
+            console.log('membersaa',members.length);
+            if (members[i].DiaryDate === dateNow ) {
+                result.push(members[i]);
+                this.setState({
+                    dataSource : result
+                });
+                this.props.REDUCER_SearchFoodUser(result);
+            }
+        }
+
     }
 
     render() {
@@ -593,10 +578,7 @@ export default connect(
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
-        FETCH_SeachFoodUser: bindActionCreators(APIDeary.fetchSearchFoodUser, dispatch),
-        FETCH_AllFoodUser: bindActionCreators(APIDeary.fetchAllFoodUser, dispatch),
-        REDUCER_ALLDATA: bindActionCreators(AllFoodUser, dispatch),
-        REDUCER_ONEDATA: bindActionCreators(getOneFoodUser, dispatch),
-        REDUCER_GetFoodUser: bindActionCreators(getSearchFoofUser, dispatch)
+        REDUCER_ALLFoodUser: bindActionCreators(AllFoodUser, dispatch),
+        REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
     })
 )(foodDiaryScreen);

@@ -1,15 +1,12 @@
 import { SEARCH_ALLFODEUSER, SEARCH_FODEUSER, ONE_FODEUSER } from './constants';
 
-export const AllFoodUser = () => ({
-    type: SEARCH_ALLFODEUSER
+export const AllFoodUser = (data) => ({
+    type: SEARCH_ALLFODEUSER,
+    json: data
 });
 
-export const getSearchFoofUser = (data) => ({
+export const getSearchFoodUser = (data) => ({
     type: SEARCH_FODEUSER,
     payload: data
 });
 
-export const getOneFoodUser = (data) => ({
-    type: ONE_FODEUSER,
-    json: data
-});

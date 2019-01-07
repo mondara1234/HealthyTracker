@@ -27,20 +27,18 @@ export function* fetchFoodUser() {
 //     }
 // }
 
-export function* fetchData(screen) {
-    yield take(SEARCH_FODEUSER);
-    console.log('a', screen);
-    try {
-        yield put({type: ROUTE_START, payload: screen})
-    }catch (e) {
-        console.log('e: '+e);
-    }
-}
+// export function* fetchData(screen) {
+//     yield take(SEARCH_FODEUSER);
+//     console.log('a', screen);
+//     try {
+//         yield put({type: ROUTE_START, payload: screen})
+//     }catch (e) {
+//         console.log('e: '+e);
+//     }
+// }
 
-export default function* rootSaga() {
+export default function* rootSagaFoodDiary() {
     yield all([
-        fetchFoodUser(),
-        //fetchSearchUser(),
-        fetchData(),
+        fetchFoodUser()
     ]);
 }
