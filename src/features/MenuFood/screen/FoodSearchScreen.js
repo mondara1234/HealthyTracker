@@ -10,9 +10,9 @@ import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import { MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../../MenuFood/router";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {BMI_SCREEN} from "../../BMI/router";
-import {TRICK_SCREEN} from "../../Trick/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { TRICK_SCREEN } from "../../Trick/router";
 
 class FoodSearchScreen extends React.PureComponent {
     constructor(){

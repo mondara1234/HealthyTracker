@@ -7,7 +7,7 @@ const MenuItem = (props) => {
     return(
         <TouchableOpacity style={styles.containerMenu} onPress={props.onPress}>
             <Image
-                source={props.itemImage}
+                source={{uri:props.itemImage}}
                 style={styles.image}
             />
             <CommonText text={props.name} style={styles.nameImage} />
@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
-        borderColor: '#068e81'
+        borderColor: '#068e81',
+        marginBottom: 20
     },
     image: {
         width: 70,

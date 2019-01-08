@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
-
+//ไมไ่ด้ใช้+sagas
 export function fetchAllFoodUser() {
     return fetch(`${SERVER_URL}/My_SQL/foodDiary/AllFoodUser.php`)
         .then(response => response.json())

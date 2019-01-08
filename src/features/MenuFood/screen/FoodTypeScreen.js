@@ -1,22 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, BackHandler, Alert } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, BackHandler, Alert, FlatList } from 'react-native';
 import { Container, Content } from 'native-base';
-import { Images } from "../../User/components/images";
-import HandleBack from "../../common/components/HandleBack";
+import { connect } from "react-redux";
+import { NavigationActions } from "react-navigation";
+import { bindActionCreators } from "redux";
 import MenuItem from "../components/MenuItem";
 import SideMenu from '../../common/components/SideMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import HandleBack from "../../common/components/HandleBack";
+import { AllMenuFood } from "../../MenuFood/redux/actions";
+import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
+import { SERVER_URL } from "../../../common/constants";
+import * as APIMenuFood from "../../MenuFood/api/api";
 
 class FoodTypeScreen extends React.PureComponent {
     constructor(){
         super();
         this.state = {
-            editing: true
+            editing: true,
+            dataSource: []
         }
     }
 
@@ -38,45 +45,53 @@ class FoodTypeScreen extends React.PureComponent {
 
     };
 
+    componentDidMount() {
+        this.getDataFoodMenu();
+
+    }
+
+    async getDataFoodMenu() {
+        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/AllMenuFood.php`)
+            .then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+        console.log(response);
+        this.props.REDUCER_GetAllMenuFood(response);
+
+        const dataFoodType = this.props.FoodType.foodType;
+        console.log(dataFoodType);
+
+        this.setState({
+            dataSource: dataFoodType
+        })
+    }
+
+    _renderItem = ({item, index}) => {
+        return (
+            <MenuItem
+                itemImage={item.TypeIMG}
+                name={item.TypeName}
+                onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
+            />
+        )
+    };
+
     render() {
-        const item = 'ประเภทของอาหาร';
+        console.log('Update Store:', this.props);
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={{ flex: 1}}>
                     <Content>
                         <View style={styles.container}>
                             <View style={styles.menuContainer}>
-                                <MenuItem
-                                    itemImage={Images.typeFood.food1}
-                                    name={'จานเดียว'}
-                                    onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
-                                />
-                                <MenuItem
-                                    itemImage={Images.typeFood.food1}
-                                    name={'ผัก'}
-                                    onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
-                                />
-                                <MenuItem
-                                    itemImage={Images.typeFood.food1}
-                                    name={'ผลไม้'}
-                                    onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
-                                />
-                            </View>
-                            <View style={styles.menuContainer}>
-                                <MenuItem
-                                    itemImage={Images.typeFood.food4}
-                                    name={'ธัฐพืช'}
-                                    onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
-                                />
-                                <MenuItem
-                                    itemImage={Images.typeFood.food4}
-                                    name={'เครื่องเคียง'}
-                                    onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
-                                />
-                                <MenuItem
-                                    itemImage={Images.typeFood.food4}
-                                    name={'ของหวาน'}
-                                    onPress={() => this.props.navigation.navigate({routeName: MENUFOOD_SCREEN, params: {foodType: item}})}
+                                <FlatList
+                                    data={this.state.dataSource}
+                                    renderItem={this._renderItem}
+                                    keyExtractor={(item, index) => index}
+                                    horizontal={false}
+                                    numColumns={3}
                                 />
                             </View>
                         </View>
@@ -99,21 +114,34 @@ FoodTypeScreen.navigationOptions  = ({navigation}) => ({
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
 
-const windows = Dimensions.get('window');
-
 const styles = StyleSheet.create({
     container: {
-        width: windows.width,
-        height: '80%',
+        width: '100%',
+        height: '100%',
         paddingTop: 20
     },
     menuContainer: {
+        width:'100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 20
+        marginHorizontal: 15
     }
 
 });
 
-export default FoodTypeScreen;
+function mapStateToProps(state) {
+    return{
+        FoodType: state.dataMenuFood,
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        REDUCER_GetAllMenuFood: bindActionCreators(AllMenuFood, dispatch),
+        FETCH_AllMenuFood: bindActionCreators(APIMenuFood.fetchAllMenuFood, dispatch),
+    })
+)(FoodTypeScreen);
+

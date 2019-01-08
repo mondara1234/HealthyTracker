@@ -20,7 +20,7 @@ import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
-import { getSearchFoodUser, AllFoodUser } from "../../FoodDiary/redux/actions";
+import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser} from "../../User/redux/actions";
 
 class foodDiaryScreen extends React.PureComponent {
