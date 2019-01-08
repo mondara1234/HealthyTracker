@@ -78,7 +78,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
 
 };
 
-export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch => {
+export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height, BMRUser ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/UpdateBMIUser.php`, {
         method: 'POST',
         headers: {
@@ -90,7 +90,8 @@ export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch =
             sex : Sex,
             age : Age,
             weight: Weight,
-            height: Height
+            height: Height,
+            bmruser: BMRUser
         })
     }).then(response => response.json())
         .then((responseJson) =>

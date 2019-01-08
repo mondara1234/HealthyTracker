@@ -21,7 +21,6 @@ import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser, AllFoodUser } from "../../FoodDiary/redux/actions";
-import { SERVER_URL } from "../../../common/constants";
 import {getOneUser} from "../../User/redux/actions";
 
 class foodDiaryScreen extends React.PureComponent {
@@ -344,8 +343,18 @@ class foodDiaryScreen extends React.PureComponent {
                                             let Age = this.state.TextInput_age;
                                             let Weight = this.state.TextInput_cm;
                                             let Height = this.state.TextInput_gg;
+                                            let BMRUser = 0;
 
-                                            this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height);
+                                            if(Sex === 'male'){
+                                                let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
+                                                BMRUser = BMR_male.toFixed();
+                                            }else if(Sex === 'female') {
+                                                let BMR_female = 665 + (9.6 * Height) + (1.8 * Weight) - (4.7 * Age);
+
+                                                BMRUser = BMR_female.toFixed();
+                                            }
+
+                                            this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
 
                                             this.setState({DialogData: false});
                                             this.getData(UserName);
