@@ -190,6 +190,7 @@ class foodDiaryScreen extends React.PureComponent {
         console.log('Update Store:', this.props);
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
+        const BMRUser = user.map((data) => {return data.BMRUser});
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
@@ -265,7 +266,7 @@ class foodDiaryScreen extends React.PureComponent {
                             </View>
                             <View style={styles.containerCalendar}>
                                 <CommonText text={'พลังงานที่ต้องการต่อวัน '} style={styles.textTitlekcal}/>
-                                <CommonText text={'1875'} style={styles.textSumkcal}/>
+                                <CommonText text={`${BMRUser}่`} style={styles.textSumkcal}/>
                                 <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
                             </View>
                         </View>
@@ -350,7 +351,6 @@ class foodDiaryScreen extends React.PureComponent {
                                                 BMRUser = BMR_male.toFixed();
                                             }else if(Sex === 'female') {
                                                 let BMR_female = 665 + (9.6 * Height) + (1.8 * Weight) - (4.7 * Age);
-
                                                 BMRUser = BMR_female.toFixed();
                                             }
 

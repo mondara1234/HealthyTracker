@@ -127,8 +127,9 @@ class Sideber extends React.Component {
         const { user } = this.props.users;
         const imgProfile = user.map((data) => {return data.imgProfile});
         const Names = user.map((data) => {return data.UserName});
-        const profileImage = imgProfile.toString();
-        const UserName = Names.toString();
+        const BMRUser = user.map((data) => {return data.BMRUser});
+        let profileImage = imgProfile.toString();
+        let UserName = Names.toString();
 
         const menus = [
             {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
@@ -145,7 +146,7 @@ class Sideber extends React.Component {
                 <TouchableOpacity
                     style={styles.info}
                 >
-                    <View style={{flexDirection: 'row', width: '100%'}}>
+                    <View style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
                         <Thumbnail
                             source={
                                 profileImage
@@ -158,11 +159,11 @@ class Sideber extends React.Component {
                         <View style={{justifyContent: 'space-between'}}>
                             <CommonText
                                 text={UserName}
-                                style={[styles.fontBase, s.b, s.ml2,{fontSize: 18}]}
+                                style={[styles.fontBase, {fontSize: 18, textAlign: 'center'}]}
                             />
                             <CommonText
-                                text={`พลังงานที่ต้องการ:  ${'1999'}  แคลอรี่`}
-                                style={[styles.fontBase, s.fw3, {fontSize: 12, marginLeft: -5, marginBottom: -5}]}
+                                text={`พลังงานที่ต้องการ:  ${BMRUser}  แคลอรี่`}
+                                style={styles.fontBase}
                             />
                         </View>
                     </View>
@@ -235,15 +236,16 @@ const styles = StyleSheet.create({
         fontWeight: '300',
     },
     userThumb: {
-        width: 70,
-        height: 70,
+        width: 80,
+        height: 80,
         borderRadius: 40,
-        marginHorizontal: 5
     },
     fontBase: {
         color: '#fff',
-        fontSize: 14,
-        fontWeight: themeVariables.platform === 'ios' ? '600' : null
+        fontSize: 16,
+        fontWeight: themeVariables.platform === 'ios' ? '600' : null,
+        marginTop: '3%'
+
     },
     version: {
         fontSize: 14,
