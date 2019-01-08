@@ -78,6 +78,30 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
 
 };
 
+export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height ) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdateBMIUser.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id : UserID,
+            sex : Sex,
+            age : Age,
+            weight: Weight,
+            height: Height
+        })
+    }).then(response => response.json())
+        .then((responseJson) =>
+            console.log(responseJson)
+        )
+        .catch((error) => {
+            console.error(error);
+        });
+
+};
+
 export const fetchSearchUser = (UserNames) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/ShowOneDataList.php`, {
         method: 'POST',
@@ -86,7 +110,7 @@ export const fetchSearchUser = (UserNames) => dispatch => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            userName: UserNames
+            username: UserNames
         })
     }).then(response => response.json())
         .then((responseJson) => responseJson)

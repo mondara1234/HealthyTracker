@@ -22,6 +22,7 @@ import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser, AllFoodUser } from "../../FoodDiary/redux/actions";
 import { SERVER_URL } from "../../../common/constants";
+import {getOneUser} from "../../User/redux/actions";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -167,22 +168,9 @@ class foodDiaryScreen extends React.PureComponent {
         )
     };
     //ใช้สำหรับข้อมูลเป็น Promise {_40: 0, _65: 0, _55: null, _72: null}
-    async getData(itemID) {
-        const response = await fetch(`${SERVER_URL}/My_SQL/user/ShowOneDataList.php`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: itemID
-            })
-        }).then(response => response.json())
-            .then((responseJson) => responseJson)
-            .catch((error) => {
-                console.error(error);
-            });
-
+    async getData(UserName) {
+        let UserNames =`${UserName}`;
+        const response = await this.props.FETCH_SearchUser(UserNames);
         this.props.REDUCER_ONEDATA(response);
     }
 
@@ -349,16 +337,18 @@ class foodDiaryScreen extends React.PureComponent {
                                             );
                                         } else {
                                             const {user} = this.props.Users;
-                                            const id = user.map((data) => { return data.UserID });
-                                            const UserID = id.toString();
-                                            const Sex = this.state.selected;
-                                            const Age = this.state.TextInput_age;
-                                            const Weight = this.state.TextInput_cm;
-                                            const Height = this.state.TextInput_gg;
+                                            let id = user.map((data) => { return data.UserID });
+                                            let UserName = user.map((data) => { return data.UserName });
+                                            let UserID = id.toString();
+                                            let Sex = this.state.selected;
+                                            let Age = this.state.TextInput_age;
+                                            let Weight = this.state.TextInput_cm;
+                                            let Height = this.state.TextInput_gg;
 
                                             this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height);
+
                                             this.setState({DialogData: false});
-                                            this.getData(UserID);
+                                            this.getData(UserName);
                                         }
                                 }}
                                 style={styles.dialogTitleView}
@@ -561,8 +551,9 @@ export default connect(
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
-        FETCH_UpdateUser: bindActionCreators(APIDiary.fetchUpdateUser, dispatch),
+        FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
         FETCH_SearchFoodUser: bindActionCreators(APIDiary.fetchSearchFoodUser, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })
 )(foodDiaryScreen);
