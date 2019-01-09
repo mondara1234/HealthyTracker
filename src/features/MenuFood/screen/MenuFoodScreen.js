@@ -16,12 +16,16 @@ import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
+import {SERVER_URL} from "../../../common/constants";
+import {AllMenuFood} from "../redux/actions";
 
 class menuFoodScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            films: food,
+            films: [],
+            nameFoodType: '',
+            lengthFoodType: 0,
             query: '',
             editing: true
         };
@@ -45,6 +49,68 @@ class menuFoodScreen extends React.PureComponent {
 
     };
 
+    componentDidMount() {
+        const { foodType } = this.props.navigation.state.params ? this.props.navigation.state.params : '';
+        console.log('foodType'+foodType);
+        let foodTypes = foodType === undefined ? '' : `${foodType.TypeName}`;
+        console.log('foodTypes'+foodTypes);
+        let dataFoodType = foodType ? foodTypes : '';
+        if(dataFoodType === ''){
+            this.AllFoodMenu();
+            this.setState({
+                nameFoodType: 'ทั้งหมด'
+            })
+        }else{
+            this.SerachFoodMenu(foodTypes);
+            this.setState({
+                nameFoodType: foodTypes
+            })
+        }
+
+    }
+
+    async SerachFoodMenu(foodTypes) {
+        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/SeachFoodType.php`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                foodtypes: foodTypes
+            })
+        }).then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+        this.props.REDUCER_GetMenuFood(response);
+        const dataFoodMenu = this.props.FoodMenu.foodMenu;
+        console.log(dataFoodMenu);
+        this.setState({
+            films: dataFoodMenu,
+            lengthFoodType: dataFoodMenu.length
+        })
+    }
+
+    async AllFoodMenu() {
+        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/AllMenuFood.php`)
+            .then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+        console.log(response);
+        this.props.REDUCER_GetMenuFood(response);
+
+        const dataFoodMenu = this.props.FoodMenu.foodMenu;
+        console.log(dataFoodMenu);
+
+        this.setState({
+            films: dataFoodMenu,
+            lengthFoodType: dataFoodMenu.length
+        })
+    }
     //ไว้รับค่าแล้วค้นหา
     findFilm(query) {
         if (query === '') {
@@ -52,7 +118,7 @@ class menuFoodScreen extends React.PureComponent {
         }
 
         const { films } = this.state;
-        return films.filter(searchData => searchData.name.first.search(query.trim()) >= 0);
+        return films.filter(searchData => searchData.FoodName.search(query.trim()) >= 0);
         /* film.episode_id ต้องการค้นหาจากอะไร*/
         /* filter  trim  คิอไร*/
     }
@@ -91,15 +157,15 @@ class menuFoodScreen extends React.PureComponent {
                 >
                     <Left>
                         <Thumbnail
-                            source={{uri: item.picture.thumbnail}}
+                            source={{uri: item.FoodIMG}}
                             style={{ width: 60, height: 60}}
                         />
                     </Left>
                     <Body style={{ width: '100%'}}>
                     <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View>
-                            <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.name.first}</Text>
-                            <CommonText text={item.calorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81'}} />
+                            <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.FoodName}</Text>
+                            <CommonText text={item.FoodCalorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81'}} />
                         </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                 <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
@@ -127,17 +193,17 @@ class menuFoodScreen extends React.PureComponent {
                             defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
                             onChangeText={text => this.setState({ query: text })} /*setค่าให้กับตัวแปล query เป้นไปตามที่กรอก*/
                             placeholder="กรอกชื่ออาหาร" /*ลายน้ำเพื่อพิมจะหายไป*/
-                            renderItem={({ calorie, name }) => (
-                                <TouchableOpacity onPress={() => alert(`${calorie} ${name.first}`)}>
-                                    <CommonText text={`${name.first} แสดงตรงค้นหา`} style={styles.itemText}/>
+                            renderItem={({ FoodCalorie, FoodName }) => (
+                                <TouchableOpacity onPress={() => alert(`${FoodCalorie} ${FoodName}`)}>
+                                    <CommonText text={`${FoodName} แสดงตรงค้นหา`} style={styles.itemText}/>
                                 </TouchableOpacity>/*กำหนดรูปแบบการแสดงในช่่องค้นหาที่จะขึ้นเมื่อกรอกข้อความ*/
                             )}
                         />
                         <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
-                            <CommonText text={'หมวดหมู่'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
-                            <CommonText text={' จานเดียว'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
-                            <CommonText text={'  จำนวนที่พบ'} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
-                            <CommonText text={' 25'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                            <CommonText text={'หมวดหมู่ '} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                            <CommonText text={this.state.nameFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
+                            <CommonText text={' จำนวนที่พบ '} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                            <CommonText text={this.state.lengthFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
                             <CommonText text={' รายการ'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
                         </View>
                         <View style={{ flex: 1, width: '100%'}}>
@@ -236,9 +302,16 @@ const styles = StyleSheet.create({
     }
 });
 
+function mapStateToProps(state) {
+    return{
+        FoodMenu: state.dataMenuFood,
+    };
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        REDUCER_GetMenuFood: bindActionCreators(AllMenuFood, dispatch),
     })
 )(menuFoodScreen);

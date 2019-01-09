@@ -21,7 +21,7 @@ class FoodDetailScreen extends React.PureComponent {
         super(props);
 
         this.state = {
-            UserEmail: '',
+            numberUnit: 1,
             editing: true
         }
     }
@@ -52,11 +52,11 @@ class FoodDetailScreen extends React.PureComponent {
                     <View style={styles.container}>
                         <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', paddingLeft: '2%'}}>
                             <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: 100, height: 100}}
-                                    source={{uri: foodData.picture.large}}
+                                    source={{uri: foodData.FoodIMG}}
                             />
                             <View>
-                                <CommonText text={foodData.name.first} style={{fontSize: 22, color: '#068e81', fontWeight: 'bold'}} />
-                                <CommonText text={`${foodData.calorie} แคลลอรี่`} color={'#068e81'} />
+                                <CommonText text={foodData.FoodName} style={{fontSize: 22, color: '#068e81'}} />
+                                <CommonText text={`${foodData.FoodCalorie} แคลลอรี่`} color={'#068e81'} />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
                                 <TextInput style={styles.inputBox}
@@ -65,9 +65,9 @@ class FoodDetailScreen extends React.PureComponent {
                                            placeholderTextColor = "#068e81"
                                            selectionColor="#fff"
                                            keyboardType="numeric"
-                                           onChangeText={UserEmail =>this.setState({UserEmail})}
+                                           onChangeText={numberUnit =>this.setState({numberUnit: numberUnit})}
                                 />
-                                <CommonText text={'หน่วย'} style={{fontSize: 20, color: '#068e81'}} />
+                                <CommonText text={foodData.FoodUnit} style={{fontSize: 20, color: '#068e81'}} />
                             </View>
                         </View>
                         <View
@@ -89,8 +89,8 @@ class FoodDetailScreen extends React.PureComponent {
                         <View style={{flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                             <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center'}}>
                                 <CommonText text={'ปริมาณแคลลอรี่เปรียบเทียบต่อ '} />
-                                <CommonText text={'1'} />
-                                <CommonText text={' หน่วย'} />
+                                <CommonText text={this.state.numberUnit}/>
+                                <CommonText text={` ${foodData.FoodUnit}`} />
                             </View>
                             <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 100}}>
                                 <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิน 10 นาที'} />

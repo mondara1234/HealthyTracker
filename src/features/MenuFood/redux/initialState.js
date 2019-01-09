@@ -1,6 +1,7 @@
 
 const initialState = {
     foodType: [],
+    foodMenu: [],
     loading : false
 };
 

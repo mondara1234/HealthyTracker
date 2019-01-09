@@ -9,7 +9,7 @@ import SideMenu from '../../common/components/SideMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HandleBack from "../../common/components/HandleBack";
-import { AllMenuFood } from "../../MenuFood/redux/actions";
+import { AllFoodType } from "../../MenuFood/redux/actions";
 import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
@@ -51,14 +51,14 @@ class FoodTypeScreen extends React.PureComponent {
     }
 
     async getDataFoodMenu() {
-        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/AllMenuFood.php`)
+        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/AllFoodType.php`)
             .then(response => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => {
                 console.error(error);
             });
         console.log(response);
-        this.props.REDUCER_GetAllMenuFood(response);
+        this.props.REDUCER_GetFoodType(response);
 
         const dataFoodType = this.props.FoodType.foodType;
         console.log(dataFoodType);
@@ -140,7 +140,7 @@ export default connect(
     mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
-        REDUCER_GetAllMenuFood: bindActionCreators(AllMenuFood, dispatch),
+        REDUCER_GetFoodType: bindActionCreators(AllFoodType, dispatch),
         FETCH_AllMenuFood: bindActionCreators(APIMenuFood.fetchAllMenuFood, dispatch),
     })
 )(FoodTypeScreen);

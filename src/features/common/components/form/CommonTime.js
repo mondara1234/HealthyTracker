@@ -26,7 +26,12 @@ class CommonTime extends React.PureComponent {
         hour    = date.getHours();
         minutes = date.getMinutes();
         seconds = date.getSeconds();
-
+        if (minutes < 10) {
+            minutes = '0' + minutes.toString();
+        }
+        if (seconds < 10) {
+            seconds = '0' + seconds.toString();
+        }
         fullTime = hour.toString() + ':' + minutes.toString() + ':' + seconds.toString();
 
         this.setState({

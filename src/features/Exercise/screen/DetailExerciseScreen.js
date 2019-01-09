@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert} from 'react-native';
+import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert, Linking } from 'react-native';
 import { Container, Content } from 'native-base';
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
@@ -50,15 +50,23 @@ class DetailExerciseScreen extends React.PureComponent {
                     <Content>
                         <View style={styles.container}>
                             <Image  style={{width: width - 40, height: 150, marginVertical: 20}}
-                                    source={{uri: exerciseData.picture.large}}
+                                    source={{uri: exerciseData.ExerciseIMG}}
                             />
-                            <CommonText text={exerciseData.name.first} style={{fontSize: 24, marginLeft: 15}} />
+                            <CommonText text={exerciseData.ExerciseName} style={{fontSize: 24, marginHorizontal: 15}} />
                             <View style={{flex: 1, width: width}}>
                                 <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 10}}>
-                                    <CommonText text={'Admin/28/11/61'} style={{ fontSize: 16 }} />
+                                    <CommonText text={`${exerciseData.PeopleAdd}/${exerciseData.DateAdded}`} style={{ fontSize: 16 }} />
                                 </View>
-                                <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
-                                    <CommonText text={exerciseData.detailExercise} style={{ fontSize: 30, color: '#000'}} />
+                                <View  style={{marginTop: 20, alignItems: 'center', justifyContent: 'center', marginHorizontal: 10}}>
+                                    <CommonText text={exerciseData.ExerciseDetail} />
+                                    <View style={{width: '90%', flexDirection: 'row', marginTop: 15, marginLeft: -30}}>
+                                        <CommonText text={'ที่มา : '} />
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL(exerciseData.sourceURL)}
+                                        >
+                                            <CommonText text={exerciseData.sourceURL} style={{color: 'blue'}} />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                         </View>
@@ -76,7 +84,7 @@ class DetailExerciseScreen extends React.PureComponent {
 }
 
 DetailExerciseScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={`เคล็ดลับ: ${navigation.state.params.exerciseData.name.first}`} />,
+    headerTitle: <HeaderTitle text={`เคล็ดลับ: ${navigation.state.params.exerciseData.ExerciseName}`} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
