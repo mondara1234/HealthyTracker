@@ -11,7 +11,6 @@ import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import food from '../../FoodDiary/api/food';
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
