@@ -22,6 +22,7 @@ import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser} from "../../User/redux/actions";
+import moment from "moment/moment";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -36,6 +37,8 @@ class foodDiaryScreen extends React.PureComponent {
             TextInput_cm: 0,
             TextInput_gg: 0,
             dataSource: [],
+            sumCalorie: 0,
+            statusBar: 0
         };
     }
 
@@ -62,29 +65,17 @@ class foodDiaryScreen extends React.PureComponent {
 
      componentDidMount() {
 
-        let date, day, month, year, fulldate;
-
-        date = new Date();
-        day = date.getDate();
-        month = date.getMonth() + 1;
-        year = date.getFullYear();
-
-        if (day < 10) {
-            day = '0' + day.toString();
-        }
-        if (month < 10) {
-            month = '0' + month.toString();
-        }
-
-        fulldate = year.toString() + '-' + month.toString() + '-' + day.toString();
+        let date = new Date();
+        let dateFormat = moment(date).format("YYYY-MM-DD");
 
         this.setState({
-            date: fulldate
+            date: dateFormat
         });
 
         const {user} = this.props.Users;
         const sex = user.map((data) => {return data.Sex});
         const UserName = user.map((data) => {return data.UserName});
+        const BMRUser = user.map((data) => {return data.BMRUser});
 
         if (sex.toString() === '') {
             this.setState({
@@ -92,7 +83,8 @@ class foodDiaryScreen extends React.PureComponent {
             });
         }
 
-         this.getFoodUser(UserName,fulldate);
+        this.getFoodUser(UserName,dateFormat);
+        this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
 
     }
 
@@ -173,14 +165,30 @@ class foodDiaryScreen extends React.PureComponent {
         this.props.REDUCER_ONEDATA(response);
     }
 
-    async getFoodUser(UserName,fulldate) {
-        let dateNow = this.state.date ? `${this.state.date}` : `${fulldate}`;
+    async getFoodUser(UserName,dateFormat) {
+        let dateNow = this.state.date ? `${this.state.date}` : `${dateFormat}`;
+        console.log('dateNow'+dateNow);
         let UserNames =`${UserName}`;
         const response = await this.props.FETCH_SearchFoodUser(UserNames, dateNow);
         this.props.REDUCER_SearchFoodUser(response);
         const members = this.props.FoodUser.foodUser;
         this.setState({
             dataSource : members
+        });
+
+
+    }
+
+    async getSumCalorieFoodUser(BMRUser,UserName,dateFormat) {
+        let dateNow = this.state.date ? `${this.state.date}` : `${dateFormat}`;
+        let UserNames =`${UserName}`;
+        let BMRUsers =`${BMRUser}`;
+        const response = await this.props.FETCH_SumCalorieFoodUser(UserNames, dateNow);
+        let sumstatusBar = (response/(BMRUsers*2))*100;
+        let sumcalorie = parseInt(sumstatusBar);
+        this.setState({
+            sumCalorie : response,
+            statusBar: sumcalorie
         });
 
 
@@ -261,7 +269,7 @@ class foodDiaryScreen extends React.PureComponent {
                         <View>
                             <View style={styles.containerCalendar}>
                                 <CommonText text={'พลังงานที่ได้รับในวันนี้ '} style={styles.textTitlekcal}/>
-                                <CommonText text={'200'} style={styles.textSumkcal}/>
+                                <CommonText text={this.state.sumCalorie} style={styles.textSumkcal}/>
                                 <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
                             </View>
                             <View style={styles.containerCalendar}>
@@ -275,11 +283,14 @@ class foodDiaryScreen extends React.PureComponent {
                         <View style={{
                             height: 16,
                             flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
+                            alignItems: 'center'
                         }}>
-                            <View style={styles.barBMI}/>
-                            <Text style={{marginRight: 10}}>{'เหลือ 1675 kcal'}</Text>
+                            <View style={[styles.barBMI,{width: `${this.state.statusBar}%`}]} />
+                            <CommonText
+                                text={`เหลือ ${BMRUser - this.state.sumCalorie} แคลอรี่่`}
+                                style={{marginLeft: '-18%'}}
+                                size={14}
+                            />
                         </View>
                     </View>
                     <View style={{
@@ -543,7 +554,6 @@ const styles = StyleSheet.create({
     },
     barBMI: {
         height: 16,
-        width: '12%',
         backgroundColor: '#068e81'
     },
 });
@@ -562,6 +572,7 @@ export default connect(
         FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
         FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
         FETCH_SearchFoodUser: bindActionCreators(APIDiary.fetchSearchFoodUser, dispatch),
+        FETCH_SumCalorieFoodUser: bindActionCreators(APIDiary.fetchSumCalorieFoodUser, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
         REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })

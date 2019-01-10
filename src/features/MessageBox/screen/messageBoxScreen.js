@@ -93,22 +93,17 @@ class messageBoxScreen extends Component {
                         {this.state.listViewData ?
                             <Content>
                                 <List
-                                    leftOpenValue={55}
                                     rightOpenValue={-55}
                                     dataSource={ds.cloneWithRows(this.state.listViewData)} //ใส่ค่าข้อมูลไปในตัวแปรรับเพื่อนใส่ข้อมูล ไปยังแหล่งข้อมูล
                                     renderRow={data =>
 
                                         <ListItem
                                             style={{backgroundColor: this.state.status === false ? '#bfbfbf' : '#fff'}}
-                                            onPress={() => alert('กดที่ข้อความแล้วเลื่อนขวา เพื่อดู รายละเอียด' + '\n' + 'กดที่ข้อความแล้วเลื่อนซ้าย เพื่อลบ ข้อความ')}>
+                                            onPress={() => this.messageDetail(data)}>
                                             <CommonText text={data.title} style={{marginLeft: 10}}/>
                                         </ListItem>
 
                                     }
-                                    renderLeftHiddenRow={data =>
-                                        <Button full onPress={() => this.messageDetail(data)}>
-                                            <Icon active name="information-circle"/>
-                                        </Button>}
                                     renderRightHiddenRow={(data, secId, rowId, rowMap) =>
                                         <Button full danger onPress={_ => this.deleteRow(data, secId, rowId, rowMap)}>
                                             <Icon active name="trash"/>
@@ -136,7 +131,7 @@ class messageBoxScreen extends Component {
 messageBoxScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={'กล่องข้อมความ'} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
-    headerRight: <HeaderLeftMenu icon={null} />
+    headerRight: <HeaderLeftMenu icon={'question-circle'} size={30} onPress={() => Alert.alert('กดที่ข้อความ เพื่อทำการดูรายละเอียด'+'\n'+'กดค้างที่ข้อความแล้วเลื่อนไปทางซ้าย เพื่อทำการลบข้อความ')} />
 });
 
 export default messageBoxScreen;

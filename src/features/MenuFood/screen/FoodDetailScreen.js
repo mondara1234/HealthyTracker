@@ -4,6 +4,7 @@ import { Container } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
+import moment from 'moment';
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
@@ -15,6 +16,7 @@ import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {TRICK_SCREEN} from "../../Trick/router";
 import {MENUFOOD_SCREEN} from "../router";
 import {BMI_SCREEN} from "../../BMI/router";
+import * as APIMenuFood from "../../MenuFood/api/api";
 
 class FoodDetailScreen extends React.PureComponent {
     constructor(props) {
@@ -44,8 +46,57 @@ class FoodDetailScreen extends React.PureComponent {
 
     };
 
+    onChanged(numberUnit){
+        let newText = parseInt(numberUnit);
+        console.log('newText'+newText);
+        console.log('numberUnit'+numberUnit);
+        if(numberUnit.toString() !== ''){
+            if(numberUnit.toString() !== newText.toString() && numberUnit.toString() !== ''){
+                Alert.alert(
+                    "แจ้งเตือน",
+                    "กรุณากรอกค่าเป็นจำนวนเต็มเท่านั้น",
+                    [
+                        { text: "ปิด", onPress: () => {}, style: "cancel" },
+                    ],
+                    { cancelable: false },
+                );
+            }else{
+                this.setState({
+                    numberUnit: newText
+                })
+            }
+        }else{
+            this.setState({
+                numberUnit: 0
+            })
+        }
+    }
+
+    SaveFoodUser(number,foodData){
+        let date = new Date();
+        const {user} = this.props.Users;
+        let UserName = user.map((data) => {return data.UserName});
+        let UserNames = `${UserName}`;
+        let FoodName = foodData.FoodName;
+        let numberFood = this.state.numberUnit;
+        let FoodCalorie = foodData.FoodCalorie * numberFood;
+        let FoodIMG = foodData.FoodIMG;
+        let FoodUnit = foodData.FoodUnit;
+        let dateADD = moment(date).format("YYYY-MM-DD");
+        this.props.Flights_InsertFoodUser(UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateADD);
+
+        if(number === 1){
+            this.props.navigation.navigate({
+                routeName: FOODDIARY_SCREEN,
+                params: {foodData: 'adasd'}})
+        }
+
+    };
+
     render() {
         const { foodData } = this.props.navigation.state.params;
+        let number = 1;
+        let number1 = 2;
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
@@ -61,11 +112,12 @@ class FoodDetailScreen extends React.PureComponent {
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholder="1"
+                                           defaultValue="1"
                                            placeholderTextColor = "#068e81"
                                            selectionColor="#fff"
                                            keyboardType="numeric"
-                                           onChangeText={numberUnit =>this.setState({numberUnit: numberUnit})}
+                                           maxLength={3}
+                                           onChangeText={numberUnit => this.onChanged(numberUnit)}
                                 />
                                 <CommonText text={foodData.FoodUnit} style={{fontSize: 20, color: '#068e81'}} />
                             </View>
@@ -76,13 +128,14 @@ class FoodDetailScreen extends React.PureComponent {
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
                             <TouchableOpacity
                                 style={[styles.button,{marginLeft: '10%'}]}
-                                onPress={ () => this.props.navigation.navigate({
-                                routeName: FOODDIARY_SCREEN,
-                                params: {foodData: foodData}})}
+                                onPress={ () => this.SaveFoodUser(number,foodData) }
                             >
                                 <CommonText text={'บันทึกลงไดอารี่'} style={styles.buttonText} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button,{marginRight: '10%'}]}>
+                            <TouchableOpacity
+                                style={[styles.button,{marginRight: '10%'}]}
+                                onPress={ () => this.SaveFoodUser(number1,foodData) }
+                            >
                                 <CommonText text={'บันทึกและค้นหาต่อ'} style={styles.buttonText} />
                             </TouchableOpacity>
                         </View>
@@ -93,10 +146,10 @@ class FoodDetailScreen extends React.PureComponent {
                                 <CommonText text={` ${foodData.FoodUnit}`} />
                             </View>
                             <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 100}}>
-                                <ImageGif itemImage={Images.imgGif.walk} nameImg={'เดิน 10 นาที'} />
-                                <ImageGif itemImage={Images.imgGif.Run} nameImg={'วิ่ง 10 นาที'} />
-                                <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={'ปั่น 72 นาที'} />
-                                <ImageGif itemImage={Images.imgGif.swimming} nameImg={'ว่าย 59 นาที'} />
+                                <ImageGif itemImage={Images.imgGif.walk} nameImg={`เดิน ${10 * this.state.numberUnit} นาที`} />
+                                <ImageGif itemImage={Images.imgGif.Run} nameImg={`วิ่ง ${7 * this.state.numberUnit} นาที`} />
+                                <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={`ปั่น ${5 * this.state.numberUnit} นาที`} />
+                                <ImageGif itemImage={Images.imgGif.swimming} nameImg={`ว่าย ${3 * this.state.numberUnit} นาที`} />
                             </View>
                         </View>
                     </View>
@@ -153,10 +206,17 @@ const styles = StyleSheet.create({
     },
 });
 
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser
+    };
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        Flights_InsertFoodUser: bindActionCreators(APIMenuFood.fetchInsert, dispatch),
     })
 )(FoodDetailScreen);
 

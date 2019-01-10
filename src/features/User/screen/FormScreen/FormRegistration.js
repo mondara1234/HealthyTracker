@@ -219,11 +219,12 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        servers: state.data
+        servers: state.dataUser
     };
 }
 
-export default connect(mapStateToProps,
+export default connect(
+    mapStateToProps,
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
         Flights_Register: bindActionCreators(API.fetchRegister, dispatch),
