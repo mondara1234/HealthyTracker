@@ -16,7 +16,7 @@ import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {TRICK_SCREEN} from "../../Trick/router";
 import {MENUFOOD_SCREEN} from "../router";
 import {BMI_SCREEN} from "../../BMI/router";
-import * as APIMenuFood from "../../MenuFood/api/api";
+import * as APIDiary from "../../FoodDiary/api/api";
 
 class FoodDetailScreen extends React.PureComponent {
     constructor(props) {
@@ -48,8 +48,6 @@ class FoodDetailScreen extends React.PureComponent {
 
     onChanged(numberUnit){
         let newText = parseInt(numberUnit);
-        console.log('newText'+newText);
-        console.log('numberUnit'+numberUnit);
         if(numberUnit.toString() !== ''){
             if(numberUnit.toString() !== newText.toString() && numberUnit.toString() !== ''){
                 Alert.alert(
@@ -72,18 +70,28 @@ class FoodDetailScreen extends React.PureComponent {
         }
     }
 
-    SaveFoodUser(number,foodData){
+    async  SaveFoodUser(number,foodData){
         let date = new Date();
         const {user} = this.props.Users;
         let UserName = user.map((data) => {return data.UserName});
         let UserNames = `${UserName}`;
         let FoodName = foodData.FoodName;
         let numberFood = this.state.numberUnit;
-        let FoodCalorie = foodData.FoodCalorie * numberFood;
+        let FoodCalorie = foodData.FoodCalorie;
         let FoodIMG = foodData.FoodIMG;
         let FoodUnit = foodData.FoodUnit;
-        let dateADD = moment(date).format("YYYY-MM-DD");
-        this.props.Flights_InsertFoodUser(UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateADD);
+        let dateNow = moment(date).format("YYYY-MM-DD");
+        const response = await this.props.FETCH_SearchFoodName(UserNames,dateNow,FoodName);
+
+        if(response.length !== 0){
+            let FoodNumbers = response.map((data) => {return data.FoodNumber});
+            numberFood = parseInt(numberFood) + parseInt(FoodNumbers);
+            FoodCalorie = FoodCalorie * numberFood;
+            this.props.FETCH_UpdateFoodUser(UserNames, FoodCalorie, numberFood, dateNow, FoodName);
+        }else{
+            FoodCalorie = FoodCalorie * numberFood;
+            this.props.FETCH_InsertFoodUser(UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateNow);
+        }
 
         if(number === 1){
             this.props.navigation.navigate({
@@ -216,7 +224,9 @@ export default connect(
     mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
-        Flights_InsertFoodUser: bindActionCreators(APIMenuFood.fetchInsert, dispatch),
+        FETCH_InsertFoodUser: bindActionCreators(APIDiary.fetchInsert, dispatch),
+        FETCH_SearchFoodName: bindActionCreators(APIDiary.fetchSearchFoodName, dispatch),
+        FETCH_UpdateFoodUser: bindActionCreators(APIDiary.fetchUpdateFoodUser, dispatch),
     })
 )(FoodDetailScreen);
 

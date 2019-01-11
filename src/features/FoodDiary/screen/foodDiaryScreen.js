@@ -23,6 +23,7 @@ import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser} from "../../User/redux/actions";
 import moment from "moment/moment";
+import {LOGIN} from "../../User/router";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -67,7 +68,7 @@ class foodDiaryScreen extends React.PureComponent {
 
         let date = new Date();
         let dateFormat = moment(date).format("YYYY-MM-DD");
-
+        console.log('dateFormat'+dateFormat);
         this.setState({
             date: dateFormat
         });
@@ -126,7 +127,7 @@ class foodDiaryScreen extends React.PureComponent {
                             size={30}
                             color={'#068e81'}
                             style={{marginTop: -14}}
-                            onPress={() => alert('ต้องการลบรายการอาหารนี้ใช่ไหม')}
+                            onPress={() => this.DeleteFoodName(item)}
                         />
                     </View>
                     <View style={{
@@ -139,8 +140,8 @@ class foodDiaryScreen extends React.PureComponent {
                     }}>
                         <View style={styles.containerRowList}>
                             <CommonText text={'จำนวน '} size={14}/>
-                            <CommonText text={'1'} style={{fontSize: 14, color: '#068e81'}}/>
-                            <CommonText text={' หน่วย'} size={14}/>
+                            <CommonText text={item.FoodNumber} style={{fontSize: 14, color: '#068e81'}}/>
+                            <CommonText text={` ${item.FoodUnit}`} size={14}/>
                         </View>
                         <CommonText text={item.FoodCalorie + ' แคลอรี่'}
                                     style={{fontSize: 14, color: '#068e81', marginRight: 3}}/>
@@ -158,6 +159,30 @@ class foodDiaryScreen extends React.PureComponent {
             </View>
         )
     };
+
+    DeleteFoodName(item){
+        let UserName = item.UserName;
+        let FoodName = item.FoodName;
+        let dateFormat = item.DiaryDate;
+        let BMRUser = item.BMRUser;
+
+        Alert.alert(
+            "แจ้งเตือน",
+            `คุณต้องการลบ ${item.FoodName} ใช่ไหม ?`,
+            [
+                { text: "ใช่", onPress: () => this.DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser)},
+                { text: "ไม่", onPress: () => {}, style: "cancel" }
+            ],
+            { cancelable: false },
+        );
+    }
+
+    DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser){
+        const response = this.props.FETCH_DeleteFoodName(UserName,FoodName,dateFormat);
+        this.getFoodUser(UserName,dateFormat);
+        this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
+    }
+
     //ใช้สำหรับข้อมูลเป็น Promise {_40: 0, _65: 0, _55: null, _72: null}
     async getData(UserName) {
         let UserNames =`${UserName}`;
@@ -167,7 +192,6 @@ class foodDiaryScreen extends React.PureComponent {
 
     async getFoodUser(UserName,dateFormat) {
         let dateNow = this.state.date ? `${this.state.date}` : `${dateFormat}`;
-        console.log('dateNow'+dateNow);
         let UserNames =`${UserName}`;
         const response = await this.props.FETCH_SearchFoodUser(UserNames, dateNow);
         this.props.REDUCER_SearchFoodUser(response);
@@ -190,8 +214,6 @@ class foodDiaryScreen extends React.PureComponent {
             sumCalorie : response,
             statusBar: sumcalorie
         });
-
-
     }
 
     render() {
@@ -199,6 +221,7 @@ class foodDiaryScreen extends React.PureComponent {
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         const BMRUser = user.map((data) => {return data.BMRUser});
+
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
@@ -274,7 +297,7 @@ class foodDiaryScreen extends React.PureComponent {
                             </View>
                             <View style={styles.containerCalendar}>
                                 <CommonText text={'พลังงานที่ต้องการต่อวัน '} style={styles.textTitlekcal}/>
-                                <CommonText text={`${BMRUser}่`} style={styles.textSumkcal}/>
+                                <CommonText text={`${BMRUser}`} style={styles.textSumkcal}/>
                                 <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
                             </View>
                         </View>
@@ -283,14 +306,47 @@ class foodDiaryScreen extends React.PureComponent {
                         <View style={{
                             height: 16,
                             flexDirection: 'row',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
                         }}>
-                            <View style={[styles.barBMI,{width: `${this.state.statusBar}%`}]} />
-                            <CommonText
-                                text={`เหลือ ${BMRUser - this.state.sumCalorie} แคลอรี่่`}
-                                style={{marginLeft: '-18%'}}
-                                size={14}
+                            <View
+                                style={[
+                                    styles.barBMI,
+                                    {
+                                        width: `${this.state.statusBar}%`,
+                                        backgroundColor:
+                                            this.state.statusBar < 45 ?
+                                                '#068e81'
+                                                :
+                                                this.state.statusBar > 55 ?
+                                                    '#940c17'
+                                                    :
+                                                    '#406894'
+                                    }
+                                    ]}
                             />
+                            {this.state.statusBar > 100 ?
+                                <CommonText
+                                    text={`เกิน ${this.state.sumCalorie - BMRUser} แคลอรี่่`}
+                                    style={{marginLeft: '-93%'}}
+                                    size={14}
+                                    color={'#fff'}
+                                />
+                                :
+                                this.state.statusBar > 50 ?
+                                <CommonText
+                                    text={`เกิน ${this.state.sumCalorie - BMRUser} แคลอรี่่`}
+                                    style={{marginLeft: '-18%'}}
+                                    size={14}
+                                />
+                                    :
+                                        <CommonText
+                                            text={`เหลือ ${BMRUser - this.state.sumCalorie} แคลอรี่่`}
+                                            style={{marginRight: '2%'}}
+                                            size={14}
+                                        />
+
+                            }
                         </View>
                     </View>
                     <View style={{
@@ -553,8 +609,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     barBMI: {
-        height: 16,
-        backgroundColor: '#068e81'
+        height: 16
     },
 });
 
@@ -573,6 +628,7 @@ export default connect(
         FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
         FETCH_SearchFoodUser: bindActionCreators(APIDiary.fetchSearchFoodUser, dispatch),
         FETCH_SumCalorieFoodUser: bindActionCreators(APIDiary.fetchSumCalorieFoodUser, dispatch),
+        FETCH_DeleteFoodName: bindActionCreators(APIDiary.fetchDeleteFoodName, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
         REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })

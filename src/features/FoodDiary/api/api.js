@@ -19,13 +19,82 @@ export const fetchSearchFoodUser = (UserNames, dateNow) => dispatch => {
         },
         body: JSON.stringify({
             userName: UserNames,
-            dateDiary: dateNow,
+            dateDiary: dateNow
         })
     }).then((response) => response.json())
         .then((responseJson) => responseJson)
         .catch((error) => {
         console.error(error);
     });
+
+};
+
+export const fetchSearchFoodName = (UserNames, dateNow, FoodName) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/SeachFoodName.php`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            userName: UserNames,
+            dateDiary: dateNow,
+            foodname: FoodName
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => responseJson)
+        .catch((error) => {
+            console.error(error);
+        });
+
+};
+
+export const fetchInsert = (UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateNow) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/InsertFoodUser.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: UserNames,
+            foodname: FoodName,
+            foodcalorie: FoodCalorie,
+            foddimg: FoodIMG,
+            foodunit: FoodUnit,
+            numberfood: numberFood,
+            dateadd: dateNow
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson);
+        }).catch((error) => {
+            console.error(error);
+        });
+
+};
+
+export const fetchUpdateFoodUser = (UserNames, FoodCalorie, numberFood, dateNow, FoodName) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/UpdateFoodUser.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username : UserNames,
+            foodcalorie : FoodCalorie,
+            numberfood : numberFood,
+            dateadd: dateNow,
+            foodname: FoodName,
+        })
+    }).then(response => response.json())
+        .then((responseJson) =>
+            console.log(responseJson)
+        )
+        .catch((error) => {
+            console.error(error);
+        });
 
 };
 
@@ -43,6 +112,27 @@ export const fetchSumCalorieFoodUser = (UserNames, dateNow) => dispatch => {
     }).then((response) => response.json())
         .then((responseJson) => responseJson)
         .catch((error) => {
+            console.error(error);
+        });
+
+};
+
+export const fetchDeleteFoodName = (UserNames, FoodName, dateFormat) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/DeleteFoodName.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: UserNames,
+            foodname: FoodName,
+            dateadd: dateFormat
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => {
+            responseJson
+        }).catch((error) => {
             console.error(error);
         });
 
