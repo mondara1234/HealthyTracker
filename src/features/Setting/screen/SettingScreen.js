@@ -79,18 +79,7 @@ class settingScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <View style={styles.container}>
-                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                            <CommonText text={'ปิดการใช้งาน'} style={{ fontSize: 16, color: '#000'}} />
-                            <TouchableOpacity
-                                style={styles.containerButton}
-                                onPress={ () => this.props.navigation.navigate(PRAVIEDKEY)}
-                            >
-                                <View style={styles.containerTitleButton}>
-                                    <CommonText text={'ปิดบัญชี'} style={styles.textButton} />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
+                    <View style={styles.container}>r
                         <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
                             <CommonText text={'เปลี่ยนภาษา'} style={{ fontSize: 16, color: '#000'}} />
                             <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
