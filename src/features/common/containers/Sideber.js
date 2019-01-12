@@ -15,7 +15,6 @@ import { APP_VERSION_TEXT } from '../../../common/constants';
 import { LOGIN, PRAVIEDKEY } from "../../User/router";
 import { PROFILE_SCREEN } from "../../ProfileUser/router";
 import { EXERCISE_SCREEN } from "../../Exercise/router";
-import { USERMANUAL_SCREEN } from "../../UserManual/router";
 import { SETTING_SCREEN } from "../../Setting/router";
 import { MESSAGEBOX_SCREEN } from "../../MessageBox/router";
 import { PROBLEM_SCREEN } from "../../Problem/router";
