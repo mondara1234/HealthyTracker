@@ -12,7 +12,6 @@ import { bmiRouter, BMI_SCREEN } from '../features/BMI/router';
 import { aboutRouter, ABOUT_SCREEN } from '../features/About/router';
 import { problemRouter, PROBLEM_SCREEN } from '../features/Problem/router';
 import { settingRouter } from '../features/Setting/router';
-import { usermanualRouter } from '../features/UserManual/router';
 import { messageboxRouter, MESSAGEBOX_SCREEN } from '../features/MessageBox/router';
 import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
@@ -27,7 +26,6 @@ export const RootStack = StackNavigator({
     ...exerciseRouter,
     ...bmiRouter,
     ...settingRouter,
-    ...usermanualRouter,
     ...profileRouter,
     ...aboutRouter,
     ...problemRouter,

@@ -135,7 +135,6 @@ class Sideber extends React.Component {
             {name: 'ท่าออกกำลังกาย', icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
             {name: 'กล่องข้อความ', icon: 'message', route: MESSAGEBOX_SCREEN, params: {isRootPage: true}},
             {name: 'แจ้งปัญหา', icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
-            {name: 'คู่มือการใช้งาน', icon: 'address-book-o', route: USERMANUAL_SCREEN, params: {isRootPage: true}},
             {name: 'ตั้งค่า', icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
             {name: 'ออกจากระบบ', icon: 'log-out', route: LOGIN, params: {isRootPage: true}}
         ];

@@ -142,7 +142,7 @@ class problemScreen extends React.PureComponent {
 
                             }}
                         >
-                            <CommonText text={'เคลีย'} style={{color: '#fff', fontSize: 16}} />
+                            <CommonText text={'เคลียร์'} style={{color: '#fff', fontSize: 16}} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.container}>
