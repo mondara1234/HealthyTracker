@@ -7,12 +7,13 @@ import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HandleBack from "../../common/components/HandleBack";
 import {bindActionCreators} from "redux";
-import {withNavigation} from "react-navigation";
+import {NavigationActions, withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
+import {getRouteName} from "../../User/redux/actions";
 
 class messageDetailScreen extends React.PureComponent {
     constructor(){
@@ -42,16 +43,16 @@ class messageDetailScreen extends React.PureComponent {
 
     render() {
         const { messageData } = this.props.navigation.state.params;
-        const { width } = Dimensions.get('window');
 
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
-                    <View style={styles.container}>
+                    <View style={{alignItems: 'center'}}>
                         <Content>
-                            <CommonText text={messageData.title} style={{fontSize: 22, marginLeft: 15}} />
-                            <View  style={{marginTop: 20,  alignItems: 'center', justifyContent: 'center'}}>
-                                <CommonText text={messageData.detail} style={{ fontSize: 20, color: '#000'}} />
+                            <CommonText text={messageData.AU_Title} style={{fontSize: 22, textAlign: 'center',marginVertical: 20,}} />
+                            <CommonText text={'รายละเอียด'} style={{marginTop: 10, marginLeft: 10,fontSize: 20}} />
+                            <View  style={{marginHorizontal: 10,  alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#068e81'}}>
+                                <CommonText text={messageData.AU_Datile} style={{ margin: 10, fontSize: 20, color: '#000'}} />
                             </View>
                         </Content>
                     </View>

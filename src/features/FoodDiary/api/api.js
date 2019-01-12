@@ -22,7 +22,7 @@ export const fetchSearchFoodUser = (UserNames, dateNow) => dispatch => {
             dateDiary: dateNow
         })
     }).then((response) => response.json())
-        .then((responseJson) => responseJson)
+        .then((responseJson) => responseJson )
         .catch((error) => {
         console.error(error);
     });
@@ -112,7 +112,9 @@ export const fetchSumCalorieFoodUser = (UserNames, dateNow) => dispatch => {
     }).then((response) => response.json())
         .then((responseJson) => responseJson)
         .catch((error) => {
-            console.error(error);
+            console.log('error:', error);
+            let num = 0;
+            return num;
         });
 
 };

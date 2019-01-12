@@ -20,7 +20,6 @@ import { SETTING_SCREEN } from "../../Setting/router";
 import { MESSAGEBOX_SCREEN } from "../../MessageBox/router";
 import { PROBLEM_SCREEN } from "../../Problem/router";
 import { ABOUT_SCREEN } from "../../About/router";
-import * as API from "../../User/api/api";
 import CommonText from '../../common/components/CommonText';
 import {getRouteName} from "../../User/redux/actions";
 
@@ -29,7 +28,7 @@ class Sideber extends React.Component {
         super(props);
 
         this.state = {
-            menuActive: 'home',
+            menuActive: this.props.routeName,
             ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png'
         };
     }

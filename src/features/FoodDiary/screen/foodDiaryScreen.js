@@ -68,7 +68,6 @@ class foodDiaryScreen extends React.PureComponent {
 
         let date = new Date();
         let dateFormat = moment(date).format("YYYY-MM-DD");
-        console.log('dateFormat'+dateFormat);
         this.setState({
             date: dateFormat
         });
@@ -177,8 +176,9 @@ class foodDiaryScreen extends React.PureComponent {
         );
     }
 
-    DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser){
-        const response = this.props.FETCH_DeleteFoodName(UserName,FoodName,dateFormat);
+    async DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser){
+        const response = await  this.props.FETCH_DeleteFoodName(UserName,FoodName,dateFormat);
+        console.log('response', response);
         this.getFoodUser(UserName,dateFormat);
         this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
     }
@@ -256,6 +256,7 @@ class foodDiaryScreen extends React.PureComponent {
                             onDateChange={(fulldate) => {
                                 this.setState({date: fulldate});
                                 this.getFoodUser(UserName,fulldate);
+                                this.getSumCalorieFoodUser(BMRUser,UserName,fulldate);
                             }}
                         />
                     </View>
