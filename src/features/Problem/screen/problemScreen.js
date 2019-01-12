@@ -13,6 +13,11 @@ import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {TRICK_SCREEN} from "../../Trick/router";
+import {connect} from "react-redux";
+import {AllMessageBox} from "../../MessageBox/redux/actions";
+import {bindActionCreators} from "redux";
+import {NavigationActions} from "react-navigation";
+import * as APIProblem from "../../Problem/api/api";
 
 
 class problemScreen extends React.PureComponent {
@@ -23,6 +28,8 @@ class problemScreen extends React.PureComponent {
             data: null,
             filename: null,
             selected: undefined,
+            detail : '',
+            title: '',
             editing: true
         }
     }
@@ -46,6 +53,7 @@ class problemScreen extends React.PureComponent {
     };
 
     onValueChange(value) {
+        console.log('value'+ value);
         this.setState({
             selected: value
         });
@@ -99,10 +107,44 @@ class problemScreen extends React.PureComponent {
         })
     }
 
+    handleChange(event) {
+        this.setState({
+            detail: event.target.value
+        });
+    }
+
+    addProBlem(){
+        console.log('Title' + this.state.title);
+        console.log('selected' + this.state.selected);
+        console.log('detail' + this.state.detail);
+        console.log('imageSource' + this.state.imageSource);
+        console.log('data' + this.state.data);
+        console.log('filename' + this.state.filename);
+
+    }
+
     render() {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
+                    <View style={{flexDirection: 'row' ,alignItems: 'center', justifyContent: 'flex-end'}}>
+                        <TouchableOpacity
+                            style={[styles.buttonImg,{marginRight: 10, height: 30}]}
+                            onPress={() =>{
+                                this.setState({
+                                    imageSource: null,
+                                    data: null,
+                                    filename: null,
+                                    selected: undefined,
+                                    detail : '',
+                                    title: '',
+                                })
+
+                            }}
+                        >
+                            <CommonText text={'เคลีย'} style={{color: '#fff', fontSize: 16}} />
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.container}>
                         <Content>
                             <CommonText text={'แจ้งปัญหา'} style={styles.textTitle} />
@@ -111,9 +153,9 @@ class problemScreen extends React.PureComponent {
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholder="ชื่อหัวข้อปัญหา"
-                                           secureTextEntry={true}
+                                           defaultValue={this.state.title}
                                            placeholderTextColor = "#068e81"
-                                           onChangeText={UserPassword =>this.setState({UserPassword})}
+                                           onChangeText={Title =>this.setState({ title: Title })}
                                 />
                             </View>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
@@ -124,17 +166,24 @@ class problemScreen extends React.PureComponent {
                                     selectedValue={this.state.selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                 >
-                                    <Picker.Item label="เลือกประเภทของปัญหา" value="null" />
-                                    <Picker.Item label="ระบบไม่สเถียน" value="Error1" />
-                                    <Picker.Item label="serverมีปัญหา" value="Error2" />
-                                    <Picker.Item label="เจอBug" value="Error3" />
-                                    <Picker.Item label="แนะนำ" value="Error4" />
-                                    <Picker.Item label="อื่นๆ" value="Error5" />
+                                    <Picker.Item label="เลือกประเภทของปัญหา" value="เลือกประเภทของปัญหา" />
+                                    <Picker.Item label="ระบบไม่สเถียน" value="ระบบไม่สเถียน" />
+                                    <Picker.Item label="serverมีปัญหา" value="serverมีปัญหา" />
+                                    <Picker.Item label="เจอBug" value="เจอBug" />
+                                    <Picker.Item label="แนะนำ" value="แนะนำ" />
+                                    <Picker.Item label="อื่นๆ" value="อื่นๆ" />
                                 </Picker>
                             </View>
                             <CommonText text={'รายละเอียด'} style={{fontSize: 20 , marginHorizontal: 20}} />
                             <Form>
-                                <Textarea style={{backgroundColor: '#fff'}} rowSpan={10} bordered placeholder="กรอกรายละเอียดของปัญหา" />
+                                <Textarea
+                                    style={{backgroundColor: '#fff'}}
+                                    rowSpan={10}
+                                    bordered
+                                    placeholder="กรอกรายละเอียดของปัญหา"
+                                    defaultValue={this.state.detail}
+                                    onChangeText={Detail =>this.setState({ detail: Detail })}
+                                />
                             </Form>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
                                 <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
@@ -143,7 +192,7 @@ class problemScreen extends React.PureComponent {
                                 <CommonText text={'ชื่อรูปภาพ.jpg'} style={{fontSize: 14, marginLeft: '2%', marginTop: 10}} />
                             </View>
                             <View style={{width: '100%',alignItems: 'center', justifyContent: 'center' }}>
-                                <TouchableOpacity style={styles.button} onPress={this.uploadPhoto.bind(this)}>
+                                <TouchableOpacity style={styles.button} onPress={() => this.addProBlem()}>
                                     <CommonText text={'ส่งปัญหา'} style={styles.buttonText} />
                                 </TouchableOpacity>
                             </View>
@@ -175,7 +224,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F4F4F4',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 30
+        paddingTop: 10
     },
     textTitle: {
         fontSize: 24,
@@ -197,6 +246,8 @@ const styles = StyleSheet.create({
     buttonImg: {
         width: 100,
         height: 40,
+        borderRadius: 25,
+        borderWidth: 1,
         backgroundColor: '#068e81',
         justifyContent: 'center',
         alignItems: 'center',
@@ -220,4 +271,16 @@ const styles = StyleSheet.create({
 
 });
 
-export default problemScreen;
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser,
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_InsertProblem: bindActionCreators(APIProblem.InsertProblem, dispatch)
+    })
+)(problemScreen);
