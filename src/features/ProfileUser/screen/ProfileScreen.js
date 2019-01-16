@@ -101,7 +101,7 @@ class ProfileScreen extends React.PureComponent {
                             </View>
                             <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={'BMI :'} size={14} />
+                                    <CommonText text={'BMR :'} size={14} />
                                 </View>
                                 <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
                                     <CommonText text={'58'} style={{fontSize: 16, color: '#068E81'}} />
