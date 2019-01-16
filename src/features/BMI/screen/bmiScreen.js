@@ -11,13 +11,21 @@ import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../router";
 import { TRICK_SCREEN } from "../../Trick/router";
+import {NavigationActions} from "react-navigation";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import * as APIBMIUser from "../../BMI/api/api";
+import { seaech_BMIUser } from "../../BMI/redux/actions";
 
 
 class bmiScreen extends React.PureComponent {
     constructor(){
         super();
         this.state = {
-            editing: true
+            editing: true,
+            dataArray : [],
+            bmi: 0,
+            criterionbmi: ''
         }
     }
 
@@ -43,10 +51,10 @@ class bmiScreen extends React.PureComponent {
         return (
             <View style={styles.containerHead}>
                 <View style={styles.containerBodyHead}>
-                    <CommonText text={dataArray.title} />
+                    <CommonText text={dataArray.NameBMI} />
                     <View style={styles.containerUnitHead}>
-                        <CommonText text={dataArray.kcal} />
-                        <CommonText text={dataArray.Unit} style={{ marginLeft: 3 }} />
+                        <CommonText text={dataArray.UnitBMI} />
+                        <CommonText text={dataArray.SumBMI} style={{ marginLeft: 3 }} />
                     </View>
                 </View>
                 {expanded
@@ -61,16 +69,60 @@ class bmiScreen extends React.PureComponent {
 
     _renderContent(dataArray) {
         return (
-            <CommonText text={dataArray.content} style={styles.containerContent} />
+            <CommonText text={dataArray.DetailBMI} style={styles.containerContent} />
         );
     }
 
+    componentDidMount() {
+
+        const {user} = this.props.Users;
+        const Height = user.map((data) => {return data.Height});
+        const Weight = user.map((data) => {return data.Weight});
+        let SumBMi = Math.pow(Weight, 2)/Height;
+        let BMRUser = 0;
+        let criterionBMI = '';
+        if(SumBMi.toFixed(2) < 18.50){
+            BMRUser = 1;
+            criterionBMI = 'ผอม';
+
+        }else if(SumBMi.toFixed(2) < 23.00){
+            BMRUser = 2;
+            criterionBMI = 'ปกติ';
+
+        }else if(SumBMi.toFixed(2) < 25.00){
+            BMRUser = 3;
+            criterionBMI = 'ท้วม';
+
+        }else if(SumBMi.toFixed(2) < 30.00){
+            BMRUser = 4;
+            criterionBMI = 'อ้วน';
+
+        }else if(30.00 < SumBMi.toFixed(2) ){
+            BMRUser = 5;
+            criterionBMI = 'อ้วนมาก';
+        }
+        this.setState({
+            bmi : SumBMi.toFixed(2),
+            criterionbmi: criterionBMI
+        });
+        this.getBMRUser(BMRUser)
+
+    }
+
+    async getBMRUser(BMRUser) {
+        let BMRUsers =`${BMRUser}`;
+        const response = await this.props.FETCH_SearchBMIUse(BMRUsers);
+        console.log(response);
+        this.props.REDUCER_seaech_BMIUser(response);
+        const arrayBMI = this.props.BmiUser.bmiUser;
+        console.log(arrayBMI);
+        this.setState({
+            dataArray : arrayBMI
+        });
+
+    }
+
     render() {
-        const dataArray = [
-            { title: "น้ำหนักที่เหมาะสม", content: "เนื้อหา น้ำหนักที่เหมาะสม " , kcal: '72-76', Unit: 'กก'},
-            { title: "ปริมาณน้ำที่แนะนำ", content: "เนื้อหา ปริมาณน้ำที่แนะนำ ", kcal: 1.99, Unit: 'ลิตร' },
-            { title: "การบริโภคที่แนะนำ", content: "เนื้อหา การบริโภคที่แนะนำ ", kcal: 2428, Unit: 'แคลอรี่' },
-        ];
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
@@ -80,11 +132,11 @@ class bmiScreen extends React.PureComponent {
                                 <View>
                                     <View style={styles.containerBodyBMI}>
                                         <CommonText text={'BMI :'} style={styles.textHead} />
-                                        <CommonText text={'21.36'} style={styles.valueHead} />
+                                        <CommonText text={this.state.bmi} style={styles.valueHead} />
                                     </View>
                                     <View style={styles.containerBodyBMI}>
                                         <CommonText text={'เกณฑ์ :'} style={[styles.textHead,{marginLeft: -13}]} />
-                                        <CommonText text={'ปกติ'} style={styles.valueHead} />
+                                        <CommonText text={this.state.criterionbmi} style={styles.valueHead} />
                                     </View>
                                 </View>
                                 <View style={styles.containerBodyBMI}>
@@ -94,19 +146,55 @@ class bmiScreen extends React.PureComponent {
                                 </View>
                             </View>
                             <View style={styles.containerBarBMI }>
-                                <View style={styles.barBMI} />
+                                <View
+                                    style={[
+                                        styles.barBMI,
+                                        {
+                                            width: this.state.bmi < 18.50 ?
+                                                '5%'
+                                                :
+                                                this.state.bmi < 23.00 ?
+                                                    '25%'
+                                                    :
+                                                    this.state.bmi < 25.00 ?
+                                                        '45%'
+                                                        :
+                                                        this.state.bmi < 30.00 ?
+                                                            '68%'
+                                                            :
+                                                            '100%',
+                                            backgroundColor:
+                                                this.state.bmi < 18.50 ?
+                                                    '#068e81'
+                                                    :
+                                                    this.state.bmi < 23.00 ?
+                                                        '#406894'
+                                                        :
+                                                        this.state.bmi < 25.00 ?
+                                                            '#946649'
+                                                            :
+                                                            this.state.bmi < 30.00 ?
+                                                                '#940c17'
+                                                                :
+                                                                '#428e94'
+                                        }
+                                    ]}
+                                />
                             </View>
                             <View style={styles.containerClock}>
-                                <CommonText text={'ควรเพิ่ม'} style={[styles.textUnitKcal, { color: '#068e81'}]} />
-                                <CommonText text={'พอดี'} style={[styles.textUnitKcal, { color: '#406894'}]} />
-                                <CommonText text={'ควรลด'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
+                                <CommonText text={'ผอม'} style={[styles.textUnitKcal, { color: '#068e81'}]} />
+                                <CommonText text={'ปกติ'} style={[styles.textUnitKcal, { color: '#406894'}]} />
+                                <CommonText text={'ท้วม'} style={[styles.textUnitKcal, { color: '#946649'}]} />
+                                <CommonText text={'อ้วน'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
+                                <CommonText text={'อ้วนมาก'} style={[styles.textUnitKcal, { color: '#428e94'}]} />
                             </View>
                             <View
                                 style = {styles.separator}>
                             </View>
                             <View padder>
+                                <CommonText text={'ข้อแนะนำ'} style={[styles.textUnitKcal, {fontSize:18, marginTop: 10}]} color={'#068e81'} />
                                 <Accordion
-                                    dataArray={dataArray}
+                                    dataArray={this.state.dataArray}
                                     renderHeader={this._renderHeader}
                                     renderContent={this._renderContent}
                                     headerStyle={{ backgroundColor: "#b7daf8" }}
@@ -239,4 +327,18 @@ const styles = StyleSheet.create({
 
 });
 
-export default bmiScreen;
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser,
+        BmiUser: state.dataBMIUser
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_SearchBMIUse: bindActionCreators(APIBMIUser.fetchSearchBMIUser, dispatch),
+        REDUCER_seaech_BMIUser: bindActionCreators(seaech_BMIUser, dispatch),
+    })
+)(bmiScreen);

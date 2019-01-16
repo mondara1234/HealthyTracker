@@ -410,15 +410,15 @@ class foodDiaryScreen extends React.PureComponent {
                                             let UserID = id.toString();
                                             let Sex = this.state.selected;
                                             let Age = this.state.TextInput_age;
-                                            let Weight = this.state.TextInput_cm;
-                                            let Height = this.state.TextInput_gg;
+                                            let Height = this.state.TextInput_cm;
+                                            let Weight = this.state.TextInput_gg;
                                             let BMRUser = 0;
 
                                             if(Sex === 'male'){
-                                                let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
+                                                let BMR_male = 66 + (13.7 * Weight)+(5 * Height) - (6.8 * Age);
                                                 BMRUser = BMR_male.toFixed();
                                             }else if(Sex === 'female') {
-                                                let BMR_female = 665 + (9.6 * Height) + (1.8 * Weight) - (4.7 * Age);
+                                                let BMR_female = 665 + (9.6 * Weight) + (1.8 * Height) - (4.7 * Age);
                                                 BMRUser = BMR_female.toFixed();
                                             }
 
