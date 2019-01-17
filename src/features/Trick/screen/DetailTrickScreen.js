@@ -7,19 +7,24 @@ import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import {bindActionCreators} from "redux";
-import {withNavigation} from "react-navigation";
+import {NavigationActions, withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {TRICK_SCREEN} from "../router";
 import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {Images} from "../../User/components/images";
+import * as APITrick from "../../Trick/api/api";
+import moment from "moment/moment";
+import * as APIDiary from "../../FoodDiary/api/api";
 
 class DetailTrickScreen extends React.PureComponent {
     constructor(){
         super();
         this.state = {
-            editing: true
+            editing: true,
+            statusLike: '',
+            trickLike: 0
         }
     }
 
@@ -40,34 +45,115 @@ class DetailTrickScreen extends React.PureComponent {
         return false;
 
     };
+    componentDidMount() {
+        const { trickData } = this.props.navigation.state.params;
+        const trickID = trickData.TrickID;
+        const {user} = this.props.Users;
+        const UserName = user.map((data) => {return data.UserName});
+        let UserNames =`${UserName}`;
+        let trickIDs =`${trickID}`;
+
+        this.SearchUserLikeTrick(UserNames,trickIDs);
+
+    }
+    async SearchUserLikeTrick(UserNames,trickIDs) {
+        const response = await this.props.FETCH_SearchUserLikeTrick(UserNames,trickIDs);
+        if(response === 'allow'){
+            this.setState({
+                statusLike: 'allow',
+            });
+        }else{
+            this.setState({
+                statusLike: 'disallow',
+            });
+        }
+    }
+
+    async DeleteUserLikeTrick(){
+        const { trickData } = this.props.navigation.state.params;
+        const trickID = trickData.TrickID;
+        const trickLike = parseInt(trickData.TrickLike) - 1;
+        const {user} = this.props.Users;
+        const UserName = user.map((data) => {return data.UserName});
+        let UserNames =`${UserName}`;
+        let trickIDs =`${trickID}`;
+        let trickLikes =`${trickLike }`;
+        const response = await  this.props.FETCH_DeleteUserLikeTrick(UserNames,trickIDs);
+        this.SearchUserLikeTrick(UserNames,trickID);
+        this.UpdateLike(trickIDs,trickLikes);
+    }
+
+    async InsertUserLikeTrick(){
+        const { trickData } = this.props.navigation.state.params;
+        const trickID = trickData.TrickID;
+        const trickLike = parseInt(trickData.TrickLike) + 1;
+        const {user} = this.props.Users;
+        const UserName = user.map((data) => {return data.UserName});
+        let UserNames =`${UserName}`;
+        let trickIDs =`${trickID}`;
+        let trickLikes =`${trickLike }`;
+        const response = await  this.props.FETCH_InsertUserLikeTrick(UserNames,trickIDs);
+        this.SearchUserLikeTrick(UserNames,trickID);
+        this.UpdateLike(trickIDs,trickLikes);
+    }
+
+    async UpdateLike(trickIDs,trickLikes){
+        this.props.FETCH_UpdateLike(trickIDs,trickLikes);
+        this.SearchTrickID(trickIDs)
+    }
+
+    async SearchTrickID(trickIDs){
+        const response = await this.FETCH_SearchTrickID(trickIDs);
+        console.log('response',response);
+        this.setState({
+            trickLike: response.TrickLike
+        });
+    }
 
     render() {
         const { trickData } = this.props.navigation.state.params;
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <Content>
-                        <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                            <CommonText text={'กดถูกใจ'} />
-                            <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
+                    <Content padder>
+                        {this.state.statusLike === 'allow' ?
+                            <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                                <CommonText text={'เลิกถูกใจ'} />
+                                <TouchableOpacity
+                                    onPress={()=> this.DeleteUserLikeTrick()}
+                                >
+                                    <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
                                     source={Images.TrickScreen.Heart}
-                            />
-                        </View>
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        :
+                            <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                                <CommonText text={'กดถูกใจ'} />
+                                <TouchableOpacity
+                                    onPress={()=> this.InsertUserLikeTrick()}
+                                >
+                                    <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
+                                            source={Images.TrickScreen.Heart}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        }
                         <View style={styles.container}>
                             <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '90%', height: 150}}
-                                    source={{uri: trickData.picture.large}}
+                                    source={{uri: trickData.TrickIMG}}
                             />
-                            <CommonText text={trickData.name.first} style={{fontSize: 22, fontWeight: 'bold'}} />
+                            <CommonText text={trickData.TrickName} style={{fontSize: 22, fontWeight: 'bold'}} />
                             <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row'}}>
                                     <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
                                             source={Images.TrickScreen.Heart}
                                     />
-                                    <CommonText text={`${trickData.Follow} คน`} size={16} />
+                                    <CommonText text={`${this.state.trickLike === 0 ? trickData.TrickLike : this.state.trickLike} คน`} size={16} />
                                 </View>
-                                <CommonText text={`${trickData.credit}/${trickData.dateAdd}`} size={16} />
+                                <CommonText text={`${trickData.PeopleAdd} / ${trickData.DateAdded}`} size={16} />
                             </View>
-                            <CommonText text={trickData.detailtrick} style={{ fontSize: 30, marginTop: 40}} />
+                            <CommonText text={trickData.TrickDetail} style={{marginTop: 40}} />
                         </View>
                     </Content>
                     <SideMenu
@@ -124,4 +210,20 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNavigation(DetailTrickScreen);
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_SearchUserLikeTrick: bindActionCreators(APITrick.fetchSearchUserLikeTrick, dispatch),
+        FETCH_DeleteUserLikeTrick: bindActionCreators(APITrick.DeleteUserLikeTrick, dispatch),
+        FETCH_InsertUserLikeTrick: bindActionCreators(APITrick.InsertUserLikeTrick, dispatch),
+        FETCH_UpdateLike: bindActionCreators(APITrick.UpdateLikeTrick, dispatch),
+        FETCH_SearchTrickID: bindActionCreators(APITrick.SearchTrickID, dispatch),
+    })
+)(DetailTrickScreen);

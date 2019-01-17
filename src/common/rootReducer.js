@@ -5,6 +5,7 @@ import  MenuFoodReducer from '../features/MenuFood/redux/reducer';
 import  ExerciseUserReducer from '../features/Exercise/redux/reducer';
 import  MessageBoxReducer from '../features/MessageBox/redux/reducer';
 import  BMIReducer from '../features/BMI/redux/reducer';
+import  TrickReducer from '../features/Trick/redux/reducer';
 
 export default  combineReducers({
     //counterreducer: CounterReducer,
@@ -13,5 +14,6 @@ export default  combineReducers({
     dataMenuFood: MenuFoodReducer,
     dataExerciseUser: ExerciseUserReducer,
     dataMessageBox: MessageBoxReducer,
-    dataBMIUser: BMIReducer
+    dataBMIUser: BMIReducer,
+    dataTrick: TrickReducer
 });

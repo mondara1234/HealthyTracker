@@ -92,7 +92,4 @@ TrickScreen.navigationOptions  = ({navigation}) => ({
 });
 
 export default TrickScreen;
-{/*
-<RankTrick  itemImage={Images.TrickScreen.Rank}
-            nameImg={'1'}
-/>*/}
+

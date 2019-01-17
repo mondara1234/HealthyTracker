@@ -23,7 +23,6 @@ import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser} from "../../User/redux/actions";
 import moment from "moment/moment";
-import {LOGIN} from "../../User/router";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
