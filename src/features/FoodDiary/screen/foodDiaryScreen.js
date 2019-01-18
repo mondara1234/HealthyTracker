@@ -17,6 +17,7 @@ import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
+import { PRAVIEDKEY } from "../../User/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
@@ -75,7 +76,10 @@ class foodDiaryScreen extends React.PureComponent {
         const sex = user.map((data) => {return data.Sex});
         const UserName = user.map((data) => {return data.UserName});
         const BMRUser = user.map((data) => {return data.BMRUser});
-
+        const personalSelect = user.map((data) => {return data.PersonalSelect});
+         if(`${personalSelect}` === 'on'){
+             this.props.navigation.navigate(PRAVIEDKEY)
+         }
         if (sex.toString() === '') {
             this.setState({
                 DialogData: true

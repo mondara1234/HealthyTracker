@@ -10,6 +10,9 @@ import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import {FORGOTPASSWORD} from "../router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
+import {NavigationActions} from "react-navigation";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
@@ -39,6 +42,14 @@ class PraviedKeyScreen extends React.PureComponent {
 
     };
 
+    componentDidMount() {
+        const {user} = this.props.Users;
+        const personalCode = user.map((data) => {return data.PersonalCode});
+        this.setState({
+            passKey : `${personalCode}`
+        })
+    }
+
     _onFinishCheckingCode = () => {
         let checkPassKey = this.state.passCode[0]+
             this.state.passCode[1]+
@@ -48,25 +59,29 @@ class PraviedKeyScreen extends React.PureComponent {
             this.state.passCode[5];
 
         setTimeout( _onFinishCheck = () => {
-            let checkData = '123456';
+            let checkData = this.state.passKey;
 
             if (checkData === '') {
                 Alert.alert(
-                    'Confirmation Code',
-                    'Set the code successfully!',
+                    'รหัสส่วนตัว',
+                    'ตั้งรหัสสำเร็จ!',
                     [
                         {text: 'OK',
-                            onPress: () => this.setState({
-                                passCode: []
-                            })
+                            onPress: () => {
+                                this.setState({
+                                    passCode: []
+                                });
+
+                                this.props.navigation.navigate(FOODDIARY_SCREEN)
+                            }
                         }
                     ],
                     { cancelable: false }
                 );
             }else if (checkPassKey === checkData) {
                 Alert.alert(
-                    'Confirmation Code',
-                    'Successful!',
+                    'รหัสส่วนตัว',
+                    'รหัสส่วนตัวถูกต้อง!',
                     [
                         {text: 'OK',
                             onPress: () => this.setState({
@@ -78,8 +93,8 @@ class PraviedKeyScreen extends React.PureComponent {
                 );
             } else {
                 Alert.alert(
-                    'Confirmation Code',
-                    'Code not match!',
+                    'รหัสส่วนตัว',
+                    'รหัสส่วนตัวไม่ถูกต้อง!',
                     [
                         {text: 'OK',
                             onPress: () => this.setState({
@@ -159,8 +174,7 @@ class PraviedKeyScreen extends React.PureComponent {
 
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
     headerTitle: <HeaderTitle text={'ตั้งค่ารหัสส่วนตัว'} />,
-    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
-    headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 
 const styles = StyleSheet.create({
@@ -214,12 +228,16 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
 });
- export default PraviedKeyScreen;
-//
-// export default connect(
-//     (state) => {
-//     },
-//     (dispatch) => ({
-//         navigationActions: bindActionCreators(NavigationActions, dispatch)
-//     })
-// )(PraviedKeyScreen)
+
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch)
+    })
+)(PraviedKeyScreen)

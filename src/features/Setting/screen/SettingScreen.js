@@ -11,12 +11,13 @@ import {FOODSTYPE_SCREEN, MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
-import {getNews} from "../../User/redux/actions";
 import {connect} from "react-redux";
-import * as API from "../../User/api/api";
 import {bindActionCreators} from "redux";
 import {NavigationActions} from "react-navigation";
 import {PRAVIEDKEY} from "../../User/router";
+import * as APIUser from "../../User/api/api";
+import * as APISetting from "../../Setting/api/api";
+import {getOneUser} from "../../User/redux/actions";
 
 class settingScreen extends React.PureComponent {
     constructor(props) {
@@ -27,7 +28,12 @@ class settingScreen extends React.PureComponent {
             active: false,
             DialogChangePrivateKey: false,
             DialogChangeSuccess: false,
-            editing: true
+            editing: true,
+            personalCode: '',
+            TextInput_Passwordold: '',
+            TextInput_PasswordNew: '',
+            TextInput_PasswordAgain: ''
+
         }
     }
 
@@ -49,6 +55,128 @@ class settingScreen extends React.PureComponent {
 
     };
 
+    componentDidMount() {
+
+        const {user} = this.props.Users;
+        const personalSelect = user.map((data) => {return data.PersonalSelect});
+        const language = user.map((data) => {return data.Language});
+        const personalCode = user.map((data) => {return data.PersonalCode});
+        if(`${personalSelect}` === 'on'){
+            this.setState({
+                PrivateKey : true
+            })
+        }
+        if(`${language}` === 'eng'){
+            this.setState({
+                active : true
+            })
+        }
+        this.setState({
+            personalCode : `${personalCode}`
+        })
+    }
+
+    async UpdateChangePrivateKey() {
+        const {user} = this.props.Users;
+        let id = user.map((data) => { return data.UserID });
+        let UserName = user.map((data) => { return data.UserName });
+        let UserID = id.toString();
+        let UserNames =`${UserName}`;
+        let personalCode = this.state.personalCode;
+        let Passwordold = this.state.TextInput_Passwordold;
+        let PasswordNew = this.state.TextInput_PasswordNew;
+        let PasswordAgain = this.state.TextInput_PasswordAgain;
+        if(Passwordold.length !== 6 || PasswordNew.length !== 6 || PasswordAgain.length !== 6){
+            Alert.alert(
+                "แจ้งเตือน",
+                " รหัสผ่านต้องมี6ตัว",
+                [
+                    {
+                        text: "ปิด", onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+        }else if(Passwordold === '' || PasswordNew === '' || PasswordAgain === ''){
+            Alert.alert(
+                "แจ้งเตือน",
+                " กรุณากรอกให้ครบ",
+                [
+                    {
+                        text: "ปิด", onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+        }else if(personalCode !== Passwordold){
+            Alert.alert(
+                "แจ้งเตือน",
+                " รหัสผ่านเก่าไม่ถูกต้อง",
+                [
+                    {
+                        text: "ปิด", onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+        }else if(PasswordNew !== PasswordAgain){
+            Alert.alert(
+                "แจ้งเตือน",
+                " รหัสผ่านใหม่ทั้งสอง ไม่ตรงกัน",
+                [
+                    {
+                        text: "ปิด", onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+
+        }else{
+                const response = await this.props.FETCH_UpdateChangePrivateKey(UserID, PasswordNew);
+                const responseSearchUser = await this.props.FETCH_fetchSearchUser(UserNames);
+                this.props.REDUCER_ONEDATA(responseSearchUser);
+                const members = this.props.Users.user;
+                const personalCode = members.map((data) => {return data.PersonalCode});
+
+                this.setState({
+                    DialogChangePrivateKey: false,
+                    DialogChangeSuccess: true,
+                    personalCode : `${personalCode}`
+                })
+        }
+    }
+
+    async UpdateAllSetting() {
+        const {user} = this.props.Users;
+        let id = user.map((data) => { return data.UserID });
+        let UserName = user.map((data) => { return data.UserName });
+        let UserID = id.toString();
+        let UserNames =`${UserName}`;
+        let PrivateKey = this.state.PrivateKey;
+        let active = this.state.active;
+        let Language = '';
+        let PersonalSelect = '';
+            if(PrivateKey === true){
+                PersonalSelect = 'on';
+            }else{
+                PersonalSelect = 'off';
+            }
+
+            if(active === true){
+                Language = 'eng';
+            }else{
+                Language = 'th';
+            }
+        const response = await this.props.FETCH_UpdateAllPrivate(UserID, PersonalSelect, Language);
+        const responseSearchUser = await this.props.FETCH_fetchSearchUser(UserNames);
+        this.props.REDUCER_ONEDATA(responseSearchUser);
+
+    }
+
     handleSwitchToggle = () => {
       this.setState({
           active: !this.state.active
@@ -56,7 +184,7 @@ class settingScreen extends React.PureComponent {
     };
 
     _setPrivateKey = () => {
-        if(this.state.PrivateKey === 'true'){
+        if(this.state.PrivateKey === true){
             this.setState(state => ({ PrivateKey: !state.PrivateKey }))
         }else{
             this.setState(state => ({ PrivateKey: !state.PrivateKey }));
@@ -79,7 +207,7 @@ class settingScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <View style={styles.container}>r
+                    <View style={styles.container}>
                         <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
                             <CommonText text={'เปลี่ยนภาษา'} style={{ fontSize: 16, color: '#000'}} />
                             <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
@@ -105,7 +233,22 @@ class settingScreen extends React.PureComponent {
                         <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 20}}>
                             <TouchableOpacity
                                 style={[styles.containerButton,{width: 130, height: 30}]}
-                                onPress={() => {this.setState({DialogChangePrivateKey: true})}}
+                                onPress={() => {
+                                    this.state.personalCode ?
+                                        this.setState({DialogChangePrivateKey: true})
+                                        :
+                                        Alert.alert(
+                                            "แจ้งเตือน",
+                                            " คุณยังไม่ได้สร้างรหัสส่วนตัว",
+                                            [
+                                                {
+                                                    text: "ปิด", onPress: () => {
+                                                    }, style: "cancel"
+                                                }
+                                            ],
+                                            {cancelable: false},
+                                        );
+                                }}
                             >
                                 <View style={styles.containerTitleButton}>
                                     <CommonText text={'เปลี่ยนรหัสส่วนตัว'} style={styles.textButton} />
@@ -114,7 +257,7 @@ class settingScreen extends React.PureComponent {
                         </View>
                         <TouchableOpacity
                             style={[styles.containerButton,{width: 100, height: 50}]}
-                            onPress={ () => navigate({routeName: FOODSTYPE_SCREEN})}
+                            onPress={ () => this.UpdateAllSetting()}
                         >
                             <View style={styles.containerTitleButton}>
                                 <CommonText text={'บันทึก'} style={[styles.textButton,{fontSize: 20}]} />
@@ -142,9 +285,7 @@ class settingScreen extends React.PureComponent {
                             <DialogButton
                                 text="ตกลง"
                                 textStyle={styles.dialogTextButton}
-                                onPress={() => {
-                                    this.setState({ DialogChangePrivateKey: false, DialogChangeSuccess: true })
-                                }}
+                                onPress={() => this.UpdateChangePrivateKey()}
                                 style={styles.dialogTitleView}
                             />,
                             <DialogButton
@@ -163,8 +304,9 @@ class settingScreen extends React.PureComponent {
                                 underlineColorAndroid='rgba(0,0,0,0)'
                                 placeholder="รหัสส่วนตัวเดิม"
                                 secureTextEntry={true}
+                                maxLength={6}
                                 placeholderTextColor = "#068e81"
-                                onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
+                                onChangeText={ TextInputValue => this.setState({ TextInput_Passwordold : TextInputValue })}
                             />
                             <TextInput
                                 style={styles.inputBoxDialog}
@@ -173,7 +315,8 @@ class settingScreen extends React.PureComponent {
                                 secureTextEntry={true}
                                 placeholderTextColor = "#068e81"
                                 selectionColor="#fff"
-                                onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
+                                maxLength={6}
+                                onChangeText={ TextInputValue => this.setState({ TextInput_PasswordNew : TextInputValue })}
                             />
                             <TextInput
                                 style={styles.inputBoxDialog}
@@ -182,6 +325,7 @@ class settingScreen extends React.PureComponent {
                                 secureTextEntry={true}
                                 placeholderTextColor = "#068e81"
                                 selectionColor="#fff"
+                                maxLength={6}
                                 onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
                             />
                         </View>
@@ -304,9 +448,19 @@ const styles = StyleSheet.create({
     }
 });
 
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser
+    };
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     (dispatch) => ({
-        navigationActions: bindActionCreators(NavigationActions, dispatch),
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_UpdateAllPrivate: bindActionCreators(APISetting.UpdateAllPrivate, dispatch),
+        FETCH_UpdateChangePrivateKey: bindActionCreators(APISetting.UpdateChangePrivateKey, dispatch),
+        FETCH_fetchSearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })
 )(settingScreen);
