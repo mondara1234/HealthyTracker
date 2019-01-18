@@ -18,6 +18,7 @@ import {AllMessageBox} from "../../MessageBox/redux/actions";
 import {bindActionCreators} from "redux";
 import {NavigationActions} from "react-navigation";
 import * as APIProblem from "../../Problem/api/api";
+import Trans from "../../common/containers/Trans";
 
 
 class problemScreen extends React.PureComponent {
@@ -37,11 +38,11 @@ class problemScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );

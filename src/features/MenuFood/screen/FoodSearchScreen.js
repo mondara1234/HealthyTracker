@@ -13,6 +13,7 @@ import { MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { TRICK_SCREEN } from "../../Trick/router";
+import Trans from "../../common/containers/Trans";
 
 class FoodSearchScreen extends React.PureComponent {
     constructor(){
@@ -25,11 +26,11 @@ class FoodSearchScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -54,8 +55,8 @@ class FoodSearchScreen extends React.PureComponent {
                         >
                             <View style={styles.containerTextButton}>
                                 <View style={styles.containerTitleButton}>
-                                    <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
-                                    <CommonText text={'ชื่ออาหาร'} style={styles.textButton} />
+                                    <CommonText text={Trans.tran('MenuFood.foodSearch.search_by')} style={[styles.textButton,{marginLeft: 50}]} />
+                                    <CommonText text={Trans.tran('MenuFood.foodSearch.food_name')} style={styles.textButton} />
                                 </View>
                                 <IconFontAwesome name="search" size={70} style={styles.styleIconFontAwesome} />
                             </View>
@@ -66,8 +67,8 @@ class FoodSearchScreen extends React.PureComponent {
                         >
                             <View style={styles.containerTextButton}>
                                 <View style={styles.containerTitleButton}>
-                                    <CommonText text={'ค้นหาตาม'} style={[styles.textButton,{marginLeft: 50}]} />
-                                    <CommonText text={'หมวดหมู่'} style={styles.textButton} />
+                                    <CommonText text={Trans.tran('MenuFood.foodSearch.search_by')} style={[styles.textButton,{marginLeft: 50}]} />
+                                    <CommonText text={Trans.tran('MenuFood.foodSearch.category')} style={styles.textButton} />
                                 </View>
                                 <IconMaterialIcons name="restaurant-menu" size={70} style={styles.styleIconFontAwesome} />
                             </View>
@@ -86,7 +87,7 @@ class FoodSearchScreen extends React.PureComponent {
 }
 
 FoodSearchScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'ค้นหาอาหาร'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('MenuFood.foodSearch.title')} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 

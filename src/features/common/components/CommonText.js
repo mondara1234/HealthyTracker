@@ -6,7 +6,7 @@ import { styles as s } from 'react-native-style-tachyons';
 const CommonText = (props) => {
 
     return (
-        <Text style={[{ fontSize: props.size, color: props.color }, props.style]}>
+        <Text numberOfLines={null} style={[{ fontSize: props.size, color: props.color }, props.style]}>
             {`${props.text}`}
         </Text>
     )

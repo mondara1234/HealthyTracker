@@ -17,13 +17,13 @@ import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
-import { PRAVIEDKEY } from "../../User/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser} from "../../User/redux/actions";
 import moment from "moment/moment";
+import Trans from "../../common/containers/Trans";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -46,16 +46,13 @@ class foodDiaryScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    {text: "ปิด", onPress: () => BackHandler.exitApp()},
-                    {
-                        text: "ยกเลิก", onPress: () => {
-                        }, style: "cancel"
-                    },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
-                {cancelable: false},
+                { cancelable: false },
             );
             return true;
         }
@@ -76,10 +73,6 @@ class foodDiaryScreen extends React.PureComponent {
         const sex = user.map((data) => {return data.Sex});
         const UserName = user.map((data) => {return data.UserName});
         const BMRUser = user.map((data) => {return data.BMRUser});
-        const personalSelect = user.map((data) => {return data.PersonalSelect});
-         if(`${personalSelect}` === 'on'){
-             this.props.navigation.navigate(PRAVIEDKEY)
-         }
         if (sex.toString() === '') {
             this.setState({
                 DialogData: true
@@ -141,11 +134,11 @@ class foodDiaryScreen extends React.PureComponent {
                         backgroundColor: 'transparent'
                     }}>
                         <View style={styles.containerRowList}>
-                            <CommonText text={'จำนวน '} size={14}/>
+                            <CommonText text={Trans.tran('FoodDiary.number')} size={14}/>
                             <CommonText text={item.FoodNumber} style={{fontSize: 14, color: '#068e81'}}/>
                             <CommonText text={` ${item.FoodUnit}`} size={14}/>
                         </View>
-                        <CommonText text={item.FoodCalorie + ' แคลอรี่'}
+                        <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`}
                                     style={{fontSize: 14, color: '#068e81', marginRight: 3}}/>
                     </View>
                     </Body>
@@ -169,11 +162,11 @@ class foodDiaryScreen extends React.PureComponent {
         let BMRUser = item.BMRUser;
 
         Alert.alert(
-            "แจ้งเตือน",
-            `คุณต้องการลบ ${item.FoodName} ใช่ไหม ?`,
+            Trans.tran('general.alert'),
+            `${Trans.tran('FoodDiary.want_Delete')} ${item.FoodName} ${Trans.tran('FoodDiary.right')}`,
             [
-                { text: "ใช่", onPress: () => this.DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser)},
-                { text: "ไม่", onPress: () => {}, style: "cancel" }
+                { text: Trans.tran('general.yes'), onPress: () => this.DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser)},
+                { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
             ],
             { cancelable: false },
         );
@@ -181,7 +174,6 @@ class foodDiaryScreen extends React.PureComponent {
 
     async DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser){
         const response = await  this.props.FETCH_DeleteFoodName(UserName,FoodName,dateFormat);
-        console.log('response', response);
         this.getFoodUser(UserName,dateFormat);
         this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
     }
@@ -236,10 +228,10 @@ class foodDiaryScreen extends React.PureComponent {
                             style={styles.styleIconClock}
                         />
                         <CommonTime/>
-                        <CommonText text={'น.'} style={styles.textDate} size={16}/>
+                        <CommonText text={Trans.tran('FoodDiary.clock')} style={styles.textDate} size={16}/>
                     </View>
                     <View style={styles.containerCalendar}>
-                        <CommonText text={'วันที่'} style={styles.textDate}/>
+                        <CommonText text={Trans.tran('FoodDiary.date')} style={styles.textDate}/>
                         <CommonText text={this.state.date} style={styles.textDate}/>
                         <DatePicker
                             style={{width: 40}}
@@ -295,14 +287,14 @@ class foodDiaryScreen extends React.PureComponent {
                         />
                         <View>
                             <View style={styles.containerCalendar}>
-                                <CommonText text={'พลังงานที่ได้รับในวันนี้ '} style={styles.textTitlekcal}/>
+                                <CommonText text={Trans.tran('FoodDiary.energy_today')} style={styles.textTitlekcal}/>
                                 <CommonText text={this.state.sumCalorie} style={styles.textSumkcal}/>
-                                <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
+                                <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal}/>
                             </View>
                             <View style={styles.containerCalendar}>
-                                <CommonText text={'พลังงานที่ต้องการต่อวัน '} style={styles.textTitlekcal}/>
-                                <CommonText text={`${BMRUser}`} style={styles.textSumkcal}/>
-                                <CommonText text={' แคลอรี่'} style={styles.textTitlekcal}/>
+                                <CommonText text={Trans.tran('FoodDiary.energy_per_day')} style={styles.textTitlekcal}/>
+                                <CommonText text={`${BMRUser}`} style={[styles.textSumkcal,{marginHorizontal: 10}]}/>
+                                <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal}/>
                             </View>
                         </View>
                     </View>
@@ -331,7 +323,7 @@ class foodDiaryScreen extends React.PureComponent {
                             />
                             {this.state.statusBar > 100 ?
                                 <CommonText
-                                    text={`เกิน ${this.state.sumCalorie - BMRUser} แคลอรี่่`}
+                                    text={`${Trans.tran('FoodDiary.over')} ${this.state.sumCalorie - BMRUser} ${Trans.tran('FoodDiary.calorie')}`}
                                     style={{marginLeft: '-93%'}}
                                     size={14}
                                     color={'#fff'}
@@ -339,13 +331,13 @@ class foodDiaryScreen extends React.PureComponent {
                                 :
                                 this.state.statusBar > 50 ?
                                 <CommonText
-                                    text={`เกิน ${this.state.sumCalorie - BMRUser} แคลอรี่่`}
+                                    text={`${Trans.tran('FoodDiary.over')} ${this.state.sumCalorie - BMRUser} ${Trans.tran('FoodDiary.calorie')}`}
                                     style={{marginLeft: '-18%'}}
                                     size={14}
                                 />
                                     :
                                         <CommonText
-                                            text={`เหลือ ${BMRUser - this.state.sumCalorie} แคลอรี่่`}
+                                            text={`${Trans.tran('FoodDiary.surplus')} ${BMRUser - this.state.sumCalorie} ${Trans.tran('FoodDiary.calorie')}่`}
                                             style={{marginRight: '2%'}}
                                             size={14}
                                         />
@@ -359,10 +351,10 @@ class foodDiaryScreen extends React.PureComponent {
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}>
-                        <CommonText text={'ควรเพิ่ม'}
+                        <CommonText text={Trans.tran('FoodDiary.should_Add')}
                                     style={[styles.textUnitKcal, {marginLeft: 10, color: '#068e81'}]}/>
-                        <CommonText text={'พอดี'} style={[styles.textUnitKcal, {color: '#406894'}]}/>
-                        <CommonText text={'ควรลด'} style={[styles.textUnitKcal, {color: '#940c17'}]}/>
+                        <CommonText text={Trans.tran('FoodDiary.fit')} style={[styles.textUnitKcal, {color: '#406894'}]}/>
+                        <CommonText text={Trans.tran('FoodDiary.should_Reduce')} style={[styles.textUnitKcal, {color: '#940c17'}]}/>
                     </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -378,7 +370,7 @@ class foodDiaryScreen extends React.PureComponent {
                         backgroundStyle={styles.customBackgroundDialog}
                         dialogTitle={//ส่วนของTitle
                             <DialogTitle
-                                title="กรุณากรอกข้อมูลส่วนตัวของคุณ"
+                                title={Trans.tran('FoodDiary.Dialog.please_Information')}
                                 hasTitleBar={false}
                                 textStyle={styles.dialogTextTitle}
                                 style={[styles.dialogTitleView, {backgroundColor: '#F4F4F4'}]}
@@ -386,7 +378,7 @@ class foodDiaryScreen extends React.PureComponent {
                         }//ส่วนของฺbutton
                         actions={[
                             <DialogButton
-                                text="บันทึก"
+                                text={Trans.tran('Setting.save')}
                                 textStyle={styles.dialogTextButton}
                                 onPress={() => {
                                     if (
@@ -396,11 +388,11 @@ class foodDiaryScreen extends React.PureComponent {
                                         this.state.TextInput_gg === 0
                                         ) {
                                             Alert.alert(
-                                                "แจ้งเตือน",
-                                                " กรุณากรอกให้ครบ",
+                                                Trans.tran('general.alert'),
+                                                Trans.tran('general.please_Complete'),
                                                 [
                                                     {
-                                                        text: "ปิด", onPress: () => {
+                                                        text: Trans.tran('general.close'), onPress: () => {
                                                         }, style: "cancel"
                                                     }
                                                 ],
@@ -437,10 +429,10 @@ class foodDiaryScreen extends React.PureComponent {
                     >{/*ส่วนของbody*/}
                         <View style={styles.dialogBodyView}>
                             <View style={styles.containerTextDialogBody}>
-                                <CommonText text={'เพศ'} style={[styles.dialogTextBody, {marginLeft: 20}]}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.sex')} style={[styles.dialogTextBody, {marginLeft: 20}]}/>
                                 <TouchableOpacity onPress={() => this.selectSex('male')}>
                                     <CommonText
-                                        text={'ชาย'}
+                                        text={Trans.tran('FoodDiary.Dialog.male')}
                                         style={[styles.dialogTextBody, {
                                             marginLeft: 30,
                                             color: this.state.selected === 'male' ? '#068e81' : '#000'
@@ -450,7 +442,7 @@ class foodDiaryScreen extends React.PureComponent {
                                 <CommonText text={'/'} style={[styles.dialogTextBody, {marginLeft: 3}]}/>
                                 <TouchableOpacity onPress={() => this.selectSex('female')}>
                                     <CommonText
-                                        text={'หญิง'}
+                                        text={Trans.tran('FoodDiary.Dialog.female')}
                                         style={[styles.dialogTextBody, {
                                             marginLeft: 3,
                                             color: this.state.selected === 'female' ? '#068e81' : '#000'
@@ -459,7 +451,7 @@ class foodDiaryScreen extends React.PureComponent {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.containerTextDialogBody}>
-                                <CommonText text={'อายุ'} style={[styles.dialogTextBody, {marginLeft: 20}]}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.Age')} style={[styles.dialogTextBody, {marginLeft: 20}]}/>
                                 <TextInput style={styles.inputBoxDialog}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholderTextColor="#068e81"
@@ -467,10 +459,10 @@ class foodDiaryScreen extends React.PureComponent {
                                            textAlign="center"
                                            onChangeText={TextInputValue => this.setState({TextInput_age: TextInputValue})}
                                 />
-                                <CommonText text={'ปี'} style={styles.dialogTextBody}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.year')} style={styles.dialogTextBody}/>
                             </View>
                             <View style={styles.containerTextDialogBody}>
-                                <CommonText text={'ส่วนสูง'} style={styles.dialogTextBody}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.height')} style={styles.dialogTextBody}/>
                                 <TextInput style={styles.inputBoxDialog}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholderTextColor="#068e81"
@@ -478,10 +470,10 @@ class foodDiaryScreen extends React.PureComponent {
                                            textAlign="center"
                                            onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue})}
                                 />
-                                <CommonText text={'เซนติเมตร'} style={styles.dialogTextBody}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.cm')} style={styles.dialogTextBody}/>
                             </View>
                             <View style={[styles.containerTextDialogBody, {marginBottom: 30}]}>
-                                <CommonText text={'น้ำหนัก'} style={styles.dialogTextBody}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.weight')} style={styles.dialogTextBody}/>
                                 <TextInput style={styles.inputBoxDialog}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholderTextColor="#068e81"
@@ -489,7 +481,7 @@ class foodDiaryScreen extends React.PureComponent {
                                            textAlign="center"
                                            onChangeText={TextInputValue => this.setState({TextInput_gg: TextInputValue})}
                                 />
-                                <CommonText text={'กิโลกรัม'} style={styles.dialogTextBody}/>
+                                <CommonText text={Trans.tran('FoodDiary.Dialog.kg')} style={styles.dialogTextBody}/>
                             </View>
                         </View>
                     </Dialog>
@@ -500,7 +492,7 @@ class foodDiaryScreen extends React.PureComponent {
 }
 
 foodDiaryScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'ไดอารี่อาหาร'}/>,
+    headerTitle: <HeaderTitle text={Trans.tran('FoodDiary.title')}/>,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });

@@ -3,11 +3,12 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput, BackHandler, Alert}
 import { Container, Switch } from 'native-base';
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
+import Trans from "../../common/containers/Trans";
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import {TRICK_SCREEN} from "../../Trick/router";
-import {FOODSTYPE_SCREEN, MENUFOOD_SCREEN} from "../../MenuFood/router";
+import {MENUFOOD_SCREEN} from "../../MenuFood/router";
 import {BMI_SCREEN} from "../../BMI/router";
 import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
@@ -40,11 +41,11 @@ class settingScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -86,25 +87,25 @@ class settingScreen extends React.PureComponent {
         let Passwordold = this.state.TextInput_Passwordold;
         let PasswordNew = this.state.TextInput_PasswordNew;
         let PasswordAgain = this.state.TextInput_PasswordAgain;
-        if(Passwordold.length !== 6 || PasswordNew.length !== 6 || PasswordAgain.length !== 6){
+        if(Passwordold === '' || PasswordNew === '' || PasswordAgain === ''){
             Alert.alert(
-                "แจ้งเตือน",
-                " รหัสผ่านต้องมี6ตัว",
+                Trans.tran('general.alert'),
+                Trans.tran('general.please_Complete'),
                 [
                     {
-                        text: "ปิด", onPress: () => {
+                        text: Trans.tran('general.close'), onPress: () => {
                         }, style: "cancel"
                     }
                 ],
                 {cancelable: false},
             );
-        }else if(Passwordold === '' || PasswordNew === '' || PasswordAgain === ''){
+        }else if(Passwordold.length !== 6 || PasswordNew.length !== 6 || PasswordAgain.length !== 6){
             Alert.alert(
-                "แจ้งเตือน",
-                " กรุณากรอกให้ครบ",
+                Trans.tran('general.alert'),
+                Trans.tran('Setting.alert.password_Length'),
                 [
                     {
-                        text: "ปิด", onPress: () => {
+                        text: Trans.tran('general.close'), onPress: () => {
                         }, style: "cancel"
                     }
                 ],
@@ -112,11 +113,11 @@ class settingScreen extends React.PureComponent {
             );
         }else if(personalCode !== Passwordold){
             Alert.alert(
-                "แจ้งเตือน",
-                " รหัสผ่านเก่าไม่ถูกต้อง",
+                Trans.tran('general.alert'),
+                Trans.tran('general.please_Complete'),
                 [
                     {
-                        text: "ปิด", onPress: () => {
+                        text: Trans.tran('general.close'), onPress: () => {
                         }, style: "cancel"
                     }
                 ],
@@ -124,11 +125,11 @@ class settingScreen extends React.PureComponent {
             );
         }else if(PasswordNew !== PasswordAgain){
             Alert.alert(
-                "แจ้งเตือน",
-                " รหัสผ่านใหม่ทั้งสอง ไม่ตรงกัน",
+                Trans.tran('general.alert'),
+                Trans.tran('Setting.alert.old_Password'),
                 [
                     {
-                        text: "ปิด", onPress: () => {
+                        text: Trans.tran('general.close'), onPress: () => {
                         }, style: "cancel"
                     }
                 ],
@@ -209,7 +210,7 @@ class settingScreen extends React.PureComponent {
                 <Container>
                     <View style={styles.container}>
                         <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                            <CommonText text={'เปลี่ยนภาษา'} style={{ fontSize: 16, color: '#000'}} />
+                            <CommonText text={Trans.tran('Setting.change_language')} style={{ fontSize: 16, color: '#000'}} />
                             <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
                                 <View style={styles.containerToggle}>
                                     <TouchableOpacity
@@ -222,7 +223,7 @@ class settingScreen extends React.PureComponent {
                             </View>
                         </View>
                         <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                            <CommonText text={'รหัสส่วนตัว'} style={{ fontSize: 16, color: '#000'}} />
+                            <CommonText text={Trans.tran('Setting.personal_code')} style={{ fontSize: 16, color: '#000'}} />
                             <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
                                 <Switch
                                     value={this.state.PrivateKey}
@@ -232,17 +233,17 @@ class settingScreen extends React.PureComponent {
                         </View>
                         <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 20}}>
                             <TouchableOpacity
-                                style={[styles.containerButton,{width: 130, height: 30}]}
+                                style={styles.containerButton}
                                 onPress={() => {
                                     this.state.personalCode ?
                                         this.setState({DialogChangePrivateKey: true})
                                         :
                                         Alert.alert(
-                                            "แจ้งเตือน",
-                                            " คุณยังไม่ได้สร้างรหัสส่วนตัว",
+                                            Trans.tran('general.alert'),
+                                            Trans.tran('Setting.alert.created_Personal_code'),
                                             [
                                                 {
-                                                    text: "ปิด", onPress: () => {
+                                                    text: Trans.tran('general.close'), onPress: () => {
                                                     }, style: "cancel"
                                                 }
                                             ],
@@ -251,16 +252,16 @@ class settingScreen extends React.PureComponent {
                                 }}
                             >
                                 <View style={styles.containerTitleButton}>
-                                    <CommonText text={'เปลี่ยนรหัสส่วนตัว'} style={styles.textButton} />
+                                    <CommonText text={Trans.tran('Setting.change_Personal_code')} style={styles.textButton} />
                                 </View>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
-                            style={[styles.containerButton,{width: 100, height: 50}]}
+                            style={[styles.containerButton,{height: 50}]}
                             onPress={ () => this.UpdateAllSetting()}
                         >
                             <View style={styles.containerTitleButton}>
-                                <CommonText text={'บันทึก'} style={[styles.textButton,{fontSize: 20}]} />
+                                <CommonText text={Trans.tran('Setting.save')} style={[styles.textButton,{fontSize: 20}]} />
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -275,7 +276,7 @@ class settingScreen extends React.PureComponent {
                         onTouchOutside={() => {this.setState({ DialogChangePrivateKey: true })}}//ไม่ให้กดข้างนอกได้
                         dialogTitle={//ส่วนของTitle
                             <DialogTitle
-                                title="การเปลี่ยนรหัสส่วนตัว"
+                                title={Trans.tran('Setting.Dialog.changing_Personal_code')}
                                 hasTitleBar={false}
                                 textStyle={styles.dialogTextTitle}
                                 style={styles.dialogTitleView}
@@ -283,13 +284,13 @@ class settingScreen extends React.PureComponent {
                         }
                         actions={[//ส่วนของฺbutton
                             <DialogButton
-                                text="ตกลง"
+                                text={Trans.tran('general.ok')}
                                 textStyle={styles.dialogTextButton}
                                 onPress={() => this.UpdateChangePrivateKey()}
                                 style={styles.dialogTitleView}
                             />,
                             <DialogButton
-                                text="ปิด"
+                                text={Trans.tran('general.close')}
                                 textStyle={styles.dialogTextButton}
                                 onPress={() => {
                                     this.setState({ DialogChangePrivateKey: false });
@@ -302,7 +303,7 @@ class settingScreen extends React.PureComponent {
                             <TextInput
                                 style={styles.inputBoxDialog}
                                 underlineColorAndroid='rgba(0,0,0,0)'
-                                placeholder="รหัสส่วนตัวเดิม"
+                                placeholder={Trans.tran('Setting.Dialog.original_Private_code')}
                                 secureTextEntry={true}
                                 maxLength={6}
                                 placeholderTextColor = "#068e81"
@@ -311,7 +312,7 @@ class settingScreen extends React.PureComponent {
                             <TextInput
                                 style={styles.inputBoxDialog}
                                 underlineColorAndroid='rgba(0,0,0,0)'
-                                placeholder="รหัสส่วนตัวใหม่"
+                                placeholder={Trans.tran('Setting.Dialog.new_Personal_code')}
                                 secureTextEntry={true}
                                 placeholderTextColor = "#068e81"
                                 selectionColor="#fff"
@@ -321,7 +322,7 @@ class settingScreen extends React.PureComponent {
                             <TextInput
                                 style={styles.inputBoxDialog}
                                 underlineColorAndroid='rgba(0,0,0,0)'
-                                placeholder="ยืนยัน รหัสส่วนตัวใหม่"
+                                placeholder={Trans.tran('Setting.Dialog.confirm_New_Password')}
                                 secureTextEntry={true}
                                 placeholderTextColor = "#068e81"
                                 selectionColor="#fff"
@@ -336,7 +337,7 @@ class settingScreen extends React.PureComponent {
                         onTouchOutside={() => {this.setState({ DialogChangeSuccess: true })}}//ไม่ให้กดข้างนอกได้
                         dialogTitle={//ส่วนของTitle
                             <DialogTitle
-                                title="เปลี่ยนรหัสส่วนตัวสำเร็จ"
+                                title={Trans.tran('general.alert')}
                                 hasTitleBar={false}
                                 textStyle={styles.dialogTextTitle}
                                 style={styles.dialogTitleView}
@@ -344,7 +345,7 @@ class settingScreen extends React.PureComponent {
                         }
                         actions={[//ส่วนของฺbutton
                             <DialogButton
-                                text="ปิด"
+                                text={Trans.tran('general.close')}
                                 textStyle={styles.dialogTextButton}
                                 onPress={() => {
                                     this.setState({ DialogChangeSuccess: false });
@@ -354,7 +355,7 @@ class settingScreen extends React.PureComponent {
                         ]}
                     >{/*ส่วนของbody*/}
                         <View style={styles.dialogBodyView}>
-                            <Text style={styles.dialogTextBody}> {'เปลี่ยน รหัสส่วนตัว เรียบร้อยแล้วครับ'}</Text>
+                            <CommonText text={Trans.tran('Setting.Dialog.change_Personal_Successfully')} style={styles.dialogTextBody} />
                         </View>
                     </Dialog>
                 </Container>
@@ -364,7 +365,7 @@ class settingScreen extends React.PureComponent {
 }
 
 settingScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'ตั้งค่า'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('Setting.title')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });
@@ -378,15 +379,15 @@ const styles = StyleSheet.create({
         marginHorizontal: 20
     },
     containerButton: {
-        width: 100,
         height: 30,
         backgroundColor: '#068e81',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     containerTitleButton: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginHorizontal: 10
     },
     textButton: {
         fontSize: 14,

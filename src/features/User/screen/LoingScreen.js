@@ -9,8 +9,9 @@ import CommonText from '../../common/components/CommonText';
 import Logo from '../components/Logo';
 import { getAllUser, getOneUser } from '../redux/actions';
 import * as API from '../api/api';
-import { FORGOTPASSWORD, REGISTRATION } from "../router";
+import {FORGOTPASSWORD, PRAVIEDKEY, REGISTRATION} from "../router";
 import { Images } from "../../User/components/images";
+import Trans from "../../common/containers/Trans";
 
 class LoingScreen extends Component {
     constructor(props) {
@@ -27,11 +28,11 @@ class LoingScreen extends Component {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -62,7 +63,6 @@ class LoingScreen extends Component {
             const Password = this.state.UserPassword;
             const keyScreen = this.props.navigation;
             const members = this.props.servers.user;
-            console.log(Email);
             let result = [];
             for (let i = 0; i < members.length; i++) {
                 if (members[i].Email === Email) {
@@ -70,7 +70,10 @@ class LoingScreen extends Component {
                     this.props.REDUCER_ONEDATA(result);
                 }
             }
-            this.props.FETCH_Login(Email, Password, keyScreen);
+            const personalSelect = result.map((data) => {return data.PersonalSelect});
+            console.log( result);
+            console.log('personalSelect '+ personalSelect);
+            this.props.FETCH_Login(Email, Password, keyScreen, personalSelect);
         }
     };
 

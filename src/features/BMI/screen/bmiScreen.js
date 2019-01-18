@@ -16,6 +16,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as APIBMIUser from "../../BMI/api/api";
 import { seaech_BMIUser } from "../../BMI/redux/actions";
+import Trans from "../../common/containers/Trans";
 
 
 class bmiScreen extends React.PureComponent {
@@ -32,11 +33,11 @@ class bmiScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -59,9 +60,9 @@ class bmiScreen extends React.PureComponent {
                 </View>
                 {expanded
                     ?
-                    <CommonText text={'ปิดรายละเอียด'} style={styles.showBody}/>
+                    <CommonText text={Trans.tran('BMI.close_Details')} style={styles.showBody}/>
                     :
-                    <CommonText text={'เปิดรายละเอียด'} style={styles.showBody}/>
+                    <CommonText text={Trans.tran('BMI.open_Details')} style={styles.showBody}/>
                 }
             </View>
         );
@@ -83,23 +84,23 @@ class bmiScreen extends React.PureComponent {
         let criterionBMI = '';
         if(SumBMi.toFixed(2) < 18.50){
             BMRUser = 1;
-            criterionBMI = 'ผอม';
+            criterionBMI = Trans.tran('BMI.criterionBMI.thin');
 
         }else if(SumBMi.toFixed(2) < 23.00){
             BMRUser = 2;
-            criterionBMI = 'ปกติ';
+            criterionBMI = Trans.tran('BMI.criterionBMI.normal');
 
         }else if(SumBMi.toFixed(2) < 25.00){
             BMRUser = 3;
-            criterionBMI = 'ท้วม';
+            criterionBMI = Trans.tran('BMI.criterionBMI.buxom');
 
         }else if(SumBMi.toFixed(2) < 30.00){
             BMRUser = 4;
-            criterionBMI = 'อ้วน';
+            criterionBMI = Trans.tran('BMI.criterionBMI.fat');
 
         }else if(30.00 < SumBMi.toFixed(2) ){
             BMRUser = 5;
-            criterionBMI = 'อ้วนมาก';
+            criterionBMI = Trans.tran('BMI.criterionBMI.fat_much');
         }
         this.setState({
             bmi : SumBMi.toFixed(2),
@@ -135,7 +136,7 @@ class bmiScreen extends React.PureComponent {
                                         <CommonText text={this.state.bmi} style={styles.valueHead} />
                                     </View>
                                     <View style={styles.containerBodyBMI}>
-                                        <CommonText text={'เกณฑ์ :'} style={[styles.textHead,{marginLeft: -13}]} />
+                                        <CommonText text={`${Trans.tran('BMI.criterion')} :`} style={[styles.textHead,{marginLeft: -13}]} />
                                         <CommonText text={this.state.criterionbmi} style={styles.valueHead} />
                                     </View>
                                 </View>
@@ -182,17 +183,36 @@ class bmiScreen extends React.PureComponent {
                                 />
                             </View>
                             <View style={styles.containerClock}>
-                                <CommonText text={'ผอม'} style={[styles.textUnitKcal, { color: '#068e81'}]} />
-                                <CommonText text={'ปกติ'} style={[styles.textUnitKcal, { color: '#406894'}]} />
-                                <CommonText text={'ท้วม'} style={[styles.textUnitKcal, { color: '#946649'}]} />
-                                <CommonText text={'อ้วน'} style={[styles.textUnitKcal, { color: '#940c17'}]} />
-                                <CommonText text={'อ้วนมาก'} style={[styles.textUnitKcal, { color: '#428e94'}]} />
+                                <CommonText
+                                    text={Trans.tran('BMI.criterionBMI.thin')}
+                                    style={[styles.textUnitKcal, { color: '#068e81'}]}
+                                />
+                                <CommonText
+                                    text={Trans.tran('BMI.criterionBMI.normal')}
+                                    style={[styles.textUnitKcal, { color: '#406894'}]}
+                                />
+                                <CommonText
+                                    text={Trans.tran('BMI.criterionBMI.buxom')}
+                                    style={[styles.textUnitKcal, { color: '#946649'}]}
+                                />
+                                <CommonText
+                                    text={Trans.tran('BMI.criterionBMI.fat')}
+                                    style={[styles.textUnitKcal, { color: '#940c17'}]}
+                                />
+                                <CommonText
+                                    text={Trans.tran('BMI.criterionBMI.fat_much')}
+                                    style={[styles.textUnitKcal, { color: '#428e94'}]}
+                                />
                             </View>
                             <View
                                 style = {styles.separator}>
                             </View>
                             <View padder>
-                                <CommonText text={'ข้อแนะนำ'} style={[styles.textUnitKcal, {fontSize:18, marginTop: 10}]} color={'#068e81'} />
+                                <CommonText
+                                    style={[styles.textUnitKcal, {fontSize:18, marginTop: 10}]}
+                                    color={'#068e81'}
+                                    text={Trans.tran('BMI.suggestion')}
+                                />
                                 <Accordion
                                     dataArray={this.state.dataArray}
                                     renderHeader={this._renderHeader}

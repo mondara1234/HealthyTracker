@@ -17,6 +17,7 @@ import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
 import {SERVER_URL} from "../../../common/constants";
 import {AllMenuFood} from "../redux/actions";
+import Trans from "../../common/containers/Trans";
 
 class menuFoodScreen extends React.PureComponent {
     constructor(props) {
@@ -33,11 +34,11 @@ class menuFoodScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -50,14 +51,12 @@ class menuFoodScreen extends React.PureComponent {
 
     componentDidMount() {
         const { foodType } = this.props.navigation.state.params ? this.props.navigation.state.params : '';
-        console.log('foodType'+foodType);
         let foodTypes = foodType === undefined ? '' : `${foodType.TypeName}`;
-        console.log('foodTypes'+foodTypes);
         let dataFoodType = foodType ? foodTypes : '';
         if(dataFoodType === ''){
             this.AllFoodMenu();
             this.setState({
-                nameFoodType: 'ทั้งหมด'
+                nameFoodType: Trans.tran('MenuFood.all')
             })
         }else{
             this.SerachFoodMenu(foodTypes);
@@ -99,11 +98,8 @@ class menuFoodScreen extends React.PureComponent {
             .catch((error) => {
                 console.error(error);
             });
-        console.log(response);
         this.props.REDUCER_GetMenuFood(response);
-
         const dataFoodMenu = this.props.FoodMenu.foodMenu;
-        console.log(dataFoodMenu);
 
         this.setState({
             films: dataFoodMenu,
@@ -140,7 +136,7 @@ class menuFoodScreen extends React.PureComponent {
                     <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: '100%'}}>
                         <IconMaterialIcons name="navigate-next" size={40} color={'#000'} style={{ marginTop: 100}} />
                     </View>
-                    <CommonText text={calorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81'}} />
+                    <CommonText text={`${calorie} ${Trans.tran('FoodDiary.calorie')}`} style={{ fontSize: 14, color: '#068e81'}} />
                     </Body>
                 </CardItem>
             </Card>
@@ -164,7 +160,7 @@ class menuFoodScreen extends React.PureComponent {
                     <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View>
                             <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.FoodName}</Text>
-                            <CommonText text={item.FoodCalorie + ' แคลอรี่'} style={{ fontSize: 14, color: '#068e81'}} />
+                            <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} style={{ fontSize: 14, color: '#068e81'}} />
                         </View>
                             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                 <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
@@ -191,7 +187,7 @@ class menuFoodScreen extends React.PureComponent {
                             data={films.length === 1 ? [] : films}  /*ตรวจสอบข้อมูลที่หาเจอถ้ามีแค่อันเดียว ไม่แสดงช่องค้นหา แต่ถ้ามีเยอะจะแสดงให้เลือก*/
                             defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
                             onChangeText={text => this.setState({ query: text })} /*setค่าให้กับตัวแปล query เป้นไปตามที่กรอก*/
-                            placeholder="กรอกชื่ออาหาร" /*ลายน้ำเพื่อพิมจะหายไป*/
+                            placeholder={Trans.tran('MenuFood.fill_Food_Name')} /*ลายน้ำเพื่อพิมจะหายไป*/
                             renderItem={({ FoodCalorie, FoodName }) => (
                                 <TouchableOpacity onPress={() => alert(`${FoodCalorie} ${FoodName}`)}>
                                     <CommonText text={`${FoodName} แสดงตรงค้นหา`} style={styles.itemText}/>
@@ -199,11 +195,11 @@ class menuFoodScreen extends React.PureComponent {
                             )}
                         />
                         <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
-                            <CommonText text={'หมวดหมู่ '} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                            <CommonText text={Trans.tran('MenuFood.foodSearch.category')} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
                             <CommonText text={this.state.nameFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
-                            <CommonText text={' จำนวนที่พบ '} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
+                            <CommonText text={Trans.tran('MenuFood.number_Found')} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
                             <CommonText text={this.state.lengthFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
-                            <CommonText text={' รายการ'} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                            <CommonText text={Trans.tran('MenuFood.list')} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
                         </View>
                         <View style={{ flex: 1, width: '100%'}}>
                             <FlatList
@@ -235,7 +231,7 @@ class menuFoodScreen extends React.PureComponent {
 }
 
 menuFoodScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'รายการอาหาร'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('MenuFood.title')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: (
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

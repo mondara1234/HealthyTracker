@@ -17,6 +17,7 @@ import { MENUFOOD_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { SERVER_URL } from "../../../common/constants";
 import * as APIMenuFood from "../../MenuFood/api/api";
+import Trans from "../../common/containers/Trans";
 
 class FoodTypeScreen extends React.PureComponent {
     constructor(){
@@ -30,11 +31,11 @@ class FoodTypeScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -109,7 +110,7 @@ class FoodTypeScreen extends React.PureComponent {
 }
 
 FoodTypeScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'หมวดหมู่อาหาร'} color={'#fff'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('MenuFood.foodType.food_Category')} color={'#fff'} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });

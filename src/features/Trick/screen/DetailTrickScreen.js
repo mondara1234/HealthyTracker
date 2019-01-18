@@ -17,6 +17,7 @@ import {Images} from "../../User/components/images";
 import * as APITrick from "../../Trick/api/api";
 import moment from "moment/moment";
 import * as APIDiary from "../../FoodDiary/api/api";
+import Trans from "../../common/containers/Trans";
 
 class DetailTrickScreen extends React.PureComponent {
     constructor(){
@@ -31,11 +32,11 @@ class DetailTrickScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -45,6 +46,7 @@ class DetailTrickScreen extends React.PureComponent {
         return false;
 
     };
+
     componentDidMount() {
         const { trickData } = this.props.navigation.state.params;
         const trickID = trickData.TrickID;

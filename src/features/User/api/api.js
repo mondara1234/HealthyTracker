@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
-import { LOGIN } from "../router";
+import {LOGIN, PRAVIEDKEY} from "../router";
 
 export function fetchPostsApi() {
     return fetch(`${SERVER_URL}/My_SQL/user/ShowAllDataList.php`)
@@ -11,7 +11,7 @@ export function fetchPostsApi() {
         });
 }
 
-export const fetchLogin = (Email, Password, keyScreen) => dispatch => {
+export const fetchLogin = (Email, Password, keyScreen, personalSelect) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/User_Login.php`, {
         method: 'POST',
         headers: {
@@ -26,7 +26,11 @@ export const fetchLogin = (Email, Password, keyScreen) => dispatch => {
         .then((responseJson) => {
             if(responseJson === 'Data Matched')
             {
-                keyScreen.navigate('FOODDIARY_SCREEN')
+                if(`${personalSelect}` === 'on'){
+                    keyScreen.navigate('PRAVIEDKEY');
+                }else{
+                    keyScreen.navigate('FOODDIARY_SCREEN')
+                }
             }
             else{
                 Alert.alert('Error',responseJson);

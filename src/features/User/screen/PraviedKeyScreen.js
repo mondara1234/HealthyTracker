@@ -13,6 +13,7 @@ import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
 import {NavigationActions} from "react-navigation";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import Trans from "../../common/containers/Trans";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
@@ -27,11 +28,11 @@ class PraviedKeyScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -71,8 +72,6 @@ class PraviedKeyScreen extends React.PureComponent {
                                 this.setState({
                                     passCode: []
                                 });
-
-                                this.props.navigation.navigate(FOODDIARY_SCREEN)
                             }
                         }
                     ],
@@ -84,9 +83,12 @@ class PraviedKeyScreen extends React.PureComponent {
                     'รหัสส่วนตัวถูกต้อง!',
                     [
                         {text: 'OK',
-                            onPress: () => this.setState({
-                                passCode: []
-                            })
+                            onPress: () =>{
+                                this.props.navigation.navigate(FOODDIARY_SCREEN);
+                                this.setState({
+                                    passCode: []
+                                })
+                            }
                         }
                     ],
                     { cancelable: false }
@@ -180,7 +182,7 @@ PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 20,
+        paddingTop: '20%',
         alignItems: 'center',
     },
     borderWrapper: {

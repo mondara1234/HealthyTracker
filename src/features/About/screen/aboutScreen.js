@@ -3,6 +3,7 @@ import { StyleSheet, View, BackHandler, Alert } from 'react-native';
 import { Container, Content } from 'native-base';
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
+import Trans from "../../common/containers/Trans";
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
@@ -22,11 +23,11 @@ class aboutScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -43,12 +44,12 @@ class aboutScreen extends React.PureComponent {
                 <Container>
                     <View style={styles.container}>
                         <Content padder>
-                            <CommonText style={styles.textTitle} text={'เกี่ยวกับเรา'} />
+                            <CommonText style={styles.textTitle} text={Trans.tran('About.about')} />
                             <View style={styles.containerBody}>
-                                <CommonText text={'Healthy Tracker'} />
+                                <CommonText text={Trans.tran('About.about')} />
                                 <CommonText text={'คือ แอฟพลิเคชันดูแลสุขภาพในส่วนของการควบคุมอาหารในแต่ละวัน'} />
                             </View>
-                            <CommonText style={styles.textHead} text={'รายละเอียดของ แอฟพลิเคชัน'} />
+                            <CommonText style={styles.textHead} text={Trans.tran('About.details_Application')} />
                             <View style={styles.containerBody}>
                                 <CommonText text={'เนื้อหา..................................................................................' +
                                 '........................................................................................' +
@@ -56,11 +57,11 @@ class aboutScreen extends React.PureComponent {
                                 '........................................................................................'}
                                 />
                             </View>
-                            <CommonText style={styles.textHead} text={'ติดต่อเรา'} />
+                            <CommonText style={styles.textHead} text={Trans.tran('About.contact')} />
                             <View style={styles.containerBody}>
-                                <CommonText text={'สอบถามข้อมูลเพิ่มเติมได้ทาง'} />
-                                <CommonText text={'E-mail: kakzadsr@gmail.com'} />
-                                <CommonText text={'เบอร์โทรศัพท์: 088-6060-128'} />
+                                <CommonText text={Trans.tran('About.information_Please')} />
+                                <CommonText text={`${Trans.tran('About.e_mail')}: kakzadsr@gmail.com`} />
+                                <CommonText text={`${Trans.tran('About.telephone')}: 088-6060-128`} />
                             </View>
                         </Content>
                     </View>
@@ -77,7 +78,7 @@ class aboutScreen extends React.PureComponent {
 }
 
 aboutScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'เกี่ยวกับเรา'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('About.about')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });

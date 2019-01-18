@@ -14,6 +14,7 @@ import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import {getRouteName} from "../../User/redux/actions";
+import Trans from "../../common/containers/Trans";
 
 class messageDetailScreen extends React.PureComponent {
     constructor(){
@@ -26,11 +27,11 @@ class messageDetailScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );

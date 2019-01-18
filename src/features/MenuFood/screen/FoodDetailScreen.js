@@ -17,6 +17,7 @@ import {TRICK_SCREEN} from "../../Trick/router";
 import {MENUFOOD_SCREEN} from "../router";
 import {BMI_SCREEN} from "../../BMI/router";
 import * as APIDiary from "../../FoodDiary/api/api";
+import Trans from "../../common/containers/Trans";
 
 class FoodDetailScreen extends React.PureComponent {
     constructor(props) {
@@ -31,11 +32,11 @@ class FoodDetailScreen extends React.PureComponent {
     onBack = () => {
         if (this.state.editing) {
             Alert.alert(
-                "แจ้งเตือน",
-                "คุณต้องการปิด App ใช่ไหม?",
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
                 [
-                    { text: "ปิด", onPress: () => BackHandler.exitApp() },
-                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -51,10 +52,10 @@ class FoodDetailScreen extends React.PureComponent {
         if(numberUnit.toString() !== ''){
             if(numberUnit.toString() !== newText.toString() && numberUnit.toString() !== ''){
                 Alert.alert(
-                    "แจ้งเตือน",
-                    "กรุณากรอกค่าเป็นจำนวนเต็มเท่านั้น",
+                    Trans.tran('general.alert'),
+                    Trans.tran('MenuFood.alert.pleas_Integer'),
                     [
-                        { text: "ปิด", onPress: () => {}, style: "cancel" },
+                        { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
                     ],
                     { cancelable: false },
                 );
@@ -95,8 +96,8 @@ class FoodDetailScreen extends React.PureComponent {
 
         if(number === 1){
             this.props.navigation.navigate({
-                routeName: FOODDIARY_SCREEN,
-                params: {foodData: 'adasd'}})
+                routeName: FOODDIARY_SCREEN
+            })
         }
 
     };
@@ -115,7 +116,7 @@ class FoodDetailScreen extends React.PureComponent {
                             />
                             <View>
                                 <CommonText text={foodData.FoodName} style={{fontSize: 22, color: '#068e81'}} />
-                                <CommonText text={`${foodData.FoodCalorie} แคลลอรี่`} color={'#068e81'} />
+                                <CommonText text={`${foodData.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} color={'#068e81'} />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
                                 <TextInput style={styles.inputBox}
@@ -138,26 +139,38 @@ class FoodDetailScreen extends React.PureComponent {
                                 style={[styles.button,{marginLeft: '10%'}]}
                                 onPress={ () => this.SaveFoodUser(number,foodData) }
                             >
-                                <CommonText text={'บันทึกลงไดอารี่'} style={styles.buttonText} />
+                                <CommonText text={Trans.tran('MenuFood.foodDetail.save_Diary')} style={styles.buttonText} />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[styles.button,{marginRight: '10%'}]}
                                 onPress={ () => this.SaveFoodUser(number1,foodData) }
                             >
-                                <CommonText text={'บันทึกและค้นหาต่อ'} style={styles.buttonText} />
+                                <CommonText text={Trans.tran('MenuFood.foodDetail.save_Searching')} style={styles.buttonText} />
                             </TouchableOpacity>
                         </View>
                         <View style={{flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                             <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center'}}>
-                                <CommonText text={'ปริมาณแคลลอรี่เปรียบเทียบต่อ '} />
+                                <CommonText text={Trans.tran('MenuFood.foodDetail.amountcalories_compared')} />
                                 <CommonText text={this.state.numberUnit}/>
                                 <CommonText text={` ${foodData.FoodUnit}`} />
                             </View>
                             <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 100}}>
-                                <ImageGif itemImage={Images.imgGif.walk} nameImg={`เดิน ${10 * this.state.numberUnit} นาที`} />
-                                <ImageGif itemImage={Images.imgGif.Run} nameImg={`วิ่ง ${7 * this.state.numberUnit} นาที`} />
-                                <ImageGif itemImage={Images.imgGif.ride_bicycle} nameImg={`ปั่น ${5 * this.state.numberUnit} นาที`} />
-                                <ImageGif itemImage={Images.imgGif.swimming} nameImg={`ว่าย ${3 * this.state.numberUnit} นาที`} />
+                                <ImageGif
+                                    itemImage={Images.imgGif.walk}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.walk')} ${10 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                />
+                                <ImageGif
+                                    itemImage={Images.imgGif.Run}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.run')} ${7 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                />
+                                <ImageGif
+                                    itemImage={Images.imgGif.ride_bicycle}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.spin')} ${5 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                />
+                                <ImageGif
+                                    itemImage={Images.imgGif.swimming}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.Swim')} ${3 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                />
                             </View>
                         </View>
                     </View>
@@ -174,7 +187,7 @@ class FoodDetailScreen extends React.PureComponent {
 }
 
 FoodDetailScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'รายละเอียดอาหาร'} color={'#fff'}/>,
+    headerTitle: <HeaderTitle text={Trans.tran('MenuFood.foodDetail.title')} color={'#fff'}/>,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
