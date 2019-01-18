@@ -72,7 +72,8 @@ class DetailTrickScreen extends React.PureComponent {
     async DeleteUserLikeTrick(){
         const { trickData } = this.props.navigation.state.params;
         const trickID = trickData.TrickID;
-        const trickLike = parseInt(trickData.TrickLike) - 1;
+        const trickLike = (this.state.trickLike === 0 ? parseInt(trickData.TrickLike) : this.state.trickLike) - 1;
+        console.log('trickLikeDelete: '+ trickLike);
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         let UserNames =`${UserName}`;
@@ -86,7 +87,8 @@ class DetailTrickScreen extends React.PureComponent {
     async InsertUserLikeTrick(){
         const { trickData } = this.props.navigation.state.params;
         const trickID = trickData.TrickID;
-        const trickLike = parseInt(trickData.TrickLike) + 1;
+        const trickLike = (this.state.trickLike === 0 ? parseInt(trickData.TrickLike) : this.state.trickLike) + 1;
+        console.log('trickLikeInsert: '+ trickLike);
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         let UserNames =`${UserName}`;
@@ -98,20 +100,21 @@ class DetailTrickScreen extends React.PureComponent {
     }
 
     async UpdateLike(trickIDs,trickLikes){
-        this.props.FETCH_UpdateLike(trickIDs,trickLikes);
+        const response = await this.props.FETCH_UpdateLike(trickIDs,trickLikes);
         this.SearchTrickID(trickIDs)
     }
 
     async SearchTrickID(trickIDs){
-        const response = await this.FETCH_SearchTrickID(trickIDs);
-        console.log('response',response);
+        const response = await this.props.FETCH_SearchTrickID(trickIDs);
+        let TrickLike = response.map((data) => {return data.TrickLike});
         this.setState({
-            trickLike: response.TrickLike
+            trickLike: parseInt(TrickLike)
         });
     }
 
     render() {
         const { trickData } = this.props.navigation.state.params;
+        console.log(this.state.trickLike);
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
