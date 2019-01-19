@@ -9,6 +9,7 @@ import { Images } from "../../../User/components/images";
 import { DETAILTRICK_SCREEN } from "../../../Trick/router";
 import {seaech_TrickAll} from "../../../Trick/redux/actions";
 import * as APITrick from "../../../Trick/api/api";
+import Trans from "../../../common/containers/Trans";
 
 class AllTab extends React.PureComponent {
     constructor(props) {
@@ -39,7 +40,7 @@ class AllTab extends React.PureComponent {
                         <Image  style={{marginHorizontal: 5, width: 30, height: 25}}
                                 source={Images.TrickScreen.Heart}
                         />
-                        <Text style={{ fontSize: 14, color: '#068e81'}}> {item.TrickLike + ' คน'} </Text>
+                        <Text style={{ fontSize: 14, color: '#068e81'}}> {`${item.TrickLike} ${Trans.tran('Trick.person')}`} </Text>
                     </View>
                     </Body>
                 </CardItem>
@@ -67,7 +68,7 @@ class AllTab extends React.PureComponent {
                         <Image  style={{marginHorizontal: 5, width: 30, height: 25}}
                                 source={Images.TrickScreen.Heart}
                         />
-                        <Text style={{ fontSize: 14, color: '#068e81'}}> {item.TrickLike + ' คน'} </Text>
+                        <Text style={{ fontSize: 14, color: '#068e81'}}> {`${item.TrickLike} ${Trans.tran('Trick.person')}`} </Text>
                     </View>
                     </Body>
                 </CardItem>
@@ -97,7 +98,7 @@ class AllTab extends React.PureComponent {
                         <Image  style={{width: 28, height: 24}}
                                 source={Images.TrickScreen.Heart}
                         />
-                        <CommonText text={item.TrickLike + ' คน'} style={{ fontSize: 14, color: '#068e81'}} />
+                        <CommonText text={`${item.TrickLike} ${Trans.tran('Trick.person')}`} style={{ fontSize: 14, color: '#068e81'}} />
                     </View>
                     </Body>
                 </CardItem>

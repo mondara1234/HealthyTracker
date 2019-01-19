@@ -63,10 +63,10 @@ class problemScreen extends React.PureComponent {
     selectPhotoTapped() {
 
         const options = {
-            title: 'เลือกรูปภาพ',
-            cancelButtonTitle: 'ปิด',
-            takePhotoButtonTitle: 'ถ่ายรูป',
-            chooseFromLibraryButtonTitle: 'เลือกรูปจากคลัง',
+            title: Trans.tran('Problem.choose_picture'),
+            cancelButtonTitle: Trans.tran('general.canceled'),
+            takePhotoButtonTitle: Trans.tran('Problem.photograph'),
+            chooseFromLibraryButtonTitle: Trans.tran('Problem.picture_library'),
             quality: 1.0,
             maxWidth: 500,
             maxHeight: 500,
@@ -143,17 +143,17 @@ class problemScreen extends React.PureComponent {
 
                             }}
                         >
-                            <CommonText text={'เคลียร์'} style={{color: '#fff', fontSize: 16}} />
+                            <CommonText text={Trans.tran('Problem.clear')} style={{color: '#fff', fontSize: 16}} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.container}>
                         <Content>
-                            <CommonText text={'แจ้งปัญหา'} style={styles.textTitle} />
+                            <CommonText text={Trans.tran('Problem.report_Problem')} style={styles.textTitle} />
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                                <CommonText text={'ชื่อหัวข้อ'} style={{fontSize: 20 , marginHorizontal: 20}} />
+                                <CommonText text={Trans.tran('Problem.title_Problem')} style={{fontSize: 20 , marginHorizontal: 20}} />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholder="ชื่อหัวข้อปัญหา"
+                                           placeholder={Trans.tran('Problem.problem_Title')}
                                            defaultValue={this.state.title}
                                            placeholderTextColor = "#068e81"
                                            onChangeText={Title =>this.setState({ title: Title })}
@@ -167,34 +167,34 @@ class problemScreen extends React.PureComponent {
                                     selectedValue={this.state.selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                 >
-                                    <Picker.Item label="เลือกประเภทของปัญหา" value="เลือกประเภทของปัญหา" />
-                                    <Picker.Item label="ระบบไม่สเถียน" value="ระบบไม่สเถียน" />
-                                    <Picker.Item label="serverมีปัญหา" value="serverมีปัญหา" />
-                                    <Picker.Item label="เจอBug" value="เจอBug" />
-                                    <Picker.Item label="แนะนำ" value="แนะนำ" />
-                                    <Picker.Item label="อื่นๆ" value="อื่นๆ" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.type_Problem')} value="เลือกประเภทของปัญหา" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.unstable_System')} value="ระบบไม่เสถียร" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.server_Problem')} value="เซิร์ฟเวอร์มีปัญหา" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.bug_Found')} value="พบข้อบกพร่อง" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.recommend')} value="แนะนำ" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.other')} value="อื่นๆ" />
                                 </Picker>
                             </View>
-                            <CommonText text={'รายละเอียด'} style={{fontSize: 20 , marginHorizontal: 20}} />
+                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={{fontSize: 20 , marginHorizontal: 20}} />
                             <Form>
                                 <Textarea
                                     style={{backgroundColor: '#fff'}}
                                     rowSpan={10}
                                     bordered
-                                    placeholder="กรอกรายละเอียดของปัญหา"
+                                    placeholder={Trans.tran('Problem.fill_Problem')}
                                     defaultValue={this.state.detail}
                                     onChangeText={Detail =>this.setState({ detail: Detail })}
                                 />
                             </Form>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
                                 <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
-                                    <CommonText text={'แนบรูปภาพ'} style={{color: '#fff', fontSize: 16}} />
+                                    <CommonText text={Trans.tran('Problem.attach_Picture')} style={{color: '#fff', fontSize: 16}} />
                                 </TouchableOpacity>
                                 <CommonText text={'ชื่อรูปภาพ.jpg'} style={{fontSize: 14, marginLeft: '2%', marginTop: 10}} />
                             </View>
                             <View style={{width: '100%',alignItems: 'center', justifyContent: 'center' }}>
                                 <TouchableOpacity style={styles.button} onPress={() => this.addProBlem()}>
-                                    <CommonText text={'ส่งปัญหา'} style={styles.buttonText} />
+                                    <CommonText text={Trans.tran('Problem.send_Problems')} style={styles.buttonText} />
                                 </TouchableOpacity>
                             </View>
                         </Content>
@@ -212,7 +212,7 @@ class problemScreen extends React.PureComponent {
 }
 
 problemScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'แจ้งปัญหา'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('Problem.report_Problem')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });

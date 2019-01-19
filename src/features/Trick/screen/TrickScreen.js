@@ -49,21 +49,21 @@ class TrickScreen extends React.PureComponent {
                         <Tabs locked>
                             <Tab heading={
                                 <TabHeading style={{ backgroundColor: "#068e81" }}>
-                                    <CommonText text={'ทั้งหมด'} style={{ color: "#fff" }} />
+                                    <CommonText text={Trans.tran('Trick.Tab.all')} style={{ color: "#fff" }} />
                                 </TabHeading>}
                             >
                                 <AllTab />
                             </Tab>
                             <Tab heading={
                                 <TabHeading style={{ backgroundColor: "#068e81" }}>
-                                    <CommonText text={'ใหม่'} style={{ color: "#fff" }} />
+                                    <CommonText text={Trans.tran('Trick.Tab.new')} style={{ color: "#fff" }} />
                                 </TabHeading>}
                             >
                                 <NewTab />
                             </Tab>
                             <Tab heading={
                                 <TabHeading style={{ backgroundColor: "#068e81" }}>
-                                    <CommonText text={'ติดอันดับ'} style={{ color: "#fff" }} />
+                                    <CommonText text={Trans.tran('Trick.Tab.ranked')} style={{ color: "#fff" }} />
                                 </TabHeading>}
                             >
                                 <RankTab />
@@ -83,7 +83,7 @@ class TrickScreen extends React.PureComponent {
 }
 
 TrickScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'เคล็ดลับ'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('Trick.Tab.title')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />,
     headerStyle: {

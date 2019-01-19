@@ -50,10 +50,10 @@ class LoingScreen extends Component {
     UserLoginFunction = () =>{
         if(this.state.UserEmail === '' || this.state.UserPassword === '' ){
             Alert.alert(
-                "แจ้งเตือน",
-                "กรุณากรอกให้ครบ",
+                Trans.tran('general.alert'),
+                Trans.tran('general.please_Complete'),
                 [
-                    { text: "ปิด", onPress: () => {}, style: "cancel" },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
                 { cancelable: false },
             );
@@ -72,7 +72,6 @@ class LoingScreen extends Component {
             }
             const personalSelect = result.map((data) => {return data.PersonalSelect});
             console.log( result);
-            console.log('personalSelect '+ personalSelect);
             this.props.FETCH_Login(Email, Password, keyScreen, personalSelect);
         }
     };
@@ -88,13 +87,13 @@ class LoingScreen extends Component {
                                      source={Images.bgLogin}>
                         <Content padder>
                             <View style={styles.containerRow}>
-                                <CommonText text={'LOGIN'} style={styles.titleLogin} />
+                                <CommonText text={Trans.tran('User.login')} style={styles.titleLogin} />
                                 <Logo Title="Healthy MyApp"/>
                             </View>
                             <View style={styles.containerView}>
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholder="Email"
+                                           placeholder={Trans.tran('User.email')}
                                            placeholderTextColor = "#068e81"
                                            selectionColor="#fff"
                                            keyboardType="email-address"
@@ -102,7 +101,7 @@ class LoingScreen extends Component {
                                 />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholder="Password"
+                                           placeholder={Trans.tran('User.password')}
                                            secureTextEntry={true}
                                            placeholderTextColor = "#068e81"
                                            onChangeText={UserPassword =>this.setState({UserPassword})}
@@ -110,12 +109,12 @@ class LoingScreen extends Component {
                                 <View style={styles.containerForgot}>
                                     <TouchableOpacity style={styles.TouchForgot}
                                                       onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                                        <CommonText text={'ลืมรหัสผ่าน ?'} style={styles.textForgot} />
+                                        <CommonText text={Trans.tran('User.forgot_password')} style={styles.textForgot} />
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.containerForgot}>
                                     <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
-                                        <CommonText text={'Login'} style={styles.buttonText} />
+                                        <CommonText text={Trans.tran('User.login')} style={styles.buttonText} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -123,9 +122,9 @@ class LoingScreen extends Component {
                         </Content>
                     </ImageBackground>
                     <View style={styles.signupTextCont}>
-                        <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
+                        <CommonText text={Trans.tran('User.already_account')} style={styles.signupText} />
                         <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
-                            <CommonText text={'สมัครสมาชิก'} style={styles.signupButton} />
+                            <CommonText text={Trans.tran('User.register')} style={styles.signupButton} />
                         </TouchableOpacity>
                     </View>
                 </Container>

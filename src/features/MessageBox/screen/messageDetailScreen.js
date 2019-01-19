@@ -13,7 +13,6 @@ import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
-import {getRouteName} from "../../User/redux/actions";
 import Trans from "../../common/containers/Trans";
 
 class messageDetailScreen extends React.PureComponent {
@@ -51,7 +50,7 @@ class messageDetailScreen extends React.PureComponent {
                     <View style={{alignItems: 'center'}}>
                         <Content>
                             <CommonText text={messageData.AU_Title} style={{fontSize: 22, textAlign: 'center',marginVertical: 20,}} />
-                            <CommonText text={'รายละเอียด'} style={{marginTop: 10, marginLeft: 10,fontSize: 20}} />
+                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={{marginTop: 10, marginLeft: 10,fontSize: 20}} />
                             <View  style={{marginHorizontal: 10,  alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#068e81'}}>
                                 <CommonText text={messageData.AU_Datile} style={{ margin: 10, fontSize: 20, color: '#000'}} />
                             </View>
@@ -70,7 +69,7 @@ class messageDetailScreen extends React.PureComponent {
 }
 
 messageDetailScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'รายละเอียดข้อความ'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('MessageBox.detail_Message.title')} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });

@@ -14,7 +14,7 @@ export default {
         'details_Application': 'รายละเอียดของ แอฟพลิเคชัน',
         'contact': 'ติดต่อเรา',
         'information_Please': 'สอบถามข้อมูลเพิ่มเติมได้ทาง',
-        'e_mail': 'อีเมล',
+        'e_mail': 'อีเมล์',
         'telephone': 'หมายเลขโทรศัพท์'
     },
     'BMI': {
@@ -29,6 +29,11 @@ export default {
             'fat': 'อ้วน',
             'fat_much': 'อ้วนมาก'
         }
+    },
+    'Exercise': {
+        'title': 'ท่าออกกำลังกาย',
+        'source': 'ที่มา',
+        'topic': 'หัวข้อ'
     },
     'FoodDiary': {
         'title': 'ไดอารี่อาหาร',
@@ -90,6 +95,37 @@ export default {
             'pleas_Integer': 'Please enter the value as an integer only'
         },
     },
+    'MessageBox': {
+        'title': 'กล่องข้อมความ',
+        'no_message': 'ไม่มีข้อความ',
+        'alert': {
+            'delete_Message': 'ณต้องการลบข้อความนี้ ใช่ไหม?'
+        },
+        'detail_Message': {
+            'title': 'รายละเอียดข้อความ',
+            'description': 'รายละเอียด'
+        }
+    },
+    'Problem': {
+        'choose_picture': 'Choose a picture',
+        'photograph': 'ถ่ายรูป',
+        'picture_library': 'เลือกรูปจากคลัง',
+        'clear': 'เคลียร์',
+        'report_Problem': 'แจ้งปัญหา',
+        'title_Problem': 'ชื่อหัวข้อ',
+        'problem_Title': 'ชื่อหัวข้อปัญหา',
+        'fill_Problem': 'กรอกรายละเอียดของปัญหา',
+        'attach_Picture': 'แนบรูปภาพ',
+        'send_Problems': 'ส่งปัญหา',
+        'Picker': {
+            'type_Problem': 'เลือกประเภทของปัญหา',
+            'unstable_System': 'ระบบไม่เสถียร',
+            'server_Problem': 'เซิร์ฟเวอร์มีปัญหา',
+            'bug_Found': 'พบข้อบกพร่อง',
+            'recommend': 'แนะนำ',
+            'other': 'อื่นๆ'
+        }
+    },
     'Setting': {
         'title': 'ตั้งค่า',
         'save': 'บันทึก',
@@ -107,6 +143,37 @@ export default {
             'new_Personal_code': 'รหัสส่วนตัวใหม่',
             'confirm_New_Password': 'ยืนยัน รหัสส่วนตัวใหม่',
             'change_Personal_Successfully': 'เปลี่ยนรหัสส่วนตัวสำเร็จ'
+        }
+    },
+    'Trick': {
+        'person': 'คน',
+        'unlike': 'เลิกถูกใจ',
+        'like': 'กดถูกใจ',
+        'Tab': {
+            'title': 'เคล็ดลับ',
+            'all': 'ทั้งหมด',
+            'new': 'ใหม่',
+            'ranked': 'ติดอันดับ'
+        }
+    },
+    'User': {
+        'userName': 'ชื่อผู้ใช้',
+        'email': 'อีเมล์',
+        'password': 'รหัสผ่าน',
+        'confirm_password': 'ยืนยัน รหัสผ่าน',
+        'forgot_Password': 'ลืมรหัสผ่าน',
+        'please_Email': 'กรุณากรอก อีเมล์',
+        'change_Password': 'เปลี่ยนรหัสผ่าน',
+        'login': 'เข้าสู่ระบบ',
+        'register': 'สมัครสมาชิก',
+        'forgot_password': 'ลืมรหัสผ่าน ?',
+        'already_account': 'คุณมีบัญชีแล้วหรือยัง ?',
+        'Dialog': {
+            'Change_password': 'การเปลี่ยนรหัสผ่าน',
+            'new_Password': 'รหัสผ่านใหม่',
+            'confirm_Password': 'ยืนยัน รหัสผ่านใหม่',
+            'change_Successfully': 'เปลี่ยนรหัสผ่านสำเร็จ',
+            'system_sent': 'ระบบได้ส่งรหัสผ่านไปให้คุณทาง \n อีเมลสำเร็จ'
         }
     }
 }

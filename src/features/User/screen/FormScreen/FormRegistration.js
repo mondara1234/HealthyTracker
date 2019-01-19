@@ -10,6 +10,7 @@ import { Images } from "../../components/images";
 import {SERVER_URL} from "../../../../common/constants";
 import ImagePicker from "react-native-image-picker";
 import RNFetchBlob from "react-native-fetch-blob";
+import Trans from "../../../common/containers/Trans";
 
 class FormRegistration extends Component {
     constructor(props) {
@@ -30,10 +31,10 @@ class FormRegistration extends Component {
     InsertStudentRecordsToServer = () =>{
        if(this.state.TextInput_Name === ''||this.state.TextInput_Email === ''||this.state.TextInput_Password === ''|| this.state.TextInput_PasswordAgain === '' ){
            Alert.alert(
-               "แจ้งเตือน",
-               "กรุณากรอกให้ครบ",
+               Trans.tran('general.alert'),
+               Trans.tran('general.please_Complete'),
                [
-                   { text: "ปิด", onPress: () => {}, style: "cancel" },
+                   { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
                ],
                { cancelable: false },
            );
@@ -48,10 +49,10 @@ class FormRegistration extends Component {
                this.props.Flights_Register(Name, Email, Password, ImgProfile, keyScreens);
            }else{
                Alert.alert(
-                   "แจ้งเตือน",
-                   "รหัสผ่าน ทั้ง 2 ช่อง ไม่ตรงกัน",
+                   Trans.tran('general.alert'),
+                   Trans.tran('general.password_not_Match'),
                    [
-                       { text: "ปิด", onPress: () => {}, style: "cancel" },
+                       { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
                    ],
                    { cancelable: false },
                );
@@ -62,10 +63,10 @@ class FormRegistration extends Component {
     selectPhotoTapped() {
 
         const options = {
-            title: 'เลือกรูปภาพ',
-            cancelButtonTitle: 'ปิด',
-            takePhotoButtonTitle: 'ถ่ายรูป',
-            chooseFromLibraryButtonTitle: 'เลือกรูปจากคลัง',
+            title: Trans.tran('Problem.choose_picture'),
+            cancelButtonTitle: Trans.tran('general.canceled'),
+            takePhotoButtonTitle: Trans.tran('Problem.photograph'),
+            chooseFromLibraryButtonTitle: Trans.tran('Problem.picture_library'),
             quality: 1.0,
             maxWidth: 500,
             maxHeight: 500,
@@ -125,27 +126,27 @@ class FormRegistration extends Component {
                 </TouchableOpacity>
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
-                           placeholder="UserName"
+                           placeholder={Trans.tran('User.userName')}
                            placeholderTextColor = "#068e81"
                            onChangeText={ TextInputValue => this.setState({ TextInput_Name : TextInputValue }) }
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
-                           placeholder="Email"
+                           placeholder={Trans.tran('User.email')}
                            placeholderTextColor = "#068e81"
                            keyboardType="email-address"
                            onChangeText={ TextInputValue => this.setState({ TextInput_Email : TextInputValue }) }
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
-                           placeholder="Password"
+                           placeholder={Trans.tran('User.password')}
                            secureTextEntry={true}
                            placeholderTextColor = "#068e81"
                            onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue }) }
                 />
                 <TextInput style={styles.inputBox}
                            underlineColorAndroid='rgba(0,0,0,0)'
-                           placeholder="ยืนยัน Password"
+                           placeholder={Trans.tran('User.confirm_password')}
                            secureTextEntry={true}
                            placeholderTextColor = "#068e81"
                            onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue }) }

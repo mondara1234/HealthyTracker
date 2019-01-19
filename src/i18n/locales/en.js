@@ -30,6 +30,11 @@ export default {
             'fat_much': 'fat much'
         }
     },
+    'Exercise': {
+        'title': 'Exercise posture',
+        'source': 'source',
+        'topic': 'Topic'
+    },
     'FoodDiary': {
         'title': 'Food diary',
         'number': 'number',
@@ -90,6 +95,38 @@ export default {
             'pleas_Integer': 'Please enter the value as an integer only'
         }
     },
+    'MessageBox': {
+        'title': 'Message box',
+        'no_message': 'no message',
+        'alert': {
+            'delete_Message': 'You want to delete this message, right?'
+        },
+        'detail_Message': {
+            'title': 'Message details',
+            'description': 'Description'
+        }
+
+    },
+    'Problem': {
+        'choose_picture': 'Choose a picture',
+        'photograph': 'photograph',
+        'picture_library': 'Choose a picture from the library',
+        'clear': 'clear',
+        'report_Problem': 'Report the problem',
+        'title_Problem': 'Title',
+        'problem_Title': 'Problem Title',
+        'fill_Problem': 'Fill in the details of the problem',
+        'attach_Picture': 'Attach a picture',
+        'send_Problems': 'Send problems',
+        'Picker': {
+            'type_Problem': 'Choose the type of problem',
+            'unstable_System': 'Unstable system',
+            'server_Problem': 'server has a problem',
+            'bug_Found': 'Bug found',
+            'recommend': 'recommend',
+            'other': 'other'
+        }
+    },
     'Setting': {
         'title': 'Setting',
         'save': 'Save',
@@ -107,6 +144,37 @@ export default {
             'new_Personal_code': 'New personal code',
             'confirm_New_Password': 'Confirm new password',
             'change_Personal_Successfully': 'Change personal code successfully'
+        }
+    },
+    'Trick': {
+        'person': 'person',
+        'unlike': 'Unlike',
+        'like': 'Like',
+        'Tab': {
+            'title': 'Trick',
+            'all': 'All',
+            'new': 'New',
+            'ranked': 'Ranked'
+        }
+    },
+    'User': {
+        'userName': 'UserName',
+        'email': 'Email',
+        'password': 'Password',
+        'confirm_password': 'confirm password',
+        'forgot_Password': 'Forgot your password',
+        'please_Email': 'Please enter Email',
+        'change_Password': 'change Password',
+        'login': 'Login',
+        'register': 'Register',
+        'forgot_password': 'Forgot your password ?',
+        'already_account': 'Already have an account yet ?',
+        'Dialog': {
+            'Change_password': 'Change password',
+            'new_Password': 'New Password',
+            'confirm_Password': 'Confirm new password',
+            'change_Successfully': 'Change password successfully',
+            'system_sent': 'The system has sent you a password \n e-mail successfully'
         }
     }
 }

@@ -51,7 +51,7 @@ class HomeLoingScreen extends Component {
                         >
                             <View style={styles.containerButton}>
                                 <IconEntypo name="login" size={30} style={styles.styleIconEntypo} />
-                                <CommonText text={'เข้าสู่ระบบ'} style={styles.textLogin} />
+                                <CommonText text={Trans.tran('User.login')} style={styles.textLogin} />
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -60,7 +60,7 @@ class HomeLoingScreen extends Component {
                         >
                             <View style={styles.containerButton}>
                                 <IconFontAwesome name="registered" size={30} style={styles.styleIconFontAwesome} />
-                                <CommonText text={'สมัครสมาชิก'} style={styles.textRegister} />
+                                <CommonText text={Trans.tran('User.register')} style={styles.textRegister} />
                             </View>
                         </TouchableOpacity>
                     </View>

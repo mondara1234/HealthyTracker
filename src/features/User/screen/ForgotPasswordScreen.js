@@ -52,11 +52,11 @@ class ForgotPasswordScreen extends React.PureComponent {
                         <View style={styles.containerLogo}>
                             <LogoTextHT colorMain={'#000'} color={'#068e81'} sizeMain={34} size={28} />
                         </View>
-                        <CommonText text={'ลืมรหัสผ่าน'} style={styles.signupText} />
+                        <CommonText text={Trans.tran('User.forgot_Password')} style={styles.signupText} />
                         <TextInput
                             style={styles.inputBox}
                             underlineColorAndroid='rgba(0,0,0,0)'
-                            placeholder="กรุณากรอก Email"
+                            placeholder={Trans.tran('User.please_Email')}
                             placeholderTextColor = "#068e81"
                             keyboardType="email-address"
                             onChangeText={TextInputValue => this.setState({ UserEmail : TextInputValue })}
@@ -65,7 +65,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                             style={styles.button}
                             onPress={() => {this.setState({DialogForgot: true,})}}
                         >
-                            <CommonText text={'เปลี่ยนรหัสผ่าน'} style={styles.buttonText} />
+                            <CommonText text={Trans.tran('User.change_Password')} style={styles.buttonText} />
                         </TouchableOpacity>
 
                         <Dialog  //Dialogตอนกดเปลี่ยน
@@ -73,7 +73,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                             onTouchOutside={() => {this.setState({ DialogForgot: true })}}//ไม่ให้กดข้างนอกได้
                             dialogTitle={//ส่วนของTitle
                                 <DialogTitle
-                                    title="การเปลี่ยนรหัสผ่าน"
+                                    title={Trans.tran('User.Dialog.Change_password')}
                                     hasTitleBar={false}
                                     textStyle={styles.dialogTextTitle}
                                     style={styles.dialogTitleView}
@@ -81,7 +81,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                             }
                             actions={[//ส่วนของฺbutton
                                 <DialogButton
-                                    text="ตกลง"
+                                    text={Trans.tran('general.ok')}
                                     textStyle={styles.dialogTextButton}
                                     onPress={() => {
                                         this.setState({ DialogForgot: false, DialogSuccess: true })
@@ -89,7 +89,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                                     style={styles.dialogTitleView}
                                 />,
                                 <DialogButton
-                                    text="ปิด"
+                                    text={Trans.tran('general.canceled')}
                                     textStyle={styles.dialogTextButton}
                                     onPress={() => {
                                         this.setState({ DialogForgot: false });
@@ -102,7 +102,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                                 <TextInput
                                     style={styles.inputBoxDialog}
                                     underlineColorAndroid='rgba(0,0,0,0)'
-                                    placeholder="รหัสผ่านใหม่"
+                                    placeholder={Trans.tran('User.Dialog.new_Password')}
                                     secureTextEntry={true}
                                     placeholderTextColor = "#068e81"
                                     onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
@@ -110,7 +110,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                                 <TextInput
                                     style={styles.inputBoxDialog}
                                     underlineColorAndroid='rgba(0,0,0,0)'
-                                    placeholder="ยืนยัน รหัสผ่านใหม่"
+                                    placeholder={Trans.tran('User.Dialog.confirm_Password')}
                                     secureTextEntry={true}
                                     placeholderTextColor = "#068e81"
                                     selectionColor="#fff"
@@ -124,7 +124,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                             onTouchOutside={() => {this.setState({ DialogSuccess: true })}}//ไม่ให้กดข้างนอกได้
                             dialogTitle={//ส่วนของTitle
                                 <DialogTitle
-                                    title="เปลี่ยนรหัสผ่านสำเร็จ"
+                                    title={Trans.tran('User.Dialog.change_Successfully')}
                                     hasTitleBar={false}
                                     textStyle={styles.dialogTextTitle}
                                     style={styles.dialogTitleView}
@@ -132,7 +132,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                             }
                             actions={[//ส่วนของฺbutton
                                 <DialogButton
-                                    text="ปิด"
+                                    text={Trans.tran('general.canceled')}
                                     textStyle={styles.dialogTextButton}
                                     onPress={() => {
                                         this.setState({ DialogSuccess: false });
@@ -142,7 +142,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                             ]}
                         >{/*ส่วนของbody*/}
                                 <View style={styles.dialogBodyView}>
-                                    <Text style={styles.dialogTextBody}> {'ระบบได้ส่งรหัสผ่านไปให้คุณทาง \n e-mail เรียบร้อยแล้วครับ'}</Text>
+                                    <CommonText style={styles.dialogTextBody} text={Trans.tran('User.Dialog.change_Successfully')}/>
                                 </View>
                         </Dialog>
                     </Container>

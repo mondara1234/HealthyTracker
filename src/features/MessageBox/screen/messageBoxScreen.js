@@ -11,7 +11,6 @@ import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import moment from "moment/moment";
 import {bindActionCreators} from "redux";
 import {AllMessageBox} from "../../MessageBox/redux/actions";
 import {connect} from "react-redux";
@@ -82,11 +81,11 @@ class messageBoxScreen extends Component {
 
     deleteRow(data) {
         Alert.alert(
-            "แจ้งเตือน",
-            "คุณต้องการลบข้อความนี้ ใช่ไหม?",
+            Trans.tran('general.alert'),
+            Trans.tran('MessageBox.alert.delete_Message'),
             [
                 {
-                    text: "ลบ",
+                    text: Trans.tran('general.yes'),
                     onPress: () =>
                     {
                         let UserNames = `${data.AU_UserName}`;
@@ -97,7 +96,7 @@ class messageBoxScreen extends Component {
 
                     }
                 },
-                { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
             ],
             { cancelable: false }
         );
@@ -130,7 +129,7 @@ class messageBoxScreen extends Component {
                             </Content>
                             :
                             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                                <CommonText text={'ไม่มีข้อความ'} size={30}/>
+                                <CommonText text={Trans.tran('MessageBox.no_message')} size={30}/>
                             </View>
 
                         }
@@ -147,7 +146,7 @@ class messageBoxScreen extends Component {
 }
 
 messageBoxScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'กล่องข้อมความ'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('MessageBox.title')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu
         icon={'question-circle'}

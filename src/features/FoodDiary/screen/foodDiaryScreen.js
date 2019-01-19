@@ -288,7 +288,7 @@ class foodDiaryScreen extends React.PureComponent {
                         <View>
                             <View style={styles.containerCalendar}>
                                 <CommonText text={Trans.tran('FoodDiary.energy_today')} style={styles.textTitlekcal}/>
-                                <CommonText text={this.state.sumCalorie} style={styles.textSumkcal}/>
+                                <CommonText text={this.state.sumCalorie} style={[styles.textSumkcal,{marginHorizontal: 10}]}/>
                                 <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal}/>
                             </View>
                             <View style={styles.containerCalendar}>

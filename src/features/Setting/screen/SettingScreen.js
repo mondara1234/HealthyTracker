@@ -114,7 +114,7 @@ class settingScreen extends React.PureComponent {
         }else if(personalCode !== Passwordold){
             Alert.alert(
                 Trans.tran('general.alert'),
-                Trans.tran('general.please_Complete'),
+                Trans.tran('general.password_not_Match'),
                 [
                     {
                         text: Trans.tran('general.close'), onPress: () => {

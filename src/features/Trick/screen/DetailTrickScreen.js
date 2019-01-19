@@ -75,7 +75,6 @@ class DetailTrickScreen extends React.PureComponent {
         const { trickData } = this.props.navigation.state.params;
         const trickID = trickData.TrickID;
         const trickLike = (this.state.trickLike === 0 ? parseInt(trickData.TrickLike) : this.state.trickLike) - 1;
-        console.log('trickLikeDelete: '+ trickLike);
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         let UserNames =`${UserName}`;
@@ -90,7 +89,6 @@ class DetailTrickScreen extends React.PureComponent {
         const { trickData } = this.props.navigation.state.params;
         const trickID = trickData.TrickID;
         const trickLike = (this.state.trickLike === 0 ? parseInt(trickData.TrickLike) : this.state.trickLike) + 1;
-        console.log('trickLikeInsert: '+ trickLike);
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         let UserNames =`${UserName}`;
@@ -123,7 +121,7 @@ class DetailTrickScreen extends React.PureComponent {
                     <Content padder>
                         {this.state.statusLike === 'allow' ?
                             <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                                <CommonText text={'เลิกถูกใจ'} />
+                                <CommonText text={Trans.tran('Trick.unlike')} />
                                 <TouchableOpacity
                                     onPress={()=> this.DeleteUserLikeTrick()}
                                 >
@@ -134,7 +132,7 @@ class DetailTrickScreen extends React.PureComponent {
                             </View>
                         :
                             <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                                <CommonText text={'กดถูกใจ'} />
+                                <CommonText text={Trans.tran('Trick.like')} />
                                 <TouchableOpacity
                                     onPress={()=> this.InsertUserLikeTrick()}
                                 >
@@ -154,7 +152,7 @@ class DetailTrickScreen extends React.PureComponent {
                                     <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
                                             source={Images.TrickScreen.Heart}
                                     />
-                                    <CommonText text={`${this.state.trickLike === 0 ? trickData.TrickLike : this.state.trickLike} คน`} size={16} />
+                                    <CommonText text={`${this.state.trickLike === 0 ? trickData.TrickLike : this.state.trickLike} ${Trans.tran('Trick.person')}`} size={16} />
                                 </View>
                                 <CommonText text={`${trickData.PeopleAdd} / ${trickData.DateAdded}`} size={16} />
                             </View>
@@ -174,7 +172,7 @@ class DetailTrickScreen extends React.PureComponent {
 }
 
 DetailTrickScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'เคล็ดลับ: ชื่อที่เรากดเข้ามา'} />,
+    headerTitle: <HeaderTitle text={`${Trans.tran('Trick.Tab.title')}: ${navigation.state.params.trickData.TrickName}`} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />,
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
