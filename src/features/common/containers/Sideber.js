@@ -1,6 +1,5 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from 'react-navigation';
@@ -12,7 +11,7 @@ import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
-import { LOGIN, PRAVIEDKEY } from "../../User/router";
+import { LOGIN } from "../../User/router";
 import { PROFILE_SCREEN } from "../../ProfileUser/router";
 import { EXERCISE_SCREEN } from "../../Exercise/router";
 import { SETTING_SCREEN } from "../../Setting/router";
@@ -21,6 +20,7 @@ import { PROBLEM_SCREEN } from "../../Problem/router";
 import { ABOUT_SCREEN } from "../../About/router";
 import CommonText from '../../common/components/CommonText';
 import {getRouteName} from "../../User/redux/actions";
+import Trans from "./Trans";
 
 class Sideber extends React.Component {
     constructor(props) {
@@ -65,11 +65,11 @@ class Sideber extends React.Component {
 
                         if (item.route === LOGIN ) {
                             Alert.alert(
-                                'ออกจากระบบ',
-                                'ต้องการออกจากระบบ ?',
+                                Trans.tran('Sideber.sign_out'),
+                                Trans.tran('Sideber.want_Logout'),
                                 [
-                                    {text: 'ตกลง', onPress: () => this.props.navigation.dispatch(resetAction)},
-                                    { text: "ยกเลิก", onPress: () => {}, style: "cancel" },
+                                    {text: Trans.tran('general.yes'), onPress: () => this.props.navigation.dispatch(resetAction)},
+                                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                                 ]
                             )
                         } else {
@@ -130,12 +130,12 @@ class Sideber extends React.Component {
         let UserName = Names.toString();
 
         const menus = [
-            {name: 'จัดการข้อมูลส่วนตัว', icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
-            {name: 'ท่าออกกำลังกาย', icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
-            {name: 'กล่องข้อความ', icon: 'message', route: MESSAGEBOX_SCREEN, params: {isRootPage: true}},
-            {name: 'แจ้งปัญหา', icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
-            {name: 'ตั้งค่า', icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
-            {name: 'ออกจากระบบ', icon: 'log-out', route: LOGIN, params: {isRootPage: true}}
+            {name: Trans.tran('Sideber.manage_Information'), icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.exercise_Posture'), icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.message_box'), icon: 'message', route: MESSAGEBOX_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.report_problem'), icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.setting'), icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.sign_out'), icon: 'log-out', route: LOGIN, params: {isRootPage: true}}
         ];
 
         return (
@@ -159,7 +159,7 @@ class Sideber extends React.Component {
                                 style={[styles.fontBase, {fontSize: 18, textAlign: 'center'}]}
                             />
                             <CommonText
-                                text={`พลังงานที่ต้องการ:  ${BMRUser}  แคลอรี่`}
+                                text={`${Trans.tran('FoodDiary.energy_per_day')}:  ${BMRUser} ${Trans.tran('FoodDiary.calorie')}`}
                                 style={styles.fontBase}
                             />
                         </View>
@@ -175,7 +175,7 @@ class Sideber extends React.Component {
                 </Content>
                 <TouchableOpacity onPress={() => this.aboutFuntion()}>
                     <View style={[styles.footer,{backgroundColor: this.state.menuActive === 'about' ? '#999999' : '#e7e7e7'}]}>
-                        <CommonText text={'เกี่ยวกับเรา'} style={styles.footerFont} />
+                        <CommonText text={Trans.tran('About.about')} style={styles.footerFont} />
                         <CommonText text={`version ${APP_VERSION_TEXT}`} style={styles.version} />
                     </View>
                 </TouchableOpacity>

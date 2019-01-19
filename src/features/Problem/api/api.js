@@ -1,5 +1,7 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
+import Trans from "../../common/containers/Trans";
+import {LOGIN} from "../../User/router";
 
 export const InsertProblem = (Name, Email, Password, ImgProfile,) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/InsertData.php`, {
@@ -18,20 +20,20 @@ export const InsertProblem = (Name, Email, Password, ImgProfile,) => dispatch =>
         .then((responseJson) => {
             if(responseJson === 'Email'||responseJson === 'Name'){
                 Alert.alert(
-                    "แจ้งเตือน",
-                    responseJson+" นี้มีคนใช้ไปแล้วครับ",
+                    Trans.tran('general.alert'),
+                    `${responseJson} ${Trans.tran('User.already_people')}`,
                     [
-                        { text: "ปิด", onPress: () => {}, style: "cancel" }
+                        { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
                     ],
                     { cancelable: false },
                 );
             }else{
                 Alert.alert(
-                    "แจ้งเตือน",
+                    Trans.tran('general.alert'),
                     responseJson,
                     [
-                        { text: "ตกลง", onPress: () => keyScreens({routeName: LOGIN})},
-                        { text: "ปิด", onPress: () => {}, style: "cancel" }
+                        { text: Trans.tran('general.ok'), onPress: () => keyScreens({routeName: LOGIN})},
+                        { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
                     ],
                     { cancelable: false },
                 );

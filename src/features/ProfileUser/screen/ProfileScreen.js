@@ -28,6 +28,8 @@ class ProfileScreen extends React.PureComponent {
             TextInput_age: 0,
             TextInput_cm: 0,
             TextInput_gg: 0,
+            bmi: 0,
+            criterionbmi: '',
             stateButton: 'Edit',
             editing: true
         }
@@ -54,9 +56,30 @@ class ProfileScreen extends React.PureComponent {
     componentDidMount() {
         const members = this.props.Users.user;
         const sex = members.map((data) => {return data.Sex});
+        const Height = members.map((data) => {return data.Height});
+        const Weight = members.map((data) => {return data.Weight});
+        let SumBMi = Math.pow(Weight, 2)/Height;
+        let criterionBMI = '';
+        if(SumBMi.toFixed(2) < 18.50){
+            criterionBMI = Trans.tran('BMI.criterionBMI.thin');
+
+        }else if(SumBMi.toFixed(2) < 23.00){
+            criterionBMI = Trans.tran('BMI.criterionBMI.normal');
+
+        }else if(SumBMi.toFixed(2) < 25.00){
+            criterionBMI = Trans.tran('BMI.criterionBMI.buxom');
+
+        }else if(SumBMi.toFixed(2) < 30.00){
+            criterionBMI = Trans.tran('BMI.criterionBMI.fat');
+
+        }else if(30.00 < SumBMi.toFixed(2) ){
+            criterionBMI = Trans.tran('BMI.criterionBMI.fat_much');
+        }
         this.setState({
             dataProfileUser : members,
-            selected: `${sex}`
+            selected: `${sex}`,
+            criterionbmi: criterionBMI,
+            bmi: SumBMi.toFixed(2)
         });
 
     }
@@ -98,36 +121,36 @@ class ProfileScreen extends React.PureComponent {
                     <View style={{flex: 1 , alignItems: 'center', paddingTop: 20}}>
                         <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
                             <View style={{paddingLeft: 3, height: 30, width: '100%', backgroundColor: '#068e81', justifyContent: 'center', marginBottom: 10}}>
-                                <CommonText text={'ข้อมูล BMR'} color={'#fff'} />
+                                <CommonText text={`${Trans.tran('Profile.information')} BMR`} color={'#fff'} />
                             </View>
                             <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={'BMR :'} size={14} />
+                                    <CommonText text={`${Trans.tran('BMI.title')} :`} size={14} />
                                 </View>
                                 <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={'58'} style={{fontSize: 16, color: '#068E81'}} />
+                                    <CommonText text={this.state.bmi} style={{fontSize: 16, color: '#068E81'}} />
                                 </View>
                             </View>
                             <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={'น้ำหนักอยู่ในเกณฑ์ :'} size={14} />
+                                    <CommonText text={`${Trans.tran('BMI.criterion')} :`} size={14} />
                                 </View>
                                 <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={'ปกติ'} style={{fontSize: 16, color: '#068E81'}} />
+                                    <CommonText text={this.state.criterionbmi} style={{fontSize: 16, color: '#068E81'}} />
                                 </View>
                             </View>
                             <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={'พลังงานที่ต้องการต่อวัน :'} size={14} />
+                                    <CommonText text={`${Trans.tran('FoodDiary.energy_per_day')} :`} size={14} />
                                 </View>
                                 <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={`${BMRUsers} แคลลอรี่`} style={{fontSize: 16, color: '#068E81'}} />
+                                    <CommonText text={`${BMRUsers} ${Trans.tran('FoodDiary.calorie')}`} style={{fontSize: 16, color: '#068E81'}} />
                                 </View>
                             </View>
                         </View>
                         <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
                             <View style={{paddingLeft: 3, height: 30, width: '100%', flexDirection: 'row', backgroundColor: '#068e81', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <CommonText text={'ข้อมูล ส่วนตัว'} color={'#fff'} />
+                                <CommonText text={`${Trans.tran('Profile.information')} ${Trans.tran('Profile.private')}`} color={'#fff'} />
                                 {this.state.stateButton === 'Edit'?
                                     <TouchableOpacity
                                         style={{paddingHorizontal: 10, backgroundColor: '#F4F4F4',flexDirection: 'row', marginRight: 3, height: 26, alignItems: 'center', justifyContent: 'center'}}

@@ -4,7 +4,6 @@ import { withNavigation } from "react-navigation";
 import Form from './FormScreen/FormRegistration';
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
-import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import { Images } from "../components/images";
 import { LOGIN } from "../router";
@@ -47,11 +46,11 @@ class Registration extends Component {
                     <View style={styles.containerLogo}>
                         <LogoTextHT colorMain={'#000'} color={'#fff'} />
                     </View>
-                    <Form nameRegistration="ลงทะเบียน" keyScreen={navigate}/>
+                    <Form nameRegistration={Trans.tran('User.register')} keyScreen={navigate}/>
                     <View style={styles.signupTextCont}>
-                        <CommonText text={'คุณมีบัญชีแล้วหรือยัง ?'} style={styles.signupText} />
+                        <CommonText text={Trans.tran('User.already_account')} style={styles.signupText} />
                         <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
-                            <CommonText text={'เข้าสู่ระบบ'} style={styles.signupButton} />
+                            <CommonText text={Trans.tran('User.login')} style={styles.signupButton} />
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>

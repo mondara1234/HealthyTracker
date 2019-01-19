@@ -143,7 +143,7 @@ class problemScreen extends React.PureComponent {
 
                             }}
                         >
-                            <CommonText text={Trans.tran('Problem.clear')} style={{color: '#fff', fontSize: 16}} />
+                            <CommonText text={Trans.tran('Problem.clear')} style={{color: '#fff', fontSize: 16, marginHorizontal: 10,}} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.container}>
@@ -160,7 +160,7 @@ class problemScreen extends React.PureComponent {
                                 />
                             </View>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                                <CommonText text={'ประเภท'} style={{fontSize: 20 , marginHorizontal: 20}} />
+                                <CommonText text={Trans.tran('Problem.type')} style={{fontSize: 20 , marginHorizontal: 20}} />
                                 <Picker
                                     mode="dropdown"
                                     style={{ width: 240 }}
@@ -188,7 +188,7 @@ class problemScreen extends React.PureComponent {
                             </Form>
                             <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
                                 <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
-                                    <CommonText text={Trans.tran('Problem.attach_Picture')} style={{color: '#fff', fontSize: 16}} />
+                                    <CommonText text={Trans.tran('Problem.attach_Picture')} style={{color: '#fff', fontSize: 16, marginHorizontal: 10,}} />
                                 </TouchableOpacity>
                                 <CommonText text={'ชื่อรูปภาพ.jpg'} style={{fontSize: 14, marginLeft: '2%', marginTop: 10}} />
                             </View>
@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
         marginVertical: 5
     },
     buttonImg: {
-        width: 100,
         height: 40,
         borderRadius: 25,
         borderWidth: 1,
@@ -255,7 +254,6 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     button: {
-        width: 150,
         height: 40,
         borderRadius: 25,
         borderWidth: 1,
@@ -267,7 +265,8 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 20,
         fontWeight: '500',
-        color: '#ffffff'
+        color: '#fff',
+        marginHorizontal: 10,
     },
 
 });

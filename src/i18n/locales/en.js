@@ -9,6 +9,15 @@ export default {
         'password_not_Match': 'Both passwords do not match',
         'ok': 'OK'
     },
+    'Sideber': {
+        'manage_Information': 'Manage personal information',
+        'exercise_Posture': 'Exercise posture',
+        'message_box': 'Message box',
+        'report_problem': 'Report the problem',
+        'setting': 'Setting',
+        'sign_out': 'Sign out',
+        'want_Logout': 'Want to log out?'
+    },
     'About': {
         'about': 'About Us',
         'details_Application': 'Details of the application',
@@ -18,6 +27,7 @@ export default {
         'telephone': 'Telephone Number'
     },
     'BMI': {
+        'title': 'BMI',
         'close_Details': 'Close details',
         'open_Details': 'Open details',
         'criterion': 'criterion',
@@ -118,6 +128,7 @@ export default {
         'fill_Problem': 'Fill in the details of the problem',
         'attach_Picture': 'Attach a picture',
         'send_Problems': 'Send problems',
+        'type': 'type',
         'Picker': {
             'type_Problem': 'Choose the type of problem',
             'unstable_System': 'Unstable system',
@@ -126,6 +137,10 @@ export default {
             'recommend': 'recommend',
             'other': 'other'
         }
+    },
+    'Profile': {
+        'information': 'information',
+        'private': 'private'
     },
     'Setting': {
         'title': 'Setting',
@@ -169,6 +184,7 @@ export default {
         'register': 'Register',
         'forgot_password': 'Forgot your password ?',
         'already_account': 'Already have an account yet ?',
+        'already_people': 'This has already been used by people',
         'Dialog': {
             'Change_password': 'Change password',
             'new_Password': 'New Password',
@@ -176,5 +192,12 @@ export default {
             'change_Successfully': 'Change password successfully',
             'system_sent': 'The system has sent you a password \n e-mail successfully'
         }
+    },
+    'PraviedKey': {
+        'title': 'Set up a personal code',
+        'personal_Code': 'Personal code',
+        'set_Successfully': 'Set the code successfully !',
+        'invalid_Personal': 'Invalid personal code !',
+        'forget_Personal': 'Forget your personal code ?'
     }
 }

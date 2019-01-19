@@ -132,7 +132,7 @@ class bmiScreen extends React.PureComponent {
                             <View style={styles.containerBMI}>
                                 <View>
                                     <View style={styles.containerBodyBMI}>
-                                        <CommonText text={'BMI :'} style={styles.textHead} />
+                                        <CommonText text={`${Trans.tran('BMI.title')} :`} style={styles.textHead} />
                                         <CommonText text={this.state.bmi} style={styles.valueHead} />
                                     </View>
                                     <View style={styles.containerBodyBMI}>
@@ -236,7 +236,7 @@ class bmiScreen extends React.PureComponent {
 }
 
 bmiScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'BMI'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('BMI.title')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });

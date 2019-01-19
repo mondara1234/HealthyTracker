@@ -106,9 +106,8 @@ class LoingScreen extends Component {
                                            placeholderTextColor = "#068e81"
                                            onChangeText={UserPassword =>this.setState({UserPassword})}
                                 />
-                                <View style={styles.containerForgot}>
-                                    <TouchableOpacity style={styles.TouchForgot}
-                                                      onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                                <View style={[styles.containerForgot,{alignItems: 'flex-end'}]}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
                                         <CommonText text={Trans.tran('User.forgot_password')} style={styles.textForgot} />
                                     </TouchableOpacity>
                                 </View>
@@ -166,9 +165,6 @@ const styles = StyleSheet.create({
     textForgot: {
         color: '#000',
         fontSize: 16,
-    },
-    TouchForgot: {
-        marginLeft: '50%'
     },
     containerForgot: {
         width:  200,

@@ -64,10 +64,10 @@ class PraviedKeyScreen extends React.PureComponent {
 
             if (checkData === '') {
                 Alert.alert(
-                    'รหัสส่วนตัว',
+                    Trans.tran('PraviedKey.personal_Code'),
                     'ตั้งรหัสสำเร็จ!',
                     [
-                        {text: 'OK',
+                        {text: Trans.tran('general.ok'),
                             onPress: () => {
                                 this.setState({
                                     passCode: []
@@ -79,10 +79,10 @@ class PraviedKeyScreen extends React.PureComponent {
                 );
             }else if (checkPassKey === checkData) {
                 Alert.alert(
-                    'รหัสส่วนตัว',
-                    'รหัสส่วนตัวถูกต้อง!',
+                    Trans.tran('PraviedKey.personal_Code'),
+                    Trans.tran('PraviedKey.set_Successfully'),
                     [
-                        {text: 'OK',
+                        {text: Trans.tran('general.ok'),
                             onPress: () =>{
                                 this.props.navigation.navigate(FOODDIARY_SCREEN);
                                 this.setState({
@@ -95,10 +95,10 @@ class PraviedKeyScreen extends React.PureComponent {
                 );
             } else {
                 Alert.alert(
-                    'รหัสส่วนตัว',
-                    'รหัสส่วนตัวไม่ถูกต้อง!',
+                    Trans.tran('PraviedKey.personal_Code'),
+                    Trans.tran('PraviedKey.invalid_Personal'),
                     [
-                        {text: 'OK',
+                        {text: Trans.tran('general.ok'),
                             onPress: () => this.setState({
                                 passCode: []
                             })
@@ -157,7 +157,7 @@ class PraviedKeyScreen extends React.PureComponent {
                     <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <TouchableOpacity style={styles.TouchForgot}
                                           onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                            <CommonText text={'ลืมรหัสส่วนตัว ?'} style={styles.textForgot} />
+                            <CommonText text={Trans.tran('PraviedKey.forget_Personal')} style={styles.textForgot} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewKeyboard}>
@@ -175,7 +175,7 @@ class PraviedKeyScreen extends React.PureComponent {
 }
 
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: <HeaderTitle text={'ตั้งค่ารหัสส่วนตัว'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('PraviedKey.title')} />,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 

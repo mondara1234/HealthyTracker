@@ -9,6 +9,15 @@ export default {
         'password_not_Match': 'รหัสผ่านทั้งสองไม่ตรงกัน',
         'ok': 'ตกลง'
     },
+    'Sideber': {
+        'manage_Information': 'จัดการข้อมูลส่วนตัว',
+        'exercise_Posture': 'ท่าออกกำลังกาย',
+        'message_box': 'กล่องข้อความ',
+        'report_problem': 'แจ้งปัญหา',
+        'setting': 'ตั้งค่า',
+        'sign_out': 'ออกจากระบบ',
+        'want_Logout': 'ต้องการออกจากระบบ ?'
+    },
     'About': {
         'about': 'เกี่ยวกับเรา',
         'details_Application': 'รายละเอียดของ แอฟพลิเคชัน',
@@ -18,6 +27,7 @@ export default {
         'telephone': 'หมายเลขโทรศัพท์'
     },
     'BMI': {
+        'title': 'ค่าดัชนีมวลกาย',
         'close_Details': 'Close details',
         'open_Details': 'Open details',
         'criterion': 'เกณฑ์',
@@ -117,6 +127,7 @@ export default {
         'fill_Problem': 'กรอกรายละเอียดของปัญหา',
         'attach_Picture': 'แนบรูปภาพ',
         'send_Problems': 'ส่งปัญหา',
+        'type': 'ประเภท',
         'Picker': {
             'type_Problem': 'เลือกประเภทของปัญหา',
             'unstable_System': 'ระบบไม่เสถียร',
@@ -125,6 +136,10 @@ export default {
             'recommend': 'แนะนำ',
             'other': 'อื่นๆ'
         }
+    },
+    'Profile': {
+        'information': 'ข้อมูล',
+        'private': 'ส่วนตัว'
     },
     'Setting': {
         'title': 'ตั้งค่า',
@@ -168,6 +183,7 @@ export default {
         'register': 'สมัครสมาชิก',
         'forgot_password': 'ลืมรหัสผ่าน ?',
         'already_account': 'คุณมีบัญชีแล้วหรือยัง ?',
+        'already_people': 'นี้มีคนใช้ไปแล้วครับ',
         'Dialog': {
             'Change_password': 'การเปลี่ยนรหัสผ่าน',
             'new_Password': 'รหัสผ่านใหม่',
@@ -175,5 +191,12 @@ export default {
             'change_Successfully': 'เปลี่ยนรหัสผ่านสำเร็จ',
             'system_sent': 'ระบบได้ส่งรหัสผ่านไปให้คุณทาง \n อีเมลสำเร็จ'
         }
+    },
+    'PraviedKey': {
+        'title': 'ตั้งค่ารหัสส่วนตัว',
+        'personal_Code': 'รหัสส่วนตัว',
+        'set_Successfully': 'ตั้งรหัสสำเร็จ !',
+        'invalid_Personal': 'รหัสส่วนตัวไม่ถูกต้อง !',
+        'forget_Personal': 'ลืมรหัสส่วนตัว ?'
     }
 }
