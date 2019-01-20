@@ -76,9 +76,10 @@ export default {
     'MenuFood': {
         'title': 'รายการอาหาร',
         'all': 'ทั้งหมด',
-        'fill_Food_Name': 'กรอกชื่ออาหาร',
+        'fill_Food_Name': 'ใส่ชื่ออาหารที่ต้องการค้นหา',
         'number_Found': ' จำนวนที่พบ ',
         'list': ' รายการ',
+        'can_one': 'สามารถเลือกได้แค่ 1 ประเภทเท่านั้น',
         'foodDetail': {
             'title': 'รายละเอียดอาหาร',
             'save_Diary': 'บันทึกลงไดอารี่',

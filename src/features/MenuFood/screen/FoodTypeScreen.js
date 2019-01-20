@@ -142,7 +142,7 @@ export default connect(
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         REDUCER_GetFoodType: bindActionCreators(AllFoodType, dispatch),
-        FETCH_AllMenuFood: bindActionCreators(APIMenuFood.fetchAllMenuFood, dispatch),
+        //FETCH_AllMenuFood: bindActionCreators(APIMenuFood.fetchAllMenuFood, dispatch),
     })
 )(FoodTypeScreen);
 

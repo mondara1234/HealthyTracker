@@ -19,6 +19,7 @@ import {PRAVIEDKEY} from "../../User/router";
 import * as APIUser from "../../User/api/api";
 import * as APISetting from "../../Setting/api/api";
 import {getOneUser} from "../../User/redux/actions";
+import I18n from "react-native-i18n";
 
 class settingScreen extends React.PureComponent {
     constructor(props) {
@@ -168,10 +169,11 @@ class settingScreen extends React.PureComponent {
             }
 
             if(active === true){
-                Language = 'eng';
+                Language = 'en';
             }else{
                 Language = 'th';
             }
+        I18n.locale = Language;
         const response = await this.props.FETCH_UpdateAllPrivate(UserID, PersonalSelect, Language);
         const responseSearchUser = await this.props.FETCH_fetchSearchUser(UserNames);
         this.props.REDUCER_ONEDATA(responseSearchUser);

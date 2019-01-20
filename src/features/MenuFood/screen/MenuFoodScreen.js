@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert} from 'react-native';
-import { Container, CardItem, Left, Thumbnail, Card, Body, ListItem } from 'native-base';
+import { Container, Header, Left, Thumbnail, CheckBox, Body, ListItem } from 'native-base';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Autocomplete from 'react-native-autocomplete-input';
 import { connect } from "react-redux";
@@ -16,18 +16,23 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
 import {SERVER_URL} from "../../../common/constants";
-import {AllMenuFood} from "../redux/actions";
+import {AllFoodType, AllMenuFood} from "../redux/actions";
 import Trans from "../../common/containers/Trans";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class menuFoodScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             films: [],
+            setDataFood: [],
+            dataFoodType: [],
             nameFoodType: '',
             lengthFoodType: 0,
             query: '',
-            editing: true
+            editing: true,
+            statusCheckBox: false,
+            statusSort: false
         };
     }
 
@@ -64,7 +69,23 @@ class menuFoodScreen extends React.PureComponent {
                 nameFoodType: foodTypes
             })
         }
+        this.getDataFoodMenu();
+    }
 
+    async getDataFoodMenu() {
+        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/AllFoodType.php`)
+            .then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+        this.props.REDUCER_GetFoodType(response);
+
+        const dataFoodType = this.props.FoodType.foodType;
+
+        this.setState({
+            dataFoodType: dataFoodType
+        })
     }
 
     async SerachFoodMenu(foodTypes) {
@@ -84,9 +105,10 @@ class menuFoodScreen extends React.PureComponent {
             });
         this.props.REDUCER_GetMenuFood(response);
         const dataFoodMenu = this.props.FoodMenu.foodMenu;
-        console.log(dataFoodMenu);
+
         this.setState({
             films: dataFoodMenu,
+            setDataFood: dataFoodMenu,
             lengthFoodType: dataFoodMenu.length
         })
     }
@@ -100,47 +122,97 @@ class menuFoodScreen extends React.PureComponent {
             });
         this.props.REDUCER_GetMenuFood(response);
         const dataFoodMenu = this.props.FoodMenu.foodMenu;
-
         this.setState({
             films: dataFoodMenu,
+            setDataFood: dataFoodMenu,
             lengthFoodType: dataFoodMenu.length
         })
     }
-    //ไว้รับค่าแล้วค้นหา
-    findFilm(query) {
-        if (query === '') {
-            return [];
-        }
 
-        const { films } = this.state;
-        return films.filter(searchData => searchData.FoodName.search(query.trim()) >= 0);
-        /* film.episode_id ต้องการค้นหาจากอะไร*/
-        /* filter  trim  คิอไร*/
+     sortFoodMenu() {
+        const response = this.state.films;
+        if(this.state.statusSort === false){
+            response.reverse(function(a, b){
+                return b-a}
+            );
+            response.sort(function(a, b){
+                return a-b}
+            );
+            this.setState({
+                films: response,
+                statusSort: true
+            });
+        }else{
+            response.sort(function(a, b){
+                return a-b}
+            );
+            response.reverse(function(a, b){
+                return b-a}
+            );
+            this.setState({
+                films: response,
+                statusSort: false
+            });
+        }
+        console.log('this.state.statusSort',this.state.statusSort);
+
+         console.log('asdasd',response);
     }
 
-    //ไว้แสดงข้อความ
-    static renderFilm(getFilms) {
-        const { tyle, name, calorie, picture, key } = getFilms;
+    //ไว้รับค่าแล้วค้นหา
+    findFilm(value) {
+        this.setState({query: value});
+        let data = this.state.setDataFood;
+        if (value === '') {
+            this.setState({
+                films: data,
+                lengthFoodType: data.length
+            })
+        }else{
+            this.SearchFoodMenu(value)
+        }
+    }
 
-        return (
-            <Card style={{ backgroundColor: "#2f56b1", borderWidth:2 }}>
-                <CardItem  style={{backgroundColor: "#2f56b1", borderWidth:2 }}>
-                    <Left  style={{backgroundColor: "#2f56b1", borderWidth:2 }}>
-                        <Thumbnail
-                            source={{uri: picture.thumbnail}}
-                            style={{ width: 60, height: 60 }}
-                        />
-                    </Left>
-                    <Body>
-                    <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{name.first}</Text>
-                    <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: '100%'}}>
-                        <IconMaterialIcons name="navigate-next" size={40} color={'#000'} style={{ marginTop: 100}} />
-                    </View>
-                    <CommonText text={`${calorie} ${Trans.tran('FoodDiary.calorie')}`} style={{ fontSize: 14, color: '#068e81'}} />
-                    </Body>
-                </CardItem>
-            </Card>
-        );
+    async SearchFoodMenu(value) {
+        let valueFoodName =`${value}`;
+        const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/SeachFoodName.php`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                foodname : valueFoodName,
+            })
+        }).then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+        this.props.REDUCER_GetMenuFood(response);
+        const dataFoodMenu = this.props.FoodMenu.foodMenu;
+        let data = [];
+        if( dataFoodMenu === 'ไม่พบ' ){
+            this.setState({
+                films: data,
+                lengthFoodType: data.length
+            })
+        }else{
+            this.setState({
+                films: dataFoodMenu,
+                lengthFoodType: dataFoodMenu.length
+            })
+        }
+
+    }
+
+    BtnClear(){ // ปุ่ม x (ลบ)
+        let data = this.state.setDataFood;
+        this.setState({
+            films: data,
+            query: '',
+            lengthFoodType: data.length
+        })
     }
 
     _renderItem = ({ item, index }) => {
@@ -172,29 +244,87 @@ class menuFoodScreen extends React.PureComponent {
         )
     };
 
-    render() {
-        const films = this.findFilm(this.state.query);//ประกาศตัวแปร เพื่อรับค่า findFilm โดยส่งค่า query ไป
+    selectCheckBox = (item) => {
+        let foodTypes = `${item.TypeName}`;
+        if(foodTypes !== this.state.nameFoodType){
+            this.SerachFoodMenu(foodTypes);
+            this.setState({
+                nameFoodType: foodTypes
+            })
+        }else{
+            this.AllFoodMenu();
+            this.setState({
+                nameFoodType: Trans.tran('MenuFood.all')
+            })
+        }
 
+    };
+
+    checkedCheckBox = (item) => {
+        let status = this.state.nameFoodType === `${item.TypeName}` ? true: false;
+        return status;
+    };
+
+    _renderCheckBox = ({ item, index }) => {
+        return (
+            <View style={{flex:1}}>
+                <ListItem style={{backgroundColor: '#F4F4F4', borderBottomWidth: 0}}>
+                    <CheckBox
+                        checked={this.checkedCheckBox(item)}
+                        onPress={() => {this.selectCheckBox(item)}}
+                    />
+                    <Body>
+                        <CommonText text={item.TypeName} style={{fontSize: 16, marginLeft: 3}} />
+                    </Body>
+                </ListItem>
+            </View>
+        )
+    };
+
+    render() {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
+                    <Header style={{backgroundColor: '#068e81'}}>
+                        <HeaderLeftMenu onPress={() => this.props.navigation.navigate('DrawerOpen')} />
+                        <HeaderTitle text={Trans.tran('MenuFood.title')} />
+                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                            <HeaderLeftMenu icon={'flask'} onPress={() => this.setState({statusCheckBox: !this.state.statusCheckBox }) } />
+                            <HeaderLeftMenu icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')} style={{marginRight: 5}} onPress={() => this.sortFoodMenu()} />
+                        </View>
+                    </Header>
                     <View style={styles.container}>
-                        <Autocomplete
-                            autoCapitalize="none" /*ไม่ต้องมีก็ได้*/
-                            autoCorrect={true} /*ไม่ต้องมีก็ได้*/
-                            style={styles.containerSearch}/*กำหนดรูปแบบช่องค้นหา*/
-                            containerStyle={styles.autocompleteContainer}/*กำหนดรูปแบบแถบแสดงค้นหา*/
-                            data={films.length === 1 ? [] : films}  /*ตรวจสอบข้อมูลที่หาเจอถ้ามีแค่อันเดียว ไม่แสดงช่องค้นหา แต่ถ้ามีเยอะจะแสดงให้เลือก*/
-                            defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
-                            onChangeText={text => this.setState({ query: text })} /*setค่าให้กับตัวแปล query เป้นไปตามที่กรอก*/
-                            placeholder={Trans.tran('MenuFood.fill_Food_Name')} /*ลายน้ำเพื่อพิมจะหายไป*/
-                            renderItem={({ FoodCalorie, FoodName }) => (
-                                <TouchableOpacity onPress={() => alert(`${FoodCalorie} ${FoodName}`)}>
-                                    <CommonText text={`${FoodName} แสดงตรงค้นหา`} style={styles.itemText}/>
-                                </TouchableOpacity>/*กำหนดรูปแบบการแสดงในช่่องค้นหาที่จะขึ้นเมื่อกรอกข้อความ*/
-                            )}
-                        />
-                        <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', marginTop: 60, alignItems: 'center'}}>
+                        {this.state.statusCheckBox ?
+                            <View style={{width: '99.9%', borderWidth: 1, borderColor: '#068E81'}}>
+                                <CommonText text={Trans.tran('MenuFood.can_one')} style={{fontSize: 16, margin: 5}} />
+                                <FlatList
+                                    data={this.state.dataFoodType}
+                                    extraData={this.state}
+                                    renderItem={this._renderCheckBox}
+                                    keyExtractor={(item, index) => index}
+                                    horizontal={false}
+                                    numColumns={2}
+                                />
+                            </View>
+                            : null
+                        }
+                        <View style={{height: 50, width: '90%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 5, }}>
+                            <Icon name={'search'} size={25}/>
+                            <Autocomplete
+                                style={styles.containerSearch}/*กำหนดรูปแบบช่องค้นหา*/
+                                containerStyle={styles.autocompleteContainer}/*กำหนดรูปแบบแถบแสดงค้นหา*/
+                                defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
+                                onChangeText={(value) => this.findFilm(value)} /*ส่งค่าที่กรอกเข้าไป*/
+                                placeholder={Trans.tran('MenuFood.fill_Food_Name')} /*ลายน้ำเพื่อพิมจะหายไป*/
+                            />
+                            {this.state.query ?
+                                <TouchableOpacity onPress={() => this.BtnClear()} >
+                                    <Icon name={'close'} size={25} />
+                                </TouchableOpacity>
+                                 : null
+                             }
+                        </View>
+                        <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', alignItems: 'center'}}>
                             <CommonText text={Trans.tran('MenuFood.foodSearch.category')} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
                             <CommonText text={this.state.nameFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
                             <CommonText text={Trans.tran('MenuFood.number_Found')} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
@@ -204,19 +334,11 @@ class menuFoodScreen extends React.PureComponent {
                         <View style={{ flex: 1, width: '100%'}}>
                             <FlatList
                                 data={this.state.films}
+                                extraData={this.state}
                                 renderItem={this._renderItem}
                                 keyExtractor={(item, index) => index}
                             />
                         </View>
-                        {/*<View style={styles.descriptionContainer}>
-                            {films.length > 0 ? (
-                                menuFoodScreen.renderFilm(films[0])//คือไรทำไมเขียนแบบนี้
-                            ) : (
-                                <Text style={styles.infoText}>
-                                    Enter Title of a Star Wars movie{'แสดงเนื้อหสด้านล่าง'}
-                                </Text>
-                            )}
-                        </View>*/}
                     </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -231,36 +353,19 @@ class menuFoodScreen extends React.PureComponent {
 }
 
 menuFoodScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={Trans.tran('MenuFood.title')} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
-    headerRight: (
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <HeaderLeftMenu icon={'flask'} onPress={() => alert('เลือกประเภทของการแสดงข้อมูล')} />
-            <HeaderLeftMenu icon={'sort-alpha-asc'} onPress={() => alert('เรียงลำดับข้อมูล')} />
-        </View>
-    )
+    header: null
 });
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F4F4F4',
         flex: 1,
-        paddingTop: 25,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    autocompleteContainer: {
-        flex: 1,
-        left: '20%',
-        position: 'absolute',
-        right: '20%',
-        top: 0,
-        marginTop: 20,
-    },
-    itemText: {
-        fontSize: 15,
-        margin: 2,
-        color:'#dd1222'
+    autocompleteContainer:{
+        width: '50%',
+        marginHorizontal: 10
     },
     containerSearch: {
         height: 40,
@@ -269,37 +374,20 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#068e81',
     },
-    descriptionContainer: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-        marginTop: 25,
+    btnClear: {
+        height:50,
+        backgroundColor: 'white',
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    infoText: {
-        textAlign: 'center'
-    },
-    titleText: {
-        fontSize: 18,
-        fontWeight: '500',
-        marginBottom: 10,
-        marginTop: 10,
-        textAlign: 'center'
-    },
-    directorText: {
-        color: 'grey',
-        fontSize: 12,
-        marginBottom: 10,
-        textAlign: 'center'
-    },
-    openingText: {
-        textAlign: 'center'
+        flexDirection: 'row',
+        paddingRight: 10,
+        paddingLeft: 10
     }
 });
 
 function mapStateToProps(state) {
     return{
         FoodMenu: state.dataMenuFood,
+        FoodType: state.dataMenuFood,
     };
 }
 
@@ -308,5 +396,6 @@ export default connect(
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         REDUCER_GetMenuFood: bindActionCreators(AllMenuFood, dispatch),
+        REDUCER_GetFoodType: bindActionCreators(AllFoodType, dispatch),
     })
 )(menuFoodScreen);

@@ -10,6 +10,7 @@ import ImgRank from '../../../common/components/ImgRank';
 import { DETAILTRICK_SCREEN } from "../../../Trick/router";
 import * as APITrick from "../../api/api";
 import {seaech_TrickRank} from "../../redux/actions";
+import Trans from "../../../common/containers/Trans";
 
 class RankTab extends React.PureComponent {
     constructor(props) {

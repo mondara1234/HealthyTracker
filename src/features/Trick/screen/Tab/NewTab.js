@@ -10,6 +10,7 @@ import {DETAILTRICK_SCREEN} from "../../router";
 import {seaech_TrickNew} from "../../../Trick/redux/actions";
 import * as APITrick from "../../../Trick/api/api";
 import moment from "moment/moment";
+import Trans from "../../../common/containers/Trans";
 
 class NewTab extends React.PureComponent {
     constructor(props) {
