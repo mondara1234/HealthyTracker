@@ -103,7 +103,7 @@ export default {
             'food_Category': 'หมวดหมู่อาหาร'
         },
         'alert': {
-            'pleas_Integer': 'Please enter the value as an integer only'
+            'pleas_Integer': 'โปรดป้อนค่าเป็นจำนวนเต็มเท่านั้น'
         },
     },
     'MessageBox': {
@@ -118,7 +118,7 @@ export default {
         }
     },
     'Problem': {
-        'choose_picture': 'Choose a picture',
+        'choose_picture': 'เลือกรูปภาพ',
         'photograph': 'ถ่ายรูป',
         'picture_library': 'เลือกรูปจากคลัง',
         'clear': 'เคลียร์',

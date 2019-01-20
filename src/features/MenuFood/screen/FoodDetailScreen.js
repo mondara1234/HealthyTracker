@@ -25,6 +25,7 @@ class FoodDetailScreen extends React.PureComponent {
 
         this.state = {
             numberUnit: 1,
+            FoodCalorie: 0,
             editing: true
         }
     }
@@ -111,14 +112,14 @@ class FoodDetailScreen extends React.PureComponent {
                 <Container>
                     <View style={styles.container}>
                         <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', paddingLeft: '2%'}}>
-                            <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: 100, height: 100}}
+                            <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '20%', height: '80%'}}
                                     source={{uri: foodData.FoodIMG}}
                             />
                             <View>
-                                <CommonText text={foodData.FoodName} style={{fontSize: 22, color: '#068e81'}} />
+                                <CommonText text={foodData.FoodName} style={{fontSize: 20, color: '#068e81'}} />
                                 <CommonText text={`${foodData.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} color={'#068e81'} />
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '5%'}} >
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '1%'}} >
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            defaultValue="1"
@@ -136,13 +137,13 @@ class FoodDetailScreen extends React.PureComponent {
                         </View>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
                             <TouchableOpacity
-                                style={[styles.button,{marginLeft: '10%'}]}
+                                style={[styles.button,{marginLeft: '5%'}]}
                                 onPress={ () => this.SaveFoodUser(number,foodData) }
                             >
                                 <CommonText text={Trans.tran('MenuFood.foodDetail.save_Diary')} style={styles.buttonText} />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[styles.button,{marginRight: '10%'}]}
+                                style={[styles.button,{marginRight: '5%'}]}
                                 onPress={ () => this.SaveFoodUser(number1,foodData) }
                             >
                                 <CommonText text={Trans.tran('MenuFood.foodDetail.save_Searching')} style={styles.buttonText} />
@@ -157,19 +158,19 @@ class FoodDetailScreen extends React.PureComponent {
                             <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 100}}>
                                 <ImageGif
                                     itemImage={Images.imgGif.walk}
-                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.walk')} ${10 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.walk')} ${parseInt((foodData.FoodCalorie / 5) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
                                     itemImage={Images.imgGif.Run}
-                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.run')} ${7 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.run')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
                                     itemImage={Images.imgGif.ride_bicycle}
-                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.spin')} ${5 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.spin')} ${parseInt((foodData.FoodCalorie / 10) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
                                     itemImage={Images.imgGif.swimming}
-                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.Swim')} ${3 * this.state.numberUnit} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
+                                    nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.Swim')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                             </View>
                         </View>
