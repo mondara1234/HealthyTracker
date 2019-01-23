@@ -69,32 +69,32 @@ class foodDiaryScreen extends React.PureComponent {
             date: dateFormat
         });
 
-        const {user} = this.props.Users;
-        const sex = user.map((data) => {return data.Sex});
-        const UserName = user.map((data) => {return data.UserName});
-        const BMRUser = user.map((data) => {return data.BMRUser});
-        if (sex.toString() === '') {
-            this.setState({
-                DialogData: true
-            });
-        }
-
-        this.getFoodUser(UserName,dateFormat);
-        this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
-
-    }
-
-    selectSex = (selectedSex) => {
-
-        if (selectedSex === 'male') {
-            this.setState({
-                selected: selectedSex
-            })
-        } else {
-            this.setState({
-                selected: selectedSex
-            })
-        }
+    //     const {user} = this.props.Users;
+    //     const sex = user.map((data) => {return data.Sex});
+    //     const UserName = user.map((data) => {return data.UserName});
+    //     const BMRUser = user.map((data) => {return data.BMRUser});
+    //     if (sex.toString() === '') {
+    //         this.setState({
+    //             DialogData: true
+    //         });
+    //     }
+    //
+    //     this.getFoodUser(UserName,dateFormat);
+    //     this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
+    //
+    // }
+    //
+    // selectSex = (selectedSex) => {
+    //
+    //     if (selectedSex === 'male') {
+    //         this.setState({
+    //             selected: selectedSex
+    //         })
+    //     } else {
+    //         this.setState({
+    //             selected: selectedSex
+    //         })
+    //     }
     };
 
     _renderItem = ({item, index}) => {

@@ -11,7 +11,7 @@ import CommonText from '../components/CommonText';
 I18n.fallbacks = true;
 I18n.translations = {th, en};
 I18n.defaultLocale = DEFAULT_LOCALE;
-
+//I18n.locale = 'en';
 class Trans extends React.PureComponent {
     static tran(key, replace) {
         return I18n.t(key, replace);
