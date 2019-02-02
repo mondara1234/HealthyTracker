@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, BackHandler, Alert, FlatList } from 'react-native';
+import { View, StyleSheet, BackHandler, Alert, FlatList } from 'react-native';
 import { Container, Content } from 'native-base';
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
@@ -8,16 +8,14 @@ import MenuItem from "../components/MenuItem";
 import SideMenu from '../../common/components/SideMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import { AllFoodType } from "../../MenuFood/redux/actions";
-import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { SERVER_URL } from "../../../common/constants";
-import * as APIMenuFood from "../../MenuFood/api/api";
-import Trans from "../../common/containers/Trans";
 
 class FoodTypeScreen extends React.PureComponent {
     constructor(){
@@ -58,12 +56,9 @@ class FoodTypeScreen extends React.PureComponent {
             .catch((error) => {
                 console.error(error);
             });
-        console.log(response);
+
         this.props.REDUCER_GetFoodType(response);
-
         const dataFoodType = this.props.FoodType.foodType;
-        console.log(dataFoodType);
-
         this.setState({
             dataSource: dataFoodType
         })

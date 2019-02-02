@@ -1,10 +1,11 @@
 import React from 'react';
-import { Alert, BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Container } from 'native-base';
 import { withNavigation } from "react-navigation";
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HandleBack from "../../common/components/HandleBack";
+import Trans from "../../common/containers/Trans";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -13,7 +14,6 @@ import { MENUFOOD_SCREEN, FOODSTYPE_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { TRICK_SCREEN } from "../../Trick/router";
-import Trans from "../../common/containers/Trans";
 
 class FoodSearchScreen extends React.PureComponent {
     constructor(){

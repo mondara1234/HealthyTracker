@@ -1,14 +1,5 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
-//ไมไ่ด้ใช้+sagas
-export function fetchAllFoodUser() {
-    return fetch(`${SERVER_URL}/My_SQL/foodDiary/AllFoodUser.php`)
-        .then(response => response.json())
-        .then((responseJson) => responseJson)
-        .catch((error) => {
-            console.error(error);
-        });
-}
 
 export const fetchSearchFoodUser = (UserNames, dateNow) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/foodDiary/SeachFoodUser.php`, {
@@ -26,7 +17,6 @@ export const fetchSearchFoodUser = (UserNames, dateNow) => dispatch => {
         .catch((error) => {
         console.error(error);
     });
-
 };
 
 export const fetchSearchFoodName = (UserNames, dateNow, FoodName) => dispatch => {
@@ -46,7 +36,6 @@ export const fetchSearchFoodName = (UserNames, dateNow, FoodName) => dispatch =>
         .catch((error) => {
             console.error(error);
         });
-
 };
 
 export const fetchInsert = (UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateNow) => dispatch => {
@@ -71,7 +60,6 @@ export const fetchInsert = (UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit,
         }).catch((error) => {
             console.error(error);
         });
-
 };
 
 export const fetchUpdateFoodUser = (UserNames, FoodCalorie, numberFood, dateNow, FoodName) => dispatch => {
@@ -95,7 +83,6 @@ export const fetchUpdateFoodUser = (UserNames, FoodCalorie, numberFood, dateNow,
         .catch((error) => {
             console.error(error);
         });
-
 };
 
 export const fetchSumCalorieFoodUser = (UserNames, dateNow) => dispatch => {
@@ -116,7 +103,6 @@ export const fetchSumCalorieFoodUser = (UserNames, dateNow) => dispatch => {
             let num = 0;
             return num;
         });
-
 };
 
 export const fetchDeleteFoodName = (UserNames, FoodName, dateFormat) => dispatch => {
@@ -137,5 +123,4 @@ export const fetchDeleteFoodName = (UserNames, FoodName, dateFormat) => dispatch
         }).catch((error) => {
             console.error(error);
         });
-
 };

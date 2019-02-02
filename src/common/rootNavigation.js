@@ -2,12 +2,10 @@ import React from 'react';
 import { Dimensions } from "react-native";
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
-import { CommonRouter } from '../features/common/router';
 import { UserRouter, HOMELOGIN, LOGIN} from '../features/User/router';
 import { trickRouter, TRICK_SCREEN  } from "../features/Trick/router";
-import { menuFoodRouter , MENUFOOD_SCREEN} from "../features/MenuFood/router";
+import { menuFoodRouter , MENUFOOD_SCREEN, FOODSTYPE_SCREEN} from "../features/MenuFood/router";
 import { foodDiaryRouter,  } from "../features/FoodDiary/router";
-import { exerciseRouter, EXERCISE_SCREEN } from '../features/Exercise/router';
 import { bmiRouter, BMI_SCREEN } from '../features/BMI/router';
 import { aboutRouter, ABOUT_SCREEN } from '../features/About/router';
 import { problemRouter, PROBLEM_SCREEN } from '../features/Problem/router';
@@ -18,12 +16,10 @@ import { HEADER_STYLE } from './constants';
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
 export const RootStack = StackNavigator({
-    ...CommonRouter,
     ...UserRouter,
     ...trickRouter,
     ...menuFoodRouter,
     ...foodDiaryRouter,
-    ...exerciseRouter,
     ...bmiRouter,
     ...settingRouter,
     ...profileRouter,
@@ -31,7 +27,7 @@ export const RootStack = StackNavigator({
     ...problemRouter,
     ...messageboxRouter
 },{
-    initialRouteName: MENUFOOD_SCREEN,
+    initialRouteName: FOODSTYPE_SCREEN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

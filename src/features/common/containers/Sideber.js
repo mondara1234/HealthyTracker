@@ -13,7 +13,6 @@ import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
 import { LOGIN } from "../../User/router";
 import { PROFILE_SCREEN } from "../../ProfileUser/router";
-import { EXERCISE_SCREEN } from "../../Exercise/router";
 import { SETTING_SCREEN } from "../../Setting/router";
 import { MESSAGEBOX_SCREEN } from "../../MessageBox/router";
 import { PROBLEM_SCREEN } from "../../Problem/router";
@@ -131,7 +130,6 @@ class Sideber extends React.Component {
 
         const menus = [
             {name: Trans.tran('Sideber.manage_Information'), icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
-            {name: Trans.tran('Sideber.exercise_Posture'), icon: 'directions-run', route: EXERCISE_SCREEN, params: {isRootPage: true}},
             {name: Trans.tran('Sideber.message_box'), icon: 'message', route: MESSAGEBOX_SCREEN, params: {isRootPage: true}},
             {name: Trans.tran('Sideber.report_problem'), icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
             {name: Trans.tran('Sideber.setting'), icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},

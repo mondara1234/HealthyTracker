@@ -1,23 +1,22 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Image, BackHandler, Alert } from 'react-native';
+import { StyleSheet, View, Image, BackHandler, Alert } from 'react-native';
 import { Container, Content, Accordion } from 'native-base';
+import { NavigationActions } from "react-navigation";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import { Images } from "../../User/components/images";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../router";
 import { TRICK_SCREEN } from "../../Trick/router";
-import {NavigationActions} from "react-navigation";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
 import * as APIBMIUser from "../../BMI/api/api";
 import { seaech_BMIUser } from "../../BMI/redux/actions";
-import Trans from "../../common/containers/Trans";
-
 
 class bmiScreen extends React.PureComponent {
     constructor(){
@@ -82,6 +81,7 @@ class bmiScreen extends React.PureComponent {
         let SumBMi = Math.pow(Weight, 2)/Height;
         let BMRUser = 0;
         let criterionBMI = '';
+
         if(SumBMi.toFixed(2) < 18.50){
             BMRUser = 1;
             criterionBMI = Trans.tran('BMI.criterionBMI.thin');
@@ -113,14 +113,11 @@ class bmiScreen extends React.PureComponent {
     async getBMRUser(BMRUser) {
         let BMRUsers =`${BMRUser}`;
         const response = await this.props.FETCH_SearchBMIUse(BMRUsers);
-        console.log(response);
         this.props.REDUCER_seaech_BMIUser(response);
         const arrayBMI = this.props.BmiUser.bmiUser;
-        console.log(arrayBMI);
         this.setState({
             dataArray : arrayBMI
         });
-
     }
 
     render() {

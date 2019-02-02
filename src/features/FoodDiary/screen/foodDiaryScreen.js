@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Image, FlatList, TouchableOpacity, BackHandler, Alert, ListView } from 'react-native';
+import { StyleSheet, View, TextInput, Image, FlatList, TouchableOpacity, BackHandler, Alert } from 'react-native';
 import { Container, ListItem, Left, Thumbnail, Body } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import { NavigationActions } from "react-navigation";
@@ -9,6 +9,8 @@ import DatePicker from 'react-native-datepicker'
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonTime from '../../common/components/form/CommonTime';
 import HandleBack from "../../common/components/HandleBack";
+import moment from "moment/moment";
+import Trans from "../../common/containers/Trans";
 import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -21,9 +23,7 @@ import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
-import {getOneUser} from "../../User/redux/actions";
-import moment from "moment/moment";
-import Trans from "../../common/containers/Trans";
+import { getOneUser } from "../../User/redux/actions";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -69,42 +69,42 @@ class foodDiaryScreen extends React.PureComponent {
             date: dateFormat
         });
 
-    //     const {user} = this.props.Users;
-    //     const sex = user.map((data) => {return data.Sex});
-    //     const UserName = user.map((data) => {return data.UserName});
-    //     const BMRUser = user.map((data) => {return data.BMRUser});
-    //     if (sex.toString() === '') {
-    //         this.setState({
-    //             DialogData: true
-    //         });
-    //     }
-    //
-    //     this.getFoodUser(UserName,dateFormat);
-    //     this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
-    //
-    // }
-    //
-    // selectSex = (selectedSex) => {
-    //
-    //     if (selectedSex === 'male') {
-    //         this.setState({
-    //             selected: selectedSex
-    //         })
-    //     } else {
-    //         this.setState({
-    //             selected: selectedSex
-    //         })
-    //     }
+        const {user} = this.props.Users;
+        const sex = user.map((data) => {return data.Sex});
+        const UserName = user.map((data) => {return data.UserName});
+        const BMRUser = user.map((data) => {return data.BMRUser});
+
+        if (sex.toString() === '') {
+            this.setState({
+                DialogData: true
+            });
+        }
+
+        this.getFoodUser(UserName,dateFormat);
+        this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
+    }
+
+    selectSex = (selectedSex) => {
+
+        if (selectedSex === 'male') {
+            this.setState({
+                selected: selectedSex
+            })
+        } else {
+            this.setState({
+                selected: selectedSex
+            })
+        }
     };
 
     _renderItem = ({item, index}) => {
         return (
-            <View style={{width: '100%', height: 70, backgroundColor: "#F4F4F4"}}>
-                <ListItem thumbnail style={{height: 70, backgroundColor: 'transparent'}}>
+            <View style={styles.viewListItem}>
+                <ListItem thumbnail style={styles.ListContainer}>
                     <Left>
                         <Thumbnail
                             source={{uri: item.FoodIMG}}
-                            style={{width: 60, height: 60, alignItems: 'center', justifyContent: 'center'}}
+                            style={styles.imgList}
                         />
                     </Left>
                     <Body>
@@ -116,7 +116,8 @@ class foodDiaryScreen extends React.PureComponent {
                         justifyContent: 'space-between'
                     }}>
                         <CommonText text={item.FoodName}
-                                    style={{fontSize: 16, color: '#020202', marginLeft: 5, marginTop: 5}}/>
+                                    style={styles.textFoodName}
+                        />
                         <IconFontAwesome
                             name="window-close-o"
                             size={30}
@@ -150,7 +151,7 @@ class foodDiaryScreen extends React.PureComponent {
     renderSeparator = () => {
         return (
             <View
-                style={{height: 1, width: '100%', backgroundColor: '#068e81'}}>
+                style={styles.separator}>
             </View>
         )
     };
@@ -194,8 +195,6 @@ class foodDiaryScreen extends React.PureComponent {
         this.setState({
             dataSource : members
         });
-
-
     }
 
     async getSumCalorieFoodUser(BMRUser,UserName,dateFormat) {
@@ -212,7 +211,6 @@ class foodDiaryScreen extends React.PureComponent {
     }
 
     render() {
-        console.log('Update Store:', this.props);
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         const BMRUser = user.map((data) => {return data.BMRUser});
@@ -287,24 +285,19 @@ class foodDiaryScreen extends React.PureComponent {
                         />
                         <View>
                             <View style={styles.containerCalendar}>
-                                <CommonText text={Trans.tran('FoodDiary.energy_today')} style={styles.textTitlekcal}/>
-                                <CommonText text={this.state.sumCalorie} style={[styles.textSumkcal,{marginHorizontal: 10}]}/>
+                                <CommonText text={Trans.tran('FoodDiary.energy_today')} style={styles.textTitlekcal} />
+                                <CommonText text={this.state.sumCalorie} style={[styles.textSumkcal,{marginHorizontal: 10}]} />
                                 <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal}/>
                             </View>
                             <View style={styles.containerCalendar}>
-                                <CommonText text={Trans.tran('FoodDiary.energy_per_day')} style={styles.textTitlekcal}/>
-                                <CommonText text={`${BMRUser}`} style={[styles.textSumkcal,{marginHorizontal: 10}]}/>
-                                <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal}/>
+                                <CommonText text={Trans.tran('FoodDiary.energy_per_day')} style={styles.textTitlekcal} />
+                                <CommonText text={`${BMRUser}`} style={[styles.textSumkcal,{marginHorizontal: 10}]} />
+                                <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal} />
                             </View>
                         </View>
                     </View>
                     <View style={styles.containerBarBMI}>
-                        <View style={{
-                            height: 16,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                        }}>
+                        <View style={styles.viewBarBMI}>
                             <View
                                 style={[
                                     styles.barBMI,
@@ -341,16 +334,10 @@ class foodDiaryScreen extends React.PureComponent {
                                             style={{marginRight: '2%'}}
                                             size={14}
                                         />
-
                             }
                         </View>
                     </View>
-                    <View style={{
-                        width: '98%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}>
+                    <View style={styles.containerBody}>
                         <CommonText text={Trans.tran('FoodDiary.should_Add')}
                                     style={[styles.textUnitKcal, {marginLeft: 10, color: '#068e81'}]}/>
                         <CommonText text={Trans.tran('FoodDiary.fit')} style={[styles.textUnitKcal, {color: '#406894'}]}/>
@@ -604,9 +591,47 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         marginHorizontal: 10
     },
+    viewBarBMI: {
+        height: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
     barBMI: {
         height: 16
     },
+    viewListItem: {
+        width: '100%',
+        height: 70,
+        backgroundColor: "#F4F4F4"
+    },
+    ListContainer: {
+        height: 70,
+        backgroundColor: 'transparent'
+    },
+    imgList: {
+        width: 60,
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textFoodName: {
+        fontSize: 16,
+        color: '#020202',
+        marginLeft: 5,
+        marginTop: 5
+    },
+    separator: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#068e81'
+    },
+    containerBody: {
+        width: '98%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    }
 });
 
 function mapStateToProps(state) {

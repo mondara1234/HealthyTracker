@@ -27,10 +27,10 @@ MenuItem.defaultProps = {
 
 const styles = StyleSheet.create({
     containerMenu: {
-        marginHorizontal: 15,
+        marginHorizontal: '2%',
         paddingTop: 4,
         height: 100,
-        width: 100,
+        width: '25%',
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     image: {
-        width: 70,
+        width: '90%',
         height: 60,
         borderWidth: 1,
         borderColor: '#068e81'

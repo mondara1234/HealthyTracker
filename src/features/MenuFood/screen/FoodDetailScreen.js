@@ -6,18 +6,18 @@ import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
 import moment from 'moment';
 import HandleBack from "../../common/components/HandleBack";
+import Trans from "../../common/containers/Trans";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import ImageGif from '../components/ImageGif';
-import {Images} from "../../User/components/images";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {TRICK_SCREEN} from "../../Trick/router";
-import {MENUFOOD_SCREEN} from "../router";
-import {BMI_SCREEN} from "../../BMI/router";
+import { Images } from "../../User/components/images";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { TRICK_SCREEN } from "../../Trick/router";
+import { MENUFOOD_SCREEN } from "../router";
+import { BMI_SCREEN } from "../../BMI/router";
 import * as APIDiary from "../../FoodDiary/api/api";
-import Trans from "../../common/containers/Trans";
 
 class FoodDetailScreen extends React.PureComponent {
     constructor(props) {
@@ -43,9 +43,7 @@ class FoodDetailScreen extends React.PureComponent {
             );
             return true;
         }
-
         return false;
-
     };
 
     onChanged(numberUnit){
@@ -111,15 +109,15 @@ class FoodDetailScreen extends React.PureComponent {
             <HandleBack onBack={this.onBack}>
                 <Container>
                     <View style={styles.container}>
-                        <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', paddingLeft: '2%'}}>
-                            <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '20%', height: '80%'}}
+                        <View style={styles.containerFood}>
+                            <Image  style={styles.containerImgFood}
                                     source={{uri: foodData.FoodIMG}}
                             />
                             <View>
-                                <CommonText text={foodData.FoodName} style={{fontSize: 20, color: '#068e81'}} />
+                                <CommonText text={foodData.FoodName} style={styles.fontHead} />
                                 <CommonText text={`${foodData.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} color={'#068e81'} />
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '1%'}} >
+                            <View style={styles.viewNumberUnit} >
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            defaultValue="1"
@@ -129,13 +127,11 @@ class FoodDetailScreen extends React.PureComponent {
                                            maxLength={3}
                                            onChangeText={numberUnit => this.onChanged(numberUnit)}
                                 />
-                                <CommonText text={foodData.FoodUnit} style={{fontSize: 20, color: '#068e81'}} />
+                                <CommonText text={foodData.FoodUnit} style={styles.fontHead} />
                             </View>
                         </View>
-                        <View
-                            style = {{height: 1 , width: '100%', backgroundColor: '#080808', marginTop: 10}}>
-                        </View>
-                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
+                        <View style={styles.separator}></View>
+                        <View style={styles.viewRowSpace}>
                             <TouchableOpacity
                                 style={[styles.button,{marginLeft: '5%'}]}
                                 onPress={ () => this.SaveFoodUser(number,foodData) }
@@ -149,13 +145,13 @@ class FoodDetailScreen extends React.PureComponent {
                                 <CommonText text={Trans.tran('MenuFood.foodDetail.save_Searching')} style={styles.buttonText} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                            <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center'}}>
+                        <View style={styles.viewCenter }>
+                            <View style={styles.viewRowCenter}>
                                 <CommonText text={Trans.tran('MenuFood.foodDetail.amountcalories_compared')} />
                                 <CommonText text={this.state.numberUnit}/>
                                 <CommonText text={` ${foodData.FoodUnit}`} />
                             </View>
-                            <View style={{ backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center' , justifyContent: 'center', marginTop: 100}}>
+                            <View style={[styles.viewRowCenter,{ marginTop: 100}]}>
                                 <ImageGif
                                     itemImage={Images.imgGif.walk}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.walk')} ${parseInt((foodData.FoodCalorie / 5) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
@@ -193,7 +189,6 @@ FoodDetailScreen.navigationOptions  = ({navigation}) => ({
     headerRight: <HeaderLeftMenu icon={'home'} onPress={() => navigation.navigate(FOODDIARY_SCREEN)} />
 });
 
-
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F4F4F4',
@@ -226,6 +221,55 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'center'
     },
+    containerFood: {
+        width: '100%',
+        backgroundColor: "#F4F4F4",
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: '2%'
+    },
+    containerImgFood: {
+        marginHorizontal: 10,
+        marginVertical: 10,
+        width: '20%',
+        height: '80%'
+    },
+    fontHead: {
+        fontSize: 20,
+        color: '#068e81'
+    },
+    viewNumberUnit: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: '1%'
+    },
+    separator: {
+        height: 1 ,
+        width: '100%',
+        backgroundColor: '#080808',
+        marginTop: 10
+    },
+    viewRowSpace: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent:'space-between'
+    },
+    viewCenter: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    viewRowCenter: {
+        backgroundColor: "#F4F4F4",
+        flexDirection: 'row',
+        alignItems: 'center' ,
+        justifyContent: 'center'
+    }
+
 });
 
 function mapStateToProps(state) {
