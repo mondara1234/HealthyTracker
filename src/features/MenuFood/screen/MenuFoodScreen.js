@@ -132,31 +132,26 @@ class menuFoodScreen extends React.PureComponent {
      sortFoodMenu() {
         const response = this.state.films;
         if(this.state.statusSort === false){
-            response.reverse(function(a, b){
-                return b-a}
-            );
-            response.sort(function(a, b){
-                return a-b}
-            );
+            response.sort(function (a, b) {
+                if(a.FoodName < b.FoodName) { return -1; }
+                if(a.FoodName > b.FoodName) { return 1; }
+                return 0;
+            });
             this.setState({
                 films: response,
                 statusSort: true
             });
         }else{
-            response.sort(function(a, b){
-                return a-b}
-            );
             response.reverse(function(a, b){
-                return b-a}
-            );
+                if(a.FoodName < b.FoodName) { return -1; }
+                if(a.FoodName > b.FoodName) { return 1; }
+                return 0;
+            });
             this.setState({
                 films: response,
                 statusSort: false
             });
         }
-        console.log('this.state.statusSort',this.state.statusSort);
-
-         console.log('asdasd',response);
     }
 
     //ไว้รับค่าแล้วค้นหา
