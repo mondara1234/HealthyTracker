@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';;
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
+import { Thumbnail } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
@@ -11,6 +12,7 @@ import CommonText from '../../../common/components/CommonText'
 import * as API from '../../api/api';
 import { Images } from "../../components/images";
 import { SERVER_URL } from "../../../../common/constants";
+import moment from "moment/moment";
 
 class FormRegistration extends Component {
     constructor(props) {
@@ -21,9 +23,9 @@ class FormRegistration extends Component {
             TextInput_Email: '',
             TextInput_PasswordAgain: '',
             ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png',
-            ImgProfile: null,
+            ImageSource: null,
             data: null,
-            Image_TAG: ''
+            fileName: ''
         }
     }
 
@@ -39,13 +41,19 @@ class FormRegistration extends Component {
            );
        }else{
            if(this.state.TextInput_Password === this.state.TextInput_PasswordAgain ){
+               let date = new Date();
+               let dateFormat = moment(date).format("YYYY-MM-DD");
                const Name = this.state.TextInput_Name;
                const Email = this.state.TextInput_Email;
                const Password = this.state.TextInput_Password;
-               const ImgProfile = this.state.ImgDefault ? this.state.ImgDefault : this.state.ImgProfile;
-               const keyScreens = this.props.keyScreen;
-
-               this.props.Flights_Register(Name, Email, Password, ImgProfile, keyScreens);
+               const ImgProfile = this.state.ImageSource ? 'data:image/jpeg;base64,'+this.state.data : this.state.ImgDefault;
+               const keyScreens = this.props.navigation;
+               console.log(ImgProfile);
+               console.log(Name);
+               console.log(Email);
+               console.log(Password);
+               console.log(dateFormat);
+               this.props.Flights_Register(Name, Email, Password, ImgProfile, keyScreens, dateFormat);
            }else{
                Alert.alert(
                    Trans.tran('general.alert'),
@@ -77,6 +85,7 @@ class FormRegistration extends Component {
 
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
+
             if (response.didCancel) {
                 console.log('User cancelled photo picker');
             }
@@ -87,13 +96,17 @@ class FormRegistration extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                let source = { uri: response.uri };
+                let source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 this.setState({
-                    ImgProfile: source,
-                    data: response.data
+
+                    ImageSource: source,
+                    data: response.data,
+                    fileName: response.fileName
 
                 });
+                console.log('uri', source);
+                console.log('data', response.data);
             }
         });
     }
@@ -104,26 +117,22 @@ class FormRegistration extends Component {
             otherHeader : "foo",
             'Content-Type' : 'multipart/form-data',
         }, [
-            { name: 'image', filename: 'image.png', type: 'image/png', data: this.state.data },
-            { name: 'image_tag', data: this.state.Image_TAG }
+            { name: 'image', filename: 'image.png', type: 'image/png', data: this.state.data }
         ]).then((resp) => {
-
             let tempMSG = resp.data;
-
             tempMSG = tempMSG.replace(/^"|"$/g, '');
 
-            Alert.alert(tempMSG);
-
+            console.log('resp ='+ tempMSG);
         }).catch((err) => {
-            // ...
+            console.log('errror = '+ err);
         });
     }
 
     render(){
         return(
             <View style={styles.container}>
-                <Image  style={styles.imageUser}
-                        source={this.state.ImgProfile ? {uri: this.state.ImgProfile} :
+                <Thumbnail  style={styles.imageUser}
+                        source={this.state.ImageSource != null ? this.state.ImageSource :
                             {uri: this.state.ImgDefault}} />
                 <TouchableOpacity style={styles.touchImage} onPress={this.selectPhotoTapped.bind(this)}>
                     <Image  style={styles.image}
@@ -211,7 +220,8 @@ const styles = StyleSheet.create({
     imageUser: {
         width: 120,
         height: 120,
-        marginTop: 30
+        marginTop: 30,
+        borderRadius: 80
     },
     touchImage: {
         marginTop: -30,

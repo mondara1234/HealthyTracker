@@ -1,6 +1,7 @@
+import Trans from "../../common/containers/Trans";
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
-import Trans from "../../common/containers/Trans";
+import { LOGIN } from "../router";
 
 export function fetchPostsApi() {
     return fetch(`${SERVER_URL}/My_SQL/user/ShowAllDataList.php`)
@@ -41,7 +42,7 @@ export const fetchLogin = (UserName, Password, keyScreen, personalSelect) => dis
 
 };
 
-export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => dispatch => {
+export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dateFormat) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/InsertData.php`, {
         method: 'POST',
         headers: {
@@ -52,10 +53,12 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
             name: Name,
             email: Email,
             password: Password,
-            imgProfile: ImgProfile
+            imgProfile: ImgProfile,
+            date: dateFormat
         })
     }).then((response) => response.json())
         .then((responseJson) => {
+            console.log(responseJson);
             if(responseJson === 'Email'||responseJson === 'Name'){
                 Alert.alert(
                     Trans.tran('general.alert'),
@@ -70,7 +73,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
                     Trans.tran('general.alert'),
                     responseJson,
                     [
-                        { text: Trans.tran('general.ok'), onPress: () => keyScreens({routeName: LOGIN})},
+                        { text: Trans.tran('general.ok'), onPress: () => keyScreens.navigate('LOGIN')},
                         { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
                     ],
                     { cancelable: false },
@@ -78,6 +81,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens) => 
             }
         }).catch((error) => {
             console.error(error);
+            console.log(error);
         });
 
 };
