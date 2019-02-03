@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
 
-export const fetchSeachMessageUser = (UserNames) => dispatch => {
+export const fetchSeachMessageUser = ( UserNames ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/MessageBox/SeachMessageUser.php`, {
         method: 'POST',
         headers: {
@@ -16,11 +16,9 @@ export const fetchSeachMessageUser = (UserNames) => dispatch => {
         .catch((error) => {
             console.error(error);
         });
-
 };
 
-
-export const fetchUpdateMessageUser = (UserNames, Title, Status) => dispatch => {
+export const fetchUpdateMessageUser = ( UserNames, Title, Status ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/MessageBox/UpdateMessageUser.php`, {
         method: 'POST',
         headers: {
@@ -39,10 +37,9 @@ export const fetchUpdateMessageUser = (UserNames, Title, Status) => dispatch => 
         .catch((error) => {
             console.error(error);
         });
-
 };
 
-export const fetchDeleteMessageUse = (ID) => dispatch => {
+export const fetchDeleteMessageUse = ( ID ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/MessageBox/DeleteMessageUser.php`, {
         method: 'POST',
         headers: {
@@ -57,5 +54,4 @@ export const fetchDeleteMessageUse = (ID) => dispatch => {
         .catch((error) => {
             console.error(error);
         });
-
 };

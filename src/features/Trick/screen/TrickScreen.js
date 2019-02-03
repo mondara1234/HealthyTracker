@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, BackHandler } from "react-native";
 import { Container, Tab, TabHeading, Tabs, View } from 'native-base';
 import HandleBack from "../../common/components/HandleBack";
+import Trans from "../../common/containers/Trans";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
@@ -13,7 +14,6 @@ import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import Trans from "../../common/containers/Trans";
 
 class TrickScreen extends React.PureComponent {
     constructor(){
@@ -45,7 +45,7 @@ class TrickScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container withBackground>
-                    <View style={{flex :1}}>
+                    <View style={{ flex :1 }}>
                         <Tabs locked>
                             <Tab heading={
                                 <TabHeading style={{ backgroundColor: "#068e81" }}>

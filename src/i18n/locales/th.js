@@ -140,7 +140,9 @@ export default {
     },
     'Profile': {
         'information': 'ข้อมูล',
-        'private': 'ส่วนตัว'
+        'private': 'ส่วนตัว',
+        'edit' : 'แก้ไข',
+        'save' : 'บันทึก'
     },
     'Setting': {
         'title': 'ตั้งค่า',

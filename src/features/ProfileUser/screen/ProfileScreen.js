@@ -1,23 +1,23 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Image, TextInput, BackHandler, Alert } from 'react-native';
-import { Container, Thumbnail } from 'native-base';
+import { View, TouchableOpacity, StyleSheet, Image, TextInput, BackHandler, Alert } from 'react-native';
+import { Container } from 'native-base';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { NavigationActions } from "react-navigation";
+import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {NavigationActions} from "react-navigation";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {BMI_SCREEN} from "../../BMI/router";
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {TRICK_SCREEN} from "../../Trick/router";
-import {Images} from "../../User/components/images";
+import { Images } from "../../User/components/images";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIUser from "../../User/api/api";
 import { getOneUser } from "../../User/redux/actions";
-import Trans from "../../common/containers/Trans";
 
 class ProfileScreen extends React.PureComponent {
     constructor(props) {
@@ -48,9 +48,7 @@ class ProfileScreen extends React.PureComponent {
             );
             return true;
         }
-
         return false;
-
     };
 
     componentDidMount() {
@@ -60,6 +58,7 @@ class ProfileScreen extends React.PureComponent {
         const Weight = members.map((data) => {return data.Weight});
         let SumBMi = Math.pow(Weight, 2)/Height;
         let criterionBMI = '';
+
         if(SumBMi.toFixed(2) < 18.50){
             criterionBMI = Trans.tran('BMI.criterionBMI.thin');
 
@@ -81,8 +80,7 @@ class ProfileScreen extends React.PureComponent {
             criterionbmi: criterionBMI,
             bmi: SumBMi.toFixed(2)
         });
-
-    }
+    };
 
     selectSex = (selectedSex) => {
 
@@ -105,8 +103,7 @@ class ProfileScreen extends React.PureComponent {
     }
 
     render() {
-        console.log('Update StoreProFile:', this.props);
-        const {user} = this.props.Users;
+        const { user } = this.props.Users;
         let id = user.map((data) => { return data.UserID });
         let UserName = user.map((data) => { return data.UserName });
         let Email = user.map((data) => { return data.Email });
@@ -115,45 +112,46 @@ class ProfileScreen extends React.PureComponent {
         let Weights = user.map((data) => { return data.Weight });
         let Heights = user.map((data) => { return data.Height });
         let BMRUsers = user.map((data) => { return data.BMRUser });
+
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <View style={{flex: 1 , alignItems: 'center', paddingTop: 20}}>
-                        <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
-                            <View style={{paddingLeft: 3, height: 30, width: '100%', backgroundColor: '#068e81', justifyContent: 'center', marginBottom: 10}}>
+                    <View style={styles.container}>
+                        <View style={styles.containerBMR}>
+                            <View style={styles.viewTitleBMR}>
                                 <CommonText text={`${Trans.tran('Profile.information')} BMR`} color={'#fff'} />
                             </View>
-                            <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                            <View style={styles.containerTitleBMR}>
+                                <View style={styles.titleBMR}>
                                     <CommonText text={`${Trans.tran('BMI.title')} :`} size={14} />
                                 </View>
-                                <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={this.state.bmi} style={{fontSize: 16, color: '#068E81'}} />
+                                <View style={styles.bodyBMR}>
+                                    <CommonText text={this.state.bmi} style={styles.fontBMI} />
                                 </View>
                             </View>
-                            <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                            <View style={styles.containerTitleBMR}>
+                                <View style={styles.titleBMR}>
                                     <CommonText text={`${Trans.tran('BMI.criterion')} :`} size={14} />
                                 </View>
-                                <View style={{width: '40%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={this.state.criterionbmi} style={{fontSize: 16, color: '#068E81'}} />
+                                <View style={styles.bodyBMR}>
+                                    <CommonText text={this.state.criterionbmi} style={styles.fontBMI} />
                                 </View>
                             </View>
-                            <View style={{width: '85%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+                            <View style={styles.containerTitleBMR}>
+                                <View style={styles.titleBMR}>
                                     <CommonText text={`${Trans.tran('FoodDiary.energy_per_day')} :`} size={14} />
                                 </View>
-                                <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                    <CommonText text={`${BMRUsers} ${Trans.tran('FoodDiary.calorie')}`} style={{fontSize: 16, color: '#068E81'}} />
+                                <View style={styles.titleBMR}>
+                                    <CommonText text={`${BMRUsers} ${Trans.tran('FoodDiary.calorie')}`} style={styles.fontBMI} />
                                 </View>
                             </View>
                         </View>
-                        <View style={{width: '96%', borderWidth: 2 ,borderColor: '#068e81',justifyContent: 'center', alignItems: 'center', marginBottom: 20, paddingBottom: 10}}>
-                            <View style={{paddingLeft: 3, height: 30, width: '100%', flexDirection: 'row', backgroundColor: '#068e81', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <View style={styles.containerBMR}>
+                            <View style={styles.viewProfile}>
                                 <CommonText text={`${Trans.tran('Profile.information')} ${Trans.tran('Profile.private')}`} color={'#fff'} />
                                 {this.state.stateButton === 'Edit'?
                                     <TouchableOpacity
-                                        style={{paddingHorizontal: 10, backgroundColor: '#F4F4F4',flexDirection: 'row', marginRight: 3, height: 26, alignItems: 'center', justifyContent: 'center'}}
+                                        style={styles.btnEdit}
                                         onPress={() => {
                                             this.setState({
                                                 stateButton: 'Save',
@@ -169,11 +167,11 @@ class ProfileScreen extends React.PureComponent {
                                             color={'#068e81'}
                                             style={styles.styleIconFontAwesome}
                                         />
-                                        <CommonText text={'แก้ไข'} style={{ color: '#068e81', fontSize: 14}} />
+                                        <CommonText text={Trans.tran('Profile.edit')} size={14} color={'#068e81'} />
                                     </TouchableOpacity>
                                     :
                                     <TouchableOpacity
-                                        style={{paddingHorizontal: 10, backgroundColor: '#F4F4F4',flexDirection: 'row', marginRight: 3, height: 26, alignItems: 'center', justifyContent: 'center'}}
+                                        style={styles.btnEdit}
                                         onPress={() => {
                                             let UserID = id.toString();
                                             let Sex = this.state.selected;
@@ -201,7 +199,6 @@ class ProfileScreen extends React.PureComponent {
                                             this.setState({
                                                 stateButton: 'Edit'
                                             });
-
                                             this.getData(UserName);
                                         }}
                                     >
@@ -211,33 +208,33 @@ class ProfileScreen extends React.PureComponent {
                                             color={'#068e81'}
                                             style={styles.styleIconFontAwesome}
                                         />
-                                        <CommonText text={'บันทึก'} style={{ color: '#068e81', fontSize: 14}} />
+                                        <CommonText text={Trans.tran('Profile.save')} size={14} color={'#068e81'} />
                                     </TouchableOpacity>
                                 }
                             </View>
-                            <View style={{width: '90%', flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={styles.containerImgProfile}>
                                 <Image
                                     source={{uri: `${imgProfile}`}}
                                     style={styles.userThumb}
                                 />
                                 <View>
                                     <CommonText text={`${UserName}`} color={'#068e81'} />
-                                    <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                                    <View style={styles.containerRow}>
                                         <CommonText text={'E-mail:'} />
-                                        <CommonText text={`${Email}`} style={{ color: '#068e81', marginLeft: 10}} />
+                                        <CommonText text={`${Email}`} style={styles.colorEmail} />
                                     </View>
-                                    <TouchableOpacity style={{ backgroundColor: '#068e81', height: 25, width: 100 , alignItems: 'center', justifyContent: 'center'}}>
-                                        <CommonText text={'เปลี่ยนรหัสผ่าน'} style={{ color: '#fff', fontSize: 14}} />
+                                    <TouchableOpacity style={styles.btnPass}>
+                                        <CommonText text={'เปลี่ยนรหัสผ่าน'} style={styles.fontBtnPass} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
-                                <TouchableOpacity style={{ backgroundColor: '#068e81', marginTop: -10, marginLeft: 6, height: 20, width: 100 , alignItems: 'center', justifyContent: 'center'}}>
-                                    <CommonText text={'เปลี่ยนรูปโปรไฟล์'} style={{ color: '#fff', fontSize: 12}} />
+                            <View style={styles.containerRow}>
+                                <TouchableOpacity style={styles.btnIMG}>
+                                    <CommonText text={'เปลี่ยนรูปโปรไฟล์'} style={styles.fontBtnIMG} />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20}}>
-                                <View style={{marginLeft:10 ,width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                            <View style={styles.containerProfile}>
+                                <View style={styles.containerSex}>
                                     <CommonText text={'เพศ :'} />
                                     <TouchableOpacity onPress={() => this.selectSex('male')}>
                                         <CommonText
@@ -259,12 +256,12 @@ class ProfileScreen extends React.PureComponent {
                                         />
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{width: '50%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                                <View style={styles.containerTitleAge}>
                                     <CommonText text={'อายุ (ปี)'}/>
                                 </View>
                             </View>
-                            <View style={{paddingHorizontal: 20, width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <View style={{width: '60%', alignItems: 'center', marginTop: 20}}>
+                            <View style={styles.containerTextInput}>
+                                <View style={styles.viewGG}>
                                     <CommonText text={'น้ำหนัก (กก)'} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
@@ -282,7 +279,7 @@ class ProfileScreen extends React.PureComponent {
                                                onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue === 0 ? Weights : TextInputValue})}
                                     />
                                 </View>
-                                <View style={{width: '40%', alignItems: 'center', marginTop: 10}}>
+                                <View style={styles.viewAge}>
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
                                                defaultValue={`${Ages}`}
@@ -290,7 +287,7 @@ class ProfileScreen extends React.PureComponent {
                                                keyboardType="numeric"
                                                onChangeText={TextInputValue => this.setState({TextInput_age: TextInputValue === 0 ? Ages : TextInputValue})}
                                     />
-                                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop:10}}>
+                                    <View style={styles.viewIcon}>
                                         <Image  style={{width: 60, height: 100}}
                                                 source={Images.ProfileScreen.smile}
                                         />
@@ -338,6 +335,149 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingBottom: -5
     },
+    container: {
+        flex: 1 ,
+        alignItems: 'center',
+        paddingTop: 20
+    },
+    containerBMR: {
+        width: '96%',
+        borderWidth: 2,
+        borderColor: '#068e81',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        paddingBottom: 10
+    },
+    viewTitleBMR: {
+        paddingLeft: 3,
+        height: 30,
+        width: '100%',
+        backgroundColor: '#068e81',
+        justifyContent: 'center',
+        marginBottom: 10
+    },
+    containerTitleBMR: {
+        width: '85%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    titleBMR: {
+        width: '50%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
+    bodyBMR: {
+        width: '40%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
+    fontBMI: {
+        fontSize: 16,
+        color: '#068E81'
+    },
+    viewProfile: {
+        paddingLeft: 3,
+        height: 30,
+        width: '100%',
+        flexDirection: 'row',
+        backgroundColor: '#068e81',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    btnEdit: {
+        paddingHorizontal: 10,
+        backgroundColor: '#F4F4F4',
+        flexDirection: 'row',
+        marginRight: 3,
+        height: 26,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    containerImgProfile: {
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    containerRow: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    colorEmail: {
+        color: '#068e81',
+        marginLeft: 10
+    },
+    btnPass: {
+        backgroundColor: '#068e81',
+        height: 25,
+        width: 100 ,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    fontBtnPass: {
+        color: '#fff',
+        fontSize: 14
+    },
+    btnIMG: {
+        backgroundColor: '#068e81',
+        marginTop: -10,
+        marginLeft: 6,
+        height: 20,
+        width: 100 ,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    fontBtnIMG: {
+        color: '#fff',
+        fontSize: 12
+    },
+    containerProfile: {
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 20
+    },
+    containerSex: {
+        marginLeft:10,
+        width: '50%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    containerTitleAge: {
+        width: '50%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    containerTextInput: {
+        paddingHorizontal: 20,
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    viewGG: {
+        width: '60%',
+        alignItems: 'center',
+        marginTop: 20
+    },
+    viewAge: {
+        width: '40%',
+        alignItems: 'center',
+        marginTop: 10
+    },
+    viewIcon: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop:10
+    }
 });
 
 function mapStateToProps(state) {

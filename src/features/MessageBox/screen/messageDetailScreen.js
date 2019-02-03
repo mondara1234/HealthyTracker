@@ -1,19 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert } from 'react-native';
 import { Container, Content } from 'native-base';
+import { withNavigation } from "react-navigation";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HandleBack from "../../common/components/HandleBack";
-import {bindActionCreators} from "redux";
-import {NavigationActions, withNavigation} from "react-navigation";
-import {connect} from "react-redux";
+import Trans from "../../common/containers/Trans";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
-import Trans from "../../common/containers/Trans";
 
 class messageDetailScreen extends React.PureComponent {
     constructor(){
@@ -49,10 +47,10 @@ class messageDetailScreen extends React.PureComponent {
                 <Container style={styles.container}>
                     <View style={{alignItems: 'center'}}>
                         <Content>
-                            <CommonText text={messageData.AU_Title} style={{fontSize: 22, textAlign: 'center',marginVertical: 20,}} />
-                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={{marginTop: 10, marginLeft: 10,fontSize: 20}} />
-                            <View  style={{marginHorizontal: 10,  alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#068e81'}}>
-                                <CommonText text={messageData.AU_Datile} style={{ margin: 10, fontSize: 20, color: '#000'}} />
+                            <CommonText text={messageData.AU_Title} style={styles.titleMessage} />
+                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={styles.descriptionMessage} />
+                            <View  style={styles.viewDetailMessage}>
+                                <CommonText text={messageData.AU_Datile} style={styles.detailMessage} />
                             </View>
                         </Content>
                     </View>
@@ -80,6 +78,28 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
+    titleMessage: {
+        fontSize: 22,
+        textAlign: 'center',
+        marginVertical: 20
+    },
+    descriptionMessage: {
+        marginTop: 10,
+        marginLeft: 10,
+        fontSize: 20
+    },
+    viewDetailMessage: {
+        marginHorizontal: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: '#068e81'
+    },
+    detailMessage: {
+        margin: 10,
+        fontSize: 20,
+        color: '#000'
+    }
 });
 
 export default withNavigation(messageDetailScreen);

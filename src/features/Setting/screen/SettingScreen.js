@@ -1,25 +1,24 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, TextInput, BackHandler, Alert} from 'react-native';
+import { StyleSheet, TouchableOpacity, View, TextInput, BackHandler, Alert } from 'react-native';
 import { Container, Switch } from 'native-base';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { NavigationActions } from "react-navigation";
+import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import Trans from "../../common/containers/Trans";
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import {TRICK_SCREEN} from "../../Trick/router";
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {BMI_SCREEN} from "../../BMI/router";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {NavigationActions} from "react-navigation";
-import {PRAVIEDKEY} from "../../User/router";
+import { TRICK_SCREEN } from "../../Trick/router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { PRAVIEDKEY } from "../../User/router";
 import * as APIUser from "../../User/api/api";
 import * as APISetting from "../../Setting/api/api";
-import {getOneUser} from "../../User/redux/actions";
-import I18n from "react-native-i18n";
+import { getOneUser } from "../../User/redux/actions";
 
 class settingScreen extends React.PureComponent {
     constructor(props) {
@@ -35,7 +34,6 @@ class settingScreen extends React.PureComponent {
             TextInput_Passwordold: '',
             TextInput_PasswordNew: '',
             TextInput_PasswordAgain: ''
-
         }
     }
 
@@ -52,17 +50,15 @@ class settingScreen extends React.PureComponent {
             );
             return true;
         }
-
         return false;
-
     };
 
     componentDidMount() {
-
         const {user} = this.props.Users;
         const personalSelect = user.map((data) => {return data.PersonalSelect});
         const language = user.map((data) => {return data.Language});
         const personalCode = user.map((data) => {return data.PersonalCode});
+
         if(`${personalSelect}` === 'on'){
             this.setState({
                 PrivateKey : true
@@ -88,6 +84,7 @@ class settingScreen extends React.PureComponent {
         let Passwordold = this.state.TextInput_Passwordold;
         let PasswordNew = this.state.TextInput_PasswordNew;
         let PasswordAgain = this.state.TextInput_PasswordAgain;
+
         if(Passwordold === '' || PasswordNew === '' || PasswordAgain === ''){
             Alert.alert(
                 Trans.tran('general.alert'),
@@ -173,7 +170,6 @@ class settingScreen extends React.PureComponent {
             }else{
                 Language = 'th';
             }
-        I18n.locale = Language;
         const response = await this.props.FETCH_UpdateAllPrivate(UserID, PersonalSelect, Language);
         const responseSearchUser = await this.props.FETCH_fetchSearchUser(UserNames);
         this.props.REDUCER_ONEDATA(responseSearchUser);
@@ -211,9 +207,9 @@ class settingScreen extends React.PureComponent {
             <HandleBack onBack={this.onBack}>
                 <Container>
                     <View style={styles.container}>
-                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                            <CommonText text={Trans.tran('Setting.change_language')} style={{ fontSize: 16, color: '#000'}} />
-                            <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+                        <View style={styles.containerSeting}>
+                            <CommonText text={Trans.tran('Setting.change_language')} size={16} color={'#000'} />
+                            <View style={styles.viewToggle}>
                                 <View style={styles.containerToggle}>
                                     <TouchableOpacity
                                         style={StyleToggle.touchToggle}
@@ -224,16 +220,16 @@ class settingScreen extends React.PureComponent {
                                 </View>
                             </View>
                         </View>
-                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20}}>
-                            <CommonText text={Trans.tran('Setting.personal_code')} style={{ fontSize: 16, color: '#000'}} />
-                            <View style={{width: 80 , height: 30, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+                        <View style={styles.containerSeting}>
+                            <CommonText text={Trans.tran('Setting.personal_code')} size={16} color={'#000'} />
+                            <View style={styles.viewToggle}>
                                 <Switch
                                     value={this.state.PrivateKey}
                                     onValueChange={this._setPrivateKey}
                                 />
                             </View>
                         </View>
-                        <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginBottom: 20}}>
+                        <View style={styles.containerSeting}>
                             <TouchableOpacity
                                 style={styles.containerButton}
                                 onPress={() => {
@@ -448,6 +444,21 @@ const styles = StyleSheet.create({
     dialogTextTitle: {
         color: '#fff',
         fontSize: 20
+    },
+    containerSeting: {
+        width: '100%',
+        backgroundColor: "#F4F4F4",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20
+    },
+    viewToggle: {
+        width: 80,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden'
     }
 });
 

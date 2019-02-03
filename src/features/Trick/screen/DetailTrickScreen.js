@@ -1,23 +1,21 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, Image, View, TouchableOpacity, BackHandler, Alert} from 'react-native';
+import { StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert } from 'react-native';
 import { Container, Content } from 'native-base';
+import { bindActionCreators } from "redux";
+import { NavigationActions } from "react-navigation";
+import { connect } from "react-redux";
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import {bindActionCreators} from "redux";
-import {NavigationActions, withNavigation} from "react-navigation";
-import {connect} from "react-redux";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {TRICK_SCREEN} from "../router";
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {BMI_SCREEN} from "../../BMI/router";
-import {Images} from "../../User/components/images";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { TRICK_SCREEN } from "../router";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { Images } from "../../User/components/images";
 import * as APITrick from "../../Trick/api/api";
-import moment from "moment/moment";
-import * as APIDiary from "../../FoodDiary/api/api";
-import Trans from "../../common/containers/Trans";
 
 class DetailTrickScreen extends React.PureComponent {
     constructor(){
@@ -58,6 +56,7 @@ class DetailTrickScreen extends React.PureComponent {
         this.SearchUserLikeTrick(UserNames,trickIDs);
 
     }
+
     async SearchUserLikeTrick(UserNames,trickIDs) {
         const response = await this.props.FETCH_SearchUserLikeTrick(UserNames,trickIDs);
         if(response === 'allow'){
@@ -114,42 +113,42 @@ class DetailTrickScreen extends React.PureComponent {
 
     render() {
         const { trickData } = this.props.navigation.state.params;
-        console.log(this.state.trickLike);
+
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
                     <Content padder>
                         {this.state.statusLike === 'allow' ?
-                            <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                            <View style={styles.containerLike}>
                                 <CommonText text={Trans.tran('Trick.unlike')} />
                                 <TouchableOpacity
                                     onPress={()=> this.DeleteUserLikeTrick()}
                                 >
-                                    <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
+                                    <Image  style={styles.sizeHeart}
                                     source={Images.TrickScreen.Heart}
                                     />
                                 </TouchableOpacity>
                             </View>
                         :
-                            <View style={{marginTop: 5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                            <View style={styles.containerLike}>
                                 <CommonText text={Trans.tran('Trick.like')} />
                                 <TouchableOpacity
                                     onPress={()=> this.InsertUserLikeTrick()}
                                 >
-                                    <Image  style={{marginHorizontal: 10, width: 36, height: 30}}
+                                    <Image  style={styles.sizeHeart}
                                             source={Images.TrickScreen.Heart}
                                     />
                                 </TouchableOpacity>
                             </View>
                         }
                         <View style={styles.container}>
-                            <Image  style={{marginHorizontal: 10 ,marginVertical: 10, width: '90%', height: 150}}
+                            <Image  style={styles.sizeIMGTrick}
                                     source={{uri: trickData.TrickIMG}}
                             />
-                            <CommonText text={trickData.TrickName} style={{fontSize: 22, fontWeight: 'bold'}} />
-                            <View style={{width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <View style={{backgroundColor: "#F4F4F4", flexDirection: 'row'}}>
-                                    <Image  style={{marginHorizontal: 10, width: 26, height: 20}}
+                            <CommonText text={trickData.TrickName} style={styles.fontTitleName} />
+                            <View style={styles.viewPropleAdd}>
+                                <View style={styles.containerRow}>
+                                    <Image  style={styles.sizeHeartDetail}
                                             source={Images.TrickScreen.Heart}
                                     />
                                     <CommonText text={`${this.state.trickLike === 0 ? trickData.TrickLike : this.state.trickLike} ${Trans.tran('Trick.person')}`} size={16} />
@@ -211,6 +210,43 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'center'
     },
+    containerLike: {
+        marginTop: 5,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end'
+    },
+    sizeHeart: {
+        marginHorizontal: 10,
+        width: 36,
+        height: 30
+    },
+    sizeIMGTrick: {
+        marginHorizontal: 10,
+        marginVertical: 10,
+        width: '90%',
+        height: 150
+    },
+    fontTitleName:{
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    viewPropleAdd: {
+        width: '100%',
+        backgroundColor: '#F4F4F4',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    containerRow: {
+        backgroundColor: "#F4F4F4",
+        flexDirection: 'row'
+    },
+    sizeHeartDetail: {
+        marginHorizontal: 10,
+        width: 26,
+        height: 20
+    }
 });
 
 function mapStateToProps(state) {

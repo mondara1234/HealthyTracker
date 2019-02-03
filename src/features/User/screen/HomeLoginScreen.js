@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, BackHandler, Alert } from 'react-native';
 import { withNavigation } from "react-navigation";
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import IconEntypo from 'react-native-vector-icons/Entypo';
@@ -8,7 +9,6 @@ import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import Logo from '../components/Logo';
 import { Images } from "../components/images";
 import { LOGIN, REGISTRATION } from "../router";
-import Trans from "../../common/containers/Trans";
 
 class HomeLoingScreen extends Component {
     constructor(){
@@ -31,13 +31,10 @@ class HomeLoingScreen extends Component {
             );
             return true;
         }
-
         return false;
-
     };
 
     render() {
-
         const { navigate } = this.props.navigation;
 
         return (

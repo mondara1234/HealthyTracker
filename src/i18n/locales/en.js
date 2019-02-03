@@ -141,7 +141,9 @@ export default {
     },
     'Profile': {
         'information': 'information',
-        'private': 'private'
+        'private': 'private',
+        'edit' : 'Edit',
+        'save': 'Save'
     },
     'Setting': {
         'title': 'Setting',

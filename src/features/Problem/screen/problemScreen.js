@@ -128,7 +128,7 @@ class problemScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <View style={{flexDirection: 'row' ,alignItems: 'center', justifyContent: 'flex-end'}}>
+                    <View style={styles.containerRowCenter}>
                         <TouchableOpacity
                             style={[styles.buttonImg,{marginRight: 10, height: 30}]}
                             onPress={() =>{
@@ -143,14 +143,14 @@ class problemScreen extends React.PureComponent {
 
                             }}
                         >
-                            <CommonText text={Trans.tran('Problem.clear')} style={{color: '#fff', fontSize: 16, marginHorizontal: 10,}} />
+                            <CommonText text={Trans.tran('Problem.clear')} style={styles.fontClear} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.container}>
                         <Content>
                             <CommonText text={Trans.tran('Problem.report_Problem')} style={styles.textTitle} />
-                            <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                                <CommonText text={Trans.tran('Problem.title_Problem')} style={{fontSize: 20 , marginHorizontal: 20}} />
+                            <View style={styles.containerTextInput}>
+                                <CommonText text={Trans.tran('Problem.title_Problem')} style={styles.fontTitle} />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholder={Trans.tran('Problem.problem_Title')}
@@ -159,11 +159,11 @@ class problemScreen extends React.PureComponent {
                                            onChangeText={Title =>this.setState({ title: Title })}
                                 />
                             </View>
-                            <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
-                                <CommonText text={Trans.tran('Problem.type')} style={{fontSize: 20 , marginHorizontal: 20}} />
+                            <View style={styles.containerTextInput}>
+                                <CommonText text={Trans.tran('Problem.type')} style={styles.fontTitle} />
                                 <Picker
                                     mode="dropdown"
-                                    style={{ width: 240 }}
+                                    style={{ width: '60%' }}
                                     selectedValue={this.state.selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                 >
@@ -175,7 +175,7 @@ class problemScreen extends React.PureComponent {
                                     <Picker.Item label={Trans.tran('Problem.Picker.other')} value="อื่นๆ" />
                                 </Picker>
                             </View>
-                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={{fontSize: 20 , marginHorizontal: 20}} />
+                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={styles.fontTitle} />
                             <Form>
                                 <Textarea
                                     style={{backgroundColor: '#fff'}}
@@ -186,13 +186,13 @@ class problemScreen extends React.PureComponent {
                                     onChangeText={Detail =>this.setState({ detail: Detail })}
                                 />
                             </Form>
-                            <View style={{flexDirection: 'row' ,alignItems: 'center', marginTop: 10}}>
+                            <View style={styles.containerTextInput}>
                                 <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
-                                    <CommonText text={Trans.tran('Problem.attach_Picture')} style={{color: '#fff', fontSize: 16, marginHorizontal: 10,}} />
+                                    <CommonText text={Trans.tran('Problem.attach_Picture')} style={styles.fontbtnIMG} />
                                 </TouchableOpacity>
-                                <CommonText text={'ชื่อรูปภาพ.jpg'} style={{fontSize: 14, marginLeft: '2%', marginTop: 10}} />
+                                <CommonText text={'ชื่อรูปภาพ.jpg'} style={styles.fontNameIMG} />
                             </View>
-                            <View style={{width: '100%',alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={styles.containerCenter}>
                                 <TouchableOpacity style={styles.button} onPress={() => this.addProBlem()}>
                                     <CommonText text={Trans.tran('Problem.send_Problems')} style={styles.buttonText} />
                                 </TouchableOpacity>
@@ -268,6 +268,40 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginHorizontal: 10,
     },
+    containerRowCenter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
+    fontClear: {
+        color: '#fff',
+        fontSize: 16,
+        marginHorizontal: 10
+    },
+    containerTextInput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10
+    },
+    fontTitle: {
+        fontSize: 20,
+        marginHorizontal: 20
+    },
+    fontbtnIMG: {
+        color: '#fff',
+        fontSize: 16,
+        marginHorizontal: 10
+    },
+    fontNameIMG: {
+        fontSize: 14,
+        marginLeft: '2%',
+        marginTop: 10
+    },
+    containerCenter: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 
 });
 

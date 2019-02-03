@@ -3,19 +3,18 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } fro
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
+import ImagePicker from "react-native-image-picker";
+import RNFetchBlob from "react-native-fetch-blob";
+import Trans from "../../../common/containers/Trans";
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonText from '../../../common/components/CommonText'
 import * as API from '../../api/api';
 import { Images } from "../../components/images";
-import {SERVER_URL} from "../../../../common/constants";
-import ImagePicker from "react-native-image-picker";
-import RNFetchBlob from "react-native-fetch-blob";
-import Trans from "../../../common/containers/Trans";
+import { SERVER_URL } from "../../../../common/constants";
 
 class FormRegistration extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             TextInput_Name: '',
             TextInput_Password: '',

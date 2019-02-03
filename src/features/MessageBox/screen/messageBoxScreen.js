@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Alert, BackHandler, ListView, View } from 'react-native';
 import { Container, Content, Button, Icon, List, ListItem } from 'native-base';
+import { connect } from "react-redux";
+import { NavigationActions } from "react-navigation";
+import { bindActionCreators } from "redux";
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
@@ -11,12 +15,8 @@ import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import {bindActionCreators} from "redux";
-import {AllMessageBox} from "../../MessageBox/redux/actions";
-import {connect} from "react-redux";
-import {NavigationActions} from "react-navigation";
+import { AllMessageBox } from "../../MessageBox/redux/actions";
 import * as APIMessage from "../../MessageBox/api/api";
-import Trans from "../../common/containers/Trans";
 
 class messageBoxScreen extends Component {
     constructor(props) {
@@ -40,9 +40,7 @@ class messageBoxScreen extends Component {
             );
             return true;
         }
-
         return false;
-
     };
 
     componentDidMount() {
@@ -50,7 +48,6 @@ class messageBoxScreen extends Component {
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         this.getFoodUser(UserName)
-
     }
 
     async getFoodUser(UserName) {
@@ -93,7 +90,6 @@ class messageBoxScreen extends Component {
 
                         this.props.FETCH_DeleteMessageUse(ID);
                         this.getFoodUser(UserNames);
-
                     }
                 },
                 { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },

@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, TextInput, Alert, BackHandler} from 'react-native';
-import { Container, Content, Button, Text } from 'native-base';
+import { StyleSheet, View, TouchableOpacity, TextInput, Alert, BackHandler } from 'react-native';
+import { Container } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
@@ -35,13 +35,10 @@ class ForgotPasswordScreen extends React.PureComponent {
             );
             return true;
         }
-
         return false;
-
     };
 
     render() {
-
         const { goBack } = this.props.navigation;
 
         return (

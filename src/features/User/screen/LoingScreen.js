@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler } from 'react-native';
-import { Container, Content, Footer } from 'native-base';
+import { StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler } from 'react-native';
+import { Container, Content } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
@@ -9,7 +9,7 @@ import CommonText from '../../common/components/CommonText';
 import Logo from '../components/Logo';
 import { getAllUser, getOneUser } from '../redux/actions';
 import * as API from '../api/api';
-import {FORGOTPASSWORD, PRAVIEDKEY, REGISTRATION} from "../router";
+import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
 import Trans from "../../common/containers/Trans";
 
@@ -38,9 +38,7 @@ class LoingScreen extends Component {
             );
             return true;
         }
-
         return false;
-
     };
 
     componentDidMount(){
@@ -77,7 +75,6 @@ class LoingScreen extends Component {
     };
 
     render() {
-
         console.log('Update Store:',this.props);
 
         return (
@@ -236,4 +233,3 @@ export default connect(
         FETCH_Login: bindActionCreators(API.fetchLogin, dispatch),
     })
 )(LoingScreen);
-

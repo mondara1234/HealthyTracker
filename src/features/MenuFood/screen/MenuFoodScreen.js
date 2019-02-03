@@ -3,22 +3,22 @@ import {StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert} 
 import { Container, Header, Left, Thumbnail, CheckBox, Body, ListItem } from 'native-base';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Autocomplete from 'react-native-autocomplete-input';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
+import { AllFoodType, AllMenuFood } from "../redux/actions";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
 import {SERVER_URL} from "../../../common/constants";
-import {AllFoodType, AllMenuFood} from "../redux/actions";
-import Trans from "../../common/containers/Trans";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 class menuFoodScreen extends React.PureComponent {
     constructor(props) {
@@ -49,9 +49,7 @@ class menuFoodScreen extends React.PureComponent {
             );
             return true;
         }
-
         return false;
-
     };
 
     componentDidMount() {
@@ -212,9 +210,9 @@ class menuFoodScreen extends React.PureComponent {
 
     _renderItem = ({ item, index }) => {
         return (
-            <View style={{  width: '100%', height: 70, backgroundColor: "#F4F4F4", borderWidth: 1 , borderColor: '#068e81'}}>
+            <View style={styles.containerRenderItem}>
                 <ListItem  thumbnail
-                           style={{ backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', marginTop: -7 }}
+                           style={styles.listItem}
                            onPress={() => this.props.navigation.navigate({routeName: FOODDETAIL_SCREEN, params: {foodData: item}}) }
                 >
                     <Left>
@@ -223,16 +221,16 @@ class menuFoodScreen extends React.PureComponent {
                             style={{ width: 60, height: 60}}
                         />
                     </Left>
-                    <Body style={{ width: '100%'}}>
-                    <View style={{ width: '100%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Body>
+                        <View style={styles.bodyRendsrItem}>
                             <View>
-                            <Text numberOfLines={1} style={{fontSize: 18, color: '#020202', marginBottom: 5, fontWeight: 'bold'}}>{item.FoodName}</Text>
-                            <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} style={{ fontSize: 14, color: '#068e81'}} />
-                        </View>
-                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                <Text numberOfLines={1} style={styles.fontbase}>{item.FoodName}</Text>
+                                <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} style={styles.fontCalorie} />
+                            </View>
+                            <View style={styles.viewCenter}>
                                 <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
                             </View>
-                    </View>
+                        </View>
                     </Body>
                 </ListItem>
             </View>
@@ -263,13 +261,13 @@ class menuFoodScreen extends React.PureComponent {
     _renderCheckBox = ({ item, index }) => {
         return (
             <View style={{flex:1}}>
-                <ListItem style={{backgroundColor: '#F4F4F4', borderBottomWidth: 0}}>
+                <ListItem style={styles.listCheckBox}>
                     <CheckBox
                         checked={this.checkedCheckBox(item)}
                         onPress={() => {this.selectCheckBox(item)}}
                     />
                     <Body>
-                        <CommonText text={item.TypeName} style={{fontSize: 16, marginLeft: 3}} />
+                        <CommonText text={item.TypeName} style={[styles.fontCheckBox, {marginLeft: 3}]} />
                     </Body>
                 </ListItem>
             </View>
@@ -280,18 +278,18 @@ class menuFoodScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
-                    <Header style={{backgroundColor: '#068e81'}}>
+                    <Header style={styles.bgColorApp}>
                         <HeaderLeftMenu onPress={() => this.props.navigation.navigate('DrawerOpen')} />
                         <HeaderTitle text={Trans.tran('MenuFood.title')} />
-                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={styles.viewRowCenter}>
                             <HeaderLeftMenu icon={'flask'} onPress={() => this.setState({statusCheckBox: !this.state.statusCheckBox }) } />
                             <HeaderLeftMenu icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')} style={{marginRight: 5}} onPress={() => this.sortFoodMenu()} />
                         </View>
                     </Header>
                     <View style={styles.container}>
                         {this.state.statusCheckBox ?
-                            <View style={{width: '99.9%', borderWidth: 1, borderColor: '#068E81'}}>
-                                <CommonText text={Trans.tran('MenuFood.can_one')} style={{fontSize: 16, margin: 5}} />
+                            <View style={styles.containerCheckBox}>
+                                <CommonText text={Trans.tran('MenuFood.can_one')} style={[styles.fontCheckBox, {margin: 5}]} />
                                 <FlatList
                                     data={this.state.dataFoodType}
                                     extraData={this.state}
@@ -303,7 +301,7 @@ class menuFoodScreen extends React.PureComponent {
                             </View>
                             : null
                         }
-                        <View style={{height: 50, width: '90%', backgroundColor: "#F4F4F4", flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 5, }}>
+                        <View style={styles.containerViewSearch}>
                             <Icon name={'search'} size={25}/>
                             <Autocomplete
                                 style={styles.containerSearch}/*กำหนดรูปแบบช่องค้นหา*/
@@ -319,14 +317,14 @@ class menuFoodScreen extends React.PureComponent {
                                  : null
                              }
                         </View>
-                        <View style={{ width: '100%',height: 40, backgroundColor: "#068E81", flexDirection: 'row', alignItems: 'center'}}>
-                            <CommonText text={Trans.tran('MenuFood.foodSearch.category')} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
-                            <CommonText text={this.state.nameFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
-                            <CommonText text={Trans.tran('MenuFood.number_Found')} style={{ fontSize: 14, color: '#fff', marginLeft: 10}} />
-                            <CommonText text={this.state.lengthFoodType} style={{ fontSize: 16, color: '#fff', marginLeft: 5, fontWeight: 'bold'}} />
-                            <CommonText text={Trans.tran('MenuFood.list')} style={{ fontSize: 14, color: '#fff', marginLeft: 5}} />
+                        <View style={styles.viewNumberFound}>
+                            <CommonText text={Trans.tran('MenuFood.foodSearch.category')} style={styles.fonttitleFoodType} />
+                            <CommonText text={this.state.nameFoodType} style={styles.fontFoodType} />
+                            <CommonText text={Trans.tran('MenuFood.number_Found')} style={styles.fonttitleFoodType} />
+                            <CommonText text={this.state.lengthFoodType} style={styles.fontFoodType} />
+                            <CommonText text={Trans.tran('MenuFood.list')} style={styles.fonttitleFoodType} />
                         </View>
-                        <View style={{ flex: 1, width: '100%'}}>
+                        <View style={styles.containerFlasList}>
                             <FlatList
                                 data={this.state.films}
                                 extraData={this.state}
@@ -376,7 +374,92 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingRight: 10,
         paddingLeft: 10
+    },
+    containerRenderItem: {
+        width: '100%',
+        height: 70,
+        backgroundColor: "#F4F4F4",
+        borderWidth: 1 ,
+        borderColor: '#068e81'
+    },
+    listItem: {
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -7
+    },
+    bodyRendsrItem: {
+        width: '100%',
+        backgroundColor: "#F4F4F4",
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    fontbase: {
+        fontSize: 18,
+        color: '#020202',
+        marginBottom: 5,
+        fontWeight: 'bold'
+    },
+    fontCalorie: {
+        fontSize: 14,
+        color: '#068e81'
+    },
+    viewCenter: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    listCheckBox: {
+        backgroundColor: '#F4F4F4',
+        borderBottomWidth: 0
+    },
+    fontCheckBox: {
+        fontSize: 16
+    },
+    bgColorApp: {
+        backgroundColor: '#068e81'
+    },
+    viewRowCenter: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    containerCheckBox: {
+        width: '99.9%',
+        borderWidth: 1,
+        borderColor: '#068E81'
+    },
+    containerViewSearch: {
+        height: 50,
+        width: '90%',
+        backgroundColor: "#F4F4F4",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 5
+    },
+    viewNumberFound: {
+        width: '100%',
+        height: 40,
+        backgroundColor: "#068E81",
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    fonttitleFoodType: {
+        fontSize: 14,
+        color: '#fff',
+        marginLeft: 10
+    },
+    fontFoodType: {
+        fontSize: 16,
+        color: '#fff',
+        marginLeft: 5,
+        fontWeight: 'bold'
+    },
+    containerFlasList: {
+        flex: 1,
+        width: '100%'
     }
+
 });
 
 function mapStateToProps(state) {
