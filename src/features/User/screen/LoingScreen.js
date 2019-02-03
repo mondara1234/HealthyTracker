@@ -18,7 +18,7 @@ class LoingScreen extends Component {
         super(props);
 
         this.state = {
-            UserEmail: '',
+            userName: '',
             UserPassword: '',
             editing: true,
             data_User: []
@@ -46,7 +46,7 @@ class LoingScreen extends Component {
     }
 
     UserLoginFunction = () =>{
-        if(this.state.UserEmail === '' || this.state.UserPassword === '' ){
+        if(this.state.userName === '' || this.state.UserPassword === '' ){
             Alert.alert(
                 Trans.tran('general.alert'),
                 Trans.tran('general.please_Complete'),
@@ -57,20 +57,33 @@ class LoingScreen extends Component {
             );
         }else{
 
-            const Email = this.state.UserEmail;
+            const userName = this.state.userName;
+            const UserName = `${userName}`;
             const Password = this.state.UserPassword;
             const keyScreen = this.props.navigation;
             const members = this.props.servers.user;
+            console.log( userName);
             let result = [];
             for (let i = 0; i < members.length; i++) {
-                if (members[i].Email === Email) {
+                if (members[i].UserName === UserName && members[i].Password === Password) {
                     result.push(members[i]);
                     this.props.REDUCER_ONEDATA(result);
                 }
             }
-            const personalSelect = result.map((data) => {return data.PersonalSelect});
             console.log( result);
-            this.props.FETCH_Login(Email, Password, keyScreen, personalSelect);
+            if(result.length === 1){
+               const personalSelect = result.map((data) => {return data.PersonalSelect});
+                this.props.FETCH_Login(UserName, Password, keyScreen, personalSelect);
+            }else{
+                Alert.alert(
+                    Trans.tran('general.alert'),
+                   'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้องโปรดตรวจสอบตัวอักษรพิมพ์เล็ดพิมพ์ใหญ่ให้ถูกต้อง',
+                    [
+                        { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                    ],
+                    { cancelable: false },
+                );
+            }
         }
     };
 
@@ -90,11 +103,11 @@ class LoingScreen extends Component {
                             <View style={styles.containerView}>
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
-                                           placeholder={Trans.tran('User.email')}
+                                           placeholder={Trans.tran('User.userName')}
                                            placeholderTextColor = "#068e81"
                                            selectionColor="#fff"
                                            keyboardType="email-address"
-                                           onChangeText={UserEmail =>this.setState({UserEmail})}
+                                           onChangeText={userName =>this.setState({userName})}
                                 />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
@@ -200,7 +213,8 @@ const styles = StyleSheet.create({
         color: '#068e81',
         paddingLeft: 10,
         marginVertical: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingBottom: 5
     },
     button: {
         width: 150,

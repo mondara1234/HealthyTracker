@@ -1,6 +1,5 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
-import {LOGIN, PRAVIEDKEY} from "../router";
 import Trans from "../../common/containers/Trans";
 
 export function fetchPostsApi() {
@@ -12,7 +11,7 @@ export function fetchPostsApi() {
         });
 }
 
-export const fetchLogin = (Email, Password, keyScreen, personalSelect) => dispatch => {
+export const fetchLogin = (UserName, Password, keyScreen, personalSelect) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/User_Login.php`, {
         method: 'POST',
         headers: {
@@ -20,7 +19,7 @@ export const fetchLogin = (Email, Password, keyScreen, personalSelect) => dispat
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: Email,
+            username: UserName,
             password: Password
         })
     }).then((response) => response.json())
