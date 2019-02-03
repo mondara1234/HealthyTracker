@@ -23,7 +23,7 @@ class FormRegistration extends Component {
             ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png',
             ImgProfile: null,
             data: null,
-            filename: null,
+            Image_TAG: ''
         }
     }
 
@@ -76,25 +76,26 @@ class FormRegistration extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            if (!response.uri) {
-                return;
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled photo picker');
             }
-            //let source = { uri: response.uri };
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = { uri: response.uri };
 
-            // You can also display the image using data:
-             let source = 'data:image/jpeg;base64,'+response.data ;
+                this.setState({
+                    ImgProfile: source,
+                    data: response.data
 
-            console.log(source);
-            console.log(response.uri);
-            console.log(response.data);
-            console.log(response.fileName);
-
-            this.setState({
-                ImgProfile: source,
-                data: response.data,
-                filename: response.fileName
-            });
-        })
+                });
+            }
+        });
     }
 
     uploadPhoto(){
@@ -103,13 +104,19 @@ class FormRegistration extends Component {
             otherHeader : "foo",
             'Content-Type' : 'multipart/form-data',
         }, [
-            { name : 'fileToUpload', filename : this.state.filename, type: 'image/jpeg', data: this.state.data},
-            console.log('Data',this.state.data)
+            { name: 'image', filename: 'image.png', type: 'image/png', data: this.state.data },
+            { name: 'image_tag', data: this.state.Image_TAG }
         ]).then((resp) => {
-            console.log('resp ='+ resp);
+
+            let tempMSG = resp.data;
+
+            tempMSG = tempMSG.replace(/^"|"$/g, '');
+
+            Alert.alert(tempMSG);
+
         }).catch((err) => {
-            console.log('errror = '+ err);
-        })
+            // ...
+        });
     }
 
     render(){
