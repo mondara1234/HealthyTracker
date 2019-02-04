@@ -27,7 +27,7 @@ export const RootStack = StackNavigator({
     ...problemRouter,
     ...messageboxRouter
 },{
-    initialRouteName: HOMELOGIN,
+    initialRouteName: LOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

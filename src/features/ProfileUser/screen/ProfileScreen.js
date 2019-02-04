@@ -4,6 +4,8 @@ import { Container } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
+import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog'
+import ImagePicker from "react-native-image-picker";
 import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
@@ -31,7 +33,11 @@ class ProfileScreen extends React.PureComponent {
             bmi: 0,
             criterionbmi: '',
             stateButton: 'Edit',
-            editing: true
+            editing: true,
+            DialogChange: false,
+            DialogSuccess: false,
+            ImageSource: null,
+            data: null
         }
     }
 
@@ -100,6 +106,50 @@ class ProfileScreen extends React.PureComponent {
         let UserNames =`${UserName}`;
         const response = await this.props.FETCH_SearchUser(UserNames);
         this.props.REDUCER_ONEDATA(response);
+    }
+
+    selectPhotoTapped() {
+
+        const options = {
+            title: Trans.tran('Problem.choose_picture'),
+            cancelButtonTitle: Trans.tran('general.canceled'),
+            takePhotoButtonTitle: Trans.tran('Problem.photograph'),
+            chooseFromLibraryButtonTitle: Trans.tran('Problem.picture_library'),
+            quality: 1.0,
+            maxWidth: 500,
+            maxHeight: 500,
+            storageOptions: {
+                skipBackup: true
+            },
+            mediaType: 'photo'
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+
+            if (response.didCancel) {
+                console.log('User cancelled photo picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                const { user } = this.props.Users;
+                let id = user.map((data) => { return data.UserID });
+                let UserID = id.toString();
+                let UserName = user.map((data) => { return data.UserName });
+                let source = { uri: 'data:image/jpeg;base64,' + response.data };
+                let dataImg = 'data:image/jpeg;base64,' + response.data;
+                this.props.FETCH_UpdateImgUser(UserID, dataImg);
+                this.setState({
+                    ImageSource: source,
+                    data: response.data
+                });
+                this.getData(UserName);
+            }
+        });
     }
 
     render() {
@@ -187,7 +237,6 @@ class ProfileScreen extends React.PureComponent {
                                                 let BMR_female = 665 + (9.6 * Height) + (1.8 * Weight) - (4.7 * Age);
                                                 BMRUser = BMR_female.toFixed();
                                             }
-                                            console.log('BMRUser'+BMRUser);
                                             
                                             this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
 
@@ -209,7 +258,8 @@ class ProfileScreen extends React.PureComponent {
                             </View>
                             <View style={styles.containerImgProfile}>
                                 <Image
-                                    source={{uri: `${imgProfile}`}}
+                                    source={this.state.ImageSource != null ? this.state.ImageSource :
+                                       {uri: `${imgProfile}`}}
                                     style={styles.userThumb}
                                 />
                                 <View>
@@ -218,13 +268,16 @@ class ProfileScreen extends React.PureComponent {
                                         <CommonText text={Trans.tran('Profile.email')} />
                                         <CommonText text={`${Email}`} style={styles.colorEmail} />
                                     </View>
-                                    <TouchableOpacity style={styles.btnPass}>
+                                    <TouchableOpacity
+                                        style={styles.btnPass}
+                                        onPress={() => {this.setState({DialogChange: true})}}
+                                    >
                                         <CommonText text={Trans.tran('User.change_Password')} style={styles.fontBtnPass} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
                             <View style={styles.containerRow}>
-                                <TouchableOpacity style={styles.btnIMG}>
+                                <TouchableOpacity style={styles.btnIMG} onPress={this.selectPhotoTapped.bind(this)}>
                                     <CommonText text={Trans.tran('Profile.change_Img_profile')} style={styles.fontBtnIMG} />
                                 </TouchableOpacity>
                             </View>
@@ -290,6 +343,83 @@ class ProfileScreen extends React.PureComponent {
                                 </View>
                             </View>
                         </View>
+                        <Dialog  //Dialogตอนกดเปลี่ยน
+                            visible={this.state.DialogChange}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                            onTouchOutside={() => {this.setState({ DialogChange: true })}}//ไม่ให้กดข้างนอกได้
+                            dialogTitle={//ส่วนของTitle
+                                <DialogTitle
+                                    title={Trans.tran('User.Dialog.Change_password')}
+                                    hasTitleBar={false}
+                                    textStyle={styles.dialogTextTitle}
+                                    style={styles.dialogTitleView}
+                                />
+                            }
+                            actions={[//ส่วนของฺbutton
+                                <DialogButton
+                                    text={Trans.tran('general.ok')}
+                                    textStyle={styles.dialogTextButton}
+                                    onPress={() => {
+                                        this.setState({ DialogChange: false, DialogSuccess: true })
+                                    }}
+                                    style={styles.dialogTitleView}
+                                />,
+                                <DialogButton
+                                    text={Trans.tran('general.canceled')}
+                                    textStyle={styles.dialogTextButton}
+                                    onPress={() => {
+                                        this.setState({ DialogChange: false });
+                                    }}
+                                    style={styles.dialogTitleView}
+                                />
+                            ]}
+                        >{/*ส่วนของbody*/}
+                            <View style={styles.dialogBodyView}>
+                                <TextInput
+                                    style={styles.inputBoxDialog}
+                                    underlineColorAndroid='rgba(0,0,0,0)'
+                                    placeholder={Trans.tran('User.Dialog.new_Password')}
+                                    secureTextEntry={true}
+                                    placeholderTextColor = "#068e81"
+                                    onChangeText={ TextInputValue => this.setState({ TextInput_Password : TextInputValue })}
+                                />
+                                <TextInput
+                                    style={styles.inputBoxDialog}
+                                    underlineColorAndroid='rgba(0,0,0,0)'
+                                    placeholder={Trans.tran('User.Dialog.confirm_Password')}
+                                    secureTextEntry={true}
+                                    placeholderTextColor = "#068e81"
+                                    selectionColor="#fff"
+                                    onChangeText={ TextInputValue => this.setState({ TextInput_PasswordAgain : TextInputValue })}
+                                />
+                            </View>
+                        </Dialog>
+
+                        <Dialog //Dialogตอนกรอกข้อมูลเส้ดสิ้น
+                            visible={this.state.DialogSuccess}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                            onTouchOutside={() => {this.setState({ DialogSuccess: true })}}//ไม่ให้กดข้างนอกได้
+                            dialogTitle={//ส่วนของTitle
+                                <DialogTitle
+                                    title={Trans.tran('User.Dialog.change_Successfully')}
+                                    hasTitleBar={false}
+                                    textStyle={styles.dialogTextTitle}
+                                    style={styles.dialogTitleView}
+                                />
+                            }
+                            actions={[//ส่วนของฺbutton
+                                <DialogButton
+                                    text={Trans.tran('general.canceled')}
+                                    textStyle={styles.dialogTextButton}
+                                    onPress={() => {
+                                        this.setState({ DialogSuccess: false });
+                                    }}
+                                    style={styles.dialogTitleView}
+                                />
+                            ]}
+                        >{/*ส่วนของbody*/}
+                            <View style={styles.dialogBodyView}>
+                                <CommonText style={styles.dialogTextBody} text={Trans.tran('User.Dialog.change_Successfully')}/>
+                            </View>
+                        </Dialog>
                     </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -314,7 +444,8 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         marginVertical: 20,
-        marginRight: 20
+        marginRight: 20,
+        borderRadius: 80
     },
     styleIconFontAwesome: {
         marginRight: 10
@@ -472,6 +603,44 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop:10
+    },
+    dialogBodyView: {
+        backgroundColor: '#F4F4F4',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+    },
+    dialogTitleView: {
+        backgroundColor: '#068e81',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputBoxDialog: {
+        width: 250,
+        height: 40,
+        backgroundColor: '#fff',
+        borderRadius: 25,
+        borderWidth: 1,
+        fontSize: 18,
+        color: '#068e81',
+        paddingLeft: 10,
+        paddingTop: 8,
+        marginVertical: 5,
+        marginHorizontal: 10
+    },
+    dialogTextBody: {
+        color: '#000',
+        fontSize: 18
+    },
+    dialogTextButton: {
+        color: '#fff',
+        fontSize: 18
+    },
+    dialogTextTitle: {
+        color: '#fff',
+        fontSize: 20
     }
 });
 
@@ -486,6 +655,7 @@ export default connect(
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
+        FETCH_UpdateImgUser: bindActionCreators(APIUser.fetchUpdateUpdateImgUser, dispatch),
         FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
         REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })

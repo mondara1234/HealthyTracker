@@ -124,7 +124,7 @@ class FoodDetailScreen extends React.PureComponent {
                                            placeholderTextColor = "#068e81"
                                            selectionColor="#fff"
                                            keyboardType="numeric"
-                                           maxLength={3}
+                                           maxLength={2}
                                            onChangeText={numberUnit => this.onChanged(numberUnit)}
                                 />
                                 <CommonText text={foodData.FoodUnit} style={styles.fontHead} />

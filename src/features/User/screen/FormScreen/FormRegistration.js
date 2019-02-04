@@ -22,8 +22,7 @@ class FormRegistration extends Component {
             TextInput_PasswordAgain: '',
             ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png',
             ImageSource: null,
-            data: null,
-            fileName: ''
+            data: null
         }
     }
 
@@ -92,8 +91,7 @@ class FormRegistration extends Component {
 
                 this.setState({
                     ImageSource: source,
-                    data: response.data,
-                    fileName: response.fileName
+                    data: response.data
                 });
             }
         });

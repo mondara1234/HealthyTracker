@@ -10,7 +10,7 @@ const ImageGif = (props) => {
                 source={props.itemImage}
                 style={styles.image}
             />
-            <CommonText text={props.nameImg} color={'#068e81'} size={16} />
+            <CommonText text={props.nameImg} color={'#068e81'} size={14} />
         </View>
     )
 };

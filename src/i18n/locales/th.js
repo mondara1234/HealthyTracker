@@ -7,7 +7,11 @@ export default {
         'yes': 'ใช่',
         'please_Complete': 'กรุณากรอกให้ครบ',
         'password_not_Match': 'รหัสผ่านทั้งสองไม่ตรงกัน',
-        'ok': 'ตกลง'
+        'ok': 'ตกลง',
+        'foodDiary': 'ไดอารี่อาหาร',
+        'menu': 'รายการอาหาร',
+        'BMI': 'ดัชนีมวลกาย',
+        'trick': 'เคล็ดลับ',
     },
     'Sideber': {
         'manage_Information': 'จัดการข้อมูลส่วนตัว',
@@ -28,8 +32,8 @@ export default {
     },
     'BMI': {
         'title': 'ค่าดัชนีมวลกาย',
-        'close_Details': 'Close details',
-        'open_Details': 'Open details',
+        'close_Details': 'ปิดรายละเอียด',
+        'open_Details': 'เปิดรายละเอียด',
         'criterion': 'เกณฑ์',
         'suggestion': 'ข้อแนะนำ',
         'criterionBMI':{
@@ -188,7 +192,7 @@ export default {
         'password': 'รหัสผ่าน',
         'confirm_password': 'ยืนยัน รหัสผ่าน',
         'forgot_Password': 'ลืมรหัสผ่าน',
-        'please_Email': 'กรุณากรอก อีเมล์',
+        'please_Email': 'กรุณากรอก อีเมล',
         'change_Password': 'เปลี่ยนรหัสผ่าน',
         'login': 'เข้าสู่ระบบ',
         'register': 'สมัครสมาชิก',

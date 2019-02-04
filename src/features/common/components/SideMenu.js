@@ -4,8 +4,9 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { StyleSheet } from 'react-native';
-import { Container, Content, Footer, FooterTab, Button, Text } from 'native-base';
+import { Footer, FooterTab, Button, Text } from 'native-base';
 import Trans from "../containers/Trans";
+import CommonText from '../../common/components/CommonText';
 
 const SideMenu = (props) => {
     return<Footer>
@@ -15,28 +16,28 @@ const SideMenu = (props) => {
                 onPress={ props.diaryScreen }
             >
                 <IconEntypo name="open-book" size={30} />
-                <Text style={styles.Text}>{Trans.tran('FoodDiary.title')}</Text>
+                <CommonText text={Trans.tran('general.foodDiary')} style={styles.Text} />
             </Button>
             <Button
                 style={styles.button}
                 onPress={ props.menuFoodScreen }
             >
                 <IconMaterialCommunityIcons name="food" size={30} />
-                <Text style={styles.Text}>{Trans.tran('MenuFood.title')}</Text>
+                <CommonText text={Trans.tran('general.menu')} style={[styles.Text,{marginLeft: -3}]} />
             </Button>
             <Button
                 style={styles.button}
                 onPress={ props.bmiScreen }
             >
                 <IconMaterialIcons name="healing" size={30} />
-                <Text style={styles.Text}>{Trans.tran('BMI.title')}</Text>
+                <CommonText text={Trans.tran('general.BMI')} style={styles.Text} />
             </Button>
             <Button
                 style={styles.button}
                 onPress={ props.trickScreen }
             >
                 <IconMaterialCommunityIcons name="nutrition" size={30} />
-                <Text style={styles.Text}>{Trans.tran('Trick.Tab.title')}</Text>
+                <CommonText text={Trans.tran('general.trick')} style={styles.Text} />
             </Button>
         </FooterTab>
     </Footer>
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     },
     Text: {
         color: '#ffffff',
-        fontSize: 10
+        fontSize: 12
     }
 });
 

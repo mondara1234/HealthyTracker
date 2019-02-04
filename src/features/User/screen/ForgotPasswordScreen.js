@@ -60,7 +60,7 @@ class ForgotPasswordScreen extends React.PureComponent {
                         />
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => {this.setState({DialogForgot: true,})}}
+                            onPress={() => {this.setState({DialogForgot: true})}}
                         >
                             <CommonText text={Trans.tran('User.change_Password')} style={styles.buttonText} />
                         </TouchableOpacity>

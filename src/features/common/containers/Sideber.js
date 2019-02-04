@@ -237,9 +237,10 @@ const styles = StyleSheet.create({
     },
     fontBase: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: themeVariables.platform === 'ios' ? '600' : null,
-        marginTop: '3%'
+        marginTop: '3%',
+        marginLeft: '2%'
 
     },
     version: {

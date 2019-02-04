@@ -7,7 +7,11 @@ export default {
         'yes': 'Yes',
         'please_Complete': 'Please complete',
         'password_not_Match': 'Both passwords do not match',
-        'ok': 'OK'
+        'ok': 'OK',
+        'foodDiary': 'Food diary',
+        'menu': 'Menu',
+        'BMI': 'BMI',
+        'trick': 'Trick',
     },
     'Sideber': {
         'manage_Information': 'Manage personal information',

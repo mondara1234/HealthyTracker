@@ -98,6 +98,8 @@ class LoingScreen extends Component {
                         <Content padder>
                             <View style={styles.containerRow}>
                                 <CommonText text={Trans.tran('User.login')} style={styles.titleLogin} />
+                            </View>
+                            <View style={{marginTop: -20, paddingLeft: 10}}>
                                 <Logo Title="Healthy MyApp"/>
                             </View>
                             <View style={styles.containerView}>
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     },
     titleLogin: {
         color: '#068e81',
-        fontSize: 30,
+        fontSize: 24,
         marginLeft: 10
     },
     textForgot: {

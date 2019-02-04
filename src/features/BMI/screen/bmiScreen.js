@@ -133,12 +133,12 @@ class bmiScreen extends React.PureComponent {
                                         <CommonText text={this.state.bmi} style={styles.valueHead} />
                                     </View>
                                     <View style={styles.containerBodyBMI}>
-                                        <CommonText text={`${Trans.tran('BMI.criterion')} :`} style={[styles.textHead,{marginLeft: -13}]} />
+                                        <CommonText text={`${Trans.tran('BMI.criterion')} :`} style={[styles.textHead,{marginLeft: '30%'}]} />
                                         <CommonText text={this.state.criterionbmi} style={styles.valueHead} />
                                     </View>
                                 </View>
                                 <View style={styles.containerBodyBMI}>
-                                    <Image  style={{width: 60, height: 100}}
+                                    <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
                                             source={Images.foodDiaty.kcal1}
                                     />
                                 </View>
@@ -296,14 +296,13 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     textHead: {
-        fontSize: 22,
-        marginTop: 10,
-        marginLeft: 20
+        fontSize: 20,
+        marginTop: 10
     },
     valueHead:{
         fontSize: 22,
         marginTop: 10,
-        marginLeft: 60,
+        marginLeft: '10%',
         color: '#068e81'
     },
     textbody :{
