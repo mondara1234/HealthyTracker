@@ -1,33 +1,29 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, TextInput, Alert, BackHandler } from 'react-native';
-import { Container, Footer, FooterTab, Picker, Content, Textarea, Form } from 'native-base';
-import RNFetchBlob from "react-native-fetch-blob";
+import { Container, Picker, Content, Textarea, Form } from 'native-base';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { NavigationActions } from "react-navigation";
+import moment from "moment/moment";
+import Trans from "../../common/containers/Trans";
 import ImagePicker from "react-native-image-picker";
 import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HandleBack from "../../common/components/HandleBack";
-import {SERVER_URL} from "../../../common/constants";
-import {MENUFOOD_SCREEN} from "../../MenuFood/router";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {BMI_SCREEN} from "../../BMI/router";
-import {TRICK_SCREEN} from "../../Trick/router";
-import {connect} from "react-redux";
-import {AllMessageBox} from "../../MessageBox/redux/actions";
-import {bindActionCreators} from "redux";
-import {NavigationActions} from "react-navigation";
+import { MENUFOOD_SCREEN } from "../../MenuFood/router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { BMI_SCREEN } from "../../BMI/router";
+import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIProblem from "../../Problem/api/api";
-import Trans from "../../common/containers/Trans";
-
 
 class problemScreen extends React.PureComponent {
     constructor(){
         super();
         this.state = {
-            imageSource: null,
             data: null,
-            filename: null,
+            fileName: null,
             selected: undefined,
             detail : '',
             title: '',
@@ -48,13 +44,10 @@ class problemScreen extends React.PureComponent {
             );
             return true;
         }
-
         return false;
-
     };
 
     onValueChange(value) {
-        console.log('value'+ value);
         this.setState({
             selected: value
         });
@@ -77,51 +70,64 @@ class problemScreen extends React.PureComponent {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            if (!response.uri) {
-                return;
+
+            if (response.didCancel) {
+                console.log('User cancelled photo picker');
             }
-            let source = { uri: response.uri };
-
-            // You can also display the image using data:
-            // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-            this.setState({
-                imageSource: source,
-                data: response.data,
-                filename: response.fileName
-            });
-        })
-    }
-
-    uploadPhoto(){
-        RNFetchBlob.fetch('POST', `${SERVER_URL}/My_SQL/upload.php`, {
-            Authorization : "Bearer access-token",
-            otherHeader : "foo",
-            'Content-Type' : 'multipart/form-data',
-        }, [
-            { name : 'fileToUpload', filename : this.state.filename, type: 'image/jpeg', data: this.state.data},
-            console.log('Data',this.state.data)
-        ]).then((resp) => {
-            console.log('resp ='+ resp);
-        }).catch((err) => {
-            console.log('errror = '+ err);
-        })
-    }
-
-    handleChange(event) {
-        this.setState({
-            detail: event.target.value
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                this.setState({
+                    data: response.data,
+                    fileName: response.fileName
+                });
+            }
         });
     }
 
     addProBlem(){
-        console.log('Title' + this.state.title);
-        console.log('selected' + this.state.selected);
-        console.log('detail' + this.state.detail);
-        console.log('imageSource' + this.state.imageSource);
-        console.log('data' + this.state.data);
-        console.log('filename' + this.state.filename);
+        if(this.state.title === '' || this.state.selected === undefined || this.state.detail === ''){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('general.please_Complete'),
+                [
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+        }else{
+            let date = new Date();
+            let dateFormat = moment(date).format("YYYY-MM-DD");
+            const {user} = this.props.Users;
+            const UserName = user.map((data) => {return data.UserName});
+            let UserNames =`${UserName}`;
+            const Title = this.state.title;
+            const Img = this.state.data ? 'data:image/jpeg;base64,'+this.state.data : '';
+            const Type = this.state.selected;
+            const Detail = this.state.detail;
+            this.props.FETCH_InsertProblem(UserNames, dateFormat, Title, Img, Type, Detail);
+            this.setState({
+                data: null,
+                fileName: null,
+                selected: undefined,
+                detail : '',
+                title: '',
+            })
+        }
+    }
 
+    BtnClear(){ // ปุ่ม x (ลบ)
+        this.setState({
+            data: null,
+            fileName: null,
+            selected: undefined,
+            detail : '',
+            title: '',
+        })
     }
 
     render() {
@@ -131,17 +137,7 @@ class problemScreen extends React.PureComponent {
                     <View style={styles.containerRowCenter}>
                         <TouchableOpacity
                             style={[styles.buttonImg,{marginRight: 10, height: 30}]}
-                            onPress={() =>{
-                                this.setState({
-                                    imageSource: null,
-                                    data: null,
-                                    filename: null,
-                                    selected: undefined,
-                                    detail : '',
-                                    title: '',
-                                })
-
-                            }}
+                            onPress={() =>{this.BtnClear()}}
                         >
                             <CommonText text={Trans.tran('Problem.clear')} style={styles.fontClear} />
                         </TouchableOpacity>
@@ -163,7 +159,7 @@ class problemScreen extends React.PureComponent {
                                 <CommonText text={Trans.tran('Problem.type')} style={styles.fontTitle} />
                                 <Picker
                                     mode="dropdown"
-                                    style={{ width: '60%' }}
+                                    style={{ width: '65%' }}
                                     selectedValue={this.state.selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                 >
@@ -190,7 +186,11 @@ class problemScreen extends React.PureComponent {
                                 <TouchableOpacity style={styles.buttonImg} onPress={this.selectPhotoTapped.bind(this)}>
                                     <CommonText text={Trans.tran('Problem.attach_Picture')} style={styles.fontbtnIMG} />
                                 </TouchableOpacity>
-                                <CommonText text={'ชื่อรูปภาพ.jpg'} style={styles.fontNameIMG} />
+                                <View style={{width: '70%'}}>
+                                    <Text numberOfLines={1} style={styles.fontNameIMG}>
+                                        {this.state.fileName ? this.state.fileName : Trans.tran('Problem.picture_Name')}
+                                    </Text>
+                                </View>
                             </View>
                             <View style={styles.containerCenter}>
                                 <TouchableOpacity style={styles.button} onPress={() => this.addProBlem()}>
@@ -242,7 +242,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#068e81',
         paddingLeft: 10,
-        marginVertical: 5
+        marginVertical: 5,
+        paddingBottom: 5
+
     },
     buttonImg: {
         height: 40,
@@ -263,10 +265,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#068e81'
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '500',
         color: '#fff',
-        marginHorizontal: 10,
+        marginHorizontal: 20,
     },
     containerRowCenter: {
         flexDirection: 'row',
@@ -281,7 +283,7 @@ const styles = StyleSheet.create({
     containerTextInput: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        width: '100%'
     },
     fontTitle: {
         fontSize: 20,
@@ -295,7 +297,7 @@ const styles = StyleSheet.create({
     fontNameIMG: {
         fontSize: 14,
         marginLeft: '2%',
-        marginTop: 10
+        marginTop: 10,
     },
     containerCenter: {
         width: '100%',

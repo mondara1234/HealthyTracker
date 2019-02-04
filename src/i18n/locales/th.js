@@ -129,6 +129,7 @@ export default {
         'attach_Picture': 'แนบรูปภาพ',
         'send_Problems': 'ส่งปัญหา',
         'type': 'ประเภท',
+        'picture_Name': 'ชื่อรูปภาพ',
         'Picker': {
             'type_Problem': 'เลือกประเภทของปัญหา',
             'unstable_System': 'ระบบไม่เสถียร',
@@ -139,11 +140,18 @@ export default {
         }
     },
     'Profile': {
+        'title' : 'จัดการข้อมูลส่วนตัว',
         'information': 'ข้อมูล',
         'private': 'ส่วนตัว',
         'edit' : 'แก้ไข',
-        'save' : 'บันทึก'
-    },
+        'save' : 'บันทึก',
+        'email' : 'อีเมล:',
+        'change_Img_profile': 'เปลี่ยนรูปโปรไฟล์',
+        'sex' : 'เพศ :',
+        'age' : 'อายุ (ปี)',
+        'weight' : 'น้ำหนัก (กก)',
+        'height' : 'ส่วนสูง (ซม)'
+},
     'Setting': {
         'title': 'ตั้งค่า',
         'save': 'บันทึก',
@@ -187,6 +195,7 @@ export default {
         'forgot_password': 'ลืมรหัสผ่าน ?',
         'already_account': 'คุณมีบัญชีแล้วหรือยัง ?',
         'already_people': 'นี้มีคนใช้ไปแล้วครับ',
+        'login_Error' : 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้องโปรดตรวจสอบตัวอักษรพิมพ์เล็กพิมพ์ใหญ่ให้ถูกต้อง',
         'Dialog': {
             'Change_password': 'การเปลี่ยนรหัสผ่าน',
             'new_Password': 'รหัสผ่านใหม่',

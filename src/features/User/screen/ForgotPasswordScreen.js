@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
-        marginVertical: 20
+        marginVertical: 20,
+        paddingBottom: 5
     },
     button: {
         width: 250,

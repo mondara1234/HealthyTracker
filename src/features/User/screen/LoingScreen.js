@@ -77,7 +77,7 @@ class LoingScreen extends Component {
             }else{
                 Alert.alert(
                     Trans.tran('general.alert'),
-                   'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้องโปรดตรวจสอบตัวอักษรพิมพ์เล็ดพิมพ์ใหญ่ให้ถูกต้อง',
+                    Trans.tran('User.login_Error'),
                     [
                         { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                     ],

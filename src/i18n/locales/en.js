@@ -130,6 +130,7 @@ export default {
         'attach_Picture': 'Attach a picture',
         'send_Problems': 'Send problems',
         'type': 'type',
+        'picture_Name': 'Picture name',
         'Picker': {
             'type_Problem': 'Choose the type of problem',
             'unstable_System': 'Unstable system',
@@ -140,10 +141,17 @@ export default {
         }
     },
     'Profile': {
+        'title' : 'Manage personal information',
         'information': 'information',
         'private': 'private',
         'edit' : 'Edit',
-        'save': 'Save'
+        'save': 'Save',
+        'email' : 'E-mail:',
+        'change_Img_profile': 'Change profile picture',
+        'sex' : 'Sex :',
+        'age' : 'Age (year)',
+        'weight' : 'Weight (kg)',
+        'height' : 'Height (cm)'
     },
     'Setting': {
         'title': 'Setting',
@@ -188,6 +196,7 @@ export default {
         'forgot_password': 'Forgot your password ?',
         'already_account': 'Already have an account yet ?',
         'already_people': 'This has already been used by people',
+        'login_Error' : 'The username or password is incorrect. Please check the correct lowercase letters',
         'Dialog': {
             'Change_password': 'Change password',
             'new_Password': 'New Password',

@@ -73,7 +73,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dat
                     Trans.tran('general.alert'),
                     responseJson,
                     [
-                        { text: Trans.tran('general.ok'), onPress: () => keyScreens.navigate('LOGIN')},
+                        { text: Trans.tran('general.ok'), onPress: () => keyScreens({routeName: LOGIN})},
                         { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
                     ],
                     { cancelable: false },

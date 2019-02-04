@@ -178,11 +178,6 @@ class ProfileScreen extends React.PureComponent {
                                             let Age = this.state.TextInput_age;
                                             let Weight = this.state.TextInput_cm;
                                             let Height = this.state.TextInput_gg;
-                                            console.log('Sex'+Sex);
-                                            console.log('Age'+Age);
-                                            console.log('Ages'+Ages);
-                                            console.log('Weight'+Weight);
-                                            console.log('Height'+Height);
                                             let BMRUser = 0;
 
                                             if(Sex === 'male'){
@@ -220,25 +215,25 @@ class ProfileScreen extends React.PureComponent {
                                 <View>
                                     <CommonText text={`${UserName}`} color={'#068e81'} />
                                     <View style={styles.containerRow}>
-                                        <CommonText text={'E-mail:'} />
+                                        <CommonText text={Trans.tran('Profile.email')} />
                                         <CommonText text={`${Email}`} style={styles.colorEmail} />
                                     </View>
                                     <TouchableOpacity style={styles.btnPass}>
-                                        <CommonText text={'เปลี่ยนรหัสผ่าน'} style={styles.fontBtnPass} />
+                                        <CommonText text={Trans.tran('User.change_Password')} style={styles.fontBtnPass} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
                             <View style={styles.containerRow}>
                                 <TouchableOpacity style={styles.btnIMG}>
-                                    <CommonText text={'เปลี่ยนรูปโปรไฟล์'} style={styles.fontBtnIMG} />
+                                    <CommonText text={Trans.tran('Profile.change_Img_profile')} style={styles.fontBtnIMG} />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.containerProfile}>
                                 <View style={styles.containerSex}>
-                                    <CommonText text={'เพศ :'} />
+                                    <CommonText text={Trans.tran('Profile.sex')} />
                                     <TouchableOpacity onPress={() => this.selectSex('male')}>
                                         <CommonText
-                                            text={'ชาย'}
+                                            text={Trans.tran('FoodDiary.Dialog.male')}
                                             style={[styles.dialogTextBody, {
                                                 marginLeft: 30,
                                                 color: this.state.selected === 'male' ? '#068e81' : '#000'
@@ -248,7 +243,7 @@ class ProfileScreen extends React.PureComponent {
                                     <CommonText text={'/'} style={[styles.dialogTextBody, {marginLeft: 3}]}/>
                                     <TouchableOpacity onPress={() => this.selectSex('female')}>
                                         <CommonText
-                                            text={'หญิง'}
+                                            text={Trans.tran('FoodDiary.Dialog.female')}
                                             style={[styles.dialogTextBody, {
                                                 marginLeft: 3,
                                                 color: this.state.selected === 'female' ? '#068e81' : '#000'
@@ -257,12 +252,12 @@ class ProfileScreen extends React.PureComponent {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.containerTitleAge}>
-                                    <CommonText text={'อายุ (ปี)'}/>
+                                    <CommonText text={Trans.tran('Profile.age')}/>
                                 </View>
                             </View>
                             <View style={styles.containerTextInput}>
                                 <View style={styles.viewGG}>
-                                    <CommonText text={'น้ำหนัก (กก)'} />
+                                    <CommonText text={Trans.tran('Profile.weight')} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
                                                defaultValue={`${Heights}`}
@@ -270,7 +265,7 @@ class ProfileScreen extends React.PureComponent {
                                                keyboardType="numeric"
                                                onChangeText={TextInputValue => this.setState({TextInput_gg: TextInputValue === 0 ? Heights : TextInputValue})}
                                     />
-                                    <CommonText text={'ส่วนสูง (ซม)'} style={{marginTop: 10}} />
+                                    <CommonText text={Trans.tran('Profile.height')} style={{marginTop: 10}} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
                                                defaultValue={`${Weights}`}
@@ -309,7 +304,7 @@ class ProfileScreen extends React.PureComponent {
 }
 
 ProfileScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={'จัดการข้อมูลส่วนตัว'} />,
+    headerTitle: <HeaderTitle text={Trans.tran('Profile.title')} />,
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });

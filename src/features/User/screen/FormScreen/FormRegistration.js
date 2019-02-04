@@ -5,13 +5,11 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import ImagePicker from "react-native-image-picker";
-import RNFetchBlob from "react-native-fetch-blob";
 import Trans from "../../../common/containers/Trans";
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonText from '../../../common/components/CommonText'
 import * as API from '../../api/api';
 import { Images } from "../../components/images";
-import { SERVER_URL } from "../../../../common/constants";
 import moment from "moment/moment";
 
 class FormRegistration extends Component {
@@ -47,12 +45,7 @@ class FormRegistration extends Component {
                const Email = this.state.TextInput_Email;
                const Password = this.state.TextInput_Password;
                const ImgProfile = this.state.ImageSource ? 'data:image/jpeg;base64,'+this.state.data : this.state.ImgDefault;
-               const keyScreens = this.props.navigation;
-               console.log(ImgProfile);
-               console.log(Name);
-               console.log(Email);
-               console.log(Password);
-               console.log(dateFormat);
+               const keyScreens = this.props.keyScreen;
                this.props.Flights_Register(Name, Email, Password, ImgProfile, keyScreens, dateFormat);
            }else{
                Alert.alert(
@@ -84,7 +77,6 @@ class FormRegistration extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled photo picker');
@@ -99,32 +91,11 @@ class FormRegistration extends Component {
                 let source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 this.setState({
-
                     ImageSource: source,
                     data: response.data,
                     fileName: response.fileName
-
                 });
-                console.log('uri', source);
-                console.log('data', response.data);
             }
-        });
-    }
-
-    uploadPhoto(){
-        RNFetchBlob.fetch('POST', `${SERVER_URL}/My_SQL/upload.php`, {
-            Authorization : "Bearer access-token",
-            otherHeader : "foo",
-            'Content-Type' : 'multipart/form-data',
-        }, [
-            { name: 'image', filename: 'image.png', type: 'image/png', data: this.state.data }
-        ]).then((resp) => {
-            let tempMSG = resp.data;
-            tempMSG = tempMSG.replace(/^"|"$/g, '');
-
-            console.log('resp ='+ tempMSG);
-        }).catch((err) => {
-            console.log('errror = '+ err);
         });
     }
 
@@ -192,7 +163,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
-        marginVertical: 5
+        marginVertical: 5,
+        paddingBottom: 5
     },
     button: {
         width: 250,
