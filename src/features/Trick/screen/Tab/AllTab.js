@@ -90,7 +90,7 @@ class AllTab extends React.PureComponent {
                     </Left>
                     <Body style={{ marginLeft: '-50%'}}>
                         <Text numberOfLines={1} style={[styles.fontTitleName, {marginLeft: 3}]}> {item.TrickName} </Text>
-                        <View style={styles.viewHeartTwo}>
+                        <View style={[styles.viewHeartTwo,{marginTop: '8%'}]}>
                             <Image  style={{width: 28, height: 24}}
                                     source={Images.TrickScreen.Heart}
                             />

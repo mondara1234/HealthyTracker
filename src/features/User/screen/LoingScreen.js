@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, NetInfo, ImageBackground, BackHandler } from 'react-native';
+import { StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler } from 'react-native';
 import { Container, Content } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
-import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
-import CheckInternet from '../../common/components/CheckNET';
 import Logo from '../components/Logo';
 import { getAllUser, getOneUser } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
+import Trans from "../../common/containers/Trans";
 
 class LoingScreen extends Component {
     constructor(props) {
@@ -43,9 +42,7 @@ class LoingScreen extends Component {
     };
 
     componentDidMount(){
-        NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.props.REDUCER_ALLDATA(); //น้ำข้อมูลมาใส่ใน servers.data
-
     }
 
     UserLoginFunction = () =>{

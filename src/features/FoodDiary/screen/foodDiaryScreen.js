@@ -280,9 +280,19 @@ class foodDiaryScreen extends React.PureComponent {
                         </View>
                     </View>
                     <View style={styles.containerKcal}>
-                        <Image style={{width: 60, height: 100}}
-                               source={Images.foodDiaty.kcal1}
-                        />
+                        {this.state.statusBar > 50 ?
+                            <Image style={{width: 60, height: 100}}
+                                   source={Images.foodDiaty.kcal1}
+                            />
+                            : this.state.statusBar === 50 ?
+                                <Image style={{width: 60, height: 100}}
+                                       source={Images.foodDiaty.kcal1}
+                                />
+                                :
+                                    <Image style={{width: 60, height: 100}}
+                                           source={Images.foodDiaty.kcal1}
+                                    />
+                        }
                         <View>
                             <View style={styles.containerCalendar}>
                                 <CommonText text={Trans.tran('FoodDiary.energy_today')} style={styles.textTitlekcal} />

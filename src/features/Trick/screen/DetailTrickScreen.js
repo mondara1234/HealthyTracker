@@ -156,6 +156,7 @@ class DetailTrickScreen extends React.PureComponent {
                                 <CommonText text={`${trickData.PeopleAdd} / ${trickData.DateAdded}`} size={16} />
                             </View>
                             <CommonText text={trickData.TrickDetail} style={{marginTop: 40}} />
+                            <CommonText text={`ที่มา : ${trickData.sourceURL}`} style={{marginTop: 10}} />
                         </View>
                     </Content>
                     <SideMenu
@@ -229,7 +230,8 @@ const styles = StyleSheet.create({
     },
     fontTitleName:{
         fontSize: 22,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: '2%'
     },
     viewPropleAdd: {
         width: '100%',
@@ -244,8 +246,8 @@ const styles = StyleSheet.create({
     },
     sizeHeartDetail: {
         marginHorizontal: 10,
-        width: 26,
-        height: 20
+        width: 27,
+        height: 23
     }
 });
 

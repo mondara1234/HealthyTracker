@@ -138,9 +138,19 @@ class bmiScreen extends React.PureComponent {
                                     </View>
                                 </View>
                                 <View style={styles.containerBodyBMI}>
-                                    <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                            source={Images.foodDiaty.kcal1}
-                                    />
+                                    {this.state.criterionbmi === 'ผอม' ?
+                                        <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
+                                                source={Images.foodDiaty.kcal1}
+                                        />
+                                        : this.state.criterionbmi === 'ปกติ' ?
+                                            <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
+                                                    source={Images.foodDiaty.kcal1}
+                                            />
+                                            :
+                                            <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
+                                                    source={Images.foodDiaty.kcal1}
+                                            />
+                                    }
                                 </View>
                             </View>
                             <View style={styles.containerBarBMI }>
