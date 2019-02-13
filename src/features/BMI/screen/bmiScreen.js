@@ -24,6 +24,7 @@ class bmiScreen extends React.PureComponent {
         this.state = {
             editing: true,
             dataArray : [],
+            Sex:'',
             bmi: 0,
             criterionbmi: ''
         }
@@ -78,6 +79,7 @@ class bmiScreen extends React.PureComponent {
         const {user} = this.props.Users;
         const Height = user.map((data) => {return data.Height});
         const Weight = user.map((data) => {return data.Weight});
+        const Sex = user.map((data) => {return data.Sex});
         let SumBMi = Math.pow(Weight, 2)/Height;
         let BMRUser = 0;
         let criterionBMI = '';
@@ -104,7 +106,8 @@ class bmiScreen extends React.PureComponent {
         }
         this.setState({
             bmi : SumBMi.toFixed(2),
-            criterionbmi: criterionBMI
+            criterionbmi: criterionBMI,
+            Sex: `${Sex}`
         });
         this.getBMRUser(BMRUser)
 
@@ -138,18 +141,29 @@ class bmiScreen extends React.PureComponent {
                                     </View>
                                 </View>
                                 <View style={styles.containerBodyBMI}>
-                                    {this.state.criterionbmi === 'ผอม' ?
+                                    {`${this.state.criterionbmi}` === 'ผอม' && `${this.state.Sex}` === 'male' ?
                                         <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                source={Images.foodDiaty.kcal1}
+                                                source={Images.BMI.male_thin}
                                         />
-                                        : this.state.criterionbmi === 'ปกติ' ?
+                                        :`${this.state.criterionbmi}` === 'ผอม' && `${this.state.Sex}` === 'female' ?
                                             <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                    source={Images.foodDiaty.kcal1}
+                                                    source={Images.BMI.male_thin}
                                             />
-                                            :
-                                            <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                    source={Images.foodDiaty.kcal1}
-                                            />
+                                            :`${this.state.criterionbmi}` === 'ปกติ' && `${this.state.Sex}` === 'male' ?
+                                                <Image  style={{width: 60, height: 120, marginLeft: '10%'}}
+                                                    source={Images.BMI.male_slender}
+                                                />
+                                                :`${this.state.criterionbmi}` === 'ปกติ' && `${this.state.Sex}` === 'female' ?
+                                                    <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
+                                                            source={Images.BMI.Female_slender}
+                                                    />
+                                                    :`${this.state.Sex}` === 'male' ?
+                                                        <Image  style={{width: 60, height: 120, marginLeft: '3%'}}
+                                                                source={Images.BMI.male_fat}
+                                                        />
+                                                        : <Image  style={{width: 60, height: 100, marginLeft: '3%'}}
+                                                            source={Images.BMI.Female_Fat}
+                                                        />
                                     }
                                 </View>
                             </View>
@@ -226,6 +240,7 @@ class bmiScreen extends React.PureComponent {
                                     renderContent={this._renderContent}
                                     headerStyle={{ backgroundColor: "#b7daf8" }}
                                     contentStyle={{ backgroundColor: "#ddecf8" }}
+                                    style={{marginRight: '2%'}}
                                 />
                             </View>
                         </View>
@@ -290,7 +305,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     containerBMI:{
-        width: '80%',
+        flex: 1,
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

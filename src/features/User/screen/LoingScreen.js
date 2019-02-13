@@ -7,11 +7,11 @@ import { bindActionCreators } from 'redux';
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import Logo from '../components/Logo';
+import Trans from "../../common/containers/Trans";
 import { getAllUser, getOneUser } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
-import Trans from "../../common/containers/Trans";
 
 class LoingScreen extends Component {
     constructor(props) {

@@ -4,6 +4,7 @@ import * as ApiUser from '../api/api';
 
 export function* fetchPosts() {
         yield take(ALL_DATAUSER);
+        console.log('ALL_DATAUSER',ALL_DATAUSER);
     try {
         const posts = yield call(ApiUser.fetchPostsApi);
         console.log(posts);

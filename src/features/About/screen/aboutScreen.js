@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, BackHandler, Alert } from 'react-native';
+import { StyleSheet, View, BackHandler, Alert, WebView } from 'react-native';
 import { Container, Content } from 'native-base';
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
@@ -46,20 +46,22 @@ class aboutScreen extends React.PureComponent {
                         <Content padder>
                             <CommonText style={styles.textTitle} text={Trans.tran('About.about')} />
                             <View style={styles.containerBody}>
-                                <CommonText text={Trans.tran('About.about')} />
-                                <CommonText text={'คือ แอฟพลิเคชันดูแลสุขภาพในส่วนของการควบคุมอาหารในแต่ละวัน'} />
+                                <CommonText text={'Healthy Tracker'} />
+                                <CommonText text={'คือ แอพพลิเคชั่นดูแลสุขภาพในส่วนของการควบคุมอาหารในแต่ละวัน'} />
                             </View>
                             <CommonText style={styles.textHead} text={Trans.tran('About.details_Application')} />
                             <View style={styles.containerBody}>
-                                <CommonText text={'เนื้อหา..................................................................................' +
-                                '........................................................................................' +
-                                '........................................................................................' +
-                                '........................................................................................'}
-                                />
+                                <CommonText
+                                    text={
+                                        'แอพพลิเคชั่น Healthy Tracker เป็น แอพพลิเคชั่นที่จะคอยควบคุมการรับประทานอาหารในแต่ละวันของผู้ใช้เพื่อให้ผู้ใช้ได้มีสุขภาพที่ดูดีหรือตามที่ต้องการโดยผู้ใช้จะต้องทำการเพิ่มอาหารที่รับประทานในแต่ละวันเพื่อให้ระบบได้ทำการประมวลผลของแคลอรี่ที่ได้รับประทานไปในแต่ละวันว่าเกิน ขาด หรือพอดีตามมาตราฐานที่ต้องได้รับต่อวันหรือไม่และทางผู้ดูแลระบบจะคอยตรวจสอบคำนวณสถิติจากอาหารของผู้ใช้เพื่อทำการแนะนำผู้ใช้อีกทางเปรียบเสมือน เทรนเนอร์ ส่วนตัวให้กับคุณและภายในแอพพลิเคชั่นยังมีเคล็ดลับเกี่ยวกับสุขภาพและข้อแนะนำตามค่าดัชนีมวลกายให้ผู้ใช้ได้ศึกษาหาข้อมูลเพิ่มอีกด้วย'
+                                    }
+                                    style={{textAlign: 'justify'}}
+                                 />
                             </View>
                             <CommonText style={styles.textHead} text={Trans.tran('About.contact')} />
-                            <View style={styles.containerBody}>
+                            <View style={[styles.containerBody, {marginBottom: '10%'}]}>
                                 <CommonText text={Trans.tran('About.information_Please')} />
+                                <CommonText text={`${'ชื่อผู้พัฒนา'}: กมลพัชร์ พิสทุธิกมล`} />
                                 <CommonText text={`${Trans.tran('About.e_mail')}: kakzadsr@gmail.com`} />
                                 <CommonText text={`${Trans.tran('About.telephone')}: 088-6060-128`} />
                             </View>
@@ -94,16 +96,16 @@ const styles = StyleSheet.create({
     containerBody: {
         marginHorizontal:20,
         marginTop: 10,
-        marginLeft: 10
+        marginLeft: 30
     },
     textTitle: {
         fontSize: 24,
-        marginLeft: 30
+        marginLeft: 10
     },
     textHead: {
         fontSize: 22,
         marginTop:10,
-        marginLeft: 30
+        marginLeft: 10
     }
 
 });

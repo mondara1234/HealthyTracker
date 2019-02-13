@@ -2,18 +2,19 @@
 import React from "react";
 import {View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler} from 'react-native';
 import { Container } from 'native-base';
+import { NavigationActions } from "react-navigation";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import VirtualKeyboard from '../components/VirtualKeyboard';
-import {FORGOTPASSWORD} from "../router";
-import {FOODDIARY_SCREEN} from "../../FoodDiary/router";
-import {NavigationActions} from "react-navigation";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import Trans from "../../common/containers/Trans";
+import { FORGOTPASSWORD } from "../router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { SETTING_SCREEN } from "../../Setting/router";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
@@ -69,6 +70,7 @@ class PraviedKeyScreen extends React.PureComponent {
                     [
                         {text: Trans.tran('general.ok'),
                             onPress: () => {
+                                //this.props.navigation.navigate(SETTING_SCREEN);
                                 this.setState({
                                     passCode: []
                                 });

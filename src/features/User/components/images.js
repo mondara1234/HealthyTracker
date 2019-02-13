@@ -5,6 +5,14 @@ export  const Images = {
     'plusImg':require('../../../../pulic/assets/images/plusImg.png'),
     'bgRegister':require('../../../../pulic/assets/images/bgRegister.png'),
     'bgLogin':require('../../../../pulic/assets/images/bgLogin.png'),
+    'BMI': {
+        'male_thin':require('../../../../pulic/assets/images/male_thin.jpg'),
+        'Female_thin':require('../../../../pulic/assets/images/Female_thin.png'),
+        'male_slender':require('../../../../pulic/assets/images/male_slender.png'),
+        'Female_slender':require('../../../../pulic/assets/images/Female_slender.png'),
+        'male_fat':require('../../../../pulic/assets/images/male_fat.png'),
+        'Female_Fat':require('../../../../pulic/assets/images/Female_Fat.png'),
+    },
     'foodDiaty': {
          'kcal1':require('../../../../pulic/assets/images/kcal1.png'),
         'plusFood':require('../../../../pulic/assets/images/plusFood.png'),
@@ -21,6 +29,8 @@ export  const Images = {
     },
     'ProfileScreen': {
         'smile':require('../../../../pulic/assets/images/smile.png'),
+        'Profilemalefat':require('../../../../pulic/assets/images/Profile_malefat.jpg'),
+        'ProfileFemalefat':require('../../../../pulic/assets/images/Profile_Femalefat.png')
     },
 
 };

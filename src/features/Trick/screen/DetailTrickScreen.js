@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert, Linking } from 'react-native';
 import { Container, Content } from 'native-base';
 import { bindActionCreators } from "redux";
 import { NavigationActions } from "react-navigation";
@@ -156,7 +156,9 @@ class DetailTrickScreen extends React.PureComponent {
                                 <CommonText text={`${trickData.PeopleAdd} / ${trickData.DateAdded}`} size={16} />
                             </View>
                             <CommonText text={trickData.TrickDetail} style={{marginTop: 40}} />
-                            <CommonText text={`ที่มา : ${trickData.sourceURL}`} style={{marginTop: 10}} />
+                            <TouchableOpacity style={{marginTop: 10}} onPress={() => Linking.openURL(trickData.sourceURL)}>
+                                <CommonText text={`ที่มา : ${trickData.sourceURL}`} color={'#07097d'} />
+                            </TouchableOpacity>
                         </View>
                     </Content>
                     <SideMenu

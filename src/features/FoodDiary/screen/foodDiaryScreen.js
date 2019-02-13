@@ -136,7 +136,7 @@ class foodDiaryScreen extends React.PureComponent {
                     }}>
                         <View style={styles.containerRowList}>
                             <CommonText text={Trans.tran('FoodDiary.number')} size={14}/>
-                            <CommonText text={item.FoodNumber} style={{fontSize: 14, color: '#068e81'}}/>
+                            <CommonText text={` ${item.FoodNumber}`} style={{fontSize: 14, color: '#068e81'}}/>
                             <CommonText text={` ${item.FoodUnit}`} size={14}/>
                         </View>
                         <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`}
@@ -280,19 +280,9 @@ class foodDiaryScreen extends React.PureComponent {
                         </View>
                     </View>
                     <View style={styles.containerKcal}>
-                        {this.state.statusBar > 50 ?
-                            <Image style={{width: 60, height: 100}}
-                                   source={Images.foodDiaty.kcal1}
-                            />
-                            : this.state.statusBar === 50 ?
-                                <Image style={{width: 60, height: 100}}
-                                       source={Images.foodDiaty.kcal1}
-                                />
-                                :
-                                    <Image style={{width: 60, height: 100}}
-                                           source={Images.foodDiaty.kcal1}
-                                    />
-                        }
+                        <Image style={{width: 100, height: 100}}
+                               source={Images.foodDiaty.kcal1}
+                        />
                         <View>
                             <View style={styles.containerCalendar}>
                                 <CommonText text={Trans.tran('FoodDiary.energy_today')} style={styles.textTitlekcal} />

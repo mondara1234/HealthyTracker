@@ -94,7 +94,7 @@ class AllTab extends React.PureComponent {
                             <Image  style={{width: 28, height: 24}}
                                     source={Images.TrickScreen.Heart}
                             />
-                            <CommonText text={`${item.TrickLike} ${Trans.tran('Trick.person')}`} size={14} color={'#068e81'} />
+                            <CommonText text={`${item.TrickLike < 10 ? '0'+item.TrickLike : item.TrickLike} ${Trans.tran('Trick.person')}`} size={14} color={'#068e81'} style={{marginLeft: '2%'}} />
                         </View>
                     </Body>
                 </CardItem>

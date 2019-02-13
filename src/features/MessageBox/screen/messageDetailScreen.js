@@ -45,14 +45,16 @@ class messageDetailScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
-                    <View style={{alignItems: 'center'}}>
-                        <Content>
+                    <View>
+                        <View  style={{alignItems: 'center'}}>
                             <CommonText text={messageData.AU_Title} style={styles.titleMessage} />
-                            <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={styles.descriptionMessage} />
-                            <View  style={styles.viewDetailMessage}>
+                        </View>
+                        <CommonText text={Trans.tran('MessageBox.detail_Message.description')} style={styles.descriptionMessage} />
+                        <View  style={styles.viewDetailMessage}>
+                            <Content>
                                 <CommonText text={messageData.AU_Datile} style={styles.detailMessage} />
-                            </View>
-                        </Content>
+                            </Content>
+                        </View>
                     </View>
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate(FOODDIARY_SCREEN)}
@@ -93,7 +95,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
-        borderColor: '#068e81'
+        borderColor: '#068e81',
+        flex: 1,
+        marginBottom: '3%'
     },
     detailMessage: {
         margin: 10,

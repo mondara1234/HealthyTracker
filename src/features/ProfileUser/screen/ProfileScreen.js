@@ -38,7 +38,7 @@ class ProfileScreen extends React.PureComponent {
             DialogSuccess: false,
             ImageSource: null,
             data: null
-        }
+        };
     }
 
     onBack = () => {
@@ -56,6 +56,7 @@ class ProfileScreen extends React.PureComponent {
         }
         return false;
     };
+
 
     componentDidMount() {
         const members = this.props.Users.user;
@@ -208,7 +209,7 @@ class ProfileScreen extends React.PureComponent {
                                                 TextInput_age: Ages,
                                                 TextInput_cm: Weights,
                                                 TextInput_gg: Heights,
-                                            })
+                                            });
                                         }}
                                     >
                                         <IconFontAwesome5
@@ -225,9 +226,9 @@ class ProfileScreen extends React.PureComponent {
                                         onPress={() => {
                                             let UserID = id.toString();
                                             let Sex = this.state.selected;
-                                            let Age = this.state.TextInput_age;
-                                            let Weight = this.state.TextInput_cm;
-                                            let Height = this.state.TextInput_gg;
+                                            let Age = parseInt(this.state.TextInput_age);
+                                            let Weight =  parseInt(this.state.TextInput_gg);
+                                            let Height = parseInt(this.state.TextInput_cm);
                                             let BMRUser = 0;
 
                                             if(Sex === 'male'){
@@ -237,13 +238,17 @@ class ProfileScreen extends React.PureComponent {
                                                 let BMR_female = 665 + (9.6 * Height) + (1.8 * Weight) - (4.7 * Age);
                                                 BMRUser = BMR_female.toFixed();
                                             }
-                                            
+
                                             this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
 
+                                            this.getData(UserName);
+
+                                            console.log('Heights',Heights);
+                                            console.log('Height',Height);
                                             this.setState({
                                                 stateButton: 'Edit'
                                             });
-                                            this.getData(UserName);
+
                                         }}
                                     >
                                         <IconFontAwesome5
@@ -284,25 +289,48 @@ class ProfileScreen extends React.PureComponent {
                             <View style={styles.containerProfile}>
                                 <View style={styles.containerSex}>
                                     <CommonText text={Trans.tran('Profile.sex')} />
-                                    <TouchableOpacity onPress={() => this.selectSex('male')}>
-                                        <CommonText
-                                            text={Trans.tran('FoodDiary.Dialog.male')}
-                                            style={[styles.dialogTextBody, {
-                                                marginLeft: 30,
-                                                color: this.state.selected === 'male' ? '#068e81' : '#000'
-                                            }]}
-                                        />
-                                    </TouchableOpacity>
-                                    <CommonText text={'/'} style={[styles.dialogTextBody, {marginLeft: 3}]}/>
-                                    <TouchableOpacity onPress={() => this.selectSex('female')}>
-                                        <CommonText
-                                            text={Trans.tran('FoodDiary.Dialog.female')}
-                                            style={[styles.dialogTextBody, {
-                                                marginLeft: 3,
-                                                color: this.state.selected === 'female' ? '#068e81' : '#000'
-                                            }]}
-                                        />
-                                    </TouchableOpacity>
+                                    {this.state.stateButton === 'Edit'?
+                                        <View style={styles.containerSex}>
+                                            <CommonText
+                                                text={Trans.tran('FoodDiary.Dialog.male')}
+                                                style={[styles.dialogTextBody, {
+                                                    marginLeft: 30,
+                                                    color: this.state.selected === 'male' ? '#068e81' : '#000'
+                                                }]}
+                                            />
+                                            <CommonText text={'/'} style={[styles.dialogTextBody, {marginLeft: 3}]}/>
+                                            <CommonText
+                                                text={Trans.tran('FoodDiary.Dialog.female')}
+                                                style={[styles.dialogTextBody, {
+                                                    marginLeft: 3,
+                                                    color: this.state.selected === 'female' ? '#068e81' : '#000'
+                                                }]}
+                                            />
+                                        </View>
+                                        :
+                                        <View style={styles.containerSex}>
+                                            <TouchableOpacity onPress={() => this.selectSex('male')}>
+                                                <CommonText
+                                                    text={Trans.tran('FoodDiary.Dialog.male')}
+                                                    style={[styles.dialogTextBody, {
+                                                        marginLeft: 30,
+                                                        color: this.state.selected === 'male' ? '#068e81' : '#000'
+                                                    }]}
+                                                />
+                                            </TouchableOpacity>
+                                            <CommonText text={'/'} style={[styles.dialogTextBody, {marginLeft: 3}]}/>
+                                            <TouchableOpacity onPress={() => this.selectSex('female')}>
+                                                <CommonText
+                                                    text={Trans.tran('FoodDiary.Dialog.female')}
+                                                    style={[styles.dialogTextBody, {
+                                                        marginLeft: 3,
+                                                        color: this.state.selected === 'female' ? '#068e81' : '#000'
+                                                    }]}
+                                                />
+                                            </TouchableOpacity>
+                                        </View>
+
+                                    }
                                 </View>
                                 <View style={styles.containerTitleAge}>
                                     <CommonText text={Trans.tran('Profile.age')}/>
@@ -313,18 +341,20 @@ class ProfileScreen extends React.PureComponent {
                                     <CommonText text={Trans.tran('Profile.weight')} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
-                                               defaultValue={`${Heights}`}
+                                               defaultValue={`${Weights}`}
                                                placeholderTextColor = "#068e81"
                                                keyboardType="numeric"
-                                               onChangeText={TextInputValue => this.setState({TextInput_gg: TextInputValue === 0 ? Heights : TextInputValue})}
+                                               editable = {this.state.stateButton === 'Edit'? false : true}
+                                               onChangeText={TextInputValue => this.setState({TextInput_gg: TextInputValue === '' ? Weights : TextInputValue})}
                                     />
                                     <CommonText text={Trans.tran('Profile.height')} style={{marginTop: 10}} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
-                                               defaultValue={`${Weights}`}
+                                               defaultValue={`${Heights}`}
                                                placeholderTextColor = "#068e81"
                                                keyboardType="numeric"
-                                               onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue === 0 ? Weights : TextInputValue})}
+                                               editable = {this.state.stateButton === 'Edit'? false : true}
+                                               onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue === '' ? Heights : TextInputValue})}
                                     />
                                 </View>
                                 <View style={styles.viewAge}>
@@ -333,6 +363,7 @@ class ProfileScreen extends React.PureComponent {
                                                defaultValue={`${Ages}`}
                                                placeholderTextColor = "#068e81"
                                                keyboardType="numeric"
+                                               editable = {this.state.stateButton === 'Edit'? false : true}
                                                onChangeText={TextInputValue => this.setState({TextInput_age: TextInputValue === 0 ? Ages : TextInputValue})}
                                     />
                                     <View style={styles.viewIcon}>
@@ -359,6 +390,7 @@ class ProfileScreen extends React.PureComponent {
                                     text={Trans.tran('general.ok')}
                                     textStyle={styles.dialogTextButton}
                                     onPress={() => {
+
                                         this.setState({ DialogChange: false, DialogSuccess: true })
                                     }}
                                     style={styles.dialogTitleView}
