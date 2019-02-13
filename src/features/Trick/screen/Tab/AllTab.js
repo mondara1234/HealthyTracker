@@ -52,7 +52,7 @@ class AllTab extends React.PureComponent {
         return (
             <Card withSpace style={styles.containerCardTwo}>
                 <CardItem
-                    style={{ width: 180 }}
+                    style={{ width: 150 }}
                     button
                     onPress={() => this.props.navigation.navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}})}
                 >
@@ -118,7 +118,7 @@ class AllTab extends React.PureComponent {
                 resultOne.push(TrickAll[i]);
             }
         }
-        for (let i = 0; i < TrickAll.length; i++) {
+        for (let i = 1; i < TrickAll.length; i++) {
             if (i < 3) {
                 resultTwo.push(TrickAll[i]);
             }

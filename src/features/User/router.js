@@ -39,6 +39,7 @@ export const UserRouter = {
     [PRAVIEDKEY]: {
         screen: PraviedKeyScreen,
         navigationOptions: ({navigation}) => ({
+            drawerLockMode: 'locked-closed'
         })
     },
 };

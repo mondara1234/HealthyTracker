@@ -212,6 +212,7 @@ export default {
         'title': 'ตั้งค่ารหัสส่วนตัว',
         'personal_Code': 'รหัสส่วนตัว',
         'set_Successfully': 'ตั้งรหัสสำเร็จ !',
+        'Successfully': 'รหัสถูกต้อง',
         'invalid_Personal': 'รหัสส่วนตัวไม่ถูกต้อง !',
         'forget_Personal': 'ลืมรหัสส่วนตัว ?'
     }

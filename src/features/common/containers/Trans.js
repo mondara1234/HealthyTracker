@@ -27,9 +27,9 @@ class Trans extends React.PureComponent {
     };
 
     render() {
-        const {user} = (this.props.Users ? this.props.Users: '');
+        const {user} = this.props.Users ;
         const Language = user.map((data) => {return data.Language});
-        I18n.locale = (Language ? `${Language}` : null);
+        I18n.locale = `${Language}`;
         return <CommonText {...this.props} text={I18n.t(this.props.t, this.props.replace)} />
     }
 }

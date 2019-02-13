@@ -20,7 +20,6 @@ class PraviedKeyScreen extends React.PureComponent {
         super(props);
         this.state = {
             passCode: [],
-            passKey: '',
             editing: true
         };
     }
@@ -61,11 +60,12 @@ class PraviedKeyScreen extends React.PureComponent {
 
         setTimeout( _onFinishCheck = () => {
             let checkData = this.state.passKey;
+            console.log('checkData',checkData);
 
             if (checkData === '') {
                 Alert.alert(
                     Trans.tran('PraviedKey.personal_Code'),
-                    'ตั้งรหัสสำเร็จ!',
+                    Trans.tran('PraviedKey.set_Successfully'),
                     [
                         {text: Trans.tran('general.ok'),
                             onPress: () => {
@@ -80,7 +80,7 @@ class PraviedKeyScreen extends React.PureComponent {
             }else if (checkPassKey === checkData) {
                 Alert.alert(
                     Trans.tran('PraviedKey.personal_Code'),
-                    Trans.tran('PraviedKey.set_Successfully'),
+                    Trans.tran('PraviedKey.Successfully'),
                     [
                         {text: Trans.tran('general.ok'),
                             onPress: () =>{
@@ -175,7 +175,7 @@ class PraviedKeyScreen extends React.PureComponent {
 }
 
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: <HeaderTitle text={Trans.tran('PraviedKey.title')} />,
+    headerTitle: <HeaderTitle text={Trans.tran('PraviedKey.title')} style={{marginLeft: '-15%'}}/>,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 

@@ -213,6 +213,7 @@ export default {
         'title': 'Set up a personal code',
         'personal_Code': 'Personal code',
         'set_Successfully': 'Set the code successfully !',
+        'Successfully': 'code successfully',
         'invalid_Personal': 'Invalid personal code !',
         'forget_Personal': 'Forget your personal code ?'
     }
