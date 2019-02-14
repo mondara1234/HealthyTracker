@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions } from "react-native";
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
-import { UserRouter, HOMELOGIN, LOGIN,PRAVIEDKEY} from '../features/User/router';
+import { UserRouter, HOMELOGIN, LOGIN,PRAVIEDKEY, REGISTRATION} from '../features/User/router';
 import { trickRouter, TRICK_SCREEN  } from "../features/Trick/router";
 import { menuFoodRouter , MENUFOOD_SCREEN, FOODSTYPE_SCREEN} from "../features/MenuFood/router";
 import { foodDiaryRouter, FOODDIARY_SCREEN, METABOLIC_SCREEN } from "../features/FoodDiary/router";
@@ -27,7 +27,7 @@ export const RootStack = StackNavigator({
     ...problemRouter,
     ...messageboxRouter
 },{
-    initialRouteName: HOMELOGIN,
+    initialRouteName: LOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

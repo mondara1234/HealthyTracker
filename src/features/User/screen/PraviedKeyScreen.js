@@ -177,7 +177,7 @@ class PraviedKeyScreen extends React.PureComponent {
 }
 
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: <HeaderTitle text={Trans.tran('PraviedKey.title')} style={{marginLeft: '-15%'}}/>,
+    headerTitle: <HeaderTitle text={Trans.tran('PraviedKey.personal_Code')} style={{marginLeft: '-15%'}}/>,
     headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 
