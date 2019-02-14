@@ -20,6 +20,7 @@ import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN, FOODSEARCH_SCREEN } from "../../MenuFood/router";
+import { METABOLIC_SCREEN } from "../router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
@@ -32,14 +33,15 @@ class foodDiaryScreen extends React.PureComponent {
         this.state = {
             editing: true,
             date: '',
-            DialogData: false,
             selected: '',
             TextInput_age: 0,
             TextInput_cm: 0,
             TextInput_gg: 0,
             dataSource: [],
             sumCalorie: 0,
-            statusBar: 0
+            statusBar: 0,
+            DialogData: false,
+            DialogCalorie: false
         };
     }
 
@@ -337,6 +339,10 @@ class foodDiaryScreen extends React.PureComponent {
                             }
                         </View>
                     </View>
+                    {this.state.statusBar > 50 ?
+                        this.setState({DialogCalorie : true})
+                        :this.setState({DialogCalorie : false})
+                    }
                     <View style={styles.containerBody}>
                         <CommonText text={Trans.tran('FoodDiary.should_Add')}
                                     style={[styles.textUnitKcal, {marginLeft: 10, color: '#068e81'}]}/>
@@ -349,6 +355,7 @@ class foodDiaryScreen extends React.PureComponent {
                         bmiScreen={() => this.props.navigation.navigate(BMI_SCREEN)}
                         trickScreen={() => this.props.navigation.navigate(TRICK_SCREEN)}
                     />
+                    {/*ไดอาร็อดการกรอกข้อมูลBMI*/}
                     <Dialog
                         visible={this.state.DialogData}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
                         onTouchOutside={() => {
@@ -470,6 +477,40 @@ class foodDiaryScreen extends React.PureComponent {
                                 />
                                 <CommonText text={Trans.tran('FoodDiary.Dialog.kg')} style={styles.dialogTextBody}/>
                             </View>
+                        </View>
+                    </Dialog>
+
+                    {/*ไดอาร็อดการแจ้งเตือนเมื่อแคลอรี่เกินจากที่ต้องการ*/}
+                    <Dialog
+                        visible={this.state.DialogCalorie}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                        onTouchOutside={() => {
+                            this.setState({DialogCalorie: true})
+                        }}//ไม่ให้กดข้างนอกได้
+                        backgroundStyle={styles.customBackgroundDialog}
+                        dialogTitle={//ส่วนของTitle
+                            <DialogTitle
+                                title={'แจ้งเตือนแคลอรี่เกินจากที่ต้องได้รับ'}
+                                hasTitleBar={false}
+                                textStyle={[styles.dialogTextTitle,{color: '#fff'}]}
+                                style={[styles.dialogTitleView, {backgroundColor: '#068e81'}]}
+                            />
+                        }//ส่วนของฺbutton
+                        actions={[
+                            <DialogButton
+                                text={'ดูวิธีการเผาพลาญพลังงาน'}
+                                textStyle={styles.dialogTextButton}
+                                onPress={() => {
+                                    this.setState({DialogCalorie: false});
+                                    this.props.navigation.navigate(METABOLIC_SCREEN);
+                                }}
+                                style={styles.dialogTitleView}
+                            />
+                        ]}
+                    >{/*ส่วนของbody*/}
+                        <View style={{alignItems: 'center', justifyContent: 'center',paddingVertical: '10%'}}>
+                            <Image  style={{width: '60%', height: 200}}
+                                    source={Images.foodDiaty.Excess_energy}
+                            />
                         </View>
                     </Dialog>
                 </Container>

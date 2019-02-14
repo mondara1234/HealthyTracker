@@ -16,6 +16,7 @@ export  const Images = {
     'foodDiaty': {
          'kcal1':require('../../../../pulic/assets/images/kcal1.png'),
         'plusFood':require('../../../../pulic/assets/images/plusFood.png'),
+        'Excess_energy':require('../../../../pulic/assets/images/Excess_energy.png')
      },
     'imgGif': {
         'Run':require('../../../../pulic/assets/images/Run.gif'),

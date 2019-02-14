@@ -1,6 +1,7 @@
 
 const initialState = {
     foodUser: [],
+    metabolic: [],
     loading : false
 };
 
