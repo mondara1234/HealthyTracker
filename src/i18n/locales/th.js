@@ -188,7 +188,7 @@ export default {
     },
     'User': {
         'userName': 'ชื่อผู้ใช้',
-        'email': 'อีเมล์',
+        'email': 'อีเมล',
         'password': 'รหัสผ่าน',
         'confirm_password': 'ยืนยัน รหัสผ่าน',
         'forgot_Password': 'ลืมรหัสผ่าน',
