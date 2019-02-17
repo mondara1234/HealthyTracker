@@ -165,11 +165,12 @@ export default {
         'change_Personal_code': 'Change personal code',
         'alert':{
             'password_Length': 'Password must have 6 characters',
-            'old_Password': 'The old password is incorrect',
+            'old_Password': 'The original password is incorrect',
             'created_Personal_code': 'You have not created a personal code'
         },
         'Dialog':{
             'changing_Personal_code': 'Changing personal code',
+            'current_Password': 'Current Password',
             'original_Private_code': 'Original private code',
             'new_Personal_code': 'New personal code',
             'confirm_New_Password': 'Confirm new password',

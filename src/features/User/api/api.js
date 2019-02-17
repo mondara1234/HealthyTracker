@@ -66,6 +66,27 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dat
 
 };
 
+export const fetchUpdateUserName = (UserID, users, Emails ) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdateUserName.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id : UserID,
+            user : users,
+            email : Emails
+        })
+    }).then(response => response.json())
+        .then((responseJson) =>
+            console.log('อัดเดตUserName :',responseJson)
+        )
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
 export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height, BMRUser ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/UpdateBMIUser.php`, {
         method: 'POST',

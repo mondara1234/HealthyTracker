@@ -164,11 +164,12 @@ export default {
         'change_Personal_code': 'เปลี่ยนรหัสส่วนตัว',
         'alert':{
             'password_Length': 'รหัสผ่านต้องมี 6 ตัว',
-            'old_Password': 'รหัสผ่านเก่าไม่ถูกต้อง',
+            'old_Password': 'รหัสผ่านเดิมไม่ถูกต้อง',
             'created_Personal_code': 'คุณยังไม่ได้สร้างรหัสส่วนตัว'
         },
         'Dialog':{
             'changing_Personal_code': 'การเปลี่ยนรหัสส่วนตัว',
+            'current_Password': 'รหัสผ่านเดิม',
             'original_Private_code': 'รหัสส่วนตัวเดิม',
             'new_Personal_code': 'รหัสส่วนตัวใหม่',
             'confirm_New_Password': 'ยืนยัน รหัสส่วนตัวใหม่',

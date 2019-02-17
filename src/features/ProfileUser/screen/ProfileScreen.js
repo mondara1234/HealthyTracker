@@ -32,6 +32,8 @@ class ProfileScreen extends React.PureComponent {
             TextInput_gg: 0,
             BMRUser: 0,
             bmi: 0,
+            User:'',
+            Email: '',
             criterionbmi: '',
             stateButton: 'Edit',
             editing: true,
@@ -66,6 +68,8 @@ class ProfileScreen extends React.PureComponent {
         const members = this.props.Users.user;
         const sex = members.map((data) => {return data.Sex});
         const Age = members.map((data) => {return data.Age});
+        const UserName = members.map((data) => {return data.UserName});
+        const Email = members.map((data) => {return data.Email});
         const Height = members.map((data) => {return data.Height});
         const Weight = members.map((data) => {return data.Weight});
         let SumBMi = Math.pow(Weight, 2)/Height;
@@ -88,6 +92,8 @@ class ProfileScreen extends React.PureComponent {
         }
         this.setState({
             selected: `${sex}`,
+            user: `${UserName}`,
+            Email: `${Email}`,
             TextInput_age: parseInt(Age),
             TextInput_cm: parseInt(Height),
             TextInput_gg: parseInt(Weight),
@@ -301,10 +307,11 @@ class ProfileScreen extends React.PureComponent {
                                             let Age = parseInt(this.state.TextInput_age);
                                             let Weight =  parseInt(this.state.TextInput_gg);
                                             let Height = parseInt(this.state.TextInput_cm);
+                                            let user =  this.state.user;
+                                            let Email = this.state.Email;
+                                            let users = `${user}`;
+                                            let Emails = `${Email}`;
                                             let BMRUser = 0;
-                                            console.log('Age',Age);
-                                            console.log('Weight',Weight);
-                                            console.log('Height',Height);
 
                                             if(Sex === 'male'){
                                                 let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
@@ -314,7 +321,28 @@ class ProfileScreen extends React.PureComponent {
                                                 BMRUser = BMR_female.toFixed();
                                             }
 
-                                            this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
+                                            //คำสั่งเช็ดEmail
+                                            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+                                            if(reg.test(Emails) === true)
+                                            {
+                                                console.log("Email is Correct");
+                                                this.props.FETCH_UpdateUserName(UserID, users, Emails);
+                                                this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
+                                            }
+                                            else {
+                                                Alert.alert(
+                                                    Trans.tran('general.alert'),
+                                                    'Email is Not Correct',
+                                                    [
+                                                        {
+                                                            text: Trans.tran('general.close'), onPress: () => {
+                                                            }, style: "cancel"
+                                                        }
+                                                    ],
+                                                    {cancelable: false},
+                                                );
+                                                return false;
+                                            }
 
                                             let SumBMi = Math.pow(Weight, 2)/Height;
                                             let criterionBMI = '';
@@ -374,7 +402,7 @@ class ProfileScreen extends React.PureComponent {
                                                    placeholderTextColor = "#068e81"
                                                    editable = {this.state.stateButton === 'Edit'? false : true}
                                                    onChangeText={TextInputValue =>
-                                                       this.setState({ TextInput_gg: TextInputValue })}
+                                                       this.setState({ user: TextInputValue })}
                                         />
                                     </View>
                                     <View style={[styles.containerRow,{alignItems: 'center'}]}>
@@ -382,16 +410,15 @@ class ProfileScreen extends React.PureComponent {
                                         <TextInput style={[
                                             styles.inputBoxUser,
                                             {
-
+                                                fontSize: 16,
                                                 borderWidth: this.state.stateButton === 'Save'? 1 : 0
                                             }]}
                                                    underlineColorAndroid='rgba(0,0,0,0)'
                                                    defaultValue={`${Email}`}
                                                    placeholderTextColor = "#068e81"
-                                                   keyboardType="email"
                                                    editable = {this.state.stateButton === 'Edit'? false : true}
                                                    onChangeText={TextInputValue =>
-                                                       this.setState({ TextInput_gg: TextInputValue })}
+                                                       this.setState({ Email: TextInputValue })}
                                         />
                                     </View>
                                     <TouchableOpacity
@@ -528,7 +555,7 @@ class ProfileScreen extends React.PureComponent {
                                 <TextInput
                                     style={styles.inputBoxDialog}
                                     underlineColorAndroid='rgba(0,0,0,0)'
-                                    placeholder={'รหัสผ่านเดิม'}
+                                    placeholder={Trans.tran('Setting.Dialog.current_Password')}
                                     secureTextEntry={true}
                                     placeholderTextColor = "#068e81"
                                     onChangeText={ TextInputValue => this.setState({ TextInput_old_Password : TextInputValue })}
@@ -621,7 +648,7 @@ const styles = StyleSheet.create({
         paddingBottom: -5
     },
     inputBoxUser: {
-        width: '60%',
+        width: '70%',
         backgroundColor: 'transparent',
         fontSize: 18,
         color: '#068e81',
@@ -822,6 +849,7 @@ export default connect(
     mapStateToProps,
     (dispatch) => ({
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_UpdateUserName: bindActionCreators(APIUser.fetchUpdateUserName, dispatch),
         FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
         FETCH_UpdateImgUser: bindActionCreators(APIUser.fetchUpdateUpdateImgUser, dispatch),
         FETCH_UpdateChangePassword: bindActionCreators(APISetting.UpdateChangePassword, dispatch),
