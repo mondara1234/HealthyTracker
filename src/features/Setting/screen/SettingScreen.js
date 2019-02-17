@@ -124,7 +124,7 @@ class settingScreen extends React.PureComponent {
         }else if(personalCode !== Passwordold){
             Alert.alert(
                 Trans.tran('general.alert'),
-                Trans.tran('general.password_not_Match'),
+                Trans.tran('Setting.alert.old_Password'),
                 [
                     {
                         text: Trans.tran('general.close'), onPress: () => {
@@ -136,7 +136,7 @@ class settingScreen extends React.PureComponent {
         }else if(PasswordNew !== PasswordAgain){
             Alert.alert(
                 Trans.tran('general.alert'),
-                Trans.tran('Setting.alert.old_Password'),
+                Trans.tran('general.password_not_Match'),
                 [
                     {
                         text: Trans.tran('general.close'), onPress: () => {
