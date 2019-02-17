@@ -15,6 +15,8 @@ import VirtualKeyboard from '../components/VirtualKeyboard';
 import { FORGOTPASSWORD } from "../router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { SETTING_SCREEN } from "../../Setting/router";
+import { getOneUser } from "../redux/actions";
+import * as APIUser from "../api/api";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
@@ -51,6 +53,22 @@ class PraviedKeyScreen extends React.PureComponent {
         })
     }
 
+    //ใช้สำหรับข้อมูลเป็น Promise {_40: 0, _65: 0, _55: null, _72: null}
+    async updatePassCode(checkPassKey) {
+        const {user} = this.props.Users;
+        const UserID = user.map((data) => {return data.UserID});
+        let ID = UserID.toString();
+        let PassCode =`${checkPassKey}`;
+        let PersonalSelect = 'on';
+        const result = await this.props.FETCH_UpdatePassCode(PersonalSelect, PassCode, ID );
+
+        console.log('result',result);
+        const UserName = user.map((data) => {return data.UserName});
+        let UserNameS =`${UserName}`;
+        const response = await this.props.FETCH_SearchUser(UserNameS);
+        this.props.REDUCER_ONEDATA(response);
+    }
+
     _onFinishCheckingCode = () => {
         let checkPassKey = this.state.passCode[0]+
             this.state.passCode[1]+
@@ -70,7 +88,11 @@ class PraviedKeyScreen extends React.PureComponent {
                     [
                         {text: Trans.tran('general.ok'),
                             onPress: () => {
-                                //this.props.navigation.navigate(SETTING_SCREEN);
+                                this.updatePassCode(checkPassKey);
+                                this.props.navigation.navigate({
+                                    routeName: SETTING_SCREEN,
+                                        params: {status: 'on'}
+                                });
                                 this.setState({
                                     passCode: []
                                 });
@@ -242,6 +264,9 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     (dispatch) => ({
-        NavigationActions: bindActionCreators(NavigationActions, dispatch)
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_UpdatePassCode: bindActionCreators(APIUser.fetchUpdatePassCode, dispatch),
+        FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })
 )(PraviedKeyScreen)

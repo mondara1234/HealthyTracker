@@ -205,10 +205,7 @@ class ProfileScreen extends React.PureComponent {
                                         style={styles.btnEdit}
                                         onPress={() => {
                                             this.setState({
-                                                stateButton: 'Save',
-                                                TextInput_age: Ages,
-                                                TextInput_cm: Weights,
-                                                TextInput_gg: Heights,
+                                                stateButton: 'Save'
                                             });
                                         }}
                                     >
@@ -242,9 +239,6 @@ class ProfileScreen extends React.PureComponent {
                                             this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
 
                                             this.getData(UserName);
-
-                                            console.log('Heights',Heights);
-                                            console.log('Height',Height);
                                             this.setState({
                                                 stateButton: 'Edit'
                                             });

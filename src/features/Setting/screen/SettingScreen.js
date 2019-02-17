@@ -53,13 +53,25 @@ class settingScreen extends React.PureComponent {
         return false;
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        // BAD: DO NOT DO THIS!!!
+        const {user} = this.props.Users;
+        const personalCode = user.map((data) => {return data.PersonalCode});
+        console.log('personalCode',personalCode);
+        if(this.state.personalCode != `${personalCode}` ){
+            this.setState({ personalCode: `${personalCode}` });
+        }
+    }
+
+
     componentDidMount() {
+        const { status } = this.props.navigation.state.params ? this.props.navigation.state.params : '';
         const {user} = this.props.Users;
         const personalSelect = user.map((data) => {return data.PersonalSelect});
         const language = user.map((data) => {return data.Language});
         const personalCode = user.map((data) => {return data.PersonalCode});
 
-        if(`${personalSelect}` === 'on'){
+        if(`${personalSelect}` === 'on'|| status === 'on'){
             this.setState({
                 PrivateKey : true
             })
@@ -187,7 +199,10 @@ class settingScreen extends React.PureComponent {
             this.setState(state => ({ PrivateKey: !state.PrivateKey }))
         }else{
             this.setState(state => ({ PrivateKey: !state.PrivateKey }));
-            this.props.navigation.navigate(PRAVIEDKEY)
+            if(this.state.personalCode === ''){
+                this.props.navigation.navigate(PRAVIEDKEY);
+            }
+
         }
     };
 
