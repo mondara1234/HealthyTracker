@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { FETCH_FLIGHT, ALL_DATAUSER, ADD_ONEUSER, ROUTE_START, SEARCH_DATAUSER } from './constants';
+import { FETCH_FLIGHT, ADD_ONEUSER, ROUTE_START, USER_LOGOUT } from './constants';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -8,11 +8,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 user: action.json,
                 loading: false
-            };
-        case ALL_DATAUSER:
-            return {
-                ...state,
-                loading: true
             };
         case ADD_ONEUSER:
             return {
@@ -24,6 +19,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 routeName: action.payload
+            };
+        case USER_LOGOUT:
+            return {
+                ...state,
+                routeName: '',
+                user: []
             };
         default:
             return state;

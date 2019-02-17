@@ -692,6 +692,6 @@ export default connect(
         FETCH_SumCalorieFoodUser: bindActionCreators(APIDiary.fetchSumCalorieFoodUser, dispatch),
         FETCH_DeleteFoodName: bindActionCreators(APIDiary.fetchDeleteFoodName, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
-        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch)
     })
 )(foodDiaryScreen);

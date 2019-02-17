@@ -8,7 +8,7 @@ import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import Logo from '../components/Logo';
 import Trans from "../../common/containers/Trans";
-import { getAllUser, getOneUser } from '../redux/actions';
+import { getOneUser } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
 import { Images } from "../../User/components/images";
@@ -18,7 +18,7 @@ class LoingScreen extends Component {
         super(props);
 
         this.state = {
-            userName: '',
+            User: '',
             UserPassword: '',
             editing: true,
             data_User: []
@@ -41,12 +41,8 @@ class LoingScreen extends Component {
         return false;
     };
 
-    componentDidMount(){
-        this.props.REDUCER_ALLDATA(); //น้ำข้อมูลมาใส่ใน servers.data
-    }
-
-    UserLoginFunction = () =>{
-        if(this.state.userName === '' || this.state.UserPassword === '' ){
+    UserLoginFunction = async() =>{
+        if(this.state.User === '' || this.state.UserPassword === '' ){
             Alert.alert(
                 Trans.tran('general.alert'),
                 Trans.tran('general.please_Complete'),
@@ -57,33 +53,26 @@ class LoingScreen extends Component {
             );
         }else{
 
-            const userName = this.state.userName;
-            const UserName = `${userName}`;
+            const username = this.state.User;
+            const UserNames = `${username}`;
             const Password = this.state.UserPassword;
             const keyScreen = this.props.navigation;
-            const members = this.props.servers.user;
-            console.log( userName);
-            let result = [];
-            for (let i = 0; i < members.length; i++) {
-                if (members[i].UserName === UserName && members[i].Password === Password) {
-                    result.push(members[i]);
-                    this.props.REDUCER_ONEDATA(result);
+            const response = await this.props.FETCH_Login(UserNames, Password);
+            if(response === 'Data Matched')
+            {
+                const result = await this.props.FETCH_ShowUser(UserNames);
+                const personalSelect = result.map((data) => {return data.PersonalSelect});
+                this.props.REDUCER_ONEDATA(result);
+                if(`${personalSelect}` === 'on'){
+                    keyScreen.navigate('PRAVIEDKEY');
+                }else{
+                    keyScreen.navigate('FOODDIARY_SCREEN')
                 }
             }
-            console.log( result);
-            if(result.length === 1){
-               const personalSelect = result.map((data) => {return data.PersonalSelect});
-                this.props.FETCH_Login(UserName, Password, keyScreen, personalSelect);
-            }else{
-                Alert.alert(
-                    Trans.tran('general.alert'),
-                    Trans.tran('User.login_Error'),
-                    [
-                        { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
-                    ],
-                    { cancelable: false },
-                );
+            else{
+                Alert.alert('Error',response);
             }
+
         }
     };
 
@@ -108,15 +97,14 @@ class LoingScreen extends Component {
                                            placeholder={Trans.tran('User.userName')}
                                            placeholderTextColor = "#068e81"
                                            selectionColor="#fff"
-                                           keyboardType="email-address"
-                                           onChangeText={userName =>this.setState({userName})}
+                                           onChangeText={UserName =>this.setState({User: UserName})}
                                 />
                                 <TextInput style={styles.inputBox}
                                            underlineColorAndroid='rgba(0,0,0,0)'
                                            placeholder={Trans.tran('User.password')}
                                            secureTextEntry={true}
                                            placeholderTextColor = "#068e81"
-                                           onChangeText={UserPassword =>this.setState({UserPassword})}
+                                           onChangeText={UserPassword =>this.setState({UserPassword: UserPassword})}
                                 />
                                 <View style={[styles.containerForgot,{alignItems: 'flex-end'}]}>
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
@@ -236,7 +224,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        servers: state.dataUser
+        Users: state.dataUser
     };
 }
 
@@ -244,8 +232,8 @@ export default connect(
     mapStateToProps,
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
-        REDUCER_ALLDATA: bindActionCreators(getAllUser, dispatch),
         REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
         FETCH_Login: bindActionCreators(API.fetchLogin, dispatch),
+        FETCH_ShowUser: bindActionCreators(API.fetchSearchUser, dispatch),
     })
 )(LoingScreen);

@@ -3,16 +3,7 @@ import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
 import { LOGIN } from "../router";
 
-export function fetchPostsApi() {
-    return fetch(`${SERVER_URL}/My_SQL/user/ShowAllDataList.php`)
-        .then(response => response.json())
-        .then((responseJson) => responseJson)
-        .catch((error) => {
-            console.error(error);
-        });
-}
-
-export const fetchLogin = (UserName, Password, keyScreen, personalSelect) => dispatch => {
+export const fetchLogin = (UserNames, Password) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/User_Login.php`, {
         method: 'POST',
         headers: {
@@ -20,23 +11,12 @@ export const fetchLogin = (UserName, Password, keyScreen, personalSelect) => dis
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            username: UserName,
+            username: UserNames,
             password: Password
         })
     }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson === 'Data Matched')
-            {
-                if(`${personalSelect}` === 'on'){
-                    keyScreen.navigate('PRAVIEDKEY');
-                }else{
-                    keyScreen.navigate('FOODDIARY_SCREEN')
-                }
-            }
-            else{
-                Alert.alert('Error',responseJson);
-            }
-        }).catch((error) => {
+        .then((responseJson) => responseJson)
+        .catch((error) => {
             console.error(error);
         });
 

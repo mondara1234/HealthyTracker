@@ -18,7 +18,7 @@ import { MESSAGEBOX_SCREEN } from "../../MessageBox/router";
 import { PROBLEM_SCREEN } from "../../Problem/router";
 import { ABOUT_SCREEN } from "../../About/router";
 import CommonText from '../../common/components/CommonText';
-import {getRouteName} from "../../User/redux/actions";
+import { getRouteName, getUSER_LOGOUT } from "../../User/redux/actions";
 import Trans from "./Trans";
 
 class Sideber extends React.Component {
@@ -29,6 +29,14 @@ class Sideber extends React.Component {
             menuActive: this.props.routeName,
             ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png'
         };
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // BAD: DO NOT DO THIS!!!
+        let routeName = this.props.routeName;
+        if(this.state.menuActive != routeName){
+            this.setState({ menuActive: routeName });
+        }
     }
 
     _renderItem = ({item}) => {
@@ -67,7 +75,11 @@ class Sideber extends React.Component {
                                 Trans.tran('Sideber.sign_out'),
                                 Trans.tran('Sideber.want_Logout'),
                                 [
-                                    {text: Trans.tran('general.yes'), onPress: () => this.props.navigation.dispatch(resetAction)},
+                                    {text: Trans.tran('general.yes'), onPress: () =>{
+                                            this.props.REDUCER_USERLOGOUT();
+                                            this.setState({menuActive: ''});
+                                            this.props.navigation.dispatch(resetAction);
+                                        }},
                                     { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                                 ]
                             )
@@ -264,5 +276,6 @@ export default connect(
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
         REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
+        REDUCER_USERLOGOUT: bindActionCreators(getUSER_LOGOUT, dispatch),
     })
 )(Sideber);

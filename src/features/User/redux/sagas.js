@@ -1,18 +1,6 @@
 import { put, take, all, call, select } from 'redux-saga/effects';
-import {ALL_DATAUSER, FETCH_FLIGHT, ROUTE_START, SEARCH_DATAUSER} from './constants';
+import { FETCH_FLIGHT, ROUTE_START, SEARCH_DATAUSER} from './constants';
 import * as ApiUser from '../api/api';
-
-export function* fetchPosts() {
-        yield take(ALL_DATAUSER);
-        console.log('ALL_DATAUSER',ALL_DATAUSER);
-    try {
-        const posts = yield call(ApiUser.fetchPostsApi);
-        console.log(posts);
-        yield put({type: FETCH_FLIGHT, json: posts})
-    }catch (e) {
-        console.log(e);
-    }
-}
 
 // export function* fetchSearchUser(itemID) {
 //     //yield take(SEARCH_DATAUSER);
@@ -39,7 +27,6 @@ export function* fetchData(screen) {
 
 export default function* rootSaga() {
     yield all([
-        fetchPosts(),
         fetchData(),
     ]);
 }
