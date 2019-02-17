@@ -20,16 +20,17 @@ import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIUser from "../../User/api/api";
 import { getOneUser } from "../../User/redux/actions";
+import * as APISetting from "../../Setting/api/api";
 
 class ProfileScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            dataProfileUser:  [],
             selected: '',
             TextInput_age: 0,
             TextInput_cm: 0,
             TextInput_gg: 0,
+            BMRUser: 0,
             bmi: 0,
             criterionbmi: '',
             stateButton: 'Edit',
@@ -37,7 +38,10 @@ class ProfileScreen extends React.PureComponent {
             DialogChange: false,
             DialogSuccess: false,
             ImageSource: null,
-            data: null
+            data: null,
+            TextInput_old_Password: '',
+            TextInput_Password: '',
+            TextInput_PasswordAgain: ''
         };
     }
 
@@ -61,6 +65,7 @@ class ProfileScreen extends React.PureComponent {
     componentDidMount() {
         const members = this.props.Users.user;
         const sex = members.map((data) => {return data.Sex});
+        const Age = members.map((data) => {return data.Age});
         const Height = members.map((data) => {return data.Height});
         const Weight = members.map((data) => {return data.Weight});
         let SumBMi = Math.pow(Weight, 2)/Height;
@@ -82,8 +87,10 @@ class ProfileScreen extends React.PureComponent {
             criterionBMI = Trans.tran('BMI.criterionBMI.fat_much');
         }
         this.setState({
-            dataProfileUser : members,
             selected: `${sex}`,
+            TextInput_age: parseInt(Age),
+            TextInput_cm: parseInt(Height),
+            TextInput_gg: parseInt(Weight),
             criterionbmi: criterionBMI,
             bmi: SumBMi.toFixed(2)
         });
@@ -153,15 +160,83 @@ class ProfileScreen extends React.PureComponent {
         });
     }
 
+    async UpdateChangePassword() {
+        const {user} = this.props.Users;
+        let id = user.map((data) => { return data.UserID });
+        let UserName = user.map((data) => { return data.UserName });
+        let Password = user.map((data) => { return data.Password });
+        let UserID = id.toString();
+        let UserNames =`${UserName}`;
+        let Passwords =`${Password}`;
+        let Passwordold = this.state.TextInput_old_Password;
+        let PasswordNew = this.state.TextInput_Password;
+        let PasswordAgain = this.state.TextInput_PasswordAgain;
+
+        if(Passwordold === '' || PasswordNew === '' || PasswordAgain === ''){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('general.please_Complete'),
+                [
+                    {
+                        text: Trans.tran('general.close'), onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+        }else if(Passwordold.length !== 6 || PasswordNew.length !== 6 || PasswordAgain.length !== 6){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('Setting.alert.password_Length'),
+                [
+                    {
+                        text: Trans.tran('general.close'), onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+        }else if(Passwords !== Passwordold){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('Setting.alert.old_Password'),
+                [
+                    {
+                        text: Trans.tran('general.close'), onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+        }else if(PasswordNew !== PasswordAgain){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('general.password_not_Match'),
+                [
+                    {
+                        text: Trans.tran('general.close'), onPress: () => {
+                        }, style: "cancel"
+                    }
+                ],
+                {cancelable: false},
+            );
+
+        }else{
+            const response = await this.props.FETCH_UpdateChangePassword(UserID, PasswordNew);
+            this.getData(UserNames);
+            this.setState({
+                DialogChange: false,
+                DialogSuccess: true
+            })
+        }
+    }
+
     render() {
         const { user } = this.props.Users;
         let id = user.map((data) => { return data.UserID });
         let UserName = user.map((data) => { return data.UserName });
         let Email = user.map((data) => { return data.Email });
         let imgProfile = user.map((data) => { return data.imgProfile });
-        let Ages = user.map((data) => { return data.Age });
-        let Weights = user.map((data) => { return data.Weight });
-        let Heights = user.map((data) => { return data.Height });
         let BMRUsers = user.map((data) => { return data.BMRUser });
 
         return (
@@ -193,7 +268,7 @@ class ProfileScreen extends React.PureComponent {
                                     <CommonText text={`${Trans.tran('FoodDiary.energy_per_day')} :`} size={14} />
                                 </View>
                                 <View style={styles.titleBMR}>
-                                    <CommonText text={`${BMRUsers} ${Trans.tran('FoodDiary.calorie')}`} style={styles.fontBMI} />
+                                    <CommonText text={`${this.state.BMRUser !== 0 ? this.state.BMRUser : BMRUsers} ${Trans.tran('FoodDiary.calorie')}`} style={styles.fontBMI} />
                                 </View>
                             </View>
                         </View>
@@ -227,6 +302,9 @@ class ProfileScreen extends React.PureComponent {
                                             let Weight =  parseInt(this.state.TextInput_gg);
                                             let Height = parseInt(this.state.TextInput_cm);
                                             let BMRUser = 0;
+                                            console.log('Age',Age);
+                                            console.log('Weight',Weight);
+                                            console.log('Height',Height);
 
                                             if(Sex === 'male'){
                                                 let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
@@ -238,10 +316,32 @@ class ProfileScreen extends React.PureComponent {
 
                                             this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
 
-                                            this.getData(UserName);
+                                            let SumBMi = Math.pow(Weight, 2)/Height;
+                                            let criterionBMI = '';
+
+                                            if(SumBMi.toFixed(2) < 18.50){
+                                                criterionBMI = Trans.tran('BMI.criterionBMI.thin');
+
+                                            }else if(SumBMi.toFixed(2) < 23.00){
+                                                criterionBMI = Trans.tran('BMI.criterionBMI.normal');
+
+                                            }else if(SumBMi.toFixed(2) < 25.00){
+                                                criterionBMI = Trans.tran('BMI.criterionBMI.buxom');
+
+                                            }else if(SumBMi.toFixed(2) < 30.00){
+                                                criterionBMI = Trans.tran('BMI.criterionBMI.fat');
+
+                                            }else if(30.00 < SumBMi.toFixed(2) ){
+                                                criterionBMI = Trans.tran('BMI.criterionBMI.fat_much');
+                                            }
                                             this.setState({
+                                                BMRUser: BMRUser,
+                                                selected: `${Sex}`,
+                                                criterionbmi: criterionBMI,
+                                                bmi: SumBMi.toFixed(2),
                                                 stateButton: 'Edit'
                                             });
+                                            this.getData(UserName);
 
                                         }}
                                     >
@@ -262,10 +362,37 @@ class ProfileScreen extends React.PureComponent {
                                     style={styles.userThumb}
                                 />
                                 <View>
-                                    <CommonText text={`${UserName}`} color={'#068e81'} />
-                                    <View style={styles.containerRow}>
-                                        <CommonText text={Trans.tran('Profile.email')} />
-                                        <CommonText text={`${Email}`} style={styles.colorEmail} />
+                                    <View style={{height: 30, marginBottom: '-2%'}}>
+                                        <TextInput style={[
+                                            styles.inputBoxUser,
+                                            {
+
+                                                borderWidth: this.state.stateButton === 'Save'? 1 : 0
+                                            }]}
+                                                   underlineColorAndroid='rgba(0,0,0,0)'
+                                                   defaultValue={`${UserName}`}
+                                                   placeholderTextColor = "#068e81"
+                                                   editable = {this.state.stateButton === 'Edit'? false : true}
+                                                   onChangeText={TextInputValue =>
+                                                       this.setState({ TextInput_gg: TextInputValue })}
+                                        />
+                                    </View>
+                                    <View style={[styles.containerRow,{alignItems: 'center'}]}>
+                                        <CommonText text={Trans.tran('Profile.email')} style={{marginTop: '5%'}}/>
+                                        <TextInput style={[
+                                            styles.inputBoxUser,
+                                            {
+
+                                                borderWidth: this.state.stateButton === 'Save'? 1 : 0
+                                            }]}
+                                                   underlineColorAndroid='rgba(0,0,0,0)'
+                                                   defaultValue={`${Email}`}
+                                                   placeholderTextColor = "#068e81"
+                                                   keyboardType="email"
+                                                   editable = {this.state.stateButton === 'Edit'? false : true}
+                                                   onChangeText={TextInputValue =>
+                                                       this.setState({ TextInput_gg: TextInputValue })}
+                                        />
                                     </View>
                                     <TouchableOpacity
                                         style={styles.btnPass}
@@ -335,30 +462,31 @@ class ProfileScreen extends React.PureComponent {
                                     <CommonText text={Trans.tran('Profile.weight')} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
-                                               defaultValue={`${Weights}`}
+                                               defaultValue={`${this.state.TextInput_gg}`}
                                                placeholderTextColor = "#068e81"
                                                keyboardType="numeric"
                                                editable = {this.state.stateButton === 'Edit'? false : true}
-                                               onChangeText={TextInputValue => this.setState({TextInput_gg: TextInputValue === '' ? Weights : TextInputValue})}
+                                               onChangeText={TextInputValue =>
+                                                   this.setState({ TextInput_gg: TextInputValue })}
                                     />
                                     <CommonText text={Trans.tran('Profile.height')} style={{marginTop: 10}} />
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
-                                               defaultValue={`${Heights}`}
+                                               defaultValue={`${this.state.TextInput_cm}`}
                                                placeholderTextColor = "#068e81"
                                                keyboardType="numeric"
                                                editable = {this.state.stateButton === 'Edit'? false : true}
-                                               onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue === '' ? Heights : TextInputValue})}
+                                               onChangeText={TextInputValue => this.setState({TextInput_cm: TextInputValue})}
                                     />
                                 </View>
                                 <View style={styles.viewAge}>
                                     <TextInput style={styles.inputBox}
                                                underlineColorAndroid='rgba(0,0,0,0)'
-                                               defaultValue={`${Ages}`}
+                                               defaultValue={`${this.state.TextInput_age}`}
                                                placeholderTextColor = "#068e81"
                                                keyboardType="numeric"
                                                editable = {this.state.stateButton === 'Edit'? false : true}
-                                               onChangeText={TextInputValue => this.setState({TextInput_age: TextInputValue === 0 ? Ages : TextInputValue})}
+                                               onChangeText={TextInputValue => this.setState({TextInput_age: TextInputValue})}
                                     />
                                     <View style={styles.viewIcon}>
                                         <Image  style={{width: 60, height: 100}}
@@ -383,10 +511,7 @@ class ProfileScreen extends React.PureComponent {
                                 <DialogButton
                                     text={Trans.tran('general.ok')}
                                     textStyle={styles.dialogTextButton}
-                                    onPress={() => {
-
-                                        this.setState({ DialogChange: false, DialogSuccess: true })
-                                    }}
+                                    onPress={() => {this.UpdateChangePassword()}}
                                     style={styles.dialogTitleView}
                                 />,
                                 <DialogButton
@@ -400,6 +525,14 @@ class ProfileScreen extends React.PureComponent {
                             ]}
                         >{/*ส่วนของbody*/}
                             <View style={styles.dialogBodyView}>
+                                <TextInput
+                                    style={styles.inputBoxDialog}
+                                    underlineColorAndroid='rgba(0,0,0,0)'
+                                    placeholder={'รหัสผ่านเดิม'}
+                                    secureTextEntry={true}
+                                    placeholderTextColor = "#068e81"
+                                    onChangeText={ TextInputValue => this.setState({ TextInput_old_Password : TextInputValue })}
+                                />
                                 <TextInput
                                     style={styles.inputBoxDialog}
                                     underlineColorAndroid='rgba(0,0,0,0)'
@@ -487,6 +620,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingBottom: -5
     },
+    inputBoxUser: {
+        width: '60%',
+        backgroundColor: 'transparent',
+        fontSize: 18,
+        color: '#068e81',
+        marginLeft: '2%',
+        marginBottom: -10,
+        paddingTop: -10,
+        paddingBottom: -10,
+        borderColor: '#068e81'
+    },
     container: {
         flex: 1 ,
         alignItems: 'center',
@@ -559,16 +703,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    colorEmail: {
-        color: '#068e81',
-        marginLeft: 10
-    },
     btnPass: {
         backgroundColor: '#068e81',
         height: 25,
         width: 100 ,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: '5%',
+        marginLeft: '2%'
     },
     fontBtnPass: {
         color: '#fff',
@@ -682,6 +824,7 @@ export default connect(
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_UpdateUser: bindActionCreators(APIUser.fetchUpdateUser, dispatch),
         FETCH_UpdateImgUser: bindActionCreators(APIUser.fetchUpdateUpdateImgUser, dispatch),
+        FETCH_UpdateChangePassword: bindActionCreators(APISetting.UpdateChangePassword, dispatch),
         FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
         REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
     })

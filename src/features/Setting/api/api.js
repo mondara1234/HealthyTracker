@@ -43,3 +43,25 @@ export const UpdateChangePrivateKey = (UserID, PasswordNew) => dispatch => {
         });
 
 };
+
+
+export const UpdateChangePassword = (UserID, PasswordNew) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdateChangePassword.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id : UserID,
+            passwordnew: PasswordNew
+        })
+    }).then(response => response.json())
+        .then((responseJson) =>
+            console.log(responseJson)
+        )
+        .catch((error) => {
+            console.error(error);
+        });
+
+};

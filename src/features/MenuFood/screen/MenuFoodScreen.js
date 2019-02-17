@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     return{
         FoodMenu: state.dataMenuFood,
-        FoodType: state.dataMenuFood,
+        FoodType: state.dataMenuFood
     };
 }
 
