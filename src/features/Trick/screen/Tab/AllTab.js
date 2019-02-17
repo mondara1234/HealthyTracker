@@ -10,6 +10,7 @@ import { Images } from "../../../User/components/images";
 import { DETAILTRICK_SCREEN } from "../../../Trick/router";
 import { seaech_TrickAll } from "../../../Trick/redux/actions";
 import * as APITrick from "../../../Trick/api/api";
+import {getRouteName} from "../../../User/redux/actions";
 
 class AllTab extends React.PureComponent {
     constructor(props) {
@@ -103,6 +104,8 @@ class AllTab extends React.PureComponent {
     };
 
     componentDidMount() {
+        let rountname = 'เคล็ดลับ';
+        this.props.REDUCER_ROUNTNAME(rountname);
         this.getTrickAll();
     }
 
@@ -235,6 +238,7 @@ export default connect(
         navigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_SearchTrickAll: bindActionCreators(APITrick.fetchSearchTrickAll, dispatch),
         REDUCER_seaechTrickAll: bindActionCreators(seaech_TrickAll, dispatch),
+        REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
     })
 )(withNavigation(AllTab));
 

@@ -19,6 +19,7 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
 import {SERVER_URL} from "../../../common/constants";
+import {getRouteName} from "../../User/redux/actions";
 
 class menuFoodScreen extends React.PureComponent {
     constructor(props) {
@@ -53,6 +54,9 @@ class menuFoodScreen extends React.PureComponent {
     };
 
     componentDidMount() {
+        let rountname = 'รายการอาหาร';
+        this.props.REDUCER_ROUNTNAME(rountname);
+
         const { foodType } = this.props.navigation.state.params ? this.props.navigation.state.params : '';
         let foodTypes = foodType === undefined ? '' : `${foodType.TypeName}`;
         let dataFoodType = foodType ? foodTypes : '';
@@ -475,5 +479,6 @@ export default connect(
         NavigationActions: bindActionCreators(NavigationActions, dispatch),
         REDUCER_GetMenuFood: bindActionCreators(AllMenuFood, dispatch),
         REDUCER_GetFoodType: bindActionCreators(AllFoodType, dispatch),
+        REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
     })
 )(menuFoodScreen);

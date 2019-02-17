@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, BackHandler, Alert } from 'react-native';
 import { Container, Content, Accordion } from 'native-base';
-import { NavigationActions } from "react-navigation";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import SideMenu from '../../common/components/SideMenu';
@@ -17,6 +16,7 @@ import { BMI_SCREEN } from "../router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIBMIUser from "../../BMI/api/api";
 import { seaech_BMIUser } from "../../BMI/redux/actions";
+import {getRouteName} from "../../User/redux/actions";
 
 class bmiScreen extends React.PureComponent {
     constructor(){
@@ -75,6 +75,8 @@ class bmiScreen extends React.PureComponent {
     }
 
     componentDidMount() {
+        let rountname = 'ดัชนีมวลกาย';
+        this.props.REDUCER_ROUNTNAME(rountname);
 
         const {user} = this.props.Users;
         const Height = user.map((data) => {return data.Height});
@@ -379,8 +381,8 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     (dispatch) => ({
-        NavigationActions: bindActionCreators(NavigationActions, dispatch),
         FETCH_SearchBMIUse: bindActionCreators(APIBMIUser.fetchSearchBMIUser, dispatch),
         REDUCER_seaech_BMIUser: bindActionCreators(seaech_BMIUser, dispatch),
+        REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
     })
 )(bmiScreen);
