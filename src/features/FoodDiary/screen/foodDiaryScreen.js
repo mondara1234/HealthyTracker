@@ -24,7 +24,7 @@ import { METABOLIC_SCREEN } from "../router";
 import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
-import { getOneUser } from "../../User/redux/actions";
+import {getOneUser, getRouteName} from "../../User/redux/actions";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -64,6 +64,8 @@ class foodDiaryScreen extends React.PureComponent {
     };
 
      componentDidMount() {
+         let rountname = 'ไดอารี่อาหาร';
+         this.props.REDUCER_ROUNTNAME(rountname);
 
         let date = new Date();
         let dateFormat = moment(date).format("YYYY-MM-DD");
@@ -692,6 +694,7 @@ export default connect(
         FETCH_SumCalorieFoodUser: bindActionCreators(APIDiary.fetchSumCalorieFoodUser, dispatch),
         FETCH_DeleteFoodName: bindActionCreators(APIDiary.fetchDeleteFoodName, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
-        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch)
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
+        REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
     })
 )(foodDiaryScreen);
