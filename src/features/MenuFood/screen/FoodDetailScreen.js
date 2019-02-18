@@ -46,30 +46,6 @@ class FoodDetailScreen extends React.PureComponent {
         return false;
     };
 
-    onChanged(numberUnit){
-        let newText = parseInt(numberUnit);
-        if(numberUnit.toString() !== ''){
-            if(numberUnit.toString() !== newText.toString() && numberUnit.toString() !== ''){
-                Alert.alert(
-                    Trans.tran('general.alert'),
-                    Trans.tran('MenuFood.alert.pleas_Integer'),
-                    [
-                        { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
-                    ],
-                    { cancelable: false },
-                );
-            }else{
-                this.setState({
-                    numberUnit: newText
-                })
-            }
-        }else{
-            this.setState({
-                numberUnit: 0
-            })
-        }
-    }
-
     async  SaveFoodUser(number,foodData){
         let date = new Date();
         const {user} = this.props.Users;
@@ -104,11 +80,20 @@ class FoodDetailScreen extends React.PureComponent {
                     FoodCalorie = FoodCalorie * numberFood;
                     this.props.FETCH_InsertFoodUser(UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateNow);
                 }
+                if(number === 1){
+                    this.props.navigation.navigate({
+                        routeName: FOODDIARY_SCREEN
+                    })
+                }else if(number === 2){
+                    this.props.navigation.navigate({
+                        routeName: MENUFOOD_SCREEN
+                    })
+                }
             }
         }else{
             Alert.alert(
                 Trans.tran('general.alert'),
-                'กรุณาใส่จำนวน',
+                'กรุณาใส่จำนวนอาหาร',
                 [
                     { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
                 ],
@@ -116,11 +101,6 @@ class FoodDetailScreen extends React.PureComponent {
             );
         }
 
-        if(number === 1){
-            this.props.navigation.navigate({
-                routeName: FOODDIARY_SCREEN
-            })
-        }
 
     };
 
@@ -148,7 +128,7 @@ class FoodDetailScreen extends React.PureComponent {
                                            selectionColor="#fff"
                                            keyboardType="numeric"
                                            maxLength={2}
-                                           onChangeText={numberUnit => this.onChanged(numberUnit)}
+                                           onChangeText={numberUnit => this.setState({numberUnit: numberUnit})}
                                 />
                                 <CommonText text={foodData.FoodUnit} style={[styles.fontHead, {fontSize: 18}]} />
                             </View>
