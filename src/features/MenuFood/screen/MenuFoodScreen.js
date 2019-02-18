@@ -160,18 +160,20 @@ class menuFoodScreen extends React.PureComponent {
     findFilm(value) {
         this.setState({query: value});
         let data = this.state.setDataFood;
+        let nameFoodType = this.state.nameFoodType;
         if (value === '') {
             this.setState({
                 films: data,
                 lengthFoodType: data.length
             })
         }else{
-            this.SearchFoodMenu(value)
+            this.SearchFoodMenu(value,nameFoodType)
         }
     }
 
-    async SearchFoodMenu(value) {
-        let valueFoodName =`${value}`;
+    async SearchFoodMenu(value, nameFoodType) {
+        let valueFoodName = `${value}`;
+        let FoodType = `${nameFoodType}`;
         const response = await fetch(`${SERVER_URL}/My_SQL/MenuFood/SeachFoodName.php`, {
             method: 'POST',
             headers: {
@@ -180,6 +182,7 @@ class menuFoodScreen extends React.PureComponent {
             },
             body: JSON.stringify({
                 foodname : valueFoodName,
+                nameFoodtype: FoodType
             })
         }).then(response => response.json())
             .then((responseJson) => responseJson)
@@ -226,20 +229,20 @@ class menuFoodScreen extends React.PureComponent {
                         />
                     </Left>
                     <Body>
-                        <View style={styles.bodyRendsrItem}>
-                            <View>
-                                <Text numberOfLines={1} style={styles.fontbase}>{item.FoodName}</Text>
-                                <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} style={styles.fontCalorie} />
-                            </View>
-                            <View style={styles.viewCenter}>
-                                <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
-                            </View>
+                    <View style={styles.bodyRendsrItem}>
+                        <View>
+                            <Text numberOfLines={1} style={styles.fontbase}>{item.FoodName}</Text>
+                            <CommonText text={`${item.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} style={styles.fontCalorie} />
                         </View>
+                        <View style={styles.viewCenter}>
+                            <IconMaterialIcons name="navigate-next" size={30} color={'#068e81'} />
+                        </View>
+                    </View>
                     </Body>
                 </ListItem>
             </View>
         )
-    };
+};
 
     selectCheckBox = (item) => {
         let foodTypes = `${item.TypeName}`;
