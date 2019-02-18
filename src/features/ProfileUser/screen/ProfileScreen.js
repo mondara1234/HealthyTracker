@@ -406,7 +406,7 @@ class ProfileScreen extends React.PureComponent {
                                         />
                                     </View>
                                     <View style={[styles.containerRow,{alignItems: 'center'}]}>
-                                        <CommonText text={Trans.tran('Profile.email')} style={{marginTop: '5%'}}/>
+                                        <CommonText text={Trans.tran('Profile.email')} style={{marginTop: '5%'}} size={16}/>
                                         <TextInput style={[
                                             styles.inputBoxUser,
                                             {
