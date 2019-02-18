@@ -25,7 +25,9 @@ class messageBoxScreen extends Component {
         this.state = {
             listViewData: [],
             editing: true,
-            DialogHelp: false
+            DialogHelp: false,
+            AU_Status: '',
+            CheckSttus: false
         };
     }
 
@@ -49,33 +51,40 @@ class messageBoxScreen extends Component {
 
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
-        this.getFoodUser(UserName)
+        this.getMessageBox(UserName)
     }
 
-    async getFoodUser(UserName) {
+    async getMessageBox(UserName) {
         let UserNames =`${UserName}`;
         const response = await this.props.FETCH_SearchUser(UserNames);
         this.props.REDUCER_ONEDATA(response);
-        const members = this.props.MessageBox.messageBox;
+        const MessageBox = this.props.MessageBox.messageBox;
         this.setState({
-            listViewData : members
+            listViewData : MessageBox
         });
-
     }
 
     messageDetail = (data) => {
         let UserNames = `${data.AU_UserName}`;
         let Title = `${data.AU_Title}`;
+        let ID = `${data.AU_ID}`;
 
         if(data.AU_Status === 'false'){
            let status = 'true';
-           this.props.FETCH_UpdateMessage(UserNames, Title, status);
-           this.getFoodUser(UserNames);
-        }
+           this.props.FETCH_UpdateMessage(UserNames, Title, status, ID);
+           this.getMessageBox(UserNames);
 
+        }
+        if(data.AU_Status === 'false'){
+            let status = 'true';
+            this.props.FETCH_UpdateMessage(UserNames, Title, status, ID);
+            this.getMessageBox(UserNames);
+
+        }
         this.props.navigation.navigate(
             {routeName: MESSAGEDETAIL_SCREEN, params: {messageData: data}}
         )
+
     };
 
     deleteRow(data) {
@@ -116,7 +125,7 @@ class messageBoxScreen extends Component {
                             />
                         </View>
                     </Header>
-                        {this.state.listViewData ?
+                        {this.state.listViewData.length > 0 ?
                             <Content>
                                 <List
                                     rightOpenValue={-55}
@@ -137,10 +146,9 @@ class messageBoxScreen extends Component {
                                 />
                             </Content>
                             :
-                            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                            <View style={{height: '100%', alignItems: 'center', justifyContent: 'center'}}>
                                 <CommonText text={Trans.tran('MessageBox.no_message')} size={30}/>
                             </View>
-
                         }
                     <SideMenu
                         diaryScreen={() => this.props.navigation.navigate( FOODDIARY_SCREEN )}

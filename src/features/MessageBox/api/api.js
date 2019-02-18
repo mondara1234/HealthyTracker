@@ -18,7 +18,7 @@ export const fetchSeachMessageUser = ( UserNames ) => dispatch => {
         });
 };
 
-export const fetchUpdateMessageUser = ( UserNames, Title, Status ) => dispatch => {
+export const fetchUpdateMessageUser = ( UserNames, Title, Status, ID ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/MessageBox/UpdateMessageUser.php`, {
         method: 'POST',
         headers: {
@@ -29,6 +29,7 @@ export const fetchUpdateMessageUser = ( UserNames, Title, Status ) => dispatch =
             username : UserNames,
             title: Title,
             status: Status,
+            id: ID
         })
     }).then(response => response.json())
         .then((responseJson) =>

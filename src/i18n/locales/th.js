@@ -111,10 +111,10 @@ export default {
         },
     },
     'MessageBox': {
-        'title': 'กล่องข้อมความ',
+        'title': 'กล่องข้อความ',
         'no_message': 'ไม่มีข้อความ',
         'alert': {
-            'delete_Message': 'ณต้องการลบข้อความนี้ ใช่ไหม?'
+            'delete_Message': 'ต้องการลบข้อความนี้ ใช่ไหม?'
         },
         'detail_Message': {
             'title': 'รายละเอียดข้อความ',

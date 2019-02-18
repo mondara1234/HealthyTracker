@@ -81,14 +81,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleMessage: {
-        fontSize: 22,
+        fontSize: 18,
         textAlign: 'center',
         marginVertical: 20
     },
     descriptionMessage: {
         marginTop: 10,
         marginLeft: 10,
-        fontSize: 20
+        fontSize: 18
     },
     viewDetailMessage: {
         marginHorizontal: 10,
@@ -97,6 +97,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#068e81',
         flex: 1,
+        width: '98%',
+        height:'98%',
         marginBottom: '3%'
     },
     detailMessage: {
