@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import {StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert, Keyboard} from 'react-native';
 import { Container } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -47,6 +47,7 @@ class FoodDetailScreen extends React.PureComponent {
     };
 
     async  SaveFoodUser(number,foodData){
+        Keyboard.dismiss();
         let date = new Date();
         const {user} = this.props.Users;
         let UserName = user.map((data) => {return data.UserName});
@@ -128,7 +129,7 @@ class FoodDetailScreen extends React.PureComponent {
                                            selectionColor="#fff"
                                            keyboardType="numeric"
                                            maxLength={2}
-                                           onChangeText={numberUnit => this.setState({numberUnit: numberUnit})}
+                                           onChangeText={numberUnit => this.setState({numberUnit: numberUnit === '' ? 0 : numberUnit})}
                                 />
                                 <CommonText text={foodData.FoodUnit} style={[styles.fontHead, {fontSize: 18}]} />
                             </View>
