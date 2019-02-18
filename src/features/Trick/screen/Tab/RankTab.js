@@ -34,7 +34,7 @@ class RankTab extends React.PureComponent {
                         <ImgRank
                             nameUriImg={item.TrickIMG}
                             nameRank={Rankin}
-                            styleImgRank={{marginTop: -120}}
+                            styleImgRank={{marginTop: -10, marginLeft: -8}}
                             styleImg={{width: '100%', height: 150}}
                         />
                         <Text numberOfLines={1} style={styles.fontTitleName}> {item.TrickName} </Text>
@@ -59,12 +59,12 @@ class RankTab extends React.PureComponent {
                     button
                     onPress={() => this.props.navigation.navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}})}
                 >
-                    <Body style={{ margin: -5 }}>
+                    <Body style={{ marginTop: -10, marginLeft: -11}}>
                         <ImgRank
                             nameUriImg={item.TrickIMG}
                             nameRank={Rankin}
-                            styleImgRank={{marginTop: -120}}
-                            styleImg={{width: '100%', height: 150}}
+                            styleImgRank={{ marginLeft: -7}}
+                            styleImg={{width: '100%', height: 100}}
                         />
                         <Text numberOfLines={1} style={styles.fontTitleName}>{item.TrickName}</Text>
                         <View style={[styles.viewHeartTwo, {marginTop: 20}]}>
@@ -91,7 +91,7 @@ class RankTab extends React.PureComponent {
                         <ImgRank
                             nameUriImg={item.TrickIMG}
                             styleImg={{width: 70, height: 70}}
-                            styleImgRank={{marginTop: -43}}
+                            styleImgRank={{marginTop: -11, marginLeft: -18}}
                             nameRank={Rankin}
                         />
                     </Left>
