@@ -59,7 +59,7 @@ class RankTab extends React.PureComponent {
                     button
                     onPress={() => this.props.navigation.navigate({routeName: DETAILTRICK_SCREEN, params: {trickData: item}})}
                 >
-                    <Body style={{ marginTop: -10, marginLeft: -11}}>
+                    <Body style={{ margin: -5 }}>
                         <ImgRank
                             nameUriImg={item.TrickIMG}
                             nameRank={Rankin}
