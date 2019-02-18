@@ -77,20 +77,43 @@ class FoodDetailScreen extends React.PureComponent {
         let UserNames = `${UserName}`;
         let FoodName = foodData.FoodName;
         let numberFood = this.state.numberUnit;
+        let numberUnit = parseInt(numberFood);
         let FoodCalorie = foodData.FoodCalorie;
         let FoodIMG = foodData.FoodIMG;
         let FoodUnit = foodData.FoodUnit;
         let dateNow = moment(date).format("YYYY-MM-DD");
-        const response = await this.props.FETCH_SearchFoodName(UserNames,dateNow,FoodName);
 
-        if(response.length !== 0){
-            let FoodNumbers = response.map((data) => {return data.FoodNumber});
-            numberFood = parseInt(numberFood) + parseInt(FoodNumbers);
-            FoodCalorie = FoodCalorie * numberFood;
-            this.props.FETCH_UpdateFoodUser(UserNames, FoodCalorie, numberFood, dateNow, FoodName);
+        if(numberFood.toString() !== ''){
+            if(numberFood.toString() !== numberUnit.toString() && numberFood.toString() !== ''){
+                Alert.alert(
+                    Trans.tran('general.alert'),
+                    Trans.tran('MenuFood.alert.pleas_Integer'),
+                    [
+                        { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
+                    ],
+                    { cancelable: false },
+                );
+            }else{
+                const response = await this.props.FETCH_SearchFoodName(UserNames,dateNow,FoodName);
+                if(response.length !== 0){
+                    let FoodNumbers = response.map((data) => {return data.FoodNumber});
+                    numberFood = parseInt(numberFood) + parseInt(FoodNumbers);
+                    FoodCalorie = FoodCalorie * numberFood;
+                    this.props.FETCH_UpdateFoodUser(UserNames, FoodCalorie, numberFood, dateNow, FoodName);
+                }else{
+                    FoodCalorie = FoodCalorie * numberFood;
+                    this.props.FETCH_InsertFoodUser(UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateNow);
+                }
+            }
         }else{
-            FoodCalorie = FoodCalorie * numberFood;
-            this.props.FETCH_InsertFoodUser(UserNames, FoodName, FoodCalorie, FoodIMG, FoodUnit, numberFood, dateNow);
+            Alert.alert(
+                Trans.tran('general.alert'),
+                'กรุณาใส่จำนวน',
+                [
+                    { text: Trans.tran('general.close'), onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
         }
 
         if(number === 1){
@@ -113,9 +136,9 @@ class FoodDetailScreen extends React.PureComponent {
                             <Image  style={styles.containerImgFood}
                                     source={{uri: foodData.FoodIMG}}
                             />
-                            <View>
+                            <View style={{width: '40%'}}>
                                 <CommonText text={foodData.FoodName} style={styles.fontHead} />
-                                <CommonText text={`${foodData.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} color={'#068e81'} />
+                                <CommonText text={`${foodData.FoodCalorie} ${Trans.tran('FoodDiary.calorie')}`} color={'#068e81'} size={16} />
                             </View>
                             <View style={styles.viewNumberUnit} >
                                 <TextInput style={styles.inputBox}
@@ -127,7 +150,7 @@ class FoodDetailScreen extends React.PureComponent {
                                            maxLength={2}
                                            onChangeText={numberUnit => this.onChanged(numberUnit)}
                                 />
-                                <CommonText text={foodData.FoodUnit} style={styles.fontHead} />
+                                <CommonText text={foodData.FoodUnit} style={[styles.fontHead, {fontSize: 18}]} />
                             </View>
                         </View>
                         <View style={styles.separator}></View>
@@ -196,13 +219,12 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
     inputBox: {
-        width: 80,
-        height: 80,
+        width: 40,
+        height: 50,
         backgroundColor: '#fff',
         borderWidth: 1,
-        fontSize: 25,
+        fontSize: 20,
         color: '#068e81',
-        paddingLeft: 10,
         marginVertical: 5,
         marginHorizontal: 10,
         textAlign: 'center'
@@ -231,18 +253,18 @@ const styles = StyleSheet.create({
     containerImgFood: {
         marginHorizontal: 10,
         marginVertical: 10,
-        width: '20%',
-        height: '80%'
+        width: 60,
+        height: 60
     },
     fontHead: {
-        fontSize: 20,
+        fontSize: 18,
         color: '#068e81'
     },
     viewNumberUnit: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: '1%'
+        marginLeft: '0.5%'
     },
     separator: {
         height: 1 ,

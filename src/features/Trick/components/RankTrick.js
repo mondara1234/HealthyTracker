@@ -27,12 +27,12 @@ RankTrick.defaultProps = {
 
 const styles = StyleSheet.create({
     containerGif: {
-        width: 30,
-        height: 30
+        width: 40,
+        height: 40
     },
     image: {
-        width: 30,
-        height: 30
+        width: 40,
+        height: 40
     },
     nameImage: {
         fontSize: 10,
