@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import CommonText from '../../common/components/CommonText';
 
 const RankTrick = (props) => {
     let nameimg = props.nameImg.toString();
@@ -10,7 +11,7 @@ const RankTrick = (props) => {
                 source={props.itemImage}
                 style={styles.image}
             />
-            <Text style={[styles.nameImage,{marginLeft: nameimg.length === 2 ? 8 : 12}]}>{props.nameImg}</Text>
+            <CommonText style={[styles.nameImage,{marginLeft: nameimg.length === 2 ? 8 : 12}]} text={props.nameImg} />
         </View>
     )
 };

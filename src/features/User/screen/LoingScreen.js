@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler } from 'react-native';
+import { StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler, Keyboard  } from 'react-native';
 import { Container, Content } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -42,6 +42,7 @@ class LoingScreen extends Component {
     };
 
     UserLoginFunction = async() =>{
+        Keyboard.dismiss();
         if(this.state.User === '' || this.state.UserPassword === '' ){
             Alert.alert(
                 Trans.tran('general.alert'),

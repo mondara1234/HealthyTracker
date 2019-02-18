@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { NavigationActions } from 'react-navigation';
 import { styles as s } from 'react-native-style-tachyons';
 import { Container, Content, Thumbnail, ListItem, Left, Body } from 'native-base';
-import { Alert, StyleSheet, TouchableOpacity, View, FlatList } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, View, FlatList, Keyboard } from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';

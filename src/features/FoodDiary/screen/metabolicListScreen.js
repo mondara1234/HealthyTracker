@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert} from 'react-native';
-import { Container, Header, Left, Thumbnail, CheckBox, Body, ListItem } from 'native-base';
-import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert, Keyboard } from 'react-native';
+import { Container, Header, Thumbnail } from 'native-base';
 import Autocomplete from 'react-native-autocomplete-input';
 import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
@@ -92,7 +91,10 @@ class metabolicListScreen extends React.PureComponent {
             <HandleBack onBack={this.onBack}>
                 <Container>
                     <Header style={styles.bgColorApp}>
-                        <HeaderLeftMenu onPress={() => this.props.navigation.navigate('DrawerOpen')} />
+                        <HeaderLeftMenu onPress={() => {
+                            Keyboard.dismiss();
+                            this.props.navigation.navigate('DrawerOpen')
+                        }} />
                         <HeaderTitle text={'กิจกรรมการเผาผลาญแคลอรี่'} />
                         <View style={styles.viewRowCenter}>
                             <HeaderLeftMenu icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')} style={{marginRight: 5}} onPress={() => this.sortFoodMenu()} />

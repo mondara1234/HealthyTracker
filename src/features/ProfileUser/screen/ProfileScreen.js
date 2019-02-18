@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, TextInput, BackHandler, Alert } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, TextInput, BackHandler, Alert, Keyboard } from 'react-native';
 import { Container } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -123,7 +123,7 @@ class ProfileScreen extends React.PureComponent {
     }
 
     selectPhotoTapped() {
-
+        Keyboard.dismiss();
         const options = {
             title: Trans.tran('Problem.choose_picture'),
             cancelButtonTitle: Trans.tran('general.canceled'),
@@ -167,6 +167,7 @@ class ProfileScreen extends React.PureComponent {
     }
 
     async UpdateChangePassword() {
+        Keyboard.dismiss();
         const {user} = this.props.Users;
         let id = user.map((data) => { return data.UserID });
         let UserName = user.map((data) => { return data.UserName });
@@ -285,6 +286,7 @@ class ProfileScreen extends React.PureComponent {
                                     <TouchableOpacity
                                         style={styles.btnEdit}
                                         onPress={() => {
+                                            Keyboard.dismiss();
                                             this.setState({
                                                 stateButton: 'Save'
                                             });
@@ -302,6 +304,7 @@ class ProfileScreen extends React.PureComponent {
                                     <TouchableOpacity
                                         style={styles.btnEdit}
                                         onPress={() => {
+                                            Keyboard.dismiss();
                                             let UserID = id.toString();
                                             let Sex = this.state.selected;
                                             let Age = parseInt(this.state.TextInput_age);
@@ -423,7 +426,7 @@ class ProfileScreen extends React.PureComponent {
                                     </View>
                                     <TouchableOpacity
                                         style={styles.btnPass}
-                                        onPress={() => {this.setState({DialogChange: true})}}
+                                        onPress={() => {Keyboard.dismiss(); this.setState({DialogChange: true})}}
                                     >
                                         <CommonText text={Trans.tran('User.change_Password')} style={styles.fontBtnPass} />
                                     </TouchableOpacity>
@@ -621,7 +624,7 @@ class ProfileScreen extends React.PureComponent {
 
 ProfileScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={Trans.tran('Profile.title')} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerLeft: <HeaderLeftMenu onPress={() => {Keyboard.dismiss(); navigation.navigate('DrawerOpen')}} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });
 

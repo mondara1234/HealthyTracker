@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Image, FlatList, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import {StyleSheet, View, TextInput, Image, FlatList, TouchableOpacity, BackHandler, Alert, Keyboard} from 'react-native';
 import { Container, ListItem, Left, Thumbnail, Body } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import { NavigationActions } from "react-navigation";
@@ -523,7 +523,7 @@ class foodDiaryScreen extends React.PureComponent {
 
 foodDiaryScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={Trans.tran('FoodDiary.title')}/>,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerLeft: <HeaderLeftMenu onPress={() => {navigation.navigate('DrawerOpen'); Keyboard.dismiss() }} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });
 

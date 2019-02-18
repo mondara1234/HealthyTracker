@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, FlatList, BackHandler, Alert, Keyboard} from 'react-native';
 import { Container, Header, Left, Thumbnail, CheckBox, Body, ListItem } from 'native-base';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Autocomplete from 'react-native-autocomplete-input';
@@ -132,6 +132,7 @@ class menuFoodScreen extends React.PureComponent {
     }
 
      sortFoodMenu() {
+        Keyboard.dismiss();
         const response = this.state.films;
         if(this.state.statusSort === false){
             response.sort(function (a, b) {
@@ -286,11 +287,27 @@ class menuFoodScreen extends React.PureComponent {
             <HandleBack onBack={this.onBack}>
                 <Container>
                     <Header style={styles.bgColorApp}>
-                        <HeaderLeftMenu onPress={() => this.props.navigation.navigate('DrawerOpen')} />
+                        <HeaderLeftMenu
+                            onPress={() => {
+                                Keyboard.dismiss();
+                                this.props.navigation.navigate('DrawerOpen')
+                            }}
+                        />
                         <HeaderTitle text={Trans.tran('MenuFood.title')} />
                         <View style={styles.viewRowCenter}>
-                            <HeaderLeftMenu icon={'flask'} onPress={() => this.setState({statusCheckBox: !this.state.statusCheckBox }) } />
-                            <HeaderLeftMenu icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')} style={{marginRight: 5}} onPress={() => this.sortFoodMenu()} />
+                            <HeaderLeftMenu
+                                icon={'flask'}
+                                onPress={() =>
+                                {
+                                    Keyboard.dismiss();
+                                    this.setState({statusCheckBox: !this.state.statusCheckBox })
+                                }}
+                            />
+                            <HeaderLeftMenu
+                                icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')}
+                                style={{marginRight: 5}}
+                                onPress={() => this.sortFoodMenu()}
+                            />
                         </View>
                     </Header>
                     <View style={styles.container}>

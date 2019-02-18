@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, TextInput, Alert, BackHandler } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, TextInput, Alert, BackHandler, Keyboard } from 'react-native';
 import { Container, Picker, Content, Textarea, Form } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -213,7 +213,7 @@ class problemScreen extends React.PureComponent {
 
 problemScreen.navigationOptions  = ({navigation}) => ({
     headerTitle: <HeaderTitle text={Trans.tran('Problem.report_Problem')} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerLeft: <HeaderLeftMenu onPress={() => {Keyboard.dismiss(); navigation.navigate('DrawerOpen')}} />,
     headerRight: <HeaderLeftMenu icon={null} />
 });
 
