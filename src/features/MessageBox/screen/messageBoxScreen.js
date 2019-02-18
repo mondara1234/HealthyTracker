@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, BackHandler, ListView, View } from 'react-native';
-import { Container, Content, Button, Icon, List, ListItem } from 'native-base';
+import { Alert, BackHandler, ListView, StyleSheet, View } from 'react-native';
+import { Container, Content, Button, Icon, List, ListItem, Header } from 'native-base';
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import { bindActionCreators } from "redux";
+import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
 import SideMenu from '../../common/components/SideMenu';
@@ -24,6 +25,7 @@ class messageBoxScreen extends Component {
         this.state = {
             listViewData: [],
             editing: true,
+            DialogHelp: false
         };
     }
 
@@ -103,6 +105,17 @@ class messageBoxScreen extends Component {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
+                    <Header style={styles.bgColorApp}>
+                        <HeaderLeftMenu onPress={() => this.props.navigation.navigate('DrawerOpen')} />
+                        <HeaderTitle text={Trans.tran('MessageBox.title')} />
+                        <View style={styles.viewRowCenter}>
+                            <HeaderLeftMenu
+                                icon={'question-circle'}
+                                size={30}
+                                onPress={() => this.setState({DialogHelp: !this.state.DialogHelp })}
+                            />
+                        </View>
+                    </Header>
                         {this.state.listViewData ?
                             <Content>
                                 <List
@@ -136,25 +149,77 @@ class messageBoxScreen extends Component {
                         trickScreen={() => this.props.navigation.navigate( TRICK_SCREEN )}
                     />
                 </Container>
+                <Dialog //Dialogตอนกรอกข้อมูลเส้ดสิ้น
+                    visible={this.state.DialogHelp}//เช้ดค่าจากตัวแปลเพื่อเปิดหรือปิด
+                    onTouchOutside={() => {this.setState({ DialogHelp: true })}}//ไม่ให้กดข้างนอกได้
+                    dialogTitle={//ส่วนของTitle
+                        <DialogTitle
+                            title={"ช่วยเหลือ"}
+                            hasTitleBar={false}
+                            textStyle={styles.dialogTextTitle}
+                            style={styles.dialogTitleView}
+                        />
+                    }
+                    actions={[//ส่วนของฺbutton
+                        <DialogButton
+                            text={Trans.tran('general.close')}
+                            textStyle={styles.dialogTextButton}
+                            onPress={() => {
+                                this.setState({ DialogHelp: false });
+                            }}
+                            style={styles.dialogTitleView}
+                        />
+                    ]}
+                >{/*ส่วนของbody*/}
+                    <View style={styles.dialogBodyView}>
+                        <CommonText text={'กดที่ข้อความ --> เพื่อดูรายละเอียด'} style={styles.dialogTextBody} />
+                        <CommonText text={'เลื่อนไปทางซ้าย --> เพื่อลบข้อความ'} style={styles.dialogTextBody} />
+                    </View>
+                </Dialog>
             </HandleBack>
         );
     }
 }
 
 messageBoxScreen.navigationOptions  = ({navigation}) => ({
-    headerTitle: <HeaderTitle text={Trans.tran('MessageBox.title')} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
-    headerRight: <HeaderLeftMenu
-        icon={'question-circle'}
-        size={30}
-        onPress={() =>
-            Alert.alert(
-                'แนะนำการใช้งาน',
-                'กดที่ข้อความ -> เพื่อทำการดูรายละเอียด'+ '\n'+'\n'+
-                'เลื่อนไปทางซ้าย -> เพื่อทำการลบข้อความ'
-            )
-        }
-    />
+    header: null
+});
+
+const styles = StyleSheet.create({
+    bgColorApp: {
+        backgroundColor: '#068e81'
+    },
+    viewRowCenter: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    dialogBodyView: {
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+    },
+    dialogTitleView: {
+        backgroundColor: '#068e81',
+        height: 40,
+        justifyContent: 'center',
+    },
+    dialogTextBody: {
+        color: '#000',
+        fontSize: 18
+    },
+    dialogTextButton: {
+        color: '#fff',
+        fontSize: 18
+    },
+    dialogTextTitle: {
+        color: '#fff',
+        fontSize: 20
+    },
+
 });
 
 function mapStateToProps(state) {
