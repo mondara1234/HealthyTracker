@@ -514,8 +514,7 @@ class foodDiaryScreen extends React.PureComponent {
                                             })
                                         ]
                                     });
-                                    console.log('asdas', this.state.DialogCalorie);
-                                    //this.props.navigation.dispatch(resetAction);
+                                    this.props.navigation.dispatch(resetAction);
                                 }}
                                 style={styles.dialogTitleView}
                             />,

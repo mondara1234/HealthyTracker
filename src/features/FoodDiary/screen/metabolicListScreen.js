@@ -17,13 +17,14 @@ import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN, FOODDETAIL_SCREEN } from "../router";
 import { BMI_SCREEN } from "../../BMI/router";
-import {SERVER_URL} from "../../../common/constants";
+import { SERVER_URL } from "../../../common/constants";
 
 class metabolicListScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             films: [],
+            setMetabolicList: [],
             query: '',
             editing: true,
             statusSort: false
@@ -47,46 +48,122 @@ class metabolicListScreen extends React.PureComponent {
     };
 
     componentDidMount() {
-        this.AllFoodMenu();
+        this.AllmetabolicList();
     }
 
-
-    async AllFoodMenu() {
+    async AllmetabolicList() {
         const response = await fetch(`${SERVER_URL}/My_SQL/foodDiary/AllmetabolicList.php`)
             .then(response => response.json())
             .then((responseJson) => responseJson)
             .catch((error) => {
                 console.error(error);
             });
-        this.props.REDUCER_GetAllMetabolic(response);//มีปัญหาอยู่
-        const dataMetabolic = this.props.FoodMenu.metabolic;
-        console.log('dataMetabolic',dataMetabolic);
+        this.props.REDUCER_GetAllMetabolic(response);
+        const dataMetabolic = this.props.metabolic.metabolic;
         this.setState({
-            films: response
+            setMetabolicList: dataMetabolic,
+            films: dataMetabolic
         });
+    }
+
+    sortMetablic() {
+        Keyboard.dismiss();
+        const response = this.state.films;
+        if(this.state.statusSort === false){
+            response.sort(function (a, b) {
+                if(a.metabolic_Name < b.metabolic_Name) { return -1; }
+                if(a.metabolic_Name > b.metabolic_Name) { return 1; }
+                return 0;
+            });
+            this.setState({
+                films: response,
+                statusSort: true
+            });
+        }else{
+            response.reverse(function(a, b){
+                if(a.metabolic_Name < b.metabolic_Name) { return -1; }
+                if(a.metabolic_Name > b.metabolic_Name) { return 1; }
+                return 0;
+            });
+            this.setState({
+                films: response,
+                statusSort: false
+            });
+        }
     }
 
     _renderItem = ({ item, index }) => {
         return (
-            <View style={{flexDirection: 'row', width: '99.9%'}}>
-                <View style={{borderWidth: 1, width: '20%', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.containerItem}>
+                <View style={[styles.bodyItem,{ width: '20%'}]}>
                     <Thumbnail square
                         source={{uri: item.img}}
-                        style={{ width: 50, height: 50, marginHorizontal: '3%', marginVertical: '3%'}}
+                        style={styles.sizeImgMetabolic}
                     />
                 </View>
-                <View style={{borderWidth: 1, width: '40%', alignItems: 'center', justifyContent: 'center'}}>
+                <View style={[styles.bodyItem,{ width: '40%'}]}>
                     <CommonText text={`${item.metabolic_Name}`} size={14}/>
                 </View>
-                <View style={{borderWidth: 1, width: '40%', alignItems: 'center', justifyContent: 'center'}}>
+                <View style={[styles.bodyItem,{ width: '40%'}]}>
                     <CommonText text={`${item.Calorie}  กิโลแคลอรี่`} size={14} />
                 </View>
             </View>
         )
     };
 
+    //ไว้รับค่าแล้วค้นหา
+    findFilm(value) {
+        this.setState({query: value});
+        let data = this.state.setMetabolicList;
+        if (value === '') {
+            this.setState({
+                films: data
+            })
+        }else{
+            this.SearchMetabolicList(value)
+        }
+    }
+
+    async SearchMetabolicList(value) {
+        let metabolic_Name = `${value}`;
+        const response = await fetch(`${SERVER_URL}/My_SQL/foodDiary/SeachMetabolic_Name.php`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                metabolicname : metabolic_Name
+            })
+        }).then(response => response.json())
+            .then((responseJson) => responseJson)
+            .catch((error) => {
+                console.error(error);
+            });
+        this.props.REDUCER_GetAllMetabolic(response);
+        const dataMetabolic = this.props.metabolic.metabolic;
+
+        let data = [];
+        if( dataMetabolic === 'ไม่พบ' ){
+            this.setState({
+                films: data
+            })
+        }else{
+            this.setState({
+                films: dataMetabolic
+            })
+        }
+    }
+
+    BtnClear(){ // ปุ่ม x (ลบ)
+        let data = this.state.setMetabolicList;
+        this.setState({
+            films: data,
+            query: '',
+        })
+    }
+
     render() {
-        console.log('adas', this.state.films);
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
@@ -97,7 +174,7 @@ class metabolicListScreen extends React.PureComponent {
                         }} />
                         <HeaderTitle text={'กิจกรรมการเผาผลาญแคลอรี่'} />
                         <View style={styles.viewRowCenter}>
-                            <HeaderLeftMenu icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')} style={{marginRight: 5}} onPress={() => this.sortFoodMenu()} />
+                            <HeaderLeftMenu icon={ (this.state.statusSort === false ? 'sort-alpha-desc':'sort-alpha-asc')} style={{marginRight: 5}} onPress={() => this.sortMetablic()} />
                         </View>
                     </Header>
                     <View style={styles.container}>
@@ -107,24 +184,24 @@ class metabolicListScreen extends React.PureComponent {
                                 style={styles.containerSearch}/*กำหนดรูปแบบช่องค้นหา*/
                                 containerStyle={styles.autocompleteContainer}/*กำหนดรูปแบบแถบแสดงค้นหา*/
                                 defaultValue={this.state.query} /*กำหนดค่าเริ่มต้นให้กับ แวรู้*/
-                                //onChangeText={(value) => this.findFilm(value)} /*ส่งค่าที่กรอกเข้าไป*/
+                                onChangeText={(value) => this.findFilm(value)} /*ส่งค่าที่กรอกเข้าไป*/
                                 placeholder={'ใส่ชื่อกิจกรรมที่ต้องการค้นหา'} /*ลายน้ำเพื่อพิมจะหายไป*/
                             />
-                            {/*{this.state.query ?*/}
-                                {/*<TouchableOpacity onPress={() => this.BtnClear()} >*/}
-                                    {/*<Icon name={'close'} size={25} />*/}
-                                {/*</TouchableOpacity>*/}
-                                {/*: null*/}
-                            {/*}*/}
+                            {this.state.query ?
+                                <TouchableOpacity onPress={() => this.BtnClear()} >
+                                    <Icon name={'close'} size={25} />
+                                </TouchableOpacity>
+                                : null
+                            }
                         </View>
                         <View style={styles.viewNumberFound}>
-                            <View style={{borderWidth: 1, width: '20%', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+                            <View style={[styles.titleList,{width: '20%'}]}>
                                 <CommonText text={'รูปภาพ'} style={styles.fonttitleFoodType} />
                             </View>
-                            <View style={{borderWidth: 1, width: '40%', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+                            <View style={[styles.titleList,{width: '40%'}]}>
                                 <CommonText text={'กิจกรรม 1 ชั่วโมง'} style={styles.fonttitleFoodType} />
                             </View>
-                            <View style={{borderWidth: 1, width: '40%', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+                            <View style={[styles.titleList,{width: '40%'}]}>
                                 <CommonText text={'เผาผลาญ/กิโลแคลอรี่'} style={styles.fonttitleFoodType} />
                             </View>
                         </View>
@@ -160,6 +237,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    containerItem: {
+        flexDirection: 'row',
+        width: '99.9%',
+        marginLeft: '0.10%'
+    },
+    titleList: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%'
+    },
+    sizeImgMetabolic:{
+        width: 50,
+        height: 50,
+        marginHorizontal: '3%',
+        marginVertical: '3%'
+    },
+    bodyItem:{
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     autocompleteContainer:{
         width: '50%',
         marginHorizontal: 10
@@ -179,47 +278,6 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10
     },
-    containerRenderItem: {
-        width: '100%',
-        height: 40,
-        flexDirection: 'row',
-        backgroundColor: "#F4F4F4",
-        borderWidth: 1 ,
-        borderColor: '#068e81'
-    },
-    listItem: {
-        backgroundColor: 'transparent',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: -7
-    },
-    bodyRendsrItem: {
-        width: '100%',
-        backgroundColor: "#F4F4F4",
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    fontbase: {
-        fontSize: 18,
-        color: '#020202',
-        marginBottom: 5,
-        fontWeight: 'bold'
-    },
-    fontCalorie: {
-        fontSize: 14,
-        color: '#068e81'
-    },
-    viewCenter: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    listCheckBox: {
-        backgroundColor: '#F4F4F4',
-        borderBottomWidth: 0
-    },
-    fontCheckBox: {
-        fontSize: 16
-    },
     bgColorApp: {
         backgroundColor: '#068e81'
     },
@@ -227,11 +285,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    containerCheckBox: {
-        width: '99.9%',
-        borderWidth: 1,
-        borderColor: '#068E81'
     },
     containerViewSearch: {
         height: 50,
@@ -253,12 +306,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#fff',
     },
-    fontFoodType: {
-        fontSize: 16,
-        color: '#fff',
-        marginLeft: 5,
-        fontWeight: 'bold'
-    },
     containerFlasList: {
         flex: 1,
         width: '100%'
@@ -268,7 +315,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        FoodMenu: state.dataMenuFood
+        metabolic: state.dataDiary
     };
 }
 
