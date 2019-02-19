@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { SEARCH_ALLFODEUSER, SEARCH_FODEUSER, ALL_METABOLIC } from './constants';
+import { SEARCH_ALLFODEUSER, SEARCH_FODEUSER, ALL_METABOLIC, CALORIE_CHECK } from './constants';
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -18,6 +18,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 metabolic: action.payload
+            };
+        case CALORIE_CHECK:
+            return {
+                ...state,
+                CalorieCheck: action.payload
             };
         default:
             return state;

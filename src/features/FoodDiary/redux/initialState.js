@@ -2,7 +2,8 @@
 const initialState = {
     foodUser: [],
     metabolic: [],
-    loading : false
+    loading : false,
+    CalorieCheck: false
 };
 
 export default initialState;

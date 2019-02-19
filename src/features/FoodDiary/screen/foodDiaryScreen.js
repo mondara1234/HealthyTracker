@@ -164,23 +164,23 @@ class foodDiaryScreen extends React.PureComponent {
         let UserName = item.UserName;
         let FoodName = item.FoodName;
         let dateFormat = item.DiaryDate;
-        let BMRUser = item.BMRUser;
-
         Alert.alert(
             Trans.tran('general.alert'),
             `${Trans.tran('FoodDiary.want_Delete')} ${item.FoodName} ${Trans.tran('FoodDiary.right')}`,
             [
-                { text: Trans.tran('general.yes'), onPress: () => this.DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser)},
+                { text: Trans.tran('general.yes'), onPress: () => this.DeleteFoodNames(UserName,FoodName,dateFormat)},
                 { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
             ],
             { cancelable: false },
         );
     }
 
-    async DeleteFoodNames(UserName,FoodName,dateFormat,BMRUser){
-        const response = await  this.props.FETCH_DeleteFoodName(UserName,FoodName,dateFormat);
-        this.getFoodUser(UserName,dateFormat);
-        this.getSumCalorieFoodUser(BMRUser,UserName,dateFormat);
+    async DeleteFoodNames(UserName, FoodName, dateFormat){
+        const {user} = this.props.Users;
+        const BMRUser = user.map((data) => {return data.BMRUser});
+        const response = await  this.props.FETCH_DeleteFoodName(UserName, FoodName, dateFormat);
+        this.getFoodUser(UserName, dateFormat);
+        this.getSumCalorieFoodUser(BMRUser, UserName, dateFormat);
     }
 
     //ใช้สำหรับข้อมูลเป็น Promise {_40: 0, _65: 0, _55: null, _72: null}
@@ -218,6 +218,8 @@ class foodDiaryScreen extends React.PureComponent {
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
         const BMRUser = user.map((data) => {return data.BMRUser});
+        const DateRegis = user.map((data) => {return data.DateRegis});
+        let date = new Date();
 
         return (
             <HandleBack onBack={this.onBack}>
@@ -241,8 +243,8 @@ class foodDiaryScreen extends React.PureComponent {
                             hideText
                             mode="date"
                             format="YYYY-MM-DD"
-                            minDate="01/1/2019"
-                            maxDate="31/12/2020"
+                            minDate={moment(`${DateRegis}`).format("YYYY-MM-DD")}
+                            maxDate={moment(date).format("YYYY-MM-DD")}
                             customStyles={{
                                 dateIcon: {
                                     width: 30,
@@ -499,14 +501,33 @@ class foodDiaryScreen extends React.PureComponent {
                         }//ส่วนของฺbutton
                         actions={[
                             <DialogButton
-                                text={'ดูวิธีการเผาพลาญพลังงาน'}
+                                text={'การเผาพลาญพลังงาน'}
                                 textStyle={styles.dialogTextButton}
                                 onPress={() => {
                                     this.setState({DialogCalorie: false});
-                                    this.props.navigation.navigate(METABOLIC_SCREEN);
+
+                                    const resetAction = this.props.NavigationActions.reset({
+                                        index: 0,
+                                        actions: [
+                                            NavigationActions.navigate({
+                                                routeName: 'METABOLIC_SCREEN'
+                                            })
+                                        ]
+                                    });
+                                    console.log('asdas', this.state.DialogCalorie);
+                                    //this.props.navigation.dispatch(resetAction);
+                                }}
+                                style={styles.dialogTitleView}
+                            />,
+                            <DialogButton
+                                text={'ปิด'}
+                                textStyle={styles.dialogTextButton}
+                                onPress={() => {
+                                    this.setState({DialogCalorie: false});
                                 }}
                                 style={styles.dialogTitleView}
                             />
+
                         ]}
                     >{/*ส่วนของbody*/}
                         <View style={{alignItems: 'center', justifyContent: 'center',paddingVertical: '10%'}}>
@@ -616,7 +637,7 @@ const styles = StyleSheet.create({
     },
     dialogTextButton: {
         color: '#fff',
-        fontSize: 18
+        fontSize: 16
     },
     dialogTextTitle: {
         color: '#000',
