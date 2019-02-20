@@ -240,6 +240,13 @@ class foodDiaryScreen extends React.PureComponent {
             sumCalorie : response,
             statusBar: sumcalorie
         });
+
+        if(this.state.statusBar > 50){
+            this.setState({DialogCalorie : true})
+        }else{
+            this.setState({DialogCalorie : false})
+        }
+
     }
 
     render() {
@@ -278,7 +285,6 @@ class foodDiaryScreen extends React.PureComponent {
                                     width: 30,
                                     height: 30
                                 }
-                                // ... You can check the source to find the other keys.
                             }}
                             onDateChange={(fulldate) => {
                                 this.setState({date: fulldate});
@@ -323,7 +329,7 @@ class foodDiaryScreen extends React.PureComponent {
                                 <CommonText text={this.state.sumCalorie} style={[styles.textSumkcal,{marginHorizontal: 10}]} />
                                 <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal}/>
                             </View>
-                            <View style={styles.containerCalendar}>
+                            <View style={[styles.containerCalendar,{marginLeft: '-4%' }]}>
                                 <CommonText text={Trans.tran('FoodDiary.energy_per_day')} style={styles.textTitlekcal} />
                                 <CommonText text={`${BMRUser}`} style={[styles.textSumkcal,{marginHorizontal: 10}]} />
                                 <CommonText text={Trans.tran('FoodDiary.calorie')} style={styles.textTitlekcal} />
@@ -371,10 +377,6 @@ class foodDiaryScreen extends React.PureComponent {
                             }
                         </View>
                     </View>
-                    {this.state.statusBar > 50 ?
-                        this.setState({DialogCalorie : true})
-                        :this.setState({DialogCalorie : false})
-                    }
                     <View style={styles.containerBody}>
                         <CommonText text={Trans.tran('FoodDiary.should_Add')}
                                     style={[styles.textUnitKcal, {marginLeft: 10, color: '#068e81'}]}/>
@@ -521,39 +523,47 @@ class foodDiaryScreen extends React.PureComponent {
                         backgroundStyle={styles.customBackgroundDialog}
                         dialogTitle={//ส่วนของTitle
                             <DialogTitle
-                                title={'แจ้งเตือนแคลอรี่เกินจากที่ต้องได้รับ'}
+                                title={'พลังงานที่ได้รับเกินจากที่ต้องการต่อวัน'}
                                 hasTitleBar={false}
-                                textStyle={[styles.dialogTextTitle,{color: '#fff'}]}
+                                textStyle={[styles.dialogTextTitle,{color: '#fff', fontSize: 18}]}
                                 style={[styles.dialogTitleView, {backgroundColor: '#068e81'}]}
                             />
                         }//ส่วนของฺbutton
                         actions={[
-                            <DialogButton
-                                text={'การเผาพลาญพลังงาน'}
-                                textStyle={styles.dialogTextButton}
-                                onPress={() => {
-                                    this.setState({DialogCalorie: false});
+                            <View style={{flex:1}}>
+                                <TouchableOpacity
+                                    style={styles.dialogButtonView}
+                                    onPress={() => {
+                                        this.setState({DialogCalorie: false});
 
-                                    const resetAction = this.props.NavigationActions.reset({
-                                        index: 0,
-                                        actions: [
-                                            NavigationActions.navigate({
-                                                routeName: 'METABOLIC_SCREEN'
-                                            })
-                                        ]
-                                    });
-                                    this.props.navigation.dispatch(resetAction);
-                                }}
-                                style={styles.dialogTitleView}
-                            />,
-                            <DialogButton
-                                text={'ปิด'}
-                                textStyle={styles.dialogTextButton}
-                                onPress={() => {
-                                    this.setState({DialogCalorie: false});
-                                }}
-                                style={styles.dialogTitleView}
-                            />
+                                        const resetAction = this.props.NavigationActions.reset({
+                                            index: 0,
+                                            actions: [
+                                                NavigationActions.navigate({
+                                                    routeName: 'METABOLIC_SCREEN'
+                                                })
+                                            ]
+                                        });
+                                        this.props.navigation.dispatch(resetAction);
+                                    }}
+                                >
+                                    <CommonText
+                                        text={'การเผาพลาญพลังงาน'}
+                                        style={styles.dialogTextButton}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.dialogButtonView}
+                                    onPress={() => {
+                                        this.setState({DialogCalorie: false});
+                                    }}
+                                >
+                                    <CommonText
+                                        text={'ปิด'}
+                                        style={styles.dialogTextButton}
+                                    />
+                                </TouchableOpacity>
+                            </View>
 
                         ]}
                     >{/*ส่วนของbody*/}
@@ -641,6 +651,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#F4F4F4',
         paddingLeft: '12%'
     },
+    dialogButtonView: {
+        borderBottomWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: '#068e81',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    dialogTextButton: {
+        color: '#fff',
+        fontSize: 18
+    },
     dialogTitleView: {
         backgroundColor: '#068e81',
         height: 40,
@@ -660,10 +682,6 @@ const styles = StyleSheet.create({
     },
     dialogTextBody: {
         color: '#000',
-        fontSize: 16
-    },
-    dialogTextButton: {
-        color: '#fff',
         fontSize: 16
     },
     dialogTextTitle: {
