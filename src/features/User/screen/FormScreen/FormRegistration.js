@@ -27,6 +27,8 @@ class FormRegistration extends Component {
     }
 
     InsertStudentRecordsToServer = () =>{
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+
        if(this.state.TextInput_Name === ''||this.state.TextInput_Email === ''||this.state.TextInput_Password === ''|| this.state.TextInput_PasswordAgain === '' ){
            Alert.alert(
                Trans.tran('general.alert'),
@@ -36,8 +38,43 @@ class FormRegistration extends Component {
                ],
                { cancelable: false },
            );
-       }else{
-           if(this.state.TextInput_Password === this.state.TextInput_PasswordAgain ){
+       }else if(this.state.TextInput_Name.length < 4 ){
+           Alert.alert(
+               Trans.tran('general.alert'),
+               'ชื่อผู้ใช้ต้องมากกว่า 4 อักขระ',
+               [
+                   {
+                       text: Trans.tran('general.close'), onPress: () => {
+                       }, style: "cancel"
+                   }
+               ],
+               {cancelable: false},
+           );
+       }else if(reg.test(this.state.TextInput_Email) !== true ){
+           Alert.alert(
+               Trans.tran('general.alert'),
+               'Email is Not Correct',
+               [
+                   {
+                       text: Trans.tran('general.close'), onPress: () => {
+                       }, style: "cancel"
+                   }
+               ],
+               {cancelable: false},
+           );
+       }else if(this.state.TextInput_Password.length !== 6 || this.state.TextInput_PasswordAgain.length !== 6){
+           Alert.alert(
+               Trans.tran('general.alert'),
+               Trans.tran('Setting.alert.password_Length'),
+               [
+                   {
+                       text: Trans.tran('general.close'), onPress: () => {
+                       }, style: "cancel"
+                   }
+               ],
+               {cancelable: false},
+           );
+       }else if(this.state.TextInput_Password === this.state.TextInput_PasswordAgain ){
                let date = new Date();
                let dateFormat = moment(date).format("YYYY-MM-DD");
                const Name = this.state.TextInput_Name;
@@ -56,7 +93,6 @@ class FormRegistration extends Component {
                    { cancelable: false },
                );
            }
-       }
     };
 
     selectPhotoTapped() {
