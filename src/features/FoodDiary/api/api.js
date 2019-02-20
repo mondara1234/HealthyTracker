@@ -124,3 +124,64 @@ export const fetchDeleteFoodName = (UserNames, FoodName, dateFormat) => dispatch
             console.error(error);
         });
 };
+
+export const fetchSeachEenergyUser = (UserNames,dateNow) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/SeachEenergyUser.php`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            userName: UserNames,
+            dateDiary: dateNow
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => responseJson)
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
+export const fetchInsertEenergy = (UserNames, Energy, Unit, dateNow) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/InsertSumCalorie.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: UserNames,
+            energy : Energy,
+            unit: Unit,
+            datediary: dateNow,
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson);
+        }).catch((error) => {
+            console.error(error);
+        });
+};
+
+export const fetchUpdateEenergyUser = (UserNames, Energy, Unit, dateNow) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/foodDiary/UpdateEenergyUser.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: UserNames,
+            energy : Energy,
+            unit: Unit,
+            datediary: dateNow,
+        })
+    }).then(response => response.json())
+        .then((responseJson) =>
+            console.log(responseJson)
+        )
+        .catch((error) => {
+            console.error(error);
+        });
+};

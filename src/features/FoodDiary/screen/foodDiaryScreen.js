@@ -206,8 +206,36 @@ class foodDiaryScreen extends React.PureComponent {
         let UserNames =`${UserName}`;
         let BMRUsers =`${BMRUser}`;
         const response = await this.props.FETCH_SumCalorieFoodUser(UserNames, dateNow);
+        let Energycalorie = parseInt(response) === 0 ? parseInt(BMRUsers) : parseInt(response);
         let sumstatusBar = (response/(BMRUsers*2))*100;
         let sumcalorie = parseInt(sumstatusBar);
+
+        //คำสั่งเพิ่มแคลอรี่
+        const SearcEnergy = await this.props.FETCH_SeachEenergyUser(UserNames,dateNow);
+        if(SearcEnergy.length !== 0){
+
+            if(sumcalorie < 50 || Energycalorie === parseInt(BMRUsers) ){
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(BMRUsers) - parseInt(response);
+                let Unit = 'ขาด';
+                this.props.FETCH_UpdateEenergyUser(UserNames, Energy, Unit, dateNow);
+            }else{
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(response) - parseInt(BMRUsers);
+                let Unit = 'เกิน';
+                this.props.FETCH_UpdateEenergyUser(UserNames, Energy, Unit, dateNow);
+            }
+        }else{
+            //มากกว่า 50 คือเกิน
+            if(sumcalorie < 50 || Energycalorie === parseInt(BMRUsers) ){
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(BMRUsers) - parseInt(response);
+                let Unit = 'ขาด';
+                this.props.FETCH_InsertEenergy(UserNames, Energy, Unit, dateNow);
+            }else{
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(response) - parseInt(BMRUsers);
+                let Unit = 'เกิน';
+                this.props.FETCH_InsertEenergy(UserNames, Energy, Unit, dateNow);
+            }
+        }
+
         this.setState({
             sumCalorie : response,
             statusBar: sumcalorie
@@ -713,6 +741,9 @@ export default connect(
         FETCH_SearchFoodUser: bindActionCreators(APIDiary.fetchSearchFoodUser, dispatch),
         FETCH_SumCalorieFoodUser: bindActionCreators(APIDiary.fetchSumCalorieFoodUser, dispatch),
         FETCH_DeleteFoodName: bindActionCreators(APIDiary.fetchDeleteFoodName, dispatch),
+        FETCH_UpdateEenergyUser: bindActionCreators(APIDiary.fetchUpdateEenergyUser, dispatch),
+        FETCH_SeachEenergyUser: bindActionCreators(APIDiary.fetchSeachEenergyUser, dispatch),
+        FETCH_InsertEenergy: bindActionCreators(APIDiary.fetchInsertEenergy, dispatch),
         REDUCER_SearchFoodUser: bindActionCreators(getSearchFoodUser, dispatch),
         REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
         REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
