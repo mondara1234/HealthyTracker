@@ -216,22 +216,22 @@ class foodDiaryScreen extends React.PureComponent {
         if(SearcEnergy.length !== 0){
 
             if(sumcalorie < 50 || Energycalorie === parseInt(BMRUsers) ){
-                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(BMRUsers) - parseInt(response);
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? 0 : parseInt(BMRUsers) - parseInt(response);
                 let Unit = 'ขาด';
                 this.props.FETCH_UpdateEenergyUser(UserNames, Energy, Unit, dateNow);
             }else{
-                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(response) - parseInt(BMRUsers);
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? 0 : parseInt(response) - parseInt(BMRUsers);
                 let Unit = 'เกิน';
                 this.props.FETCH_UpdateEenergyUser(UserNames, Energy, Unit, dateNow);
             }
         }else{
             //มากกว่า 50 คือเกิน
             if(sumcalorie < 50 || Energycalorie === parseInt(BMRUsers) ){
-                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(BMRUsers) - parseInt(response);
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? 0 : parseInt(BMRUsers) - parseInt(response);
                 let Unit = 'ขาด';
                 this.props.FETCH_InsertEenergy(UserNames, Energy, Unit, dateNow);
             }else{
-                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? parseInt(BMRUsers) : parseInt(response) - parseInt(BMRUsers);
+                let Energy = parseInt(Energycalorie) === parseInt(BMRUsers) ? 0 : parseInt(response) - parseInt(BMRUsers);
                 let Unit = 'เกิน';
                 this.props.FETCH_InsertEenergy(UserNames, Energy, Unit, dateNow);
             }
