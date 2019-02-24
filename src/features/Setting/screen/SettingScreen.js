@@ -26,7 +26,6 @@ class settingScreen extends React.PureComponent {
         this.state = {
             selected: 0,
             PrivateKey: false,
-            active: false,
             DialogChangePrivateKey: false,
             DialogChangeSuccess: false,
             editing: true,
@@ -68,7 +67,6 @@ class settingScreen extends React.PureComponent {
         const { status } = this.props.navigation.state.params ? this.props.navigation.state.params : '';
         const {user} = this.props.Users;
         const personalSelect = user.map((data) => {return data.PersonalSelect});
-        const language = user.map((data) => {return data.Language});
         const personalCode = user.map((data) => {return data.PersonalCode});
 
         if(`${personalSelect}` === 'on'|| status === 'on'){
@@ -76,11 +74,7 @@ class settingScreen extends React.PureComponent {
                 PrivateKey : true
             })
         }
-        if(`${language}` === 'eng'){
-            this.setState({
-                active : true
-            })
-        }
+
         this.setState({
             personalCode : `${personalCode}`
         })
@@ -168,8 +162,6 @@ class settingScreen extends React.PureComponent {
         let UserID = id.toString();
         let UserNames =`${UserName}`;
         let PrivateKey = this.state.PrivateKey;
-        let active = this.state.active;
-        let Language = '';
         let PersonalSelect = '';
             if(PrivateKey === true){
                 PersonalSelect = 'on';
@@ -177,12 +169,7 @@ class settingScreen extends React.PureComponent {
                 PersonalSelect = 'off';
             }
 
-            if(active === true){
-                Language = 'en';
-            }else{
-                Language = 'th';
-            }
-        const response = await this.props.FETCH_UpdateAllPrivate(UserID, PersonalSelect, Language);
+        const response = await this.props.FETCH_UpdateAllPrivate(UserID, PersonalSelect);
         const responseSearchUser = await this.props.FETCH_fetchSearchUser(UserNames);
         this.props.REDUCER_ONEDATA(responseSearchUser);
 
@@ -207,34 +194,12 @@ class settingScreen extends React.PureComponent {
     };
 
     render() {
-        const StyleToggle = StyleSheet.create({
-            touchToggle: {
-                height: 30,
-                width: 30,
-                backgroundColor: this.state.active ? '#55acee': '#CB6161',
-                alignItems: 'center',
-                justifyContent: 'center',
-                left: this.state.active ? 30 : 0
-            },
-        });
+
 
         return (
             <HandleBack onBack={this.onBack}>
                 <Container>
                     <View style={styles.container}>
-                        <View style={styles.containerSeting}>
-                            <CommonText text={Trans.tran('Setting.change_language')} size={16} color={'#000'} />
-                            <View style={styles.viewToggle}>
-                                <View style={styles.containerToggle}>
-                                    <TouchableOpacity
-                                        style={StyleToggle.touchToggle}
-                                        onPress={this.handleSwitchToggle}
-                                    >
-                                       <CommonText text={this.state.active ? 'ENG' : 'TH'} style={styles.labelToggle} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
                         <View style={styles.containerSeting}>
                             <CommonText text={Trans.tran('Setting.personal_code')} size={16} color={'#000'} />
                             <View style={styles.viewToggle}>
@@ -411,16 +376,6 @@ const styles = StyleSheet.create({
     styleIconFontAwesome: {
         marginHorizontal: 20,
         color: '#000'
-    },
-    containerToggle: {
-        height: 30,
-        width: 60,
-        backgroundColor: '#C7C1C1'
-    },
-    labelToggle: {
-        fontSize: 12,
-        color: '#fff',
-        textAlign: 'center'
     },
     dialogBodyView: {
         backgroundColor: '#F4F4F4',

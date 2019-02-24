@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { SERVER_URL } from "../../../common/constants";
 
-export const UpdateAllPrivate = (UserID, PersonalSelect, Language) => dispatch => {
+export const UpdateAllPrivate = (UserID, PersonalSelect) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/Setting/UpdateAllPrivate.php`, {
         method: 'POST',
         headers: {
@@ -10,8 +10,7 @@ export const UpdateAllPrivate = (UserID, PersonalSelect, Language) => dispatch =
         },
         body: JSON.stringify({
             id : UserID,
-            personalselect: PersonalSelect,
-            language: Language,
+            personalselect: PersonalSelect
         })
     }).then(response => response.json())
         .then((responseJson) =>
