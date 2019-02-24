@@ -25,6 +25,7 @@ import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser, getRouteName} from "../../User/redux/actions";
+import {SETTING_SCREEN} from "../../Setting/router";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -249,6 +250,18 @@ class foodDiaryScreen extends React.PureComponent {
 
     }
 
+    navigationFoodDiary(){
+        setTimeout(()=>{
+            const {user} = this.props.Users;
+            const sex = user.map((data) => {return data.Sex});
+            const sexs = `${sex}`;
+            if(sexs !== ''){
+                this.props.navigation.navigate(FOODDIARY_SCREEN);
+            }
+        },1000);
+
+    };
+
     render() {
         const {user} = this.props.Users;
         const UserName = user.map((data) => {return data.UserName});
@@ -449,6 +462,7 @@ class foodDiaryScreen extends React.PureComponent {
 
                                             this.setState({DialogData: false});
                                             this.getData(UserName);
+                                            this.navigationFoodDiary();
                                         }
                                 }}
                                 style={styles.dialogTitleView}
