@@ -21,6 +21,7 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIUser from "../../User/api/api";
 import { getOneUser } from "../../User/redux/actions";
 import * as APISetting from "../../Setting/api/api";
+import { PROFILE_SCREEN } from "../router";
 
 class ProfileScreen extends React.PureComponent {
     constructor(props) {
@@ -164,6 +165,19 @@ class ProfileScreen extends React.PureComponent {
                 this.getData(UserName);
             }
         });
+    }
+
+    async UpdateUser(UserID, users, Emails, oldusers){
+        const members = this.props.Users.user;
+        const UserName = members.map((data) => {return data.UserName});
+        const re = await this.props.FETCH_UpdateUserName(UserID, users, Emails, oldusers);
+        console.log('re',re);
+        if(re === 'มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว'){
+            this.setState({
+                user: `${UserName}`
+            });
+        }
+        this.getData(users);
     }
 
     async UpdateChangePassword() {
@@ -315,6 +329,7 @@ class ProfileScreen extends React.PureComponent {
                                             let users = `${user}`;
                                             let Emails = `${Email}`;
                                             let BMRUser = 0;
+                                            let oldusers = `${UserName}`;
 
                                             if(Sex === 'male'){
                                                 let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
@@ -326,16 +341,10 @@ class ProfileScreen extends React.PureComponent {
 
                                             //คำสั่งเช็ดEmail
                                             let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-                                            if(reg.test(Emails) === true)
-                                            {
-                                                console.log("Email is Correct");
-                                                this.props.FETCH_UpdateUserName(UserID, users, Emails);
-                                                this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
-                                            }
-                                            else {
+                                            if(reg.test(Emails) !== true) {
                                                 Alert.alert(
                                                     Trans.tran('general.alert'),
-                                                    'Email is Not Correct',
+                                                    'กรุณากรอก อีเมล ให้ถูกต้อง',
                                                     [
                                                         {
                                                             text: Trans.tran('general.close'), onPress: () => {
@@ -345,35 +354,50 @@ class ProfileScreen extends React.PureComponent {
                                                     {cancelable: false},
                                                 );
                                                 return false;
+                                            }else if(Age <= 20){
+                                                Alert.alert(
+                                                    Trans.tran('general.alert'),
+                                                    'อายุมากกว่า 20 ปีขึ้นไป ',
+                                                    [
+                                                        {
+                                                            text: Trans.tran('general.close'), onPress: () => {
+                                                            }, style: "cancel"
+                                                        }
+                                                    ],
+                                                    {cancelable: false},
+                                                );
+                                                return false;
+                                            }else{
+                                                let SumBMi = Math.pow(Weight, 2)/Height;
+                                                let criterionBMI = '';
+
+                                                if(SumBMi.toFixed(2) < 18.50){
+                                                    criterionBMI = Trans.tran('BMI.criterionBMI.thin');
+
+                                                }else if(SumBMi.toFixed(2) < 23.00){
+                                                    criterionBMI = Trans.tran('BMI.criterionBMI.normal');
+
+                                                }else if(SumBMi.toFixed(2) < 25.00){
+                                                    criterionBMI = Trans.tran('BMI.criterionBMI.buxom');
+
+                                                }else if(SumBMi.toFixed(2) < 30.00){
+                                                    criterionBMI = Trans.tran('BMI.criterionBMI.fat');
+
+                                                }else if(30.00 < SumBMi.toFixed(2) ){
+                                                    criterionBMI = Trans.tran('BMI.criterionBMI.fat_much');
+                                                }
+
+                                                this.setState({
+                                                    BMRUser: BMRUser,
+                                                    selected: `${Sex}`,
+                                                    criterionbmi: criterionBMI,
+                                                    bmi: SumBMi.toFixed(2),
+                                                    stateButton: 'Edit'
+                                                });
+                                                this.UpdateUser(UserID, users, Emails, oldusers);
+                                                this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
+                                                this.getData(UserName);
                                             }
-
-                                            let SumBMi = Math.pow(Weight, 2)/Height;
-                                            let criterionBMI = '';
-
-                                            if(SumBMi.toFixed(2) < 18.50){
-                                                criterionBMI = Trans.tran('BMI.criterionBMI.thin');
-
-                                            }else if(SumBMi.toFixed(2) < 23.00){
-                                                criterionBMI = Trans.tran('BMI.criterionBMI.normal');
-
-                                            }else if(SumBMi.toFixed(2) < 25.00){
-                                                criterionBMI = Trans.tran('BMI.criterionBMI.buxom');
-
-                                            }else if(SumBMi.toFixed(2) < 30.00){
-                                                criterionBMI = Trans.tran('BMI.criterionBMI.fat');
-
-                                            }else if(30.00 < SumBMi.toFixed(2) ){
-                                                criterionBMI = Trans.tran('BMI.criterionBMI.fat_much');
-                                            }
-                                            this.setState({
-                                                BMRUser: BMRUser,
-                                                selected: `${Sex}`,
-                                                criterionbmi: criterionBMI,
-                                                bmi: SumBMi.toFixed(2),
-                                                stateButton: 'Edit'
-                                            });
-                                            this.getData(UserName);
-
                                         }}
                                     >
                                         <IconFontAwesome5
@@ -401,7 +425,7 @@ class ProfileScreen extends React.PureComponent {
                                                 borderWidth: this.state.stateButton === 'Save'? 1 : 0
                                             }]}
                                                    underlineColorAndroid='rgba(0,0,0,0)'
-                                                   defaultValue={`${UserName}`}
+                                                   defaultValue={`${this.state.user}`}
                                                    placeholderTextColor = "#068e81"
                                                    editable = {this.state.stateButton === 'Edit'? false : true}
                                                    onChangeText={TextInputValue =>

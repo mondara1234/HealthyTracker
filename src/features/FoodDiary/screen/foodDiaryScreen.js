@@ -251,13 +251,13 @@ class foodDiaryScreen extends React.PureComponent {
     }
 
     navigationFoodDiary(){
+        const {user} = this.props.Users;
+        const sex = user.map((data) => {return data.Sex});
+        const sexs = `${sex}`;
+        if(sexs !== ''){
+            this.props.navigation.navigate(FOODDIARY_SCREEN);
+        }
         setTimeout(()=>{
-            const {user} = this.props.Users;
-            const sex = user.map((data) => {return data.Sex});
-            const sexs = `${sex}`;
-            if(sexs !== ''){
-                this.props.navigation.navigate(FOODDIARY_SCREEN);
-            }
         },1000);
 
     };
@@ -439,6 +439,18 @@ class foodDiaryScreen extends React.PureComponent {
                                                 ],
                                                 {cancelable: false},
                                             );
+                                        }else if(parseInt(this.state.TextInput_age) <= 20){
+                                            Alert.alert(
+                                                Trans.tran('general.alert'),
+                                                'อายุมากกว่า 20 ปีขึ้นไป ',
+                                                [
+                                                    {
+                                                        text: Trans.tran('general.close'), onPress: () => {
+                                                        }, style: "cancel"
+                                                    }
+                                                ],
+                                                {cancelable: false},
+                                            );
                                         } else {
                                             const {user} = this.props.Users;
                                             let id = user.map((data) => { return data.UserID });
@@ -459,11 +471,12 @@ class foodDiaryScreen extends React.PureComponent {
                                             }
 
                                             this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
-
-                                            this.setState({DialogData: false});
                                             this.getData(UserName);
+                                            this.setState({DialogData: false});
+
                                             this.navigationFoodDiary();
                                         }
+                                        this.navigationFoodDiary();
                                 }}
                                 style={styles.dialogTitleView}
                             />
