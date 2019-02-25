@@ -9,7 +9,6 @@ import Trans from "../../../common/containers/Trans";
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import CommonText from '../../../common/components/CommonText'
 import * as API from '../../api/api';
-import { Images } from "../../components/images";
 import moment from "moment/moment";
 
 class FormRegistration extends Component {
@@ -141,7 +140,7 @@ class FormRegistration extends Component {
                             {uri: this.state.ImgDefault}} />
                 <TouchableOpacity style={styles.touchImage} onPress={this.selectPhotoTapped.bind(this)}>
                     <Image  style={styles.image}
-                            source={Images.plusImg}
+                            source={require('../../../../../pulic/assets/images/plusImg.png')}
                     />
                 </TouchableOpacity>
                 <TextInput style={styles.inputBox}

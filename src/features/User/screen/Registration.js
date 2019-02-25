@@ -7,7 +7,6 @@ import Form from './FormScreen/FormRegistration';
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
 import LogoTextHT from '../../common/components/LogoTextHT';
-import { Images } from "../components/images";
 import { LOGIN } from "../router";
 import Trans from "../../common/containers/Trans";
 
@@ -51,7 +50,7 @@ class Registration extends Component {
         return (
             <HandleBack onBack={this.onBack}>
                 <ImageBackground style={styles.backgroundImage}
-                       source={Images.bgRegister}>
+                       source={require('../../../../pulic/assets/images/bgRegister.png')}>
                     <View style={styles.containerLogo}>
                         <LogoTextHT colorMain={'#000'} color={'#fff'} />
                     </View>

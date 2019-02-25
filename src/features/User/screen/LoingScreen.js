@@ -11,7 +11,6 @@ import Trans from "../../common/containers/Trans";
 import { getOneUser } from '../redux/actions';
 import * as API from '../api/api';
 import { FORGOTPASSWORD, REGISTRATION } from "../router";
-import { Images } from "../../User/components/images";
 
 class LoingScreen extends Component {
     constructor(props) {
@@ -92,7 +91,7 @@ class LoingScreen extends Component {
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container} >
                     <ImageBackground style={styles.backgroundImage}
-                                     source={Images.bgLogin}>
+                                     source={require('../../../../pulic/assets/images/bgLogin.png')}>
                         <Content padder>
                             <View style={styles.containerRow}>
                                 <CommonText text={Trans.tran('User.login')} style={styles.titleLogin} />

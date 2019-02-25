@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert, Keyboard} from 'react-native';
+import { StyleSheet, TextInput, Image, View, TouchableOpacity, BackHandler, Alert, Keyboard } from 'react-native';
 import { Container } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,7 +12,6 @@ import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import ImageGif from '../components/ImageGif';
-import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { MENUFOOD_SCREEN } from "../router";
@@ -157,19 +156,19 @@ class FoodDetailScreen extends React.PureComponent {
                             </View>
                             <View style={[styles.viewRowCenter,{ marginTop: 100}]}>
                                 <ImageGif
-                                    itemImage={Images.imgGif.walk}
+                                    itemImage={require('../../../../pulic/assets/images/walk.gif')}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.walk')} ${parseInt((foodData.FoodCalorie / 5) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={Images.imgGif.Run}
+                                    itemImage={require('../../../../pulic/assets/images/Run.gif')}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.run')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={Images.imgGif.ride_bicycle}
+                                    itemImage={require('../../../../pulic/assets/images/ride_bicycle.gif')}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.spin')} ${parseInt((foodData.FoodCalorie / 10) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={Images.imgGif.swimming}
+                                    itemImage={require('../../../../pulic/assets/images/swimming.gif')}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.Swim')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                             </View>

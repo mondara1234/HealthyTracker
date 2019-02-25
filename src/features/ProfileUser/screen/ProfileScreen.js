@@ -13,7 +13,6 @@ import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
@@ -21,7 +20,6 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIUser from "../../User/api/api";
 import { getOneUser } from "../../User/redux/actions";
 import * as APISetting from "../../Setting/api/api";
-import { PROFILE_SCREEN } from "../router";
 
 class ProfileScreen extends React.PureComponent {
     constructor(props) {
@@ -544,7 +542,7 @@ class ProfileScreen extends React.PureComponent {
                                     />
                                     <View style={styles.viewIcon}>
                                         <Image  style={{width: 60, height: 100}}
-                                                source={Images.ProfileScreen.smile}
+                                                source={require('../../../../pulic/assets/images/smile.png')}
                                         />
                                     </View>
                                 </View>

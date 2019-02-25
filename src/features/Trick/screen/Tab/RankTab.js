@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import { NavigationActions, withNavigation } from "react-navigation";
 import Trans from "../../../common/containers/Trans";
 import CommonText from '../../../common/components/CommonText';
-import { Images } from "../../../User/components/images";
 import ImgRank from '../../../common/components/ImgRank';
 import { DETAILTRICK_SCREEN } from "../../../Trick/router";
 import * as APITrick from "../../api/api";
@@ -40,7 +39,7 @@ class RankTab extends React.PureComponent {
                         <Text numberOfLines={1} style={styles.fontTitleName}> {item.TrickName} </Text>
                         <View style={styles.containerHeart}>
                             <Image  style={styles.sizeHeart}
-                                    source={Images.TrickScreen.Heart}
+                                    source={require('../../../../../pulic/assets/images/Heart.png')}
                             />
                             <CommonText text={`${item.TrickLike} ${Trans.tran('Trick.person')}`} size={14} color={'#068e81'} />
                         </View>
@@ -69,7 +68,7 @@ class RankTab extends React.PureComponent {
                         <Text numberOfLines={1} style={styles.fontTitleName}>{item.TrickName}</Text>
                         <View style={[styles.viewHeartTwo, {marginTop: 20}]}>
                             <Image  style={styles.sizeHeart}
-                                    source={Images.TrickScreen.Heart}
+                                    source={require('../../../../../pulic/assets/images/Heart.png')}
                             />
                             <CommonText text={`${item.TrickLike} ${Trans.tran('Trick.person')}`} size={14} color={'#068e81'} />
                         </View>
@@ -99,7 +98,7 @@ class RankTab extends React.PureComponent {
                         <Text numberOfLines={1} style={[styles.fontTitleName, {marginLeft: 3}]}> {item.TrickName} </Text>
                         <View style={[styles.viewHeartTwo,{marginTop: '8%'}]}>
                             <Image  style={{width: 28, height: 24}}
-                                    source={Images.TrickScreen.Heart}
+                                    source={require('../../../../../pulic/assets/images/Heart.png')}
                             />
                             <CommonText text={`${item.TrickLike < 10 ? '0'+item.TrickLike : item.TrickLike} ${Trans.tran('Trick.person')}`} size={14} color={'#068e81'} style={{marginLeft: '2%'}} />
                         </View>

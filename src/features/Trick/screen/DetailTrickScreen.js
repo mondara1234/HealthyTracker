@@ -14,7 +14,6 @@ import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { BMI_SCREEN } from "../../BMI/router";
-import { Images } from "../../User/components/images";
 import * as APITrick from "../../Trick/api/api";
 
 class DetailTrickScreen extends React.PureComponent {
@@ -125,7 +124,7 @@ class DetailTrickScreen extends React.PureComponent {
                                     onPress={()=> this.DeleteUserLikeTrick()}
                                 >
                                     <Image  style={styles.sizeHeart}
-                                    source={Images.TrickScreen.Heart}
+                                    source={require('../../../../pulic/assets/images/Heart.png')}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -136,7 +135,7 @@ class DetailTrickScreen extends React.PureComponent {
                                     onPress={()=> this.InsertUserLikeTrick()}
                                 >
                                     <Image  style={styles.sizeHeart}
-                                            source={Images.TrickScreen.Heart}
+                                            source={require('../../../../pulic/assets/images/Heart.png')}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -149,7 +148,7 @@ class DetailTrickScreen extends React.PureComponent {
                             <View style={styles.viewPropleAdd}>
                                 <View style={styles.containerRow}>
                                     <Image  style={styles.sizeHeartDetail}
-                                            source={Images.TrickScreen.Heart}
+                                            source={require('../../../../pulic/assets/images/Heart.png')}
                                     />
                                     <CommonText text={`${this.state.trickLike === 0 ? trickData.TrickLike : this.state.trickLike} ${Trans.tran('Trick.person')}`} size={16} />
                                 </View>
