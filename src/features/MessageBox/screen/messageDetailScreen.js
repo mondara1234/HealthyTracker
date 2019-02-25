@@ -45,7 +45,7 @@ class messageDetailScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, width: '99%', height: '80%',}}>
                         <View  style={{alignItems: 'center'}}>
                             <CommonText text={messageData.AU_Title} style={styles.titleMessage} />
                         </View>
