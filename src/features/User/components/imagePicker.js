@@ -17,6 +17,10 @@ class imagePicker extends React.Component{
     selectPhotoTapped() {
 
         const options = {
+            title: 'เลือกรูปภาพ',
+            cancelButtonTitle: 'ปิด',
+            takePhotoButtonTitle: 'ถ่ายรูป',
+            chooseFromLibraryButtonTitle: 'เลือกรูปจากคลัง',
             quality: 1.0,
             maxWidth: 500,
             maxHeight: 500,

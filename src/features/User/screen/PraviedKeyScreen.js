@@ -1,23 +1,72 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { View, StyleSheet, Alert } from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler} from 'react-native';
 import { Container } from 'native-base';
-import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import { bindActionCreators } from 'redux';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions } from "react-navigation";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Trans from "../../common/containers/Trans";
+import HandleBack from "../../common/components/HandleBack";
+import CommonText from '../../common/components/CommonText';
+import LogoTextHT from '../../common/components/LogoTextHT';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import CommonText from "../../common/components/CommonText";
 import VirtualKeyboard from '../components/VirtualKeyboard';
+import { FORGOTPASSWORD } from "../router";
+import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
+import { SETTING_SCREEN } from "../../Setting/router";
+import { getOneUser } from "../redux/actions";
+import * as APIUser from "../api/api";
 
 class PraviedKeyScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             passCode: [],
-            passKey: '',
+            editing: true
         };
+    }
+
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
+                [
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+
+        return false;
+
+    };
+
+    componentDidMount() {
+        const {user} = this.props.Users;
+        const personalCode = user.map((data) => {return data.PersonalCode});
+        this.setState({
+            passKey : `${personalCode}`
+        })
+    }
+
+    //ใช้สำหรับข้อมูลเป็น Promise {_40: 0, _65: 0, _55: null, _72: null}
+    async updatePassCode(checkPassKey) {
+        const {user} = this.props.Users;
+        const UserID = user.map((data) => {return data.UserID});
+        let ID = UserID.toString();
+        let PassCode =`${checkPassKey}`;
+        let PersonalSelect = 'on';
+        const result = await this.props.FETCH_UpdatePassCode(PersonalSelect, PassCode, ID );
+
+        console.log('result',result);
+        const UserName = user.map((data) => {return data.UserName});
+        let UserNameS =`${UserName}`;
+        const response = await this.props.FETCH_SearchUser(UserNameS);
+        this.props.REDUCER_ONEDATA(response);
     }
 
     _onFinishCheckingCode = () => {
@@ -29,40 +78,51 @@ class PraviedKeyScreen extends React.PureComponent {
             this.state.passCode[5];
 
         setTimeout( _onFinishCheck = () => {
-            let checkData = '123456';
+            let checkData = this.state.passKey;
+            console.log('checkData',checkData);
 
             if (checkData === '') {
                 Alert.alert(
-                    'Confirmation Code',
-                    'Set the code successfully!',
+                    Trans.tran('PraviedKey.personal_Code'),
+                    Trans.tran('PraviedKey.set_Successfully'),
                     [
-                        {text: 'OK',
-                            onPress: () => this.setState({
-                                passCode: []
-                            })
+                        {text: Trans.tran('general.ok'),
+                            onPress: () => {
+                                this.updatePassCode(checkPassKey);
+                                this.props.navigation.navigate({
+                                    routeName: SETTING_SCREEN,
+                                        params: {status: 'on'}
+                                });
+                                this.setState({
+                                    passCode: []
+                                });
+                            }
                         }
                     ],
                     { cancelable: false }
                 );
             }else if (checkPassKey === checkData) {
                 Alert.alert(
-                    'Confirmation Code',
-                    'Successful!',
+                    Trans.tran('PraviedKey.personal_Code'),
+                    Trans.tran('PraviedKey.Successfully'),
                     [
-                        {text: 'OK',
-                            onPress: () => this.setState({
-                                passCode: []
-                            })
+                        {text: Trans.tran('general.ok'),
+                            onPress: () =>{
+                                this.setState({
+                                    passCode: []
+                                });
+                                this.navigationFoodDiary();
+                            }
                         }
                     ],
                     { cancelable: false }
                 );
             } else {
                 Alert.alert(
-                    'Confirmation Code',
-                    'Code not match!',
+                    Trans.tran('PraviedKey.personal_Code'),
+                    Trans.tran('PraviedKey.invalid_Personal'),
                     [
-                        {text: 'OK',
+                        {text: Trans.tran('general.ok'),
                             onPress: () => this.setState({
                                 passCode: []
                             })
@@ -73,6 +133,14 @@ class PraviedKeyScreen extends React.PureComponent {
 
             } }, 0.8)
     };
+
+    navigationFoodDiary(){
+            this.props.navigation.navigate(FOODDIARY_SCREEN);
+        setTimeout(()=>{
+        },1000);
+
+    };
+
 
     _checkText = (val) => {
         if(val !== 'back'){
@@ -95,55 +163,59 @@ class PraviedKeyScreen extends React.PureComponent {
         const textDisabled = this.state.passCode[5] ? true : false;
 
         return (
-            <Container style={styles.container}>
-                <CommonText text={'กรอกรหัสส่วนตัว'} size={50} />
-                <View style={styles.borderWrapper}>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[0] ? 'black' : 'white'}]} />
+            <HandleBack onBack={this.onBack}>
+                <Container style={styles.container}>
+                    <LogoTextHT colorMain={'#000'} color={'#068e81'} />
+                    <View style={styles.borderWrapper}>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[0] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[1] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[2] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[3] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[4] ? '#068e81' : 'white'}]} />
+                        </View>
+                        <View style={styles.borderView}>
+                            <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? '#068e81': 'white'}]}  />
+                        </View>
                     </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[1] ? 'black' : 'white'}]} />
+                    <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <TouchableOpacity style={styles.TouchForgot}
+                                          onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                            <CommonText text={Trans.tran('PraviedKey.forget_Personal')} style={styles.textForgot} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[2] ? 'black' : 'white'}]} />
+                    <View style={styles.viewKeyboard}>
+                        <VirtualKeyboard
+                            pressMode={'string'}
+                            decimal={false}
+                            onPress={(val) => this._checkText(val)}
+                            disableds={textDisabled}
+                        />
                     </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[3] ? 'black' : 'white'}]} />
-                    </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[4] ? 'black' : 'white'}]} />
-                    </View>
-                    <View style={styles.borderView}>
-                        <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? 'black': 'white'}]}  />
-                    </View>
-                </View>
-                <View style={styles.viewKeyboard}>
-                    <VirtualKeyboard
-                        pressMode={'string'}
-                        decimal={false}
-                        onPress={(val) => this._checkText(val)}
-                        disableds={textDisabled}
-                    />
-                </View>
-            </Container>
+                </Container>
+            </HandleBack>
         )
     }
 }
 
-// PraviedKeyScreen.propTypes = {
-//     navigation: PropTypes.object.isRequired
-// };
-
 PraviedKeyScreen.navigationOptions = ({ navigation }) => ({
-    headerTitle: <HeaderTitle text={'ตั้งค่ารหัสส่วนตัว'} />,
-    headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerTitle: <HeaderTitle text={Trans.tran('PraviedKey.personal_Code')} style={{marginLeft: '-15%'}}/>,
+    headerLeft: <HeaderLeftMenu icon={'arrow-back'} onPress={() => navigation.goBack()} />
 });
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: '20%',
         alignItems: 'center',
-        paddingTop: 30
     },
     borderWrapper: {
         justifyContent: 'center',
@@ -151,7 +223,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 280,
         height: 60,
-        marginTop: 30,
+        marginTop: 20,
         borderWidth: 2,
         borderRadius: 50
     },
@@ -159,7 +231,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderWidth: 2,
-        borderColor:'black',
+        borderColor:'#068e81',
         marginRight:10,
         borderRadius: 50,
         justifyContent: 'center',
@@ -179,15 +251,30 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: '10%',
         marginTop: 40,
-        borderTopWidth: 1
-    }
+        borderTopWidth: 1,
+        borderColor: '#068e81'
+    },
+    textForgot: {
+        color: '#000',
+        fontSize: 14
+    },
+    TouchForgot: {
+        marginRight: 20
+    },
 });
- export default PraviedKeyScreen;
-//
-// export default connect(
-//     (state) => {
-//     },
-//     (dispatch) => ({
-//         navigationActions: bindActionCreators(NavigationActions, dispatch)
-//     })
-// )(PraviedKeyScreen)
+
+function mapStateToProps(state) {
+    return{
+        Users: state.dataUser
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    (dispatch) => ({
+        NavigationActions: bindActionCreators(NavigationActions, dispatch),
+        FETCH_UpdatePassCode: bindActionCreators(APIUser.fetchUpdatePassCode, dispatch),
+        FETCH_SearchUser: bindActionCreators(APIUser.fetchSearchUser, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
+    })
+)(PraviedKeyScreen)

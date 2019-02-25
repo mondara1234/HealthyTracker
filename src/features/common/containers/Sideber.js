@@ -1,101 +1,120 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { NavigationActions } from 'react-navigation';
 import { styles as s } from 'react-native-style-tachyons';
 import { Container, Content, Thumbnail, ListItem, Left, Body } from 'native-base';
-import { Alert, StyleSheet, TouchableOpacity, View, FlatList } from 'react-native';
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Alert, StyleSheet, TouchableOpacity, View, FlatList, Keyboard } from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
+import { LOGIN } from "../../User/router";
+import { PROFILE_SCREEN } from "../../ProfileUser/router";
+import { SETTING_SCREEN } from "../../Setting/router";
+import { MESSAGEBOX_SCREEN } from "../../MessageBox/router";
+import { PROBLEM_SCREEN } from "../../Problem/router";
+import { ABOUT_SCREEN } from "../../About/router";
 import CommonText from '../../common/components/CommonText';
-import { DASHBOARD } from "../../common/router";
-import { LOGIN, PRAVIEDKEY } from "../../User/router";
-import { BMI_SCREEN } from "../../BMI/router";
-import { EXERCISE_SCREEN } from "../../Exercise/router";
-import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
-import { MENUFOOD_SCREEN } from "../../MenuFood/router";
-import { TRICK_SCREEN } from "../../Trick/router";
-import * as API from "../../User/api/api";
+import { getRouteName, getUSER_LOGOUT } from "../../User/redux/actions";
+import Trans from "./Trans";
 
 class Sideber extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            menuActive: 'home',
+            menuActive: this.props.routeName,
+            ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png'
         };
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     // One possible fix...
-    //     const routeName = this.props.routerName;
-    //     if (this.state.screebSideber !== routeName ) {
-    //         this.setState({ screebSideber: routeName });
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState) {
+        // BAD: DO NOT DO THIS!!!
+        let routeName = this.props.routeName;
+        if(this.state.menuActive != routeName){
+            this.setState({ menuActive: routeName });
+        }
+    }
 
     _renderItem = ({item}) => {
         const isActive = this.state.menuActive === item.name;
         const fontColor = isActive ? '#fff' : '#2a9998';
         const isAndroid = themeVariables.platform === 'android';
-        const { navigate } = this.props.navigation;
 
         return (
-            <ListItem
-                style={[
-                    styles.listItem,
-                    s.m10,
-                    {backgroundColor: isActive ? '#2a9998' : '#fff'}
-                ]}
-                icon
-                onPress={() => {
-                    this.setState({menuActive: item.name});
+            <View style={{backgroundColor: isActive ? '#2a9998' : '#fff'}}>
+                <ListItem
+                    style={[
+                        styles.listItem,
+                        s.m10
+                    ]}
+                    icon
+                    onPress={() => {
+                        this.setState({menuActive: item.name});
+                        this.props.REDUCER_ROUNTNAME(item.name);
 
-                    if (item.name === 'logout') {
-                        Alert.alert(
-                            'ออกจากระบบ',
-                            'ต้องการออกจากระบบ ?',
-                            [
-                                {text: 'ตกลง', onPress: () => navigate({routeName: LOGIN})},
-                                /*this.props.NavigationActions.reset({
+                        const resetAction = this.props.navigationActions.reset({
                             index: 0,
                             actions: [
                                 NavigationActions.navigate({
-                                    routeName: item.route,
-                                    params:  item.params
+                                    routeName: 'LOGIN'
                                 })
                             ]
-                        }) //มาทำแบบนี้ให้ได้*/
-                                {text: 'ยกเลิก'}
-                            ]
-                        )
-                    } else {
-                        navigate({
+                        });
+
+                        const navigateAction = this.props.navigationActions.navigate({
                             routeName: `${item.route}`,
                             params: item.params
-                        })
+                        });
+
+                        if (item.route === LOGIN ) {
+                            Alert.alert(
+                                Trans.tran('Sideber.sign_out'),
+                                Trans.tran('Sideber.want_Logout'),
+                                [
+                                    {text: Trans.tran('general.yes'), onPress: () =>{
+                                            this.props.REDUCER_USERLOGOUT();
+                                            this.setState({menuActive: ''});
+                                            this.props.navigation.dispatch(resetAction);
+                                        }},
+                                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                                ]
+                            )
+                        } else {
+                            this.props.navigation.dispatch(navigateAction);
+                        }
+                    }}
+                >
+                    <Left>{
+                    item.icon === 'log-out' ?
+                        <IconEntypo
+                            style={[styles.listItemIcon, {color: fontColor}]}
+                            name={item.icon}
+                        />
+                        :item.icon === 'user' ?
+                        <IconEntypo
+                            style={[styles.listItemIcon, {color: fontColor}]}
+                            name={item.icon}
+                        />
+                            :item.icon === 'address-book-o' ?
+                                <IconFontAwesome
+                                style={[styles.listItemIcon, {color: fontColor}]}
+                                name={item.icon}
+                                />
+                                :
+                                <IconMaterialIcons
+                                style={[styles.listItemIcon, {color: fontColor}]}
+                                name={item.icon}/>
                     }
-                }}
-            >
-                <Left>{
-                item.icon === 'log-out' ?
-                    <IconEntypo
-                        style={[styles.listItemIcon, {color: fontColor}]}
-                        name={item.icon}
-                    />
-                    :<IconFontAwesome
-                    style={[styles.listItemIcon, {color: fontColor}]}
-                    name={item.icon}
-                />}
-                </Left>
-                <Body style={{borderBottomWidth: 0}}>
-                    <CommonText text={`${item.name}.title`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
-                </Body>
-            </ListItem>
+                    </Left>
+                    <Body style={{borderBottomWidth: 0}}>
+                        <CommonText text={`${item.name}`} style={[styles.fontBase, s.ml2, {color: fontColor}]} weight={isAndroid ? 'bold' : null} />
+                    </Body>
+                </ListItem>
+            </View>
         )
     };
 
@@ -105,51 +124,57 @@ class Sideber extends React.Component {
         )
     };
 
+    aboutFuntion = () => {
+        const { navigate } = this.props.navigation;
+
+        this.setState({menuActive: 'about'});
+        navigate({routeName: ABOUT_SCREEN});
+    };
+
     render () {
-        //const { first_name, last_name, employee_id, manager } = this.props.users;
-        const profileImage = 'https://randomuser.me/api/portraits/thumb/men/97.jpg';
+        console.log('Update Store:',this.props);
+        const { user } = this.props.users;
+        const imgProfile = user.map((data) => {return data.imgProfile});
+        const Names = user.map((data) => {return data.UserName});
+        const BMRUser = user.map((data) => {return data.BMRUser});
+        let profileImage = imgProfile.toString();
+        let UserName = Names.toString();
 
         const menus = [
-            {name: 'หน้าหลัก', icon: 'home', route: DASHBOARD},
-            {name: 'BMI', icon: 'camera', route: BMI_SCREEN},
-            {name: 'MENUFOOD', icon: 'foot', route: MENUFOOD_SCREEN},
-            {name: 'EXERCISE', icon: 'book', route: EXERCISE_SCREEN, params: {isRootPage: true}},
-            {name: 'FOODDIARY', icon: 'food', route: FOODDIARY_SCREEN},
-            {name: 'TRICK', icon: 'list', route: TRICK_SCREEN, params: {isRootPage: true}},
-            {name: 'logout', icon: 'log-out', route: null}
+            {name: Trans.tran('Sideber.manage_Information'), icon: 'user', route: PROFILE_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.message_box'), icon: 'message', route: MESSAGEBOX_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.report_problem'), icon: 'report-problem', route: PROBLEM_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.setting'), icon: 'settings', route: SETTING_SCREEN, params: {isRootPage: true}},
+            {name: Trans.tran('Sideber.sign_out'), icon: 'log-out', route: LOGIN, params: {isRootPage: true}}
         ];
 
         return (
             <Container>
-                <TouchableOpacity
+                <View
                     style={styles.info}
-                    onPress={() => {
-                        this.props.NavigationActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({routeName: PRAVIEDKEY})
-                            ]
-                        })
-                    }}
                 >
-                    <Thumbnail
-                        source={
-                            profileImage
-                                ? {uri: profileImage}
-                                : require('../../../../pulic/assets/images/user-default.png')
+                    <View style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
+                        <Thumbnail
+                            source={
+                                profileImage
+                                    ? {uri: profileImage}
+                                    : {uri: this.state.ImgDefault}
 
-                        }
-                        style={styles.userThumb}
-                    />
-                    <CommonText
-                        text={'first_name'}
-                        style={[styles.fontBase, s.b]}
-                    />
-                    <CommonText
-                        text={`หลังงานที่ต้องการต่อวัน:  ${'1999'}  kcal`}
-                        style={[styles.fontBase, s.fw3, {fontSize: 16}]}
-                    />
-                </TouchableOpacity>
+                            }
+                            style={styles.userThumb}
+                        />
+                        <View style={{justifyContent: 'space-between'}}>
+                            <CommonText
+                                text={UserName}
+                                style={[styles.fontBase, {fontSize: 18, textAlign: 'center'}]}
+                            />
+                            <CommonText
+                                text={`${Trans.tran('FoodDiary.energy_per_day')}:  ${BMRUser} ${Trans.tran('FoodDiary.calorie')}`}
+                                style={styles.fontBase}
+                            />
+                        </View>
+                    </View>
+                </View>
                 <Content style={[s.bg_white]}>
                     <FlatList
                         data={menus}
@@ -158,18 +183,9 @@ class Sideber extends React.Component {
                         ItemSeparatorComponent={this.renderSeparator}
                     />
                 </Content>
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props.NavigationActions.reset({
-                            index: 0,
-                            actions: [
-                                NavigationActions.navigate({routeName: PRAVIEDKEY})
-                            ]
-                        })
-                    }}
-                >
-                    <View style={styles.footer}>
-                        <CommonText text={'เกี่ยวกับเรา'} style={styles.footerFont} />
+                <TouchableOpacity onPress={() => this.aboutFuntion()}>
+                    <View style={[styles.footer,{backgroundColor: this.state.menuActive === 'about' ? '#999999' : '#e7e7e7'}]}>
+                        <CommonText text={Trans.tran('About.about')} style={styles.footerFont} />
                         <CommonText text={`version ${APP_VERSION_TEXT}`} style={styles.version} />
                     </View>
                 </TouchableOpacity>
@@ -183,7 +199,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: 'white',
+        backgroundColor: '#068e81',
         borderBottomWidth: 1,
         borderBottomColor: '#000000',
     },
@@ -209,6 +225,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         height: 50,
         alignItems: 'center',
+        backgroundColor: 'transparent'
     },
     listItemIcon: {
         width: 30,
@@ -217,13 +234,12 @@ const styles = StyleSheet.create({
     },
     footer: {
         width: '100%',
-        padding: 5,
+        padding: 10,
         alignItems: 'center',
-        backgroundColor: '#e7e7e7',
         height: 50,
     },
     footerFont: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '300',
     },
     userThumb: {
@@ -232,12 +248,15 @@ const styles = StyleSheet.create({
         borderRadius: 40,
     },
     fontBase: {
-        color: '#991b1f',
-        fontSize: 22,
-        fontWeight: themeVariables.platform === 'ios' ? '600' : null
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: themeVariables.platform === 'ios' ? '600' : null,
+        marginTop: '3%',
+        marginLeft: '2%'
+
     },
     version: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '300',
         position: 'absolute',
         right: 4,
@@ -247,14 +266,16 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return{
-        routerName : state.routeName
+        users: state.dataUser,
+        routeName: state.dataUser.routeName
     };
 }
 
 export default connect(
     mapStateToProps,
     (dispatch) => ({
-        NavigationActions: bindActionCreators(NavigationActions, dispatch),
-        Flights_DATA: bindActionCreators(API.fetchTodo, dispatch),
+        navigationActions: bindActionCreators(NavigationActions, dispatch),
+        REDUCER_ROUNTNAME: bindActionCreators(getRouteName, dispatch),
+        REDUCER_USERLOGOUT: bindActionCreators(getUSER_LOGOUT, dispatch),
     })
 )(Sideber);

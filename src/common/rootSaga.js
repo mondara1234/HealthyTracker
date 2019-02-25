@@ -1,13 +1,16 @@
 import { all } from 'redux-saga/effects';
 import { appInitSaga } from './appInit';
+import rootSagas from '../features/User/redux/sagas';
+import rootSagaFoodDiary from '../features/FoodDiary/redux/sagas';
 
-
-const rootSagas = [
+const rootSagasa = [
     appInitSaga
 ];
 
 const featureSagas = [
-    rootSagas
+    rootSagasa,
+    rootSagas,
+    rootSagaFoodDiary
 ];
 
 const sagas = featureSagas.reduce((prev, curr) => [

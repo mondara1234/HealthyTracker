@@ -1,9 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
-import rootReducer from '../../components/reducers';
+import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();

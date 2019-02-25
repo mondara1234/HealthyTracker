@@ -1,27 +1,33 @@
 import React from 'react';
 import { Dimensions } from "react-native";
-import { addNavigationHelpers, DrawerNavigator, StackNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
-import { CommonRouter, DASHBOARD } from '../features/common/router';
-import { trickRouter, TRICK_SCREEN } from "../features/Trick/router";
-import { menuFoodRouter, MENUFOOD_SCREEN } from "../features/MenuFood/router";
-import {foodDiaryRouter, FOODDIARY_SCREEN } from "../features/FoodDiary/router";
-import { exerciseRouter } from '../features/Exercise/router';
-import { bmiRouter } from '../features/BMI/router';
-import { UserRouter, LOGIN } from '../features/User/router';
+import { UserRouter, HOMELOGIN, LOGIN,PRAVIEDKEY, REGISTRATION} from '../features/User/router';
+import { trickRouter, TRICK_SCREEN  } from "../features/Trick/router";
+import { menuFoodRouter , MENUFOOD_SCREEN, FOODSTYPE_SCREEN} from "../features/MenuFood/router";
+import { foodDiaryRouter, FOODDIARY_SCREEN, METABOLIC_SCREEN } from "../features/FoodDiary/router";
+import { bmiRouter, BMI_SCREEN } from '../features/BMI/router';
+import { aboutRouter, ABOUT_SCREEN } from '../features/About/router';
+import { problemRouter, PROBLEM_SCREEN } from '../features/Problem/router';
+import { settingRouter } from '../features/Setting/router';
+import { messageboxRouter, MESSAGEBOX_SCREEN } from '../features/MessageBox/router';
+import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
 export const RootStack = StackNavigator({
-    ...CommonRouter,
     ...UserRouter,
     ...trickRouter,
     ...menuFoodRouter,
     ...foodDiaryRouter,
-    ...exerciseRouter,
-    ...bmiRouter
+    ...bmiRouter,
+    ...settingRouter,
+    ...profileRouter,
+    ...aboutRouter,
+    ...problemRouter,
+    ...messageboxRouter
 },{
-    initialRouteName: TRICK_SCREEN,
+    initialRouteName: LOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),
@@ -48,9 +54,5 @@ export const RootNavigator = StackNavigator({
 }, {
     headerMode: 'none',
 });
-
-
-
-
 
 export default RootNavigator;

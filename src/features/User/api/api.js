@@ -1,144 +1,183 @@
-import * as actionTypes from '../redux/actions';
-import axios from '../redux/axios';
-import {Alert} from "react-native";
-import { getAllFlights } from "../redux/actions";
+import Trans from "../../common/containers/Trans";
+import { Alert } from "react-native";
+import { SERVER_URL } from "../../../common/constants";
+import { LOGIN } from "../router";
 
-
-export function fetchPostsApi() {
-    return fetch(`http://192.168.1.4/My_SQL/ShowAllDataList.php`)
-        .then(response => response.json())
+export const fetchLogin = (UserNames, Password) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/User_Login.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: UserNames,
+            password: Password
+        })
+    }).then((response) => response.json())
         .then((responseJson) => responseJson)
         .catch((error) => {
             console.error(error);
         });
-}
 
-export const fetchTodo = (Email, Password, keyScreen) => dispatch => {
-    return fetch('http://192.168.1.4/My_SQL/User_Login.php', {
+};
+
+export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dateFormat) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/InsertData.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            name: Name,
             email: Email,
-            password: Password
+            password: Password,
+            imgProfile: ImgProfile,
+            date: dateFormat
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            if(responseJson === 'Data Matched')
-            {
-                keyScreen.navigate('DASHBOARD')
-            }
-            else{
-                Alert.alert('Error',responseJson);
+            console.log(responseJson);
+            if(responseJson === 'Email'||responseJson === 'Name'){
+                Alert.alert(
+                    Trans.tran('general.alert'),
+                    `${responseJson} ${Trans.tran('User.already_people')}`,
+                    [
+                        { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
+                    ],
+                    { cancelable: false },
+                );
+            }else{
+                Alert.alert(
+                    Trans.tran('general.alert'),
+                    responseJson,
+                    [
+                        { text: Trans.tran('general.ok'), onPress: () => keyScreens({routeName: LOGIN})},
+                        { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
+                    ],
+                    { cancelable: false },
+                );
             }
         }).catch((error) => {
             console.error(error);
+            console.log(error);
         });
 
 };
 
-export const fetchTodoss = (Email, Password, keyScreen) => dispatch => {
-    return fetch('http://192.168.1.4/My_SQL/User_Login.php', {
+export const fetchUpdateUserName = (UserID, users, Emails, oldusers ) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdateUserName.php`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: Email,
-            password: Password
+            id : UserID,
+            user : users,
+            oldusers : oldusers,
+            email : Emails
         })
-    }).then((response) => response.json())
+    }).then(response => response.json())
         .then((responseJson) => {
-            if(responseJson === 'Data Matched')
-            {
-                let todos = 'Data Matched';
-                dispatch(getAllFlights(todos))
-            }
-            else{
-                let todos = responseJson;
-                dispatch(getAllFlights(todos))
-            }
-        }).catch((error) => {
+                if(responseJson=== 'มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว'){
+                    Alert.alert(
+                        Trans.tran('general.alert'),
+                        responseJson,
+                        [
+                            { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
+                        ],
+                        { cancelable: false },
+                    );
+                    return responseJson;
+            }else{
+                    console.log(responseJson);
+                }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
+export const fetchUpdateUser = (UserID, Sex, Age, Weight, Height, BMRUser ) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdateBMIUser.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id : UserID,
+            sex : Sex,
+            age : Age,
+            weight: Weight,
+            height: Height,
+            bmruser: BMRUser
+        })
+    }).then(response => response.json())
+        .then((responseJson) =>
+            console.log(responseJson)
+        )
+        .catch((error) => {
             console.error(error);
         });
 
 };
 
+export const fetchSearchUser = (UserNames) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/ShowOneDataList.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: UserNames
+        })
+    }).then(response => response.json())
+        .then((responseJson) => responseJson)
+        .catch((error) => {
+            console.error(error);
+        });
 
-const getDataSuccess = (data) => {
-    return {
-        type: actionTypes.GET_DATA_SUCCESS,
-        data: data
-    }
 };
 
-export const getData = (url, props) => {
-    return (dispatch) => {
-        axios.get(url)
-            .then(response => {
-                dispatch(getDataSuccess(response.data));
-            })
-            .catch(error => {
-                //TODO: handle the error when implemented
-            })
-    }
-}
-const postDataSuccess = (response) => {
-    return {
-        type: actionTypes.POST_DATA_SUCCESS,
-        response: response
-    }
-}
+export const fetchUpdateUpdateImgUser = (UserID, dataImg) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdateImgProfile.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: UserID,
+            dataimg: dataImg
+        })
+    }).then(response => response.json())
+        .then((responseJson) => responseJson)
+        .catch((error) => {
+            console.error(error);
+        });
 
-export const postData = (url, obj, props) => {
-    return (dispatch) => {
-        axios.post(url, obj)
-            .then(response => {
-                dispatch(postDataSuccess(response));
-            })
-            .catch(error => {
-                //TODO: handle the error when implemented
-            })
-    }
-}
+};
 
-const putDataSuccess = (response) => {
-    return {
-        type: actionTypes.PUT_DATA_SUCCESS,
-        response: response
-    }
-}
+export const fetchUpdatePassCode = (PersonalSelect, PassCode, ID) => dispatch => {
+    return fetch(`${SERVER_URL}/My_SQL/user/UpdatePassCode.php`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: ID,
+            passCode: PassCode,
+            personalselect: PersonalSelect
+        })
+    }).then(response => response.json())
+        .then((responseJson) => responseJson)
+        .catch((error) => {
+            console.error(error);
+        });
 
-export const putData = (url, obj, props) => {
-    return (dispatch) => {
-        axios.put(url, obj)
-            .then(response => {
-                dispatch(putDataSuccess(response));
-            })
-            .catch(error => {
-                //TODO: handle the error when implemented
-            })
-    }
-}
-
-const deleteDataSuccess = (response) => {
-    return {
-        type: actionTypes.DELETE_DATA_SUCCESS,
-        response: response
-    }
-}
-
-export const deleteData = (url, props) => {
-    return (dispatch) => {
-        axios.delete(url)
-            .then(response => {
-                dispatch(deleteDataSuccess(response));
-            })
-            .catch(error => {
-                //TODO: handle the error when implemented
-            })
-    }
-}
+};

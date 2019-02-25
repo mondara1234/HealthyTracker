@@ -1,17 +1,17 @@
 import initialState from './initialState';
+import { ALL_USERExercise } from './constants';
 
-const reducers = [
-
-];
-
-export default function reducer(state = initialState, action = {}) {
-    let newState;
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        // Handle cross-topic actions here
+        case ALL_USERExercise:
+            return {
+                ...state,
+                exerciseUser: action.json,
+                loading: false
+            };
         default:
-            newState = state;
-            break;
+            return state;
     }
-    /* istanbul ignore next */
-    return reducers.reduce((s, r) => r(s, action), newState);
-}
+};
+
+export default reducer;

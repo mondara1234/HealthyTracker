@@ -1,17 +1,23 @@
 import initialState from './initialState';
+import { ALL_MENUFOOD, ALL_FOODTYPE } from './constants';
 
-const reducers = [
-
-];
-
-export default function reducer(state = initialState, action = {}) {
-    let newState;
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        // Handle cross-topic actions here
+        case ALL_MENUFOOD:
+            return {
+                ...state,
+                foodMenu: action.json,
+                loading: false
+            };
+        case ALL_FOODTYPE:
+            return {
+                ...state,
+                foodType: action.json,
+                loading: false
+            };
         default:
-            newState = state;
-            break;
+            return state;
     }
-    /* istanbul ignore next */
-    return reducers.reduce((s, r) => r(s, action), newState);
-}
+};
+
+export default reducer;

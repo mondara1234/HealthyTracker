@@ -1,142 +1,248 @@
 import React, { Component } from 'react';
-import {StyleSheet, Alert, Text, View, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, Alert, Text, View, TouchableOpacity, TextInput, ImageBackground, BackHandler, Keyboard  } from 'react-native';
+import { Container, Content } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { bindActionCreators } from 'redux';
-import { requestApiData } from "../redux/actions";
+import HandleBack from "../../common/components/HandleBack";
+import CommonText from '../../common/components/CommonText';
 import Logo from '../components/Logo';
-import {getNews, getAllFlights} from '../redux/actions';
+import Trans from "../../common/containers/Trans";
+import { getOneUser } from '../redux/actions';
 import * as API from '../api/api';
+import { FORGOTPASSWORD, REGISTRATION } from "../router";
+import { Images } from "../../User/components/images";
 
 class LoingScreen extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            UserEmail: '',
-            UserPassword: ''
+            User: '',
+            UserPassword: '',
+            editing: true,
+            data_User: []
         }
     }
 
-    componentDidMount(){
-        this.props.FETCH_DATA();
-    }
-
-    UserLoginFunction = () =>{
-        const Email = this.state.UserEmail ;
-        const Password = this.state.UserPassword ;
-        const keyScreen = this.props.navigation;
-        this.props.Flights_DATA(Email,Password , keyScreen);
+    onBack = () => {
+        if (this.state.editing) {
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('general.close_App'),
+                [
+                    { text: Trans.tran('general.yes'), onPress: () => BackHandler.exitApp() },
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+            return true;
+        }
+        return false;
     };
 
-      RegistrationFunction = () =>{
-        this.props.navigation.navigate('REGISTRATION');
+    UserLoginFunction = async() =>{
+        Keyboard.dismiss();
+        if(this.state.User === '' || this.state.UserPassword === '' ){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                Trans.tran('general.please_Complete'),
+                [
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+        }else{
+
+            const username = this.state.User;
+            const UserNames = `${username}`;
+            const Password = this.state.UserPassword;
+            const keyScreen = this.props.navigation;
+            const response = await this.props.FETCH_Login(UserNames, Password);
+            if(response === 'Data Matched')
+            {
+                const result = await this.props.FETCH_ShowUser(UserNames);
+                const personalSelect = result.map((data) => {return data.PersonalSelect});
+                this.props.REDUCER_ONEDATA(result);
+                if(`${personalSelect}` === 'on'){
+                    keyScreen.navigate('PRAVIEDKEY');
+                }else{
+                    keyScreen.navigate('FOODDIARY_SCREEN')
+                }
+            }
+            else{
+                Alert.alert('Error',response);
+            }
+
+        }
     };
 
     render() {
-            console.log('Update Store:',this.props);
+
+        const resetAction = this.props.navigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'REGISTRATION'
+                })
+            ]
+        });
+
         return (
-            <View style={styles.container}>
-                <Logo Title="WECOME MyAPP"/>
-                <View style={styles.containerView}>
-                    <TextInput style={styles.inputBox}
-                               underlineColorAndroid='rgba(0,0,0,0)'
-                               placeholder="Email"
-                               placeholderTextColor = "#ffffff"
-                               selectionColor="#fff"
-                               keyboardType="email-address"
-                               onChangeText={UserEmail =>this.setState({UserEmail})}
-                    />
-                    <TextInput style={styles.inputBox}
-                               underlineColorAndroid='rgba(0,0,0,0)'
-                               placeholder="Password"
-                               secureTextEntry={true}
-                               placeholderTextColor = "#ffffff"
-                               onChangeText={UserPassword =>this.setState({UserPassword})}
-                    />
-                    <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
-                        <Text style={styles.buttonText} > {'Login'} </Text>
-                    </TouchableOpacity>
+            <HandleBack onBack={this.onBack}>
+                <Container style={styles.container} >
+                    <ImageBackground style={styles.backgroundImage}
+                                     source={Images.bgLogin}>
+                        <Content padder>
+                            <View style={styles.containerRow}>
+                                <CommonText text={Trans.tran('User.login')} style={styles.titleLogin} />
+                            </View>
+                            <View style={{marginTop: -20, paddingLeft: 10}}>
+                                <Logo Title="Healthy MyApp"/>
+                            </View>
+                            <View style={styles.containerView}>
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder={Trans.tran('User.userName')}
+                                           placeholderTextColor = "#068e81"
+                                           selectionColor="#fff"
+                                           onChangeText={UserName =>this.setState({User: UserName})}
+                                />
+                                <TextInput style={styles.inputBox}
+                                           underlineColorAndroid='rgba(0,0,0,0)'
+                                           placeholder={Trans.tran('User.password')}
+                                           secureTextEntry={true}
+                                           placeholderTextColor = "#068e81"
+                                           onChangeText={UserPassword =>this.setState({UserPassword: UserPassword})}
+                                />
+                                <View style={[styles.containerForgot,{alignItems: 'flex-end'}]}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
+                                        <CommonText text={Trans.tran('User.forgot_password')} style={styles.textForgot} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.containerForgot}>
+                                    <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
+                                        <CommonText text={Trans.tran('User.login')} style={styles.buttonText} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                        </Content>
+                    </ImageBackground>
                     <View style={styles.signupTextCont}>
-                        <Text style={styles.signupText}>Don't have an account yet?</Text>
-                        <TouchableOpacity onPress={this.RegistrationFunction}>
-                            <Text style={styles.signupButton}> {'Signup'}</Text>
+                        <CommonText text={Trans.tran('User.already_account')} style={styles.signupText} />
+                        <TouchableOpacity onPress={() =>  this.props.navigation.dispatch(resetAction)}>
+                            <CommonText text={Trans.tran('User.register')} style={styles.signupButton} />
                         </TouchableOpacity>
                     </View>
-                </View>
-            </View>
+                </Container>
+            </HandleBack>
         )
     }
 }
 
 LoingScreen.navigationOptions  = ({navigation}) => ({
-    header: null
+    headerTransparent: true,
+    headerTintColor: '#000',
+    headerStyle: {
+        backgroundColor: 'transparent'
+    }
 });
 
 const styles = StyleSheet.create({
-    container : {
-        paddingTop:60,
-        backgroundColor:'#455a64',
+    container: {
         flex: 1,
-        alignItems:'center',
-        justifyContent :'center'
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    containerView : {
+    backgroundImage: {
+        paddingTop: 20,
         flex: 1,
-        marginTop: 65,
-        justifyContent:'center',
-        alignItems: 'center'
+        width: '100%',
+        height: '100%'
     },
-    signupTextCont : {
-        flexGrow: 1,
-        alignItems:'flex-end',
-        justifyContent :'center',
-        paddingVertical:16,
-        flexDirection:'row'
+    containerRow: {
+        flexDirection: 'row',
+    },
+    titleLogin: {
+        color: '#068e81',
+        fontSize: 24,
+        marginLeft: 10
+    },
+    textForgot: {
+        color: '#000',
+        fontSize: 16,
+    },
+    containerForgot: {
+        width:  200,
+        alignItems: 'center' ,
+        justifyContent: 'center'
+    },
+    containerView: {
+        marginLeft: 10,
+        justifyContent: 'center'
+    },
+    signupTextCont: {
+        position: 'absolute',
+        bottom: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
     signupText: {
-        color:'rgba(255,255,255,0.6)',
-        fontSize:16
+        color: 'rgba(0,0,0,0.6)',
+        fontSize: 18
     },
     signupButton: {
-        color:'#ffffff',
-        fontSize:16,
-        fontWeight:'500'
+        color: '#F4F4F4',
+        fontSize: 18,
+        fontWeight: '500',
+        marginLeft: 5
     },
     inputBox: {
-        width:300,
-        backgroundColor:'rgba(255, 255,255,0.2)',
+        width: 200,
+        height: 40,
+        backgroundColor: '#fff',
         borderRadius: 25,
-        paddingHorizontal:16,
-        fontSize:16,
-        color:'#ffffff',
-        marginVertical: 10
+        borderWidth: 1,
+        borderColor: '#068e81',
+        fontSize: 18,
+        color: '#068e81',
+        paddingLeft: 10,
+        marginVertical: 5,
+        justifyContent: 'center',
+        paddingBottom: 5
     },
     button: {
-        width:300,
-        backgroundColor:'#1c313a',
+        width: 150,
         borderRadius: 25,
-        marginVertical: 10,
-        paddingVertical: 13
+        borderWidth: 1,
+        marginTop: 20,
+        paddingVertical: 10,
+        backgroundColor: '#068e81'
     },
     buttonText: {
-        fontSize:16,
-        fontWeight:'500',
-        color:'#ffffff',
-        textAlign:'center'
-    }
+        fontSize: 20,
+        fontWeight: '500',
+        color: '#ffffff',
+        textAlign: 'center'
+    },
 });
 
 function mapStateToProps(state) {
     return{
-        servers: state.data
-};
+        Users: state.dataUser
+    };
 }
 
-export default connect(mapStateToProps,
+export default connect(
+    mapStateToProps,
     (dispatch) => ({
         navigationActions: bindActionCreators(NavigationActions, dispatch),
-        FETCH_DATA: bindActionCreators(getNews, dispatch),
-        Flights_DATA: bindActionCreators(API.fetchTodo, dispatch),
+        REDUCER_ONEDATA: bindActionCreators(getOneUser, dispatch),
+        FETCH_Login: bindActionCreators(API.fetchLogin, dispatch),
+        FETCH_ShowUser: bindActionCreators(API.fetchSearchUser, dispatch),
     })
 )(LoingScreen);
-

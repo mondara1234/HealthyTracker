@@ -1,17 +1,29 @@
 import initialState from './initialState';
+import { SEAECH_TRICKALL, SEAECH_TRICKNEW, SEAECH_TRICKRANK } from './constants';
 
-const reducers = [
-
-];
-
-export default function reducer(state = initialState, action = {}) {
-    let newState;
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        // Handle cross-topic actions here
+        case SEAECH_TRICKALL:
+            return {
+                ...state,
+                trickAll: action.json,
+                loading: false
+            };
+        case SEAECH_TRICKNEW:
+            return {
+                ...state,
+                trickNew: action.json,
+                loading: false
+            };
+        case SEAECH_TRICKRANK:
+            return {
+                ...state,
+                trickRank: action.json,
+                loading: false
+            };
         default:
-            newState = state;
-            break;
+            return state;
     }
-    /* istanbul ignore next */
-    return reducers.reduce((s, r) => r(s, action), newState);
-}
+};
+
+export default reducer;

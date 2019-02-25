@@ -162,6 +162,8 @@ export default {
   inputBorderColor: "#D9D5DC",
   inputSuccessBorderColor: "#2b8339",
   inputErrorBorderColor: "#ed2f2f",
+  inputBorderRadius: 3,
+  inputBorderWidth: 1,
   inputHeightBase: 50,
   get inputColor() {
     return this.textColor;
@@ -243,5 +245,25 @@ export default {
   deviceWidth,
   deviceHeight,
   isIphoneX,
-  inputGroupRoundedBorderRadius: 30
+  inputGroupRoundedBorderRadius: 30,
+
+    combineStyles: function(/* arg1, arg2, ... */) {
+        let styles = [];
+
+        for (let i = 0; i < arguments.length; i++) {
+            if (isArray(arguments[i])) {
+                styles = [
+                    ...styles,
+                    ...arguments[i],
+                ]
+            } else {
+                styles = [
+                    ...styles,
+                    arguments[i],
+                ]
+            }
+        }
+
+        return styles;
+    },
 };
