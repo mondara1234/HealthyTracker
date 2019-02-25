@@ -90,10 +90,19 @@ class problemScreen extends React.PureComponent {
     }
 
     addProBlem(){
-        if(this.state.title === '' || this.state.selected === undefined || this.state.detail === ''){
+        if(this.state.title === '' || this.state.detail === ''){
             Alert.alert(
                 Trans.tran('general.alert'),
                 Trans.tran('general.please_Complete'),
+                [
+                    { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
+                ],
+                { cancelable: false },
+            );
+        }else if(this.state.selected === undefined){
+            Alert.alert(
+                Trans.tran('general.alert'),
+                'กรุณาเลือกปะเภทของปัญหา',
                 [
                     { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
                 ],
@@ -163,7 +172,7 @@ class problemScreen extends React.PureComponent {
                                     selectedValue={this.state.selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                 >
-                                    <Picker.Item label={Trans.tran('Problem.Picker.type_Problem')} value="เลือกประเภทของปัญหา" />
+                                    <Picker.Item label={Trans.tran('Problem.Picker.type_Problem')} value="undefined" />
                                     <Picker.Item label={Trans.tran('Problem.Picker.unstable_System')} value="ระบบไม่เสถียร" />
                                     <Picker.Item label={Trans.tran('Problem.Picker.server_Problem')} value="เซิร์ฟเวอร์มีปัญหา" />
                                     <Picker.Item label={Trans.tran('Problem.Picker.bug_Found')} value="พบข้อบกพร่อง" />
