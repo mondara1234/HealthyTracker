@@ -150,7 +150,7 @@ class Sideber extends React.Component {
 
         return (
             <Container>
-                <TouchableOpacity
+                <View
                     style={styles.info}
                 >
                     <View style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
@@ -174,7 +174,7 @@ class Sideber extends React.Component {
                             />
                         </View>
                     </View>
-                </TouchableOpacity>
+                </View>
                 <Content style={[s.bg_white]}>
                     <FlatList
                         data={menus}
