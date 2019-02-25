@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, ImageBackground, BackHandler, Alert } from 'react-native';
-import { withNavigation } from "react-navigation";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {NavigationActions, withNavigation} from "react-navigation";
 import Form from './FormScreen/FormRegistration';
 import HandleBack from "../../common/components/HandleBack";
 import CommonText from '../../common/components/CommonText';
@@ -38,7 +40,14 @@ class Registration extends Component {
     render() {
 
         const { navigate } = this.props.navigation;
-
+        const resetAction = this.props.navigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'LOGIN'
+                })
+            ]
+        });
         return (
             <HandleBack onBack={this.onBack}>
                 <ImageBackground style={styles.backgroundImage}
@@ -49,7 +58,7 @@ class Registration extends Component {
                     <Form nameRegistration={Trans.tran('User.register')} keyScreen={navigate}/>
                     <View style={styles.signupTextCont}>
                         <CommonText text={Trans.tran('User.already_account')} style={styles.signupText} />
-                        <TouchableOpacity onPress={ () => navigate({routeName: LOGIN})}>
+                        <TouchableOpacity onPress={ () => this.props.navigation.dispatch(resetAction)}>
                             <CommonText text={Trans.tran('User.login')} style={styles.signupButton} />
                         </TouchableOpacity>
                     </View>
@@ -110,4 +119,9 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNavigation(Registration);
+export default connect(
+    null,
+    (dispatch) => ({
+        navigationActions: bindActionCreators(NavigationActions, dispatch)
+    })
+)(withNavigation(Registration));

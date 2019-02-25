@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, Dimensions, BackHandler, Alert } from 'react-native';
+import { StyleSheet, View, BackHandler, Alert } from 'react-native';
 import { Container, Content } from 'native-base';
 import { withNavigation } from "react-navigation";
 import SideMenu from '../../common/components/SideMenu';
@@ -45,7 +45,7 @@ class messageDetailScreen extends React.PureComponent {
         return (
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container}>
-                    <View>
+                    <View style={{flex: 1}}>
                         <View  style={{alignItems: 'center'}}>
                             <CommonText text={messageData.AU_Title} style={styles.titleMessage} />
                         </View>
@@ -81,25 +81,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleMessage: {
-        fontSize: 18,
+        fontSize: 22,
         textAlign: 'center',
-        marginVertical: 20
+        marginVertical: 15
     },
     descriptionMessage: {
         marginTop: 10,
         marginLeft: 10,
-        fontSize: 18
+        fontSize: 20
     },
     viewDetailMessage: {
-        marginHorizontal: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
         borderWidth: 2,
         borderColor: '#068e81',
+        width: '99%',
+        height: '80%',
         flex: 1,
-        width: '98%',
-        height:'98%',
-        marginBottom: '3%'
+        marginBottom: '3%',
+        marginLeft: '0.5%'
     },
     detailMessage: {
         margin: 10,

@@ -399,9 +399,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#068e81',
         paddingLeft: 10,
-        paddingTop: 8,
         marginVertical: 5,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        paddingBottom: -3
     },
     dialogTextBody: {
         color: '#000',

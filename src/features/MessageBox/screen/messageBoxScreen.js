@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, BackHandler, ListView, StyleSheet, View } from 'react-native';
+import { Alert, BackHandler, Text, ListView, StyleSheet, View } from 'react-native';
 import { Container, Content, Button, Icon, List, ListItem, Header } from 'native-base';
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
@@ -100,7 +100,7 @@ class messageBoxScreen extends Component {
                         let ID = `${data.AU_ID}`;
 
                         this.props.FETCH_DeleteMessageUse(ID);
-                        this.getFoodUser(UserNames);
+                        this.getMessageBox(UserNames);
                     }
                 },
                 { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" },
@@ -135,7 +135,7 @@ class messageBoxScreen extends Component {
                                         <ListItem
                                             style={{backgroundColor: data.AU_Status === 'false' ? '#bfbfbf' : '#fff'}}
                                             onPress={() => this.messageDetail(data)}>
-                                            <CommonText text={data.AU_Title} style={{marginLeft: 10}}/>
+                                            <Text numberOfLines={1} style={{marginLeft: 10, fontSize: 18, color: '#000'}}> {data.AU_Title} </Text>
                                         </ListItem>
 
                                     }

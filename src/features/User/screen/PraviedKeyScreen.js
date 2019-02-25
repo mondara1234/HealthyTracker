@@ -108,10 +108,10 @@ class PraviedKeyScreen extends React.PureComponent {
                     [
                         {text: Trans.tran('general.ok'),
                             onPress: () =>{
-                                this.props.navigation.navigate(FOODDIARY_SCREEN);
                                 this.setState({
                                     passCode: []
-                                })
+                                });
+                                this.navigationFoodDiary();
                             }
                         }
                     ],
@@ -133,6 +133,14 @@ class PraviedKeyScreen extends React.PureComponent {
 
             } }, 0.8)
     };
+
+    navigationFoodDiary(){
+            this.props.navigation.navigate(FOODDIARY_SCREEN);
+        setTimeout(()=>{
+        },1000);
+
+    };
+
 
     _checkText = (val) => {
         if(val !== 'back'){

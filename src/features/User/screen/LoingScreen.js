@@ -78,7 +78,15 @@ class LoingScreen extends Component {
     };
 
     render() {
-        console.log('Update Store:',this.props);
+
+        const resetAction = this.props.navigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'REGISTRATION'
+                })
+            ]
+        });
 
         return (
             <HandleBack onBack={this.onBack}>
@@ -123,7 +131,7 @@ class LoingScreen extends Component {
                     </ImageBackground>
                     <View style={styles.signupTextCont}>
                         <CommonText text={Trans.tran('User.already_account')} style={styles.signupText} />
-                        <TouchableOpacity onPress={() =>  this.props.navigation.navigate(REGISTRATION)}>
+                        <TouchableOpacity onPress={() =>  this.props.navigation.dispatch(resetAction)}>
                             <CommonText text={Trans.tran('User.register')} style={styles.signupButton} />
                         </TouchableOpacity>
                     </View>

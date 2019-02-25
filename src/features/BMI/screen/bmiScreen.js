@@ -241,7 +241,7 @@ class bmiScreen extends React.PureComponent {
                                     renderHeader={this._renderHeader}
                                     renderContent={this._renderContent}
                                     headerStyle={{ backgroundColor: "#b7daf8" }}
-                                    contentStyle={{ backgroundColor: "#ddecf8" }}
+                                    contentStyle={{ backgroundColor: "#ddecf8"}}
                                     style={{marginRight: '2%'}}
                                 />
                             </View>
