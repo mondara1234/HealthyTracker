@@ -165,17 +165,17 @@ class ProfileScreen extends React.PureComponent {
         });
     }
 
-    async UpdateUser(UserID, users, Emails, oldusers){
-        const members = this.props.Users.user;
-        const UserName = members.map((data) => {return data.UserName});
-        const re = await this.props.FETCH_UpdateUserName(UserID, users, Emails, oldusers);
-        console.log('re',re);
-        if(re === 'มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว'){
+    async UpdateUser(UserID, users, Emails, oldusers, oldEmails){
+        const responseJson = await this.props.FETCH_UpdateUserName(UserID, users, Emails, oldusers, oldEmails);
+        if(responseJson == 'Email'||responseJson == 'Name'){
+            this.getData(oldusers);
             this.setState({
-                user: `${UserName}`
+                user: `${oldusers}`,
+                Email: `${oldEmails}`
             });
+        }else{
+            this.getData(users);
         }
-        this.getData(users);
     }
 
     async UpdateChangePassword() {
@@ -254,7 +254,7 @@ class ProfileScreen extends React.PureComponent {
         const { user } = this.props.Users;
         let id = user.map((data) => { return data.UserID });
         let UserName = user.map((data) => { return data.UserName });
-        let Email = user.map((data) => { return data.Email });
+        let oldEmail = user.map((data) => { return data.Email });
         let imgProfile = user.map((data) => { return data.imgProfile });
         let BMRUsers = user.map((data) => { return data.BMRUser });
 
@@ -328,6 +328,7 @@ class ProfileScreen extends React.PureComponent {
                                             let Emails = `${Email}`;
                                             let BMRUser = 0;
                                             let oldusers = `${UserName}`;
+                                            let oldEmails = `${oldEmail}`;
 
                                             if(Sex === 'male'){
                                                 let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
@@ -392,7 +393,7 @@ class ProfileScreen extends React.PureComponent {
                                                     bmi: SumBMi.toFixed(2),
                                                     stateButton: 'Edit'
                                                 });
-                                                this.UpdateUser(UserID, users, Emails, oldusers);
+                                                this.UpdateUser(UserID, users, Emails, oldusers, oldEmails);
                                                 this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
                                                 this.getData(UserName);
                                             }
@@ -439,7 +440,7 @@ class ProfileScreen extends React.PureComponent {
                                                 borderWidth: this.state.stateButton === 'Save'? 1 : 0
                                             }]}
                                                    underlineColorAndroid='rgba(0,0,0,0)'
-                                                   defaultValue={`${Email}`}
+                                                   defaultValue={`${this.state.Email}`}
                                                    placeholderTextColor = "#068e81"
                                                    editable = {this.state.stateButton === 'Edit'? false : true}
                                                    onChangeText={TextInputValue =>

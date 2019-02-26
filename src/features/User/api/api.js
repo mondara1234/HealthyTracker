@@ -66,7 +66,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dat
 
 };
 
-export const fetchUpdateUserName = (UserID, users, Emails, oldusers ) => dispatch => {
+export const fetchUpdateUserName = (UserID, users, Emails, oldusers, oldEmails ) => dispatch => {
     return fetch(`${SERVER_URL}/My_SQL/user/UpdateUserName.php`, {
         method: 'POST',
         headers: {
@@ -77,14 +77,15 @@ export const fetchUpdateUserName = (UserID, users, Emails, oldusers ) => dispatc
             id : UserID,
             user : users,
             oldusers : oldusers,
-            email : Emails
+            email : Emails,
+            oldemail : oldEmails
         })
     }).then(response => response.json())
         .then((responseJson) => {
-                if(responseJson=== 'มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว'){
+                if(responseJson === 'Email'||responseJson === 'Name'){
                     Alert.alert(
                         Trans.tran('general.alert'),
-                        responseJson,
+                        `${responseJson} ${Trans.tran('User.already_people')}`,
                         [
                             { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }
                         ],
@@ -92,7 +93,7 @@ export const fetchUpdateUserName = (UserID, users, Emails, oldusers ) => dispatc
                     );
                     return responseJson;
             }else{
-                    console.log(responseJson);
+                    return responseJson;
                 }
         })
         .catch((error) => {
