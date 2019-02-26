@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import RankTrick from '../../Trick/components/RankTrick';
-import {Images} from "../../User/components/images";
 
 const ImgRank = (props) => {
     return(
         <ImageBackground source={{uri: props.nameUriImg}} style={props.styleImg}>
             <View style={styles.containerImg}>
-                <RankTrick  itemImage={Images.TrickScreen.Rank}
+                <RankTrick  itemImage={require('../../../../pulic/assets/images/Rank.png')}
                             nameImg={props.nameRank}
                             style={props.styleImgRank}
                 />

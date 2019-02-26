@@ -7,7 +7,6 @@ import CommonText from '../../common/components/CommonText';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import Logo from '../components/Logo';
-import { Images } from "../components/images";
 import { LOGIN, REGISTRATION } from "../router";
 
 class HomeLoingScreen extends Component {
@@ -61,7 +60,7 @@ class HomeLoingScreen extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <Image  style={styles.imgFood} source={Images.foodhome} />
+                    <Image  style={styles.imgFood} source={require('../../../../pulic/assets/images/foodhome.png')} />
                 </View>
             </HandleBack>
         )

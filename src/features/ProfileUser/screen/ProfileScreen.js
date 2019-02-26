@@ -13,7 +13,6 @@ import SideMenu from '../../common/components/SideMenu';
 import CommonText from '../../common/components/CommonText';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
-import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../../BMI/router";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
@@ -21,7 +20,6 @@ import { TRICK_SCREEN } from "../../Trick/router";
 import * as APIUser from "../../User/api/api";
 import { getOneUser } from "../../User/redux/actions";
 import * as APISetting from "../../Setting/api/api";
-import { PROFILE_SCREEN } from "../router";
 
 class ProfileScreen extends React.PureComponent {
     constructor(props) {
@@ -167,17 +165,16 @@ class ProfileScreen extends React.PureComponent {
         });
     }
 
-    async UpdateUser(UserID, users, Emails, oldusers){
-        const members = this.props.Users.user;
-        const UserName = members.map((data) => {return data.UserName});
-        const re = await this.props.FETCH_UpdateUserName(UserID, users, Emails, oldusers);
-        console.log('re',re);
-        if(re === 'มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว'){
+    async UpdateUser(UserID, users, Emails,  oldEmails){
+        const responseJson = await this.props.FETCH_UpdateUserName(UserID, Emails, oldEmails);
+        if(responseJson == 'Email'){
+            this.getData(users);
             this.setState({
-                user: `${UserName}`
+                Email: `${oldEmails}`
             });
+        }else{
+            this.getData(users);
         }
-        this.getData(users);
     }
 
     async UpdateChangePassword() {
@@ -205,7 +202,7 @@ class ProfileScreen extends React.PureComponent {
                 ],
                 {cancelable: false},
             );
-        }else if(Passwordold.length !== 6 || PasswordNew.length !== 6 || PasswordAgain.length !== 6){
+        }else if(Passwordold.length < 6 || PasswordNew.length < 6 || PasswordAgain.length < 6){
             Alert.alert(
                 Trans.tran('general.alert'),
                 Trans.tran('Setting.alert.password_Length'),
@@ -256,7 +253,7 @@ class ProfileScreen extends React.PureComponent {
         const { user } = this.props.Users;
         let id = user.map((data) => { return data.UserID });
         let UserName = user.map((data) => { return data.UserName });
-        let Email = user.map((data) => { return data.Email });
+        let oldEmail = user.map((data) => { return data.Email });
         let imgProfile = user.map((data) => { return data.imgProfile });
         let BMRUsers = user.map((data) => { return data.BMRUser });
 
@@ -329,7 +326,7 @@ class ProfileScreen extends React.PureComponent {
                                             let users = `${user}`;
                                             let Emails = `${Email}`;
                                             let BMRUser = 0;
-                                            let oldusers = `${UserName}`;
+                                            let oldEmails = `${oldEmail}`;
 
                                             if(Sex === 'male'){
                                                 let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
@@ -394,7 +391,7 @@ class ProfileScreen extends React.PureComponent {
                                                     bmi: SumBMi.toFixed(2),
                                                     stateButton: 'Edit'
                                                 });
-                                                this.UpdateUser(UserID, users, Emails, oldusers);
+                                                this.UpdateUser(UserID, users, Emails, oldEmails);
                                                 this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
                                                 this.getData(UserName);
                                             }
@@ -422,12 +419,12 @@ class ProfileScreen extends React.PureComponent {
                                             styles.inputBoxUser,
                                             {
 
-                                                borderWidth: this.state.stateButton === 'Save'? 1 : 0
+                                                borderWidth: this.state.stateButton === 'Save'? 0 : 0
                                             }]}
                                                    underlineColorAndroid='rgba(0,0,0,0)'
                                                    defaultValue={`${this.state.user}`}
                                                    placeholderTextColor = "#068e81"
-                                                   editable = {this.state.stateButton === 'Edit'? false : true}
+                                                   editable = {this.state.stateButton === 'Edit'? false : false}
                                                    onChangeText={TextInputValue =>
                                                        this.setState({ user: TextInputValue })}
                                         />
@@ -441,7 +438,7 @@ class ProfileScreen extends React.PureComponent {
                                                 borderWidth: this.state.stateButton === 'Save'? 1 : 0
                                             }]}
                                                    underlineColorAndroid='rgba(0,0,0,0)'
-                                                   defaultValue={`${Email}`}
+                                                   defaultValue={`${this.state.Email}`}
                                                    placeholderTextColor = "#068e81"
                                                    editable = {this.state.stateButton === 'Edit'? false : true}
                                                    onChangeText={TextInputValue =>
@@ -544,7 +541,7 @@ class ProfileScreen extends React.PureComponent {
                                     />
                                     <View style={styles.viewIcon}>
                                         <Image  style={{width: 60, height: 100}}
-                                                source={Images.ProfileScreen.smile}
+                                                source={require('../../../../pulic/assets/images/smile.png')}
                                         />
                                     </View>
                                 </View>

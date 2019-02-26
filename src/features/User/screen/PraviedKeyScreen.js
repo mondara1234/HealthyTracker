@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import {View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { Container } from 'native-base';
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
-import CommonText from '../../common/components/CommonText';
 import LogoTextHT from '../../common/components/LogoTextHT';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
@@ -62,7 +61,6 @@ class PraviedKeyScreen extends React.PureComponent {
         let PersonalSelect = 'on';
         const result = await this.props.FETCH_UpdatePassCode(PersonalSelect, PassCode, ID );
 
-        console.log('result',result);
         const UserName = user.map((data) => {return data.UserName});
         let UserNameS =`${UserName}`;
         const response = await this.props.FETCH_SearchUser(UserNameS);
@@ -79,7 +77,6 @@ class PraviedKeyScreen extends React.PureComponent {
 
         setTimeout( _onFinishCheck = () => {
             let checkData = this.state.passKey;
-            console.log('checkData',checkData);
 
             if (checkData === '') {
                 Alert.alert(
@@ -186,12 +183,6 @@ class PraviedKeyScreen extends React.PureComponent {
                             <View style={[styles.checkView,{backgroundColor: this.state.passCode[5] ? '#068e81': 'white'}]}  />
                         </View>
                     </View>
-                    <View style={{width: 280, backgroundColor: "#F4F4F4", flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                        <TouchableOpacity style={styles.TouchForgot}
-                                          onPress={() => this.props.navigation.navigate(FORGOTPASSWORD)}>
-                            <CommonText text={Trans.tran('PraviedKey.forget_Personal')} style={styles.textForgot} />
-                        </TouchableOpacity>
-                    </View>
                     <View style={styles.viewKeyboard}>
                         <VirtualKeyboard
                             pressMode={'string'}
@@ -253,14 +244,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
         borderTopWidth: 1,
         borderColor: '#068e81'
-    },
-    textForgot: {
-        color: '#000',
-        fontSize: 14
-    },
-    TouchForgot: {
-        marginRight: 20
-    },
+    }
 });
 
 function mapStateToProps(state) {

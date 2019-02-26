@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { Images } from './images';
 class Logo extends Component {
 
     render(){
         return(
             <View style={styles.container}>
                 <Image  style={{width: 150, height: 150}}
-                        source={Images.logo}
+                        source={require('../../../../pulic/assets/images/LogoHT.png')}
                 />
                 <Text style={styles.logoText}>{this.props.Title}</Text>
             </View>

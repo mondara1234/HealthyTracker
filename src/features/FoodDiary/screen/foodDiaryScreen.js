@@ -15,7 +15,6 @@ import CommonText from '../../common/components/CommonText';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import HeaderTitle from '../../common/components/HeaderTitle';
 import SideMenu from '../../common/components/SideMenu';
-import { Images } from "../../User/components/images";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { TRICK_SCREEN } from "../../Trick/router";
 import { BMI_SCREEN } from "../../BMI/router";
@@ -25,7 +24,6 @@ import * as APIUser from "../../User/api/api";
 import * as APIDiary from "../../FoodDiary/api/api";
 import { getSearchFoodUser } from "../../FoodDiary/redux/actions";
 import {getOneUser, getRouteName} from "../../User/redux/actions";
-import {SETTING_SCREEN} from "../../Setting/router";
 
 class foodDiaryScreen extends React.PureComponent {
     constructor(props) {
@@ -334,7 +332,7 @@ class foodDiaryScreen extends React.PureComponent {
                     </View>
                     <View style={styles.containerKcal}>
                         <Image style={{width: 100, height: 100}}
-                               source={Images.foodDiaty.kcal1}
+                               source={require('../../../../pulic/assets/images/kcal1.png')}
                         />
                         <View>
                             <View style={styles.containerCalendar}>
@@ -596,7 +594,7 @@ class foodDiaryScreen extends React.PureComponent {
                     >{/*ส่วนของbody*/}
                         <View style={{alignItems: 'center', justifyContent: 'center',paddingVertical: '10%'}}>
                             <Image  style={{width: '60%', height: 200}}
-                                    source={Images.foodDiaty.Excess_energy}
+                                    source={require('../../../../pulic/assets/images/Excessenergy.png')}
                             />
                         </View>
                     </Dialog>

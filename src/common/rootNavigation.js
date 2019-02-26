@@ -2,15 +2,15 @@ import React from 'react';
 import { Dimensions } from "react-native";
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Sidebar from '../features/common/containers/Sideber';
-import { UserRouter, HOMELOGIN, LOGIN,PRAVIEDKEY, REGISTRATION} from '../features/User/router';
-import { trickRouter, TRICK_SCREEN  } from "../features/Trick/router";
-import { menuFoodRouter , MENUFOOD_SCREEN, FOODSTYPE_SCREEN} from "../features/MenuFood/router";
-import { foodDiaryRouter, FOODDIARY_SCREEN, METABOLIC_SCREEN } from "../features/FoodDiary/router";
-import { bmiRouter, BMI_SCREEN } from '../features/BMI/router';
-import { aboutRouter, ABOUT_SCREEN } from '../features/About/router';
-import { problemRouter, PROBLEM_SCREEN } from '../features/Problem/router';
+import { UserRouter, HOMELOGIN } from '../features/User/router';
+import { trickRouter } from "../features/Trick/router";
+import { menuFoodRouter } from "../features/MenuFood/router";
+import { foodDiaryRouter } from "../features/FoodDiary/router";
+import { bmiRouter } from '../features/BMI/router';
+import { aboutRouter } from '../features/About/router';
+import { problemRouter } from '../features/Problem/router';
 import { settingRouter } from '../features/Setting/router';
-import { messageboxRouter, MESSAGEBOX_SCREEN } from '../features/MessageBox/router';
+import { messageboxRouter } from '../features/MessageBox/router';
 import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
@@ -27,7 +27,7 @@ export const RootStack = StackNavigator({
     ...problemRouter,
     ...messageboxRouter
 },{
-    initialRouteName: LOGIN,
+    initialRouteName: HOMELOGIN,
     navigationOptions: ({navigation}) => ({
         ...HEADER_STYLE
     }),

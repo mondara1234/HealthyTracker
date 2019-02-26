@@ -9,7 +9,6 @@ import HeaderTitle from '../../common/components/HeaderTitle';
 import HeaderLeftMenu from '../../common/components/HeaderLeftMenu';
 import Trans from "../../common/containers/Trans";
 import HandleBack from "../../common/components/HandleBack";
-import { Images } from "../../User/components/images";
 import { MENUFOOD_SCREEN } from "../../MenuFood/router";
 import { FOODDIARY_SCREEN } from "../../FoodDiary/router";
 import { BMI_SCREEN } from "../router";
@@ -145,26 +144,26 @@ class bmiScreen extends React.PureComponent {
                                 <View style={styles.containerBodyBMI}>
                                     {`${this.state.criterionbmi}` === 'ผอม' && `${this.state.Sex}` === 'male' ?
                                         <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                source={Images.BMI.male_thin}
+                                                source={require('../../../../pulic/assets/images/malethin.jpg')}
                                         />
                                         :`${this.state.criterionbmi}` === 'ผอม' && `${this.state.Sex}` === 'female' ?
                                             <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                    source={Images.BMI.male_thin}
+                                                    source={require('../../../../pulic/assets/images/Femalethin.png')}
                                             />
                                             :`${this.state.criterionbmi}` === 'ปกติ' && `${this.state.Sex}` === 'male' ?
                                                 <Image  style={{width: 60, height: 120, marginLeft: '10%'}}
-                                                    source={Images.BMI.male_slender}
+                                                    source={require('../../../../pulic/assets/images/maleslender.png')}
                                                 />
                                                 :`${this.state.criterionbmi}` === 'ปกติ' && `${this.state.Sex}` === 'female' ?
                                                     <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                            source={Images.BMI.Female_slender}
+                                                            source={require('../../../../pulic/assets/images/Femaleslender.png')}
                                                     />
                                                     :`${this.state.Sex}` === 'male' ?
                                                         <Image  style={{width: 60, height: 120, marginLeft: '3%'}}
-                                                                source={Images.BMI.male_fat}
+                                                                source={require('../../../../pulic/assets/images/malefat.png')}
                                                         />
                                                         : <Image  style={{width: 60, height: 100, marginLeft: '3%'}}
-                                                            source={Images.BMI.Female_Fat}
+                                                            source={require('../../../../pulic/assets/images/FemaleFat.png')}
                                                         />
                                     }
                                 </View>
