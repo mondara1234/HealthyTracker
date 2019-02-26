@@ -165,12 +165,11 @@ class ProfileScreen extends React.PureComponent {
         });
     }
 
-    async UpdateUser(UserID, users, Emails, oldusers, oldEmails){
-        const responseJson = await this.props.FETCH_UpdateUserName(UserID, users, Emails, oldusers, oldEmails);
-        if(responseJson == 'Email'||responseJson == 'Name'){
-            this.getData(oldusers);
+    async UpdateUser(UserID, users, Emails,  oldEmails){
+        const responseJson = await this.props.FETCH_UpdateUserName(UserID, Emails, oldEmails);
+        if(responseJson == 'Email'){
+            this.getData(users);
             this.setState({
-                user: `${oldusers}`,
                 Email: `${oldEmails}`
             });
         }else{
@@ -327,7 +326,6 @@ class ProfileScreen extends React.PureComponent {
                                             let users = `${user}`;
                                             let Emails = `${Email}`;
                                             let BMRUser = 0;
-                                            let oldusers = `${UserName}`;
                                             let oldEmails = `${oldEmail}`;
 
                                             if(Sex === 'male'){
@@ -393,7 +391,7 @@ class ProfileScreen extends React.PureComponent {
                                                     bmi: SumBMi.toFixed(2),
                                                     stateButton: 'Edit'
                                                 });
-                                                this.UpdateUser(UserID, users, Emails, oldusers, oldEmails);
+                                                this.UpdateUser(UserID, users, Emails, oldEmails);
                                                 this.props.FETCH_UpdateUser(UserID, Sex, Age, Weight, Height, BMRUser);
                                                 this.getData(UserName);
                                             }
@@ -421,12 +419,12 @@ class ProfileScreen extends React.PureComponent {
                                             styles.inputBoxUser,
                                             {
 
-                                                borderWidth: this.state.stateButton === 'Save'? 1 : 0
+                                                borderWidth: this.state.stateButton === 'Save'? 0 : 0
                                             }]}
                                                    underlineColorAndroid='rgba(0,0,0,0)'
                                                    defaultValue={`${this.state.user}`}
                                                    placeholderTextColor = "#068e81"
-                                                   editable = {this.state.stateButton === 'Edit'? false : true}
+                                                   editable = {this.state.stateButton === 'Edit'? false : false}
                                                    onChangeText={TextInputValue =>
                                                        this.setState({ user: TextInputValue })}
                                         />
