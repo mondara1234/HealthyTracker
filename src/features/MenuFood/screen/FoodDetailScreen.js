@@ -164,7 +164,7 @@ class FoodDetailScreen extends React.PureComponent {
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.run')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={require('../../../../pulic/assets/images/ride_bicycle.gif')}
+                                    itemImage={require('../../../../pulic/assets/images/ridebicycle.gif')}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.spin')} ${parseInt((foodData.FoodCalorie / 10) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif

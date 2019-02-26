@@ -594,7 +594,7 @@ class foodDiaryScreen extends React.PureComponent {
                     >{/*ส่วนของbody*/}
                         <View style={{alignItems: 'center', justifyContent: 'center',paddingVertical: '10%'}}>
                             <Image  style={{width: '60%', height: 200}}
-                                    source={require('../../../../pulic/assets/images/Excess_energy.png')}
+                                    source={require('../../../../pulic/assets/images/Excessenergy.png')}
                             />
                         </View>
                     </Dialog>

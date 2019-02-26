@@ -144,26 +144,26 @@ class bmiScreen extends React.PureComponent {
                                 <View style={styles.containerBodyBMI}>
                                     {`${this.state.criterionbmi}` === 'ผอม' && `${this.state.Sex}` === 'male' ?
                                         <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                source={require('../../../../pulic/assets/images/male_thin.jpg')}
+                                                source={require('../../../../pulic/assets/images/malethin.jpg')}
                                         />
                                         :`${this.state.criterionbmi}` === 'ผอม' && `${this.state.Sex}` === 'female' ?
                                             <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                    source={require('../../../../pulic/assets/images/Female_thin.png')}
+                                                    source={require('../../../../pulic/assets/images/Femalethin.png')}
                                             />
                                             :`${this.state.criterionbmi}` === 'ปกติ' && `${this.state.Sex}` === 'male' ?
                                                 <Image  style={{width: 60, height: 120, marginLeft: '10%'}}
-                                                    source={require('../../../../pulic/assets/images/male_slender.png')}
+                                                    source={require('../../../../pulic/assets/images/maleslender.png')}
                                                 />
                                                 :`${this.state.criterionbmi}` === 'ปกติ' && `${this.state.Sex}` === 'female' ?
                                                     <Image  style={{width: 60, height: 100, marginLeft: '10%'}}
-                                                            source={require('../../../../pulic/assets/images/Female_slender.png')}
+                                                            source={require('../../../../pulic/assets/images/Femaleslender.png')}
                                                     />
                                                     :`${this.state.Sex}` === 'male' ?
                                                         <Image  style={{width: 60, height: 120, marginLeft: '3%'}}
-                                                                source={require('../../../../pulic/assets/images/male_fat.png')}
+                                                                source={require('../../../../pulic/assets/images/malefat.png')}
                                                         />
                                                         : <Image  style={{width: 60, height: 100, marginLeft: '3%'}}
-                                                            source={require('../../../../pulic/assets/images/Female_Fat.png')}
+                                                            source={require('../../../../pulic/assets/images/FemaleFat.png')}
                                                         />
                                     }
                                 </View>

@@ -202,7 +202,7 @@ class ProfileScreen extends React.PureComponent {
                 ],
                 {cancelable: false},
             );
-        }else if(Passwordold.length !== 6 || PasswordNew.length !== 6 || PasswordAgain.length !== 6){
+        }else if(Passwordold.length < 6 || PasswordNew.length < 6 || PasswordAgain.length < 6){
             Alert.alert(
                 Trans.tran('general.alert'),
                 Trans.tran('Setting.alert.password_Length'),

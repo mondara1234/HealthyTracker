@@ -51,7 +51,7 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dat
             }else{
                 Alert.alert(
                     Trans.tran('general.alert'),
-                    responseJson,
+                    Trans.tran('User.complete_Subscription'),
                     [
                         { text: Trans.tran('general.ok'), onPress: () => keyScreens({routeName: LOGIN})},
                         { text: Trans.tran('general.canceled'), onPress: () => {}, style: "cancel" }

@@ -40,7 +40,7 @@ class FormRegistration extends Component {
        }else if(this.state.TextInput_Name.length < 4 ){
            Alert.alert(
                Trans.tran('general.alert'),
-               'ชื่อผู้ใช้ต้องมากกว่า 4 ตัวขึ้นไป',
+               Trans.tran('User.username_characters'),
                [
                    {
                        text: Trans.tran('general.close'), onPress: () => {
@@ -52,7 +52,7 @@ class FormRegistration extends Component {
        }else if(reg.test(this.state.TextInput_Email) !== true ){
            Alert.alert(
                Trans.tran('general.alert'),
-               'กรุณากรอก อีเมล ให้ถูกต้อง',
+               Trans.tran('User.correct_email'),
                [
                    {
                        text: Trans.tran('general.close'), onPress: () => {
@@ -61,7 +61,7 @@ class FormRegistration extends Component {
                ],
                {cancelable: false},
            );
-       }else if(this.state.TextInput_Password.length !== 6 || this.state.TextInput_PasswordAgain.length !== 6){
+       }else if(this.state.TextInput_Password.length < 6 || this.state.TextInput_PasswordAgain.length < 6){
            Alert.alert(
                Trans.tran('general.alert'),
                Trans.tran('Setting.alert.password_Length'),
