@@ -9,6 +9,7 @@ import { Alert, StyleSheet, TouchableOpacity, View, FlatList, Keyboard } from 'r
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import themeVariables from '../../../../native-base-theme/variables/platform';
 import { APP_VERSION_TEXT } from '../../../common/constants';
 import { LOGIN } from "../../User/router";
 import { PROFILE_SCREEN } from "../../ProfileUser/router";
@@ -41,7 +42,7 @@ class Sideber extends React.Component {
     _renderItem = ({item}) => {
         const isActive = this.state.menuActive === item.name;
         const fontColor = isActive ? '#fff' : '#2a9998';
-        const isAndroid = 'android';
+        const isAndroid = themeVariables.platform === 'android';
 
         return (
             <View style={{backgroundColor: isActive ? '#2a9998' : '#fff'}}>
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     fontBase: {
         color: '#fff',
         fontSize: 14,
-        fontWeight: null,
+        fontWeight: themeVariables.platform === 'ios' ? '600' : null,
         marginTop: '3%',
         marginLeft: '2%'
 
