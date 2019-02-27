@@ -132,7 +132,6 @@ class Sideber extends React.Component {
     };
 
     render () {
-        console.log('Update Store:',this.props);
         const { user } = this.props.users;
         const imgProfile = user.map((data) => {return data.imgProfile});
         const Names = user.map((data) => {return data.UserName});
