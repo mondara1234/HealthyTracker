@@ -156,19 +156,19 @@ class FoodDetailScreen extends React.PureComponent {
                             </View>
                             <View style={[styles.viewRowCenter,{ marginTop: 100}]}>
                                 <ImageGif
-                                    itemImage={require('../../../../pulic/assets/images/walk.gif')}
+                                    itemImage={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRpi1.gif'}}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.walk')} ${parseInt((foodData.FoodCalorie / 5) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={require('../../../../pulic/assets/images/Run.gif')}
+                                    itemImage={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRVVW.gif'}}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.run')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={require('../../../../pulic/assets/images/ridebicycle.gif')}
+                                    itemImage={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRH5g.gif'}}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.spin')} ${parseInt((foodData.FoodCalorie / 10) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                                 <ImageGif
-                                    itemImage={require('../../../../pulic/assets/images/swimming.gif')}
+                                    itemImage={{uri: 'https://66.media.tumblr.com/ecede36920fe80d915bdbf63fbb11638/tumblr_ob894kvYAk1qzomoco1_540.gif'}}
                                     nameImg={`${Trans.tran('MenuFood.foodDetail.imgGit.Swim')} ${parseInt((foodData.FoodCalorie / 12) * this.state.numberUnit)} ${Trans.tran('MenuFood.foodDetail.imgGit.minute')}`}
                                 />
                             </View>

@@ -38,7 +38,6 @@ export const fetchRegister = (Name, Email, Password, ImgProfile, keyScreens, dat
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            console.log(responseJson);
             if(responseJson === 'Email'||responseJson === 'Name'){
                 Alert.alert(
                     Trans.tran('general.alert'),

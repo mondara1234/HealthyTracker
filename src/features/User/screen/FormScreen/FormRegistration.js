@@ -140,7 +140,7 @@ class FormRegistration extends Component {
                             {uri: this.state.ImgDefault}} />
                 <TouchableOpacity style={styles.touchImage} onPress={this.selectPhotoTapped.bind(this)}>
                     <Image  style={styles.image}
-                            source={require('../../../../../pulic/assets/images/plusImg.png')}
+                            source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRutV.png'}}
                     />
                 </TouchableOpacity>
                 <TextInput style={styles.inputBox}

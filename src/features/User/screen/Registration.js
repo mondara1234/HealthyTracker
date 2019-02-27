@@ -50,7 +50,7 @@ class Registration extends Component {
         return (
             <HandleBack onBack={this.onBack}>
                 <ImageBackground style={styles.backgroundImage}
-                       source={require('../../../../pulic/assets/images/bgRegister.png')}>
+                       source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIiVc0.png'}}>
                     <View style={styles.containerLogo}>
                         <LogoTextHT colorMain={'#000'} color={'#fff'} />
                     </View>

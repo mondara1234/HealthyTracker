@@ -124,7 +124,7 @@ class DetailTrickScreen extends React.PureComponent {
                                     onPress={()=> this.DeleteUserLikeTrick()}
                                 >
                                     <Image  style={styles.sizeHeart}
-                                    source={require('../../../../pulic/assets/images/Heart.png')}
+                                    source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRtTJ.png'}}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -135,7 +135,7 @@ class DetailTrickScreen extends React.PureComponent {
                                     onPress={()=> this.InsertUserLikeTrick()}
                                 >
                                     <Image  style={styles.sizeHeart}
-                                            source={require('../../../../pulic/assets/images/Heart.png')}
+                                            source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRtTJ.png'}}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -148,7 +148,7 @@ class DetailTrickScreen extends React.PureComponent {
                             <View style={styles.viewPropleAdd}>
                                 <View style={styles.containerRow}>
                                     <Image  style={styles.sizeHeartDetail}
-                                            source={require('../../../../pulic/assets/images/Heart.png')}
+                                            source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRtTJ.png'}}
                                     />
                                     <CommonText text={`${this.state.trickLike === 0 ? trickData.TrickLike : this.state.trickLike} ${Trans.tran('Trick.person')}`} size={16} />
                                 </View>

@@ -332,7 +332,7 @@ class foodDiaryScreen extends React.PureComponent {
                     </View>
                     <View style={styles.containerKcal}>
                         <Image style={{width: 100, height: 100}}
-                               source={require('../../../../pulic/assets/images/kcal1.png')}
+                               source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRUFu.png'}}
                         />
                         <View>
                             <View style={styles.containerCalendar}>
@@ -594,7 +594,7 @@ class foodDiaryScreen extends React.PureComponent {
                     >{/*ส่วนของbody*/}
                         <View style={{alignItems: 'center', justifyContent: 'center',paddingVertical: '10%'}}>
                             <Image  style={{width: '60%', height: 200}}
-                                    source={require('../../../../pulic/assets/images/Excessenergy.png')}
+                                    source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIiXsu.png'}}
                             />
                         </View>
                     </Dialog>

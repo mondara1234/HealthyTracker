@@ -60,7 +60,7 @@ class HomeLoingScreen extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <Image  style={styles.imgFood} source={require('../../../../pulic/assets/images/foodhome.png')} />
+                    <Image  style={styles.imgFood} source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIR9F9.png'}} />
                 </View>
             </HandleBack>
         )

@@ -91,7 +91,7 @@ class LoingScreen extends Component {
             <HandleBack onBack={this.onBack}>
                 <Container style={styles.container} >
                     <ImageBackground style={styles.backgroundImage}
-                                     source={require('../../../../pulic/assets/images/bgLogin.png')}>
+                                     source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIiH0R.png'}}>
                         <Content padder>
                             <View style={styles.containerRow}>
                                 <CommonText text={Trans.tran('User.login')} style={styles.titleLogin} />

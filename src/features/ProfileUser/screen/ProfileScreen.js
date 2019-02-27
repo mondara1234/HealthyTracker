@@ -541,7 +541,7 @@ class ProfileScreen extends React.PureComponent {
                                     />
                                     <View style={styles.viewIcon}>
                                         <Image  style={{width: 60, height: 100}}
-                                                source={require('../../../../pulic/assets/images/smile.png')}
+                                                source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIRvCy.png'}}
                                         />
                                     </View>
                                 </View>
