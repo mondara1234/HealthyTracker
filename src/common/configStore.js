@@ -1,18 +1,22 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware from "redux-saga";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
+// แสดง ประเภท Actions ที่เกิดขึ้น
+const showLog = (store) => (next) => (action) => {
+    console.log("Log Action", action);
+    next(action);
+};
 
-export default function configureStore() {
-    const store = createStore(
-        rootReducer,{},
-        applyMiddleware(sagaMiddleware)
-    );
+const store = createStore(combineReducers
+    ({
+        ...rootReducer
+    }),{}, compose(applyMiddleware(sagaMiddleware, showLog))
+);
+// run the saga
+sagaMiddleware.run(rootSaga);
 
-    sagaMiddleware.run(rootSaga);
-    return store;
-
-}
+export default store;

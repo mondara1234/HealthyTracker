@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, TextInput, Image, FlatList, TouchableOpacity, BackHandler, Alert, Keyboard} from 'react-native';
+import { StyleSheet, View, TextInput, Image, FlatList, TouchableOpacity, BackHandler, Alert, Keyboard } from 'react-native';
 import { Container, ListItem, Left, Thumbnail, Body } from 'native-base';
 import Dialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import { NavigationActions } from "react-navigation";
