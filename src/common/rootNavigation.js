@@ -13,7 +13,6 @@ import { settingRouter } from '../features/Setting/router';
 import { messageboxRouter } from '../features/MessageBox/router';
 import { profileRouter } from '../features/ProfileUser/router';
 import { HEADER_STYLE } from './constants';
-import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
 export const RootStack = StackNavigator({
     ...UserRouter,

@@ -4,14 +4,15 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import org.reactnative.camera.RNCameraPackage;
 import com.imagepicker.ImagePickerPackage;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
+import org.reactnative.camera.RNCameraPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,11 +29,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new RNFetchBlobPackage(),
-          new RNCameraPackage(),
-          new ImagePickerPackage(),
-          new SplashScreenReactPackage(),
-          new RNI18nPackage()
+        new ImagePickerPackage(),
+        new RNI18nPackage(),
+        new RNFetchBlobPackage(),
+        new RNCameraPackage(),
+        new SplashScreenReactPackage(),
+        new VectorIconsPackage()
       );
     }
 
