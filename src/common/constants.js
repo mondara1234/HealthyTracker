@@ -1,6 +1,6 @@
 export const HEADER_STYLE = {
     headerStyle: {
-        backgroundColor: '#068E81',
+        backgroundColor: '#ddb911',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.5
     },
