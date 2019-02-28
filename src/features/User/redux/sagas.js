@@ -1,5 +1,5 @@
 import { put, take, all, call, select } from 'redux-saga/effects';
-import { FETCH_FLIGHT, ROUTE_START, SEARCH_DATAUSER} from './constants';
+import { ROUTE_START} from './constants';
 
 
 export function* fetchData(screen) {
