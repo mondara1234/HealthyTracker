@@ -1,19 +1,6 @@
 import { put, take, all, call, select } from 'redux-saga/effects';
-import { FETCH_FLIGHT, ROUTE_START, SEARCH_DATAUSER} from './constants';
-import * as ApiUser from '../api/api';
+import { ROUTE_START} from './constants';
 
-// export function* fetchSearchUser(itemID) {
-//     //yield take(SEARCH_DATAUSER);
-//     console.log('aaa', itemID);
-//     let id = itemID ? itemID : 1;
-//     try {
-//         const posts = yield call(Api.fetchSearchUser(id));
-//         console.log('posts '+ posts);
-//         yield put({type: FETCH_FLIGHT, json: posts})
-//     }catch (e) {
-//         console.log('e: '+e);
-//     }
-// }
 
 export function* fetchData(screen) {
     yield take(ROUTE_START);

@@ -6,7 +6,7 @@ class Logo extends Component {
         return(
             <View style={styles.container}>
                 <Image  style={{width: 150, height: 150}}
-                        source={require('../../../../pulic/assets/images/LogoHT.png')}
+                        source={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIROGP.png'}}
                 />
                 <Text style={styles.logoText}>{this.props.Title}</Text>
             </View>

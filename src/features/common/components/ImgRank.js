@@ -7,7 +7,7 @@ const ImgRank = (props) => {
     return(
         <ImageBackground source={{uri: props.nameUriImg}} style={props.styleImg}>
             <View style={styles.containerImg}>
-                <RankTrick  itemImage={require('../../../../pulic/assets/images/Rank.png')}
+                <RankTrick  itemImage={{uri: 'https://sv1.picz.in.th/images/2019/02/27/TIR8fn.png'}}
                             nameImg={props.nameRank}
                             style={props.styleImgRank}
                 />
