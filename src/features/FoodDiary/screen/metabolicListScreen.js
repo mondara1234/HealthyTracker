@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     viewNumberFound: {
         width: '99.9%',
         height: 40,
-        backgroundColor: "#068E81",
+        backgroundColor: "#9c1700",
         flexDirection: 'row',
         alignItems: 'center'
     },

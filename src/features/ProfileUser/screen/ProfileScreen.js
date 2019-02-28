@@ -329,10 +329,10 @@ class ProfileScreen extends React.PureComponent {
                                             let oldEmails = `${oldEmail}`;
 
                                             if(Sex === 'male'){
-                                                let BMR_male = 66 + (13.7 * Height)+(5 * Weight) - (6.8 * Age);
+                                                let BMR_male = 66 + (13.7 * parseInt(Weight))+(5 * parseInt(Height)) - (6.8 * Age);
                                                 BMRUser = BMR_male.toFixed();
                                             }else if(Sex === 'female') {
-                                                let BMR_female = 665 + (9.6 * Height) + (1.8 * Weight) - (4.7 * Age);
+                                                let BMR_female = 665 + (9.6 * parseInt(Weight)) + (1.8 * parseInt(Height)) - (4.7 * Age);
                                                 BMRUser = BMR_female.toFixed();
                                             }
 
