@@ -45,16 +45,16 @@ const SideMenu = (props) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#ddb911',
+        backgroundColor: '#068E81',
         alignItems: 'center',
         justifyContent: 'center',
     },
     icon: {
-        color: '#991715',
+        color: '#fff',
         paddingTop: 12
     },
     Text: {
-        color: '#0709a9',
+        color: '#ffffff',
         fontSize: 12
     }
 });
