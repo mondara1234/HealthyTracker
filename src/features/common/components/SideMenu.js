@@ -15,28 +15,28 @@ const SideMenu = (props) => {
                 style={styles.button}
                 onPress={ props.diaryScreen }
             >
-                <IconEntypo name="open-book" size={30} />
+                <IconEntypo name="open-book" size={30} style={styles.icon}/>
                 <CommonText text={Trans.tran('general.foodDiary')} style={styles.Text} />
             </Button>
             <Button
                 style={styles.button}
                 onPress={ props.menuFoodScreen }
             >
-                <IconMaterialCommunityIcons name="food" size={30} />
+                <IconMaterialCommunityIcons name="food" size={30} style={styles.icon} />
                 <CommonText text={Trans.tran('general.menu')} style={[styles.Text,{marginLeft: -3}]} />
             </Button>
             <Button
                 style={styles.button}
                 onPress={ props.bmiScreen }
             >
-                <IconMaterialIcons name="healing" size={30} />
+                <IconMaterialIcons name="healing" size={30} style={styles.icon} />
                 <CommonText text={Trans.tran('general.BMI')} style={styles.Text} />
             </Button>
             <Button
                 style={styles.button}
                 onPress={ props.trickScreen }
             >
-                <IconMaterialCommunityIcons name="nutrition" size={30} />
+                <IconMaterialCommunityIcons name="nutrition" size={30} style={styles.icon} />
                 <CommonText text={Trans.tran('general.trick')} style={styles.Text} />
             </Button>
         </FooterTab>
@@ -45,16 +45,15 @@ const SideMenu = (props) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#068E81',
+        backgroundColor: '#9c1700',
         alignItems: 'center',
         justifyContent: 'center',
     },
     icon: {
-        color: '#fff',
-        paddingTop: 12
+        color: '#fff'
     },
     Text: {
-        color: '#ffffff',
+        color: '#fff',
         fontSize: 12
     }
 });

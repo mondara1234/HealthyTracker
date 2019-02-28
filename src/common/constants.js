@@ -1,10 +1,10 @@
 export const HEADER_STYLE = {
     headerStyle: {
-        backgroundColor: '#068E81',
+        backgroundColor: '#9c1700',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.5
     },
-    headerTintColor: 'white'
+    headerTintColor: '#000'
 };
 
 export const APP_VERSION_TEXT = '1.0.0';

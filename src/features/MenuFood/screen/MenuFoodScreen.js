@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     bgColorApp: {
-        backgroundColor: '#068e81'
+        backgroundColor: '#9c1700'
     },
     viewRowCenter: {
         flexDirection: 'row',
