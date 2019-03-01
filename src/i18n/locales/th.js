@@ -24,7 +24,7 @@ export default {
     },
     'About': {
         'about': 'เกี่ยวกับเรา',
-        'details_Application': 'รายละเอียดของ แอฟพลิเคชัน',
+        'details_Application': 'รายละเอียดของ แอปพลิเคชัน',
         'contact': 'ติดต่อเรา',
         'information_Please': 'สอบถามข้อมูลเพิ่มเติมได้ทาง',
         'e_mail': 'อีเมล์',
