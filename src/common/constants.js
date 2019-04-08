@@ -9,4 +9,4 @@ export const HEADER_STYLE = {
 
 export const APP_VERSION_TEXT = '1.0.0';
 export const DEFAULT_LOCALE = 'th';
-export const SERVER_URL = 'http://healthytracker.942.in.th';
+export const SERVER_URL = 'http://localhost';
