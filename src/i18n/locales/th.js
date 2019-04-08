@@ -163,7 +163,7 @@ export default {
         'personal_code': 'รหัสส่วนตัว',
         'change_Personal_code': 'เปลี่ยนรหัสส่วนตัว',
         'alert':{
-            'password_Length': 'รหัสผ่านต้องมี 6 ตัว',
+            'password_Length': 'รหัสผ่านต้องมี 6 ตัวขึ้นไป',
             'old_Password': 'รหัสผ่านเดิมไม่ถูกต้อง',
             'created_Personal_code': 'คุณยังไม่ได้สร้างรหัสส่วนตัว'
         },

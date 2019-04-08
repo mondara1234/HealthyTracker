@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     },
     bgColorApp: {
-        backgroundColor: '#9c1700'
+        backgroundColor: '#068e81'
     },
     viewRowCenter: {
         flexDirection: 'row',
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     viewNumberFound: {
         width: '99.9%',
         height: 40,
-        backgroundColor: "#9c1700",
+        backgroundColor: "#068e81",
         flexDirection: 'row',
         alignItems: 'center'
     },

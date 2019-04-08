@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     bgColorApp: {
-        backgroundColor: '#9c1700'
+        backgroundColor: '#068e81'
     },
     viewRowCenter: {
         flexDirection: 'row',
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
     viewNumberFound: {
         width: '100%',
         height: 40,
-        backgroundColor: "#9c1700",
+        backgroundColor: "#068e81",
         flexDirection: 'row',
         alignItems: 'center'
     },

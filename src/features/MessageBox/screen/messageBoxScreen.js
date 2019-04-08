@@ -195,7 +195,7 @@ messageBoxScreen.navigationOptions  = ({navigation}) => ({
 
 const styles = StyleSheet.create({
     bgColorApp: {
-        backgroundColor: '#9c1700'
+        backgroundColor: '#068e81'
     },
     viewRowCenter: {
         flexDirection: 'row',

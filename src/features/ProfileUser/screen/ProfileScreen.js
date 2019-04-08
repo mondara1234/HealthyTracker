@@ -338,7 +338,20 @@ class ProfileScreen extends React.PureComponent {
 
                                             //คำสั่งเช็ดEmail
                                             let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-                                            if(reg.test(Emails) !== true) {
+                                            if(Age === ''||Weight === 0 ||Height === ''||Emails === '') {
+                                                Alert.alert(
+                                                    Trans.tran('general.alert'),
+                                                    'กรุณากรอกข้อมูลให้ครบ',
+                                                    [
+                                                        {
+                                                            text: Trans.tran('general.close'), onPress: () => {
+                                                            }, style: "cancel"
+                                                        }
+                                                    ],
+                                                    {cancelable: false},
+                                                );
+                                                return false;
+                                            }else if(reg.test(Emails) !== true) {
                                                 Alert.alert(
                                                     Trans.tran('general.alert'),
                                                     'กรุณากรอก อีเมล ให้ถูกต้อง',

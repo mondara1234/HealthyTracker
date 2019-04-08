@@ -45,7 +45,7 @@ const SideMenu = (props) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#9c1700',
+        backgroundColor: '#068e81',
         alignItems: 'center',
         justifyContent: 'center',
     },

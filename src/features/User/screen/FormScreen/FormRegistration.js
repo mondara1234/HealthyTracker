@@ -19,7 +19,7 @@ class FormRegistration extends Component {
             TextInput_Password: '',
             TextInput_Email: '',
             TextInput_PasswordAgain: '',
-            ImgDefault: 'https://pngimage.net/wp-content/uploads/2018/06/user-avatar-png-6.png',
+            ImgDefault: 'https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1',
             ImageSource: null,
             data: null
         }

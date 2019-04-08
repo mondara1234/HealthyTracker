@@ -48,21 +48,21 @@ class TrickScreen extends React.PureComponent {
                     <View style={{ flex :1 }}>
                         <Tabs locked>
                             <Tab heading={
-                                <TabHeading style={{ backgroundColor: "#9c1700" }}>
+                                <TabHeading style={{ backgroundColor: "#068e81" }}>
                                     <CommonText text={Trans.tran('Trick.Tab.all')} style={{ color: "#fff" }} />
                                 </TabHeading>}
                             >
                                 <AllTab />
                             </Tab>
                             <Tab heading={
-                                <TabHeading style={{ backgroundColor: "#9c1700" }}>
+                                <TabHeading style={{ backgroundColor: "#068e81" }}>
                                     <CommonText text={Trans.tran('Trick.Tab.new')} style={{ color: "#fff" }} />
                                 </TabHeading>}
                             >
                                 <NewTab />
                             </Tab>
                             <Tab heading={
-                                <TabHeading style={{ backgroundColor: "#9c1700" }}>
+                                <TabHeading style={{ backgroundColor: "#068e81" }}>
                                     <CommonText text={Trans.tran('Trick.Tab.ranked')} style={{ color: "#fff" }} />
                                 </TabHeading>}
                             >
@@ -87,7 +87,7 @@ TrickScreen.navigationOptions  = ({navigation}) => ({
     headerLeft: <HeaderLeftMenu onPress={() => navigation.navigate('DrawerOpen')} />,
     headerRight: <HeaderLeftMenu icon={null} />,
     headerStyle: {
-        backgroundColor: '#9c1700',
+        backgroundColor: '#068e81',
         elevation: 0
     },
 });
